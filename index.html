@@ -134,6 +134,91 @@ body.welcome-mode{overflow:hidden}
  .welcome-card{min-height:82dvh;padding:32px 22px}
 }
 
+ /* Pop-up de instalação do Guia */
+.install-popup{
+  position:fixed;
+  inset:0;
+  z-index:4000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(20,25,29,.72);
+  backdrop-filter:blur(4px);
+}
+
+.install-popup.show{
+  display:flex;
+}
+
+.install-box{
+  width:min(430px,94vw);
+  background:var(--cream);
+  color:var(--ink);
+  border:2px solid var(--gold);
+  border-radius:22px;
+  padding:26px 22px 22px;
+  text-align:center;
+  box-shadow:0 18px 55px rgba(0,0,0,.35);
+}
+
+.install-icon{
+  width:68px;
+  height:68px;
+  margin:0 auto 14px;
+  border-radius:16px;
+  background:var(--navy);
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font:bold 1.35rem Arial,sans-serif;
+  border:2px solid var(--gold);
+}
+
+.install-box h2{
+  margin:8px 0 10px;
+  color:var(--navy);
+  font-size:1.55rem;
+}
+
+.install-box p{
+  margin:0 0 20px;
+  color:var(--muted);
+  font:1rem/1.45 Arial,sans-serif;
+}
+
+.install-actions{
+  display:grid;
+  grid-template-columns:1fr 1.35fr;
+  gap:10px;
+}
+
+.install-later{
+  background:#e8e3d7;
+  color:var(--navy);
+}
+
+.install-now{
+  background:var(--navy);
+  color:#fff;
+  border:2px solid var(--gold);
+}
+
+.install-help{
+  display:none;
+  margin-top:16px;
+  padding:12px;
+  border-radius:12px;
+  background:#ece7db;
+  color:var(--navy);
+  font:.9rem/1.4 Arial,sans-serif;
+}
+
+@media(max-width:390px){
+  .install-actions{grid-template-columns:1fr}
+}
+
 </style></head>
 <body id="top" class="index-mode welcome-mode">
 
