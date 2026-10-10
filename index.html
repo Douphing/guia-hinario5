@@ -400,5 +400,81 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
 </script>
+<script>
+/* Instalação do Guia Hinário 5 */
+let deferredInstallPrompt = null;
 
+const installPopup = document.getElementById("installPopup");
+const installNow = document.getElementById("installNow");
+const installLater = document.getElementById("installLater");
+const installHelp = document.getElementById("installHelp");
+const enterGuideInstall = document.getElementById("enterGuide");
+
+function guiaJaInstalado(){
+  return window.matchMedia("(display-mode: standalone)").matches ||
+         window.navigator.standalone === true;
+}
+
+function mostrarInstalacao(){
+  if(guiaJaInstalado()) return;
+
+  if(sessionStorage.getItem("guiaInstallDismissed") === "1") return;
+
+  installPopup.classList.add("show");
+  installPopup.setAttribute("aria-hidden","false");
+
+  if(deferredInstallPrompt){
+    installNow.innerHTML = "📲 Instalar Guia";
+  }else{
+    installNow.innerHTML = "📲 Como instalar";
+  }
+}
+
+function fecharInstalacao(){
+  installPopup.classList.remove("show");
+  installPopup.setAttribute("aria-hidden","true");
+}
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+});
+
+if(enterGuideInstall){
+  enterGuideInstall.addEventListener("click", () => {
+    if(guiaJaInstalado()) return;
+
+    setTimeout(() => {
+      mostrarInstalacao();
+    }, 700);
+  });
+}
+
+installLater.addEventListener("click", () => {
+  sessionStorage.setItem("guiaInstallDismissed","1");
+  fecharInstalacao();
+});
+
+installNow.addEventListener("click", async () => {
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+
+    const escolha = await deferredInstallPrompt.userChoice;
+
+    if(escolha.outcome === "accepted"){
+      fecharInstalacao();
+    }
+
+    deferredInstallPrompt = null;
+  }else{
+    installHelp.style.display = "block";
+    installNow.style.display = "none";
+  }
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  fecharInstalacao();
+});
+</script>
 </body></html>
