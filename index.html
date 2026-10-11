@@ -134,6 +134,74 @@ body.welcome-mode{overflow:hidden}
  .welcome-card{min-height:82dvh;padding:32px 22px}
 }
 
+ /* Sobre o Guia */
+.about-link-wrap{
+  display:flex;
+  justify-content:center;
+  margin:18px 0 8px;
+}
+
+.about-link{
+  background:transparent;
+  color:var(--navy);
+  border:1px solid var(--gold);
+  border-radius:999px;
+  padding:10px 18px;
+  font:600 .9rem Arial,sans-serif;
+  cursor:pointer;
+}
+
+.about-link:hover{
+  background:#ece7db;
+}
+
+.about-content{
+  padding:4px 2px 2px;
+  color:var(--ink);
+  font:1rem/1.55 Arial,sans-serif;
+}
+
+.about-content p{
+  margin:0 0 16px;
+}
+
+.about-notice{
+  margin:18px 0;
+  padding:16px;
+  background:#ece7db;
+  border-left:4px solid var(--gold);
+  border-radius:10px;
+}
+
+.about-notice > strong{
+  display:block;
+  color:var(--navy);
+  margin-bottom:10px;
+  font-size:1.05rem;
+}
+
+.about-notice p:last-child{
+  margin-bottom:0;
+}
+
+.about-version{
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px solid #d8d0bf;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.about-version strong{
+  color:var(--navy);
+}
+
+.about-author{
+  margin-top:16px !important;
+  font-size:.92rem;
+  color:var(--muted);
+}
+
  /* Pop-up de instalação do Guia */
 .install-popup{
   position:fixed;
@@ -284,8 +352,61 @@ body.welcome-mode{overflow:hidden}
     <a id="modalIndex" class="modal-index" href="#indice">← Voltar ao índice</a>
   </div>
 </div>
+ <!-- Janela Sobre o Guia -->
+<div id="aboutModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" id="aboutBackdrop"></div>
+
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <div class="modal-head">
+      <div>
+        <strong id="aboutTitle">ⓘ Sobre o Guia</strong>
+        <small>Guia Visual de Hinos por Ocasião — Hinário nº 5</small>
+      </div>
+
+      <button id="closeAbout" class="close" type="button" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="about-content">
+      <p>
+        Este guia foi desenvolvido com a finalidade de
+        <strong>facilitar a consulta dos hinos de acordo com suas respectivas ocasiões</strong>.
+      </p>
+
+      <p>
+        A ferramenta permite localizar rapidamente os hinos por
+        <strong>ocasião, número ou título</strong>, reunindo essas informações
+        em uma interface simples e prática para consulta.
+      </p>
+
+      <div class="about-notice">
+        <strong>Aviso importante</strong>
+        <p>
+          Este guia é uma <strong>iniciativa independente</strong> e possui
+          caráter exclusivamente informativo e de consulta.
+        </p>
+        <p>
+          <strong>Não é um aplicativo, publicação ou material oficial da
+          Congregação Cristã no Brasil e não possui vínculo institucional com a CCB.</strong>
+        </p>
+      </div>
+
+      <div class="about-version">
+        <strong>Versão 1.0</strong><br>
+        Guia Visual de Hinos por Ocasião — Hinário nº 5<br>
+        Atualizado em outubro de 2026.
+      </div>
+
+      <p class="about-author">
+        <strong>Desenvolvimento:</strong> Douglas Campos Andrade
+      </p>
+    </div>
+  </div>
+</div>
 <main class="wrap">
 <nav class="index" id="indice" tabindex="-1" aria-label="Índice"></nav>
+ <div class="about-link-wrap">
+  <button id="openAbout" class="about-link" type="button">ⓘ Sobre o Guia · v1.0</button>
+ </div>
 <div class="section-divider" aria-hidden="true"><span>RELAÇÃO DE HINOS</span></div>
 <div id="content"></div>
 </main>
@@ -476,5 +597,33 @@ window.addEventListener("appinstalled", () => {
   deferredInstallPrompt = null;
   fecharInstalacao();
 });
+
+ /* Janela Sobre o Guia */
+const aboutModal = document.getElementById("aboutModal");
+const openAbout = document.getElementById("openAbout");
+const closeAbout = document.getElementById("closeAbout");
+const aboutBackdrop = document.getElementById("aboutBackdrop");
+
+function abrirSobre(){
+  aboutModal.classList.add("open");
+  aboutModal.setAttribute("aria-hidden", "false");
+}
+
+function fecharSobre(){
+  aboutModal.classList.remove("open");
+  aboutModal.setAttribute("aria-hidden", "true");
+}
+
+openAbout.addEventListener("click", abrirSobre);
+closeAbout.addEventListener("click", fecharSobre);
+aboutBackdrop.addEventListener("click", fecharSobre);
+
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && aboutModal.classList.contains("open")){
+    fecharSobre();
+  }
+});
+
+ 
 </script>
 </body></html>
