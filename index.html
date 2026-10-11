@@ -231,6 +231,66 @@ body.welcome-mode{overflow:hidden}
   color:var(--muted);
 }
 
+ /* Ajuste do Sobre para telas de celular */
+@media(max-width:600px){
+
+  #aboutModal .modal-panel{
+    top:8px;
+    width:94vw;
+    max-height:calc(100dvh - 16px);
+    padding:14px 16px;
+    overflow:hidden;
+  }
+
+  #aboutModal .modal-head{
+    margin-bottom:8px;
+  }
+
+  #aboutModal .modal-head strong{
+    font-size:1.25rem;
+  }
+
+  #aboutModal .modal-head small{
+    font-size:.78rem;
+    line-height:1.25;
+  }
+
+  #aboutModal .close{
+    font-size:1.8rem;
+  }
+
+  #aboutModal .about-content{
+    font-size:.88rem;
+    line-height:1.38;
+  }
+
+  #aboutModal .about-content p{
+    margin-bottom:10px;
+  }
+
+  #aboutModal .about-notice{
+    margin:12px 0;
+    padding:12px 14px;
+  }
+
+  #aboutModal .about-notice > strong{
+    margin-bottom:6px;
+    font-size:.95rem;
+  }
+
+  #aboutModal .about-version{
+    margin-top:12px;
+    padding-top:10px;
+    line-height:1.4;
+  }
+
+  #aboutModal .about-author{
+    margin-top:10px !important;
+    margin-bottom:0;
+    font-size:.82rem;
+  }
+}
+
  /* Pop-up de instalação do Guia */
 .install-popup{
   position:fixed;
