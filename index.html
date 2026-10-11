@@ -642,9 +642,9 @@ function fecharSobre(){
   aboutModal.setAttribute("aria-hidden", "true");
 }
 
-openAbout.addEventListener("click", abrirSobre);
-closeAbout.addEventListener("click", fecharSobre);
-aboutBackdrop.addEventListener("click", fecharSobre);
+if(openAbout) openAbout.addEventListener("click", abrirSobre);
+if(closeAbout) closeAbout.addEventListener("click", fecharSobre);
+if(aboutBackdrop) aboutBackdrop.addEventListener("click", fecharSobre);
 
 document.addEventListener("keydown", (e) => {
   if(e.key === "Escape" && aboutModal.classList.contains("open")){
