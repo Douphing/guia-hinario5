@@ -559,7 +559,18 @@ function renderResults(){
    const grupos=h.cats.join(" • "); const groupLabel=h.cats.includes("Coros") ? "Grupo" : "Ocasião";
    const aprop=(h.apropriacao && h.apropriacao!=="Culto Oficial") ? `<small>Apropriação: ${esc(h.apropriacao)}</small>` : "";
    a.innerHTML=`<b>${esc(h.num)}</b>${esc(h.titulo)}<div class="grp">${groupLabel}: ${esc(grupos)}</div>${aprop}`;
-   a.onclick=(e)=>{e.preventDefault();closeModal();openCategory(h.cats[0]);};
+   a.onclick=(e)=>{
+     e.preventDefault();
+
+     registrarEventoGA('consultar_hino', {
+       numero_hino: String(h.num),
+       titulo_hino: String(h.titulo),
+       ocasiao_hino: String(h.cats.join(" / "))
+     });
+
+     closeModal();
+     openCategory(h.cats[0]);
+   };
    results.appendChild(a);
  });
 }
