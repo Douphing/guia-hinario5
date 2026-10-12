@@ -351,19 +351,27 @@ body.welcome-mode{overflow:hidden}
   .install-actions{grid-template-columns:1fr}
 }
 
-
-/* Barra superior — ajuste mobile para 3 ações sem quebra de texto */
+/* Barra superior — ajuste mobile para 3 ações sem quebra */
 @media(max-width:600px){
-  .quickbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px}
-  .quickbar button{min-width:0;padding:12px 10px;font-size:.88rem;white-space:nowrap}
-  #openSearch{text-align:center}
+ .quickbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px}
+ .quickbar button{min-width:0;padding:12px 10px;font-size:.88rem;white-space:nowrap}
+ #openSearch{text-align:center}
 }
 @media(max-width:390px){
-  .quickbar{gap:5px}
-  .quickbar button{padding:11px 7px;font-size:.80rem}
+ .quickbar{gap:5px}
+ .quickbar button{padding:11px 7px;font-size:.80rem}
 }
 
-</style></head>
+</style><!-- Google tag (gtag.js) — Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZQBRNW3HL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2ZQBRNW3HL');
+</script>
+
+</head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
 <div id="installPopup" class="install-popup" aria-hidden="true">
@@ -410,7 +418,7 @@ body.welcome-mode{overflow:hidden}
 
 <header><div class="brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><h1>Hinário nº 5</h1><p>Guia Visual de Hinos por Ocasião</p></header>
 <div class="toolbar"><div class="wrap quickbar">
-<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino">🔎 Pesquisar hino</button>
+<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino">🔎 Pesquisar</button>
 <button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button>
 <button class="navbtn" id="goIndex" type="button">Índice</button>
 </div></div>
