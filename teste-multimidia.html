@@ -515,10 +515,12 @@ ORDER.forEach(cat=>{
  const grid=sec.querySelector(".grid");
  DATA[cat].forEach(h=>{
    const occ=h.ocasiao.split("/").map(x=>x.trim()).filter(Boolean), others=occ.filter(x=>x!==cat);
-   const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();
+   const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();card.dataset.hino=String(h.num);card.setAttribute("role","button");card.setAttribute("tabindex","0");
    let tag=others.length?`<div class="tag">Também: ${esc(others.join(" • "))}</div>`:"";
    if(h.apropriacao && h.apropriacao!=="Culto Oficial") tag+=`<div class="tag">${esc(h.apropriacao)}</div>`;
    card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div></div>${tag}`;
+   card.addEventListener("click",()=>openHymnDetail(h,cat));
+   card.addEventListener("keydown",(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openHymnDetail(h,cat);}});
    grid.appendChild(card);
  });
  sec.querySelector(".back").addEventListener("click",(e)=>{e.preventDefault();goToIndex();});
@@ -569,7 +571,7 @@ function renderResults(){
      });
 
      closeModal();
-     openCategory(h.cats[0]);
+     openCategory(h.cats[0], h.num);
    };
    results.appendChild(a);
  });
@@ -591,16 +593,24 @@ function showIndexScreen(){
   window.scrollTo({top:0,behavior:"smooth"});
   try{history.replaceState(null,"","#indice");}catch(e){}
 }
-function openCategory(cat){
+function openCategory(cat,targetNum=null){
   document.body.classList.remove("index-mode");
   document.querySelectorAll("#content section").forEach(sec=>{
     sec.classList.toggle("hidden-by-nav", sec.dataset.cat!==cat);
   });
   const target=document.getElementById(slug(cat));
-  if(target){
-    target.scrollIntoView({behavior:"smooth",block:"start"});
-    try{history.replaceState(null,"","#"+slug(cat));}catch(e){}
-  }
+  if(!target) return;
+  try{history.replaceState(null,"","#"+slug(cat));}catch(e){}
+  if(targetNum!==null){
+    setTimeout(()=>{
+      const hymn=[...target.querySelectorAll(".card[data-hino]")].find(el=>el.dataset.hino===String(targetNum));
+      if(hymn){
+        hymn.scrollIntoView({behavior:"smooth",block:"center"});
+        hymn.classList.add("hino-destaque");
+        setTimeout(()=>hymn.classList.remove("hino-destaque"),2800);
+      }else target.scrollIntoView({behavior:"smooth",block:"start"});
+    },80);
+  }else target.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 const goIndex=document.querySelector("#goIndex");
@@ -840,67 +850,79 @@ window.addEventListener('appinstalled', function () {
 </script>
 
 
-<!-- PROTÓTIPO MULTIMÍDIA — Spotify + YouTube, isolado do guia -->
+<!-- PROTÓTIPO: hino clicável + multimídia, isolado do guia -->
 <style>
-#mediaProtoBtn{position:fixed;right:16px;bottom:18px;z-index:40;border:0;border-radius:999px;padding:12px 16px;background:#2b353e;color:#fff;font-weight:700;box-shadow:0 6px 22px #0003;cursor:pointer}
-#mediaProto{position:fixed;inset:0;z-index:9999;background:#0008;display:none;align-items:center;justify-content:center;padding:18px}
-#mediaProto.open{display:flex}
-#mediaProto .mp-card{width:min(500px,100%);max-height:90vh;overflow:auto;background:#fffdf8;border:1px solid #dbcaa8;border-radius:20px;padding:20px;box-shadow:0 18px 55px #0005}
-#mediaProto .mp-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-#mediaProto h2{margin:0;color:#2b353e;font-family:Georgia,serif}
-#mediaProto .mp-close{border:0;background:#eee8dc;color:#2b353e;border-radius:50%;width:38px;height:38px;font-size:20px;font-weight:800;cursor:pointer}
-#mediaProto .mp-note{color:#6c6c68;font-size:14px;line-height:1.45;margin:10px 0 16px}
-#mediaProto .mp-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-#mediaProto .mp-actions button{border:1px solid #ac823a!important;background:#fffaf0!important;color:#2b353e!important;border-radius:999px;padding:9px 12px;font-weight:800;cursor:pointer}
-#mediaProto .mp-media{display:grid;gap:9px;margin-top:8px}
-#mediaProto .mp-play{width:100%;border:0!important;border-radius:12px;padding:12px 14px;background:#2b353e!important;color:#fff!important;font-weight:800;cursor:pointer;margin:0}
-#mediaProto .mp-play.active{background:#ac823a!important}
-#mediaProto .mp-slot{margin-top:12px}
-#mediaProto .mp-slot iframe{width:100%;border:0;border-radius:12px;display:block}
-#spotifySlot iframe{height:152px}
-#youtubeSlot iframe{aspect-ratio:16/9;height:auto}
-#mediaProto .mp-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#mediaProto .mp-links a{color:#2b353e;font-size:13px;font-weight:800;text-decoration:underline}
-#mediaProto .mp-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#ac823a;font-weight:800;margin-top:8px}
-@media(max-width:520px){#mediaProto{padding:10px}#mediaProto .mp-card{padding:16px;border-radius:18px}#mediaProto h2{font-size:26px}}
+.card[role="button"]{cursor:pointer}
+.hino-destaque{border-color:#ac823a!important;box-shadow:0 0 0 3px rgba(172,130,58,.24),0 5px 18px rgba(30,30,20,.10)!important;background:#fffaf0!important;transition:.25s ease}
+#hymnDetail{position:fixed;inset:0;z-index:9999;background:#0008;display:none;align-items:center;justify-content:center;padding:18px}
+#hymnDetail.open{display:flex}
+#hymnDetail .hd-card{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fffdf8;border:1px solid #dbcaa8;border-radius:20px;padding:20px;box-shadow:0 18px 55px #0005}
+#hymnDetail .hd-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+#hymnDetail h2{margin:0;color:#2b353e;font-family:Georgia,serif;font-size:28px;line-height:1.12}
+#hymnDetail .hd-num{color:#ac823a;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+#hymnDetail .hd-close{border:0;background:#eee8dc;color:#2b353e;border-radius:50%;width:40px;height:40px;font-size:22px;font-weight:800;cursor:pointer;flex:0 0 auto}
+#hymnDetail .hd-meta{color:#5d625f;font-size:14px;line-height:1.5;margin:12px 0}
+#hymnDetail .hd-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+#hymnDetail .hd-actions button{border:1px solid #ac823a!important;background:#fffaf0!important;color:#2b353e!important;border-radius:999px;padding:10px 13px;font-weight:800;cursor:pointer}
+#hymnDetail .hd-media-title{font-weight:800;color:#2b353e;margin:18px 0 8px;border-top:1px solid #e4dac7;padding-top:15px}
+#hymnDetail .hd-media{display:grid;gap:9px}
+#hymnDetail .hd-play{width:100%;border:0!important;border-radius:12px;padding:12px 14px;background:#2b353e!important;color:#fff!important;font-weight:800;cursor:pointer;margin:0}
+#hymnDetail .hd-play.active{background:#ac823a!important}
+#hymnDetail .hd-slot{margin-top:12px}
+#hymnDetail .hd-slot iframe{width:100%;border:0;border-radius:12px;display:block}
+#hdSpotify iframe{height:152px} #hdYoutube iframe{aspect-ratio:16/9;height:auto}
+#hymnDetail .hd-links{margin-top:10px} #hymnDetail .hd-links a{color:#2b353e;font-size:13px;font-weight:800;text-decoration:underline}
+#hymnDetail .hd-unavailable{padding:13px;border-radius:12px;background:#f2ede3;color:#5d625f;font-size:14px}
+@media(max-width:520px){#hymnDetail{padding:10px}#hymnDetail .hd-card{padding:16px;border-radius:18px}#hymnDetail h2{font-size:24px}}
 </style>
-<button id="mediaProtoBtn" type="button">🎵 Testar multimídia</button>
-<div id="mediaProto" role="dialog" aria-modal="true" aria-labelledby="mediaProtoTitle">
-  <div class="mp-card">
-    <div class="mp-head"><div><div class="mp-label">Protótipo</div><h2 id="mediaProtoTitle">Cartão multimídia do hino</h2></div><button class="mp-close" id="mediaProtoClose" aria-label="Fechar">×</button></div>
-    <p class="mp-note">Compare as três opções. Somente o player escolhido é carregado, preservando a leveza do Guia.</p>
-    <div class="mp-actions"><button type="button">☆ Favoritar</button><button type="button">✓ Marcar como chamado</button></div>
-    <div class="mp-media">
-      <button class="mp-play" id="spotifyLoad" type="button">🎧 Spotify</button>
-      <button class="mp-play" id="youtubeLoad" type="button">▶️ YouTube</button>
-      <button class="mp-play" id="youtubeMusicLoad" type="button">🎵 YouTube Music</button>
-    </div>
-    <div class="mp-slot" id="spotifySlot"></div>
-    <div class="mp-slot" id="youtubeSlot"></div>
-    <div class="mp-links" id="mediaLinks" hidden></div>
-  </div>
+<div id="hymnDetail" role="dialog" aria-modal="true" aria-labelledby="hdTitle">
+ <div class="hd-card">
+  <div class="hd-head"><div><div class="hd-num" id="hdNum"></div><h2 id="hdTitle"></h2></div><button class="hd-close" id="hdClose" aria-label="Fechar">×</button></div>
+  <div class="hd-meta" id="hdMeta"></div>
+  <div class="hd-actions"><button type="button" id="hdFav">☆ Favoritar</button><button type="button" id="hdCalled">✓ Marcar como chamado</button></div>
+  <div id="hdMediaArea"></div>
+ </div>
 </div>
 <script>
-(function(){
- const modal=document.getElementById('mediaProto');
- const buttons=[...document.querySelectorAll('#mediaProto .mp-play')];
- const spotifySlot=document.getElementById('spotifySlot'), youtubeSlot=document.getElementById('youtubeSlot'), links=document.getElementById('mediaLinks');
- function clearPlayers(){spotifySlot.innerHTML='';youtubeSlot.innerHTML='';links.innerHTML='';links.hidden=true;buttons.forEach(b=>b.classList.remove('active'));}
- document.getElementById('mediaProtoBtn').addEventListener('click',()=>modal.classList.add('open'));
- document.getElementById('mediaProtoClose').addEventListener('click',()=>modal.classList.remove('open'));
- modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')});
- document.getElementById('spotifyLoad').addEventListener('click',function(){
-   clearPlayers();this.classList.add('active');
-   const f=document.createElement('iframe');f.src='https://open.spotify.com/embed/track/0834t6lumVQ5FKetjMgREw?utm_source=generator';f.height='152';f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';f.loading='lazy';f.title='Spotify Embed';spotifySlot.appendChild(f);
-   links.hidden=false;links.innerHTML='<a href="https://open.spotify.com/intl-pt/track/0834t6lumVQ5FKetjMgREw" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
- });
- function loadYouTube(id, source, button){
-   clearPlayers();button.classList.add('active');
-   const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';f.allowFullscreen=true;f.loading='lazy';f.title='YouTube player';youtubeSlot.appendChild(f);
-   links.hidden=false;links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+const MULTIMIDIA={
+ "45":{spotify:"0834t6lumVQ5FKetjMgREw",youtube:"aFtzMzwvMfo",youtubeMusic:"DF966OAKcUQ"}
+};
+function openHymnDetail(h,cat){
+ const modal=document.getElementById('hymnDetail');
+ document.getElementById('hdNum').textContent='Hino '+h.num;
+ document.getElementById('hdTitle').textContent=h.titulo;
+ const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
+ document.getElementById('hdMeta').innerHTML='<b>Ocasiões:</b> '+esc(occ)+(h.apropriacao?'<br><b>Apropriação:</b> '+esc(h.apropriacao):'');
+ const area=document.getElementById('hdMediaArea');
+ const media=MULTIMIDIA[String(h.num)];
+ if(media){
+   area.innerHTML='<div class="hd-media-title">🎵 Multimídia experimental</div><div class="hd-media"><button class="hd-play" data-kind="spotify">🎧 Spotify</button><button class="hd-play" data-kind="youtube">▶️ YouTube</button><button class="hd-play" data-kind="youtubeMusic">🎵 YouTube Music</button></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
+   area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+ }else{
+   area.innerHTML='<div class="hd-media-title">🎵 Multimídia</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. O teste multimídia está disponível no Hino 45.</div>';
  }
- document.getElementById('youtubeLoad').addEventListener('click',function(){loadYouTube('aFtzMzwvMfo','https://youtu.be/aFtzMzwvMfo',this)});
- document.getElementById('youtubeMusicLoad').addEventListener('click',function(){loadYouTube('DF966OAKcUQ','https://music.youtube.com/watch?v=DF966OAKcUQ',this)});
+ modal.classList.add('open');
+}
+function loadHymnMedia(kind,media,button){
+ const sp=document.getElementById('hdSpotify'),yt=document.getElementById('hdYoutube'),links=document.getElementById('hdLinks');
+ sp.innerHTML='';yt.innerHTML='';links.innerHTML='';
+ document.querySelectorAll('#hymnDetail .hd-play').forEach(b=>b.classList.remove('active'));button.classList.add('active');
+ if(kind==='spotify'){
+   const f=document.createElement('iframe');f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator';f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';f.loading='lazy';f.title='Spotify Embed';sp.appendChild(f);
+   links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
+ }else{
+   const id=kind==='youtube'?media.youtube:media.youtubeMusic;
+   const source=kind==='youtube'?'https://youtu.be/'+id:'https://music.youtube.com/watch?v='+id;
+   const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';f.allowFullscreen=true;f.loading='lazy';f.title='YouTube player';yt.appendChild(f);
+   links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+ }
+}
+(function(){
+ const modal=document.getElementById('hymnDetail');
+ document.getElementById('hdClose').addEventListener('click',()=>modal.classList.remove('open'));
+ modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
 })();
 </script>
+
 </body></html>
