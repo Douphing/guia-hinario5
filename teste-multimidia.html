@@ -579,7 +579,17 @@ function renderResults(){
 openBtn.onclick=openModal;closeBtn.onclick=closeModal;
 document.querySelector("#modalBackdrop").onclick=closeModal;
 q.addEventListener("input",renderResults);
-q.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();q.blur();renderResults();}});
+q.addEventListener("keydown",e=>{
+ if(e.key!=="Enter") return;
+ e.preventDefault();
+ renderResults();
+ const itens=[...results.querySelectorAll(".result")];
+ if(itens.length===1){
+   itens[0].click();
+ }else{
+   q.blur();
+ }
+});
 document.querySelector("#clear").onclick=()=>{q.value="";renderResults();q.focus();};
 
 document.querySelector("#modalIndex").onclick=(e)=>{e.preventDefault();goToIndex();};
@@ -875,6 +885,31 @@ window.addEventListener('appinstalled', function () {
 #hymnDetail .hd-links{margin-top:10px} #hymnDetail .hd-links a{color:#2b353e;font-size:13px;font-weight:800;text-decoration:underline}
 #hymnDetail .hd-unavailable{padding:13px;border-radius:12px;background:#f2ede3;color:#5d625f;font-size:14px}
 @media(max-width:520px){#hymnDetail{padding:10px}#hymnDetail .hd-card{padding:16px;border-radius:18px}#hymnDetail h2{font-size:24px}}
+
+/* V2 — refinamentos de apresentação */
+#hymnDetail .hd-num{display:flex;align-items:baseline;gap:7px;font-size:12px;letter-spacing:.10em}
+#hymnDetail .hd-num .hd-number{font-size:25px;line-height:1;color:#ac823a;letter-spacing:0}
+#hymnDetail .hd-media{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#hymnDetail .hd-play{padding:10px 8px;font-size:13px;white-space:nowrap}
+#hymnDetail .hd-play[data-kind="instrumental"]{grid-column:1/-1;font-size:14px;padding:11px}
+#hymnDetail .hd-media-title{margin-top:16px}
+#hymnDetail .hd-slot audio{width:100%;display:block;margin-top:2px}
+#hdSpotify iframe{height:152px}
+#hdYoutube iframe{aspect-ratio:16/9;height:auto;max-height:260px}
+@media(min-width:700px){
+ #hymnDetail .hd-card{width:min(600px,94vw);max-height:86vh}
+ #hymnDetail .hd-slot{margin-top:9px}
+}
+@media(max-width:520px){
+ #hymnDetail .hd-media{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ #hymnDetail .hd-play{font-size:12px;padding:9px 5px}
+ #hymnDetail .hd-play[data-kind="instrumental"]{font-size:14px;padding:11px}
+ #hymnDetail .hd-num .hd-number{font-size:27px}
+}
+@media(max-width:360px){
+ #hymnDetail .hd-media{grid-template-columns:1fr}
+ #hymnDetail .hd-play[data-kind="instrumental"]{grid-column:auto}
+}
 </style>
 <div id="hymnDetail" role="dialog" aria-modal="true" aria-labelledby="hdTitle">
  <div class="hd-card">
@@ -890,14 +925,14 @@ const MULTIMIDIA={
 };
 function openHymnDetail(h,cat){
  const modal=document.getElementById('hymnDetail');
- document.getElementById('hdNum').textContent='Hino '+h.num;
+ document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
  document.getElementById('hdMeta').innerHTML='<b>Ocasiões:</b> '+esc(occ)+(h.apropriacao?'<br><b>Apropriação:</b> '+esc(h.apropriacao):'');
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
-   area.innerHTML='<div class="hd-media-title">🎵 Multimídia experimental</div><div class="hd-media"><button class="hd-play" data-kind="instrumental">🎼 Ouvir instrumental</button><button class="hd-play" data-kind="spotify">🎧 Spotify</button><button class="hd-play" data-kind="youtube">▶️ YouTube</button><button class="hd-play" data-kind="youtubeMusic">🎵 YouTube Music</button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
+   area.innerHTML='<div class="hd-media-title">🎵 Ouvir Hino</div><div class="hd-media"><button class="hd-play" data-kind="instrumental">🎼 Ouvir instrumental</button><button class="hd-play" data-kind="spotify">🎧 Spotify</button><button class="hd-play" data-kind="youtube">▶️ YouTube</button><button class="hd-play" data-kind="youtubeMusic">🎵 YouTube Music</button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
    area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
    area.innerHTML='<div class="hd-media-title">🎵 Multimídia</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. O teste multimídia está disponível no Hino 45.</div>';
