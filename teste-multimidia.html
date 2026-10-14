@@ -871,10 +871,16 @@ window.addEventListener('appinstalled', function () {
 #hymnDetail h2{margin:0;color:#2b353e;font-family:Georgia,serif;font-size:28px;line-height:1.12}
 #hymnDetail .hd-num{color:#ac823a;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
 #hymnDetail .hd-close{border:0;background:#eee8dc;color:#2b353e;border-radius:50%;width:40px;height:40px;font-size:22px;font-weight:800;cursor:pointer;flex:0 0 auto}
-#hymnDetail .hd-meta{display:grid;gap:7px;margin:14px 0;color:#2b353e;font-size:14px;line-height:1.35}
-#hymnDetail .hd-meta-row{background:#f6f0e5;border-left:4px solid #ac823a;border-radius:9px;padding:8px 11px}
-#hymnDetail .hd-meta-label{color:#2b353e;font-weight:800}
-#hymnDetail .hd-meta-value{color:#4f565b;font-weight:700}
+#hymnDetail .hd-meta{display:grid;gap:10px;margin:16px 0;color:#2b353e;line-height:1.25}
+#hymnDetail .hd-meta-row{display:grid;grid-template-columns:64px 1fr;align-items:stretch;background:linear-gradient(135deg,#fffdf8,#f4ead8);border:1px solid rgba(172,130,58,.24);border-radius:15px;overflow:hidden;box-shadow:0 7px 18px rgba(46,39,28,.13)}
+#hymnDetail .hd-meta-icon{display:flex;align-items:center;justify-content:center;min-height:66px;background:linear-gradient(145deg,#c99a3a,#9d711f);color:#fff}
+#hymnDetail .hd-meta-icon svg{width:43px;height:43px}
+#hymnDetail .hd-meta-copy{padding:10px 13px;display:flex;flex-direction:column;justify-content:center}
+#hymnDetail .hd-meta-label{color:#9b712a;font-weight:900;font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+#hymnDetail .hd-meta-value{color:#20303e;font-weight:800;font-size:16px}
+#hymnDetail .hd-card{scrollbar-width:none;-ms-overflow-style:none}
+#hymnDetail .hd-card::-webkit-scrollbar{width:0;height:0}
+@media(max-width:520px){#hymnDetail .hd-meta-row{grid-template-columns:60px 1fr}#hymnDetail .hd-meta-icon{min-height:62px}#hymnDetail .hd-meta-icon svg{width:40px;height:40px}#hymnDetail .hd-meta-copy{padding:9px 11px}#hymnDetail .hd-meta-value{font-size:15px}}
 #hymnDetail .hd-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
 #hymnDetail .hd-actions button{border:1px solid #ac823a!important;background:#fffaf0!important;color:#2b353e!important;border-radius:999px;padding:10px 13px;font-weight:800;cursor:pointer}
 #hymnDetail .hd-media-title{font-weight:800;color:#2b353e;margin:18px 0 8px;border-top:1px solid #e4dac7;padding-top:15px}
@@ -931,7 +937,16 @@ function openHymnDetail(h,cat){
  document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
- document.getElementById('hdMeta').innerHTML='<div class="hd-meta-row"><span class="hd-meta-label">Ocasiões:</span> <span class="hd-meta-value">'+esc(occ)+'</span></div>'+(h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-label">Apropriação:</span> <span class="hd-meta-value">'+esc(h.apropriacao)+'</span></div>':'');
+ const iconBook='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M7 15c9-3 17-2 25 3v34c-8-5-16-6-25-3V15Zm50 0c-9-3-17-2-25 3v34c8-5 16-6 25-3V15Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 18v34" stroke="currentColor" stroke-width="3"/></svg>';
+const iconHands='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M29 11c-3 2-5 7-5 12v9l-5-7c-2-3-6-1-5 3l8 18c2 5 5 7 10 8V26c0-7-1-13-3-15Zm6 0c3 2 5 7 5 12v9l5-7c2-3 6-1 5 3l-8 18c-2 5-5 7-10 8V26c0-7 1-13 3-15Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+const iconPrayerWord='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M5 38c10-3 18-2 27 4v14c-9-5-17-6-27-3V38Zm54 0c-10-3-18-2-27 4v14c9-5 17-6 27-3V38Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 42v14M29 7c-3 3-5 8-5 13v12l-5-8c-2-3-6-1-5 3l7 13M35 7c3 3 5 8 5 13v12l5-8c2-3 6-1 5 3l-7 13M32 10v29" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+const iconPeople='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="14" cy="25" r="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="25" r="6" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 52v-8c0-8 5-13 12-13s12 5 12 13v8M5 51v-6c0-7 4-11 9-11 3 0 6 1 8 4M59 51v-6c0-7-4-11-9-11-3 0-6 1-8 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+const occNorm=occ.toLowerCase();
+let occIcon=iconBook;
+if(occNorm.includes('oração')&&occNorm.includes('palavra')) occIcon=iconPrayerWord;
+else if(occNorm.includes('oração')) occIcon=iconHands;
+else if(occNorm.includes('palavra')) occIcon=iconBook;
+document.getElementById('hdMeta').innerHTML='<div class="hd-meta-row"><span class="hd-meta-icon">'+occIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Ocasiões</span><span class="hd-meta-value">'+esc(occ)+'</span></span></div>'+(h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-icon">'+iconPeople+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Apropriação</span><span class="hd-meta-value">'+esc(h.apropriacao)+'</span></span></div>':'');
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
