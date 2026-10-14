@@ -871,7 +871,10 @@ window.addEventListener('appinstalled', function () {
 #hymnDetail h2{margin:0;color:#2b353e;font-family:Georgia,serif;font-size:28px;line-height:1.12}
 #hymnDetail .hd-num{color:#ac823a;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
 #hymnDetail .hd-close{border:0;background:#eee8dc;color:#2b353e;border-radius:50%;width:40px;height:40px;font-size:22px;font-weight:800;cursor:pointer;flex:0 0 auto}
-#hymnDetail .hd-meta{color:#5d625f;font-size:14px;line-height:1.5;margin:12px 0}
+#hymnDetail .hd-meta{display:grid;gap:7px;margin:14px 0;color:#2b353e;font-size:14px;line-height:1.35}
+#hymnDetail .hd-meta-row{background:#f6f0e5;border-left:4px solid #ac823a;border-radius:9px;padding:8px 11px}
+#hymnDetail .hd-meta-label{color:#2b353e;font-weight:800}
+#hymnDetail .hd-meta-value{color:#4f565b;font-weight:700}
 #hymnDetail .hd-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
 #hymnDetail .hd-actions button{border:1px solid #ac823a!important;background:#fffaf0!important;color:#2b353e!important;border-radius:999px;padding:10px 13px;font-weight:800;cursor:pointer}
 #hymnDetail .hd-media-title{font-weight:800;color:#2b353e;margin:18px 0 8px;border-top:1px solid #e4dac7;padding-top:15px}
@@ -928,7 +931,7 @@ function openHymnDetail(h,cat){
  document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
- document.getElementById('hdMeta').innerHTML='<b>Ocasiões:</b> '+esc(occ)+(h.apropriacao?'<br><b>Apropriação:</b> '+esc(h.apropriacao):'');
+ document.getElementById('hdMeta').innerHTML='<div class="hd-meta-row"><span class="hd-meta-label">Ocasiões:</span> <span class="hd-meta-value">'+esc(occ)+'</span></div>'+(h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-label">Apropriação:</span> <span class="hd-meta-value">'+esc(h.apropriacao)+'</span></div>':'');
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
