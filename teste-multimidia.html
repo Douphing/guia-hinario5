@@ -656,7 +656,7 @@ function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hi
 function renderResults(){
  const term=q.value.trim().toLowerCase();
  results.innerHTML="";
- if(!term){results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Os resultados aparecem automaticamente enquanto você digita do hino.</div>';return;}
+ if(!term){results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Os resultados aparecem automaticamente enquanto você digita.</div>';return;}
 
  const isNumber=/^\d+$/.test(term);
  const found=[];
@@ -1241,6 +1241,17 @@ const HYMN_STORE={
    this.write(this.calledLogKey,data);
    return data[data.length-1];
  },
+ addObservation(num,note){
+   const data=this.calls();
+   for(let i=data.length-1;i>=0;i--){
+     if(String(data[i].num)===String(num) && !(data[i].note||'').trim()){
+       data[i].note=(note||'').trim().slice(0,150);
+       this.write(this.calledLogKey,data);
+       return data[i];
+     }
+   }
+   return null;
+ },
  undoLastCall(num){
    const data=this.calls();
    for(let i=data.length-1;i>=0;i--){
@@ -1325,12 +1336,16 @@ function saveCall(){
  if(!V18_CURRENT_HYMN)return;
  const note=document.getElementById('callNote').value.trim();
  if(!note){document.getElementById('callNote').focus();return}
- HYMN_STORE.addCall(V18_CURRENT_HYMN,note);
  const h=V18_CURRENT_HYMN;
+ const saved=HYMN_STORE.addObservation(h.num,note);
+ if(!saved){
+   alert('Primeiro marque este hino como chamado. Depois registre a observação.');
+   return;
+ }
  closeCallDialog();
  updateHymnActionButtons(h);
  refreshPersonalUI();
- showCallToast('Observação registrada.',h);
+ showCallToast('Observação registrada.',null);
 }
 function undoLastCall(h){
  HYMN_STORE.undoLastCall(h.num);
