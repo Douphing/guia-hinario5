@@ -486,26 +486,6 @@ body.welcome-mode{overflow:hidden}
 }
 </style>
 
-
-<style id="v2-compact-test">
-/* Protótipo v2.0 — navegação compacta */
-.quickbar{display:flex!important;justify-content:center;gap:7px!important}
-.quickbar #openSearch{flex:0 1 auto!important;text-align:center!important}
-.quickbar button{width:auto!important;padding:9px 13px!important;font-size:.84rem!important;border-radius:10px!important}
-#supportGuide{min-width:42px!important;padding-inline:10px!important}
-body.index-mode #goIndex{display:none!important}
-body:not(.index-mode) #supportGuide{display:none!important}
-.personal-tools{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px!important;padding-top:8px!important}
-.personal-tools button{min-height:42px!important;padding:7px 8px!important;font-size:.78rem!important;gap:5px!important}
-#hymnDetail .hd-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-#hymnDetail #hdLyrics{background:#fffaf0!important;color:#173149!important;border-color:#b98120!important}
-#quickMarkModal{position:fixed;inset:0;z-index:100000;display:none;place-items:center;padding:14px;background:rgba(15,25,38,.58);backdrop-filter:blur(2px)}
-#quickMarkModal.show{display:grid}.qm-panel{width:min(94vw,520px);max-height:82dvh;overflow:auto;background:#fffdf8;border:1px solid #d8b66d;border-radius:18px;box-shadow:0 18px 55px rgba(16,27,43,.28)}
-.qm-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #e3d8c0}.qm-head h3{margin:0;color:#172b45}.qm-close{background:transparent!important;color:#52606f!important;font-size:1.6rem!important;padding:0 5px!important}.qm-body{padding:14px}.qm-body input{font-size:16px}.qm-results{display:grid;gap:7px;margin-top:10px}.qm-item{display:flex;width:100%;text-align:left;align-items:center;gap:10px;background:#fff!important;color:#26394d!important;border:1px solid #ded3bc!important;padding:11px!important;border-radius:11px!important}.qm-item b{color:#a97822;min-width:35px}.qm-item span{font-family:Georgia,serif;font-weight:700}.qm-empty{padding:15px;text-align:center;color:#7b7468;font: .86rem Arial,sans-serif}
-.qm-toast{display:none;margin-top:10px;padding:11px;border-radius:10px;background:#eef3e9;color:#385338;font:bold .86rem Arial,sans-serif}.qm-toast.show{display:block}
-@media(max-width:600px){.quickbar button{padding:9px 10px!important;font-size:.78rem!important}.personal-tools{width:92%;gap:5px!important}.personal-tools button{padding:6px 5px!important;font-size:.72rem!important}.personal-tools b{min-width:19px;height:19px;font-size:.65rem}#hymnDetail .hd-actions{grid-template-columns:1fr 1fr!important}#hymnDetail #hdLyrics{grid-column:1/-1!important}}
-@media(min-width:900px){.quickbar{justify-content:flex-start!important}.toolbar .wrap{max-width:1120px}.personal-tools{max-width:620px;margin-left:auto;margin-right:auto}}
-</style>
 </head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
@@ -553,15 +533,13 @@ body:not(.index-mode) #supportGuide{display:none!important}
 
 <header><div class="brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><h1>Hinário nº 5</h1><p>Guia Visual de Hinos por Ocasião</p></header>
 <div class="toolbar"><div class="wrap quickbar">
-<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino">🔎 Pesquisar</button>
+<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino"> 🔎 Pesquisar hinos </button>
 <button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button>
-<button class="navbtn" id="goIndex" type="button">← Índice</button>
-<button class="navbtn" id="supportGuide" type="button" title="Apoiar o Guia" aria-label="Apoiar o Guia">☕</button>
+<button class="navbtn" id="goIndex" type="button">Índice</button>
 </div></div>
 <div class="personal-tools wrap" aria-label="Minha biblioteca">
   <button type="button" id="openFavorites">★ <span>Favoritos</span><b id="favTotal">0</b></button>
-  <button type="button" id="openCalledHistory">✓ <span>Chamados</span><b id="callTotal">0</b></button>
-  <button type="button" id="openQuickMark">✓ <span>Marcar hino</span></button>
+  <button type="button" id="openCalledHistory">✓ <span>Hinos chamados</span><b id="callTotal">0</b></button>
 </div>
 <div id="searchModal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" id="modalBackdrop"></div>
@@ -1226,7 +1204,7 @@ window.addEventListener('appinstalled', function () {
    <div class="hd-swoosh" aria-hidden="true"><i></i><i></i></div>
   </header>
   <div class="hd-meta" id="hdMeta"></div>
-  <div class="hd-actions"><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar hino chamado</button><button type="button" id="hdObserve"><span class="hd-sheet-icon">▤</span> Registrar observação</button><button type="button" id="hdLyrics"><span class="hd-sheet-icon">▤</span> Letra</button></div><button type="button" id="hdHistory" class="hd-history-link" hidden><span>▤</span><span id="hdHistoryText">Histórico</span><span aria-hidden="true">›</span></button>
+  <div class="hd-actions"><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar hino chamado</button><button type="button" id="hdObserve"><span class="hd-sheet-icon">▤</span> Registrar observação</button></div><button type="button" id="hdHistory" class="hd-history-link" hidden><span>▤</span><span id="hdHistoryText">Histórico</span><span aria-hidden="true">›</span></button>
   <div class="hd-divider" aria-hidden="true"><span>𝄞</span></div>
   <div id="hdMediaArea"></div>
  </div>
@@ -2207,8 +2185,6 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 </script>
 
 
-
-<div id="quickMarkModal" aria-hidden="true"><div class="qm-panel" role="dialog" aria-modal="true" aria-labelledby="qmTitle"><div class="qm-head"><h3 id="qmTitle">✓ Marcar hino chamado</h3><button type="button" class="qm-close" id="closeQuickMark" aria-label="Fechar">×</button></div><div class="qm-body"><input id="quickMarkSearch" type="search" inputmode="search" autocomplete="off" placeholder="Número ou parte do título"><div id="quickMarkResults" class="qm-results"></div><div id="quickMarkToast" class="qm-toast"></div></div></div></div>
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
   <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" class="personal-download" onclick="downloadCallsCsv()" id="callsCsvBtn" title="Baixar CSV" aria-label="Baixar CSV">↓ CSV</button><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
@@ -2245,4 +2221,297 @@ function downloadCallsCsv(){
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 </script>
-\n<script id="v2-compact-test-js">\n(function(){\n const markModal=document.getElementById('quickMarkModal'), openBtn=document.getElementById('openQuickMark'), closeBtn=document.getElementById('closeQuickMark'), input=document.getElementById('quickMarkSearch'), results=document.getElementById('quickMarkResults'), toast=document.getElementById('quickMarkToast');\n function unique(){const m=new Map();Object.values(DATA).flat().forEach(h=>{const k=String(h.num);if(!m.has(k))m.set(k,h)});return [...m.values()]}\n function close(){markModal.classList.remove('show');markModal.setAttribute('aria-hidden','true');input.value='';results.innerHTML='';toast.classList.remove('show')}\n function render(){const q=input.value.trim().toLowerCase();toast.classList.remove('show');if(!q){results.innerHTML='<div class="qm-empty">Digite o número ou parte do título.</div>';return}const found=unique().filter(h=>String(h.num).toLowerCase()===q||String(h.titulo).toLowerCase().includes(q)).slice(0,8);if(!found.length){results.innerHTML='<div class="qm-empty">Nenhum hino encontrado.</div>';return}results.innerHTML=found.map(h=>'<button type="button" class="qm-item" data-qm="'+String(h.num).replace(/"/g,'&quot;')+'"><b>'+h.num+'</b><span>'+h.titulo+'</span></button>').join('');results.querySelectorAll('[data-qm]').forEach(b=>b.onclick=()=>{const h=findHymn(b.dataset.qm);if(!h)return;HYMN_STORE.addCall(h,'');refreshPersonalUI();updateHymnActionButtons(h);toast.textContent='✓ Hino '+h.num+' registrado como chamado.';toast.classList.add('show');results.innerHTML='';input.value='';});}\n if(openBtn)openBtn.onclick=()=>{markModal.classList.add('show');markModal.setAttribute('aria-hidden','false');render();setTimeout(()=>input.focus(),80)};\n if(closeBtn)closeBtn.onclick=close;if(input)input.addEventListener('input',render);markModal.addEventListener('click',e=>{if(e.target===markModal)close()});\n const support=document.getElementById('supportGuide');if(support)support.onclick=()=>alert('☕ Protótipo: aqui abrirá a tela discreta de apoio ao Guia.');\n const lyrics=document.getElementById('hdLyrics');if(lyrics)lyrics.onclick=()=>alert('📖 Protótipo: aqui será aberta a letra do hino quando houver conteúdo autorizado.');\n})();\n</script>\n</body></html>
+
+<!-- ===== PROTÓTIPO v2.0: MENU COMPACTO / MARCAR / APOIAR / LETRA ===== -->
+<style id="v2-prototype-style">
+  /* Barra principal mais compacta */
+  .top-actions, .toolbar, .actions, .main-actions { gap:8px !important; }
+  #v2QuickBar{
+    display:flex; gap:7px; align-items:center; justify-content:center;
+    flex-wrap:nowrap; max-width:760px; margin:10px auto 4px; padding:0 12px;
+  }
+  #v2QuickBar button{
+    border:0; border-radius:12px; min-height:42px; padding:9px 13px;
+    background:#2b3741; color:#fff; font:700 .88rem Arial,sans-serif;
+    white-space:nowrap; box-shadow:none;
+  }
+  #v2QuickBar .v2-support{padding-inline:11px;background:#394650;color:#f5ead0}
+  #v2PersonalBar{
+    max-width:760px;margin:12px auto 16px;padding:0 12px;
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  }
+  #v2PersonalBar button{
+    min-height:48px;border:1px solid #d8c9a8;border-radius:13px;
+    background:#fffdf8;color:#293744;font:700 .84rem Arial,sans-serif;padding:8px 7px;
+  }
+  #v2PersonalBar .v2-badge{
+    display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;
+    margin-left:3px;border-radius:99px;background:#b8892c;color:#fff;font-size:.76rem;
+  }
+  .v2Overlay{
+    display:none;position:fixed;inset:0;z-index:99999;background:rgba(22,31,39,.68);
+    padding:58px 12px 22px;overflow:auto;align-items:flex-start;justify-content:center;
+  }
+  .v2Overlay.show{display:flex}
+  .v2Panel{
+    width:min(520px,100%);background:#fbf8ef;border:1.5px solid #c79a3a;
+    border-radius:19px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.28);
+  }
+  .v2Head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:15px 16px;background:#e6ebee;border-bottom:1px solid #d6c7a8;color:#263641;
+  }
+  .v2Head h3{margin:0;font:700 1.08rem Arial,sans-serif}
+  .v2Close{border:0;background:transparent;color:#263641;font-size:1.65rem;line-height:1}
+  .v2Body{padding:17px}
+  .v2Label{display:block;margin-bottom:6px;color:#686158;font:700 .78rem Arial,sans-serif}
+  .v2Input{
+    width:100%;padding:13px 14px;border:1px solid #bdb19c;border-radius:11px;
+    background:#fff;font-size:16px;outline:none;
+  }
+  #v2MarkResults{display:grid;gap:8px;margin-top:11px;max-height:300px;overflow:auto}
+  .v2Result{
+    width:100%;text-align:left;border:1px solid #ded4c2;border-radius:12px;background:#fff;
+    padding:12px;color:#2d2b27;
+  }
+  .v2Result strong{color:#9b7228}.v2Result small{display:block;margin-top:4px;color:#6b665f}
+  .v2Toast{display:none;margin-top:12px;padding:12px;border-radius:11px;background:#eef2e9;
+    border:1px solid #cbd3c1;font: .9rem Arial,sans-serif;color:#344330}
+  .v2Toast.show{display:block}
+  .v2MiniActions{display:flex;gap:7px;margin-top:9px}
+  .v2MiniActions button,.v2Primary{
+    border:1px solid #d5c6a5;border-radius:10px;background:#fff;padding:10px;
+    color:#71551f;font-weight:700;flex:1
+  }
+  .v2Primary{width:100%;background:#2b3741;color:#fff;border-color:#2b3741;margin-top:10px}
+  .v2CoffeeIntro{text-align:center;font: .94rem/1.45 Arial,sans-serif;color:#4d4a45;margin:2px 5px 15px}
+  .v2CoffeeIcon{text-align:center;font-size:3.4rem;margin:4px 0 8px}
+  .v2CoffeeList{display:grid;gap:9px}
+  .v2Coffee{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    border:1px solid #ddd4c5;border-radius:14px;background:#fff;padding:13px 14px;
+  }
+  .v2Coffee b{display:block;color:#2e2d2a}.v2Coffee small{color:#777068}
+  .v2Coffee button{border:0;border-radius:999px;background:#5d6972;color:#fff;padding:10px 14px;font-weight:700}
+  .v2Pix{
+    display:none;margin-top:12px;padding:12px;border:1px dashed #b99a5d;border-radius:12px;
+    background:#fffdf7;text-align:center;font: .88rem Arial,sans-serif;color:#514b43
+  }
+  .v2Pix.show{display:block}
+  .v2LetterTitle{text-align:center;color:#263641;margin:2px 0 3px}
+  .v2LetterSub{text-align:center;color:#9b7228;margin:0 0 13px;font-weight:700}
+  .v2FontCtl{display:flex;justify-content:center;gap:7px;margin-bottom:13px}
+  .v2FontCtl button{border:1px solid #d6c7a8;background:#fff;border-radius:9px;padding:8px 13px;font-weight:700}
+  #v2LetterText{background:#fff;border:1px solid #ded5c5;border-radius:13px;padding:17px;
+    font:1rem/1.65 Georgia,serif;color:#34312d}
+  .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
+  @media(min-width:850px){
+    #v2QuickBar{justify-content:flex-start}
+    #v2QuickBar button{min-height:38px;padding:8px 12px;font-size:.82rem}
+    #v2PersonalBar{grid-template-columns:repeat(3,auto);justify-content:flex-start}
+    #v2PersonalBar button{min-width:145px;min-height:44px}
+  }
+  @media(max-width:390px){
+    #v2QuickBar{gap:5px}
+    #v2QuickBar button{padding:9px 8px;font-size:.78rem}
+    #v2PersonalBar{gap:6px}
+    #v2PersonalBar button{font-size:.75rem;padding:7px 4px}
+  }
+</style>
+
+<script id="v2-prototype-script">
+(function(){
+  function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function uniqueHymns(){
+    const seen=new Set(), out=[];
+    if(typeof DATA==='undefined') return out;
+    Object.values(DATA).flat().forEach(h=>{
+      const key=String(h.num);
+      if(!seen.has(key)){seen.add(key);out.push(h);}
+    });
+    return out;
+  }
+  function callCount(){
+    try{return HYMN_STORE.calls().filter(x=>x.type!=='note').length}catch(e){return 0}
+  }
+  function favCount(){
+    try{return HYMN_STORE.favs().length}catch(e){return 0}
+  }
+  function refresh(){
+    const a=document.getElementById('v2FavCount'),b=document.getElementById('v2CallCount');
+    if(a)a.textContent=favCount(); if(b)b.textContent=callCount();
+  }
+  function close(id){document.getElementById(id)?.classList.remove('show')}
+  window.v2Close=close;
+
+  function mount(){
+    if(document.getElementById('v2QuickBar')) return;
+    const anchor = document.querySelector('main') || document.body;
+    const q=document.createElement('div');
+    q.id='v2QuickBar';
+    q.innerHTML='<button type="button" id="v2Search">🔎 Pesquisar</button><button type="button" id="v2Share">↗ Compartilhar</button><button type="button" class="v2-support" id="v2Support">☕ Apoiar</button>';
+    const p=document.createElement('div');
+    p.id='v2PersonalBar';
+    p.innerHTML='<button type="button" id="v2Fav">★ Favoritos <span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls">✓ Chamados <span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
+    anchor.insertAdjacentElement('afterbegin',p);
+    anchor.insertAdjacentElement('afterbegin',q);
+
+    // Hide only the old top action row / personal shortcuts where detectable.
+    const candidates=[...document.querySelectorAll('button,a')];
+    candidates.forEach(el=>{
+      const t=(el.textContent||'').trim().toLowerCase();
+      if((t==='índice'||t.includes('pesquisar hinos')||t==='↗ compartilhar'||t==='compartilhar') && !el.closest('#v2QuickBar')){
+        const parent=el.parentElement;
+        if(parent && parent.children.length<=4) parent.style.display='none';
+      }
+    });
+    // Old favorite/called large shortcuts.
+    candidates.forEach(el=>{
+      const t=(el.textContent||'').trim().toLowerCase();
+      if((t.includes('favoritos')||t.includes('hinos chamados')) && !el.closest('#v2PersonalBar')){
+        const parent=el.parentElement;
+        if(parent && parent.children.length<=3) parent.style.display='none';
+      }
+    });
+
+    document.getElementById('v2Search').onclick=()=>{
+      const old=[...document.querySelectorAll('button,a')].find(x=>/pesquisar hinos/i.test(x.textContent||'') && !x.closest('#v2QuickBar'));
+      if(old) old.click(); else document.querySelector('#searchInput,input[type="search"]')?.focus();
+    };
+    document.getElementById('v2Share').onclick=()=>{
+      const old=[...document.querySelectorAll('button,a')].find(x=>/compartilhar/i.test(x.textContent||'') && !x.closest('#v2QuickBar'));
+      if(old) old.click(); else if(navigator.share) navigator.share({title:document.title,url:location.href});
+    };
+    document.getElementById('v2Support').onclick=()=>document.getElementById('v2SupportOverlay').classList.add('show');
+    document.getElementById('v2Mark').onclick=()=>{document.getElementById('v2MarkOverlay').classList.add('show');setTimeout(()=>document.getElementById('v2MarkInput').focus(),80)};
+    document.getElementById('v2Fav').onclick=()=>{try{openPersonal('favorites')}catch(e){}};
+    document.getElementById('v2Calls').onclick=()=>{try{openPersonal('calls')}catch(e){}};
+    refresh();
+  }
+
+  function overlays(){
+    document.body.insertAdjacentHTML('beforeend',`
+    <div class="v2Overlay" id="v2MarkOverlay"><div class="v2Panel">
+      <div class="v2Head"><h3>✓ Marcar hino chamado</h3><button class="v2Close" onclick="v2Close('v2MarkOverlay')">×</button></div>
+      <div class="v2Body"><label class="v2Label">Número ou título</label>
+        <input id="v2MarkInput" class="v2Input" placeholder="Ex.: 45 ou Quanto nos amaste" autocomplete="off">
+        <div id="v2MarkResults"></div><div class="v2Toast" id="v2MarkToast"></div>
+      </div></div></div>
+    <div class="v2Overlay" id="v2SupportOverlay"><div class="v2Panel">
+      <div class="v2Head"><h3>☕ Apoiar o Guia</h3><button class="v2Close" onclick="v2Close('v2SupportOverlay')">×</button></div>
+      <div class="v2Body"><div class="v2CoffeeIcon">☕</div>
+        <p class="v2CoffeeIntro">Apoie o desenvolvimento contínuo do Guia com uma contribuição voluntária. O apoio ajuda a manter e aprimorar o projeto.</p>
+        <div class="v2CoffeeList">
+          <div class="v2Coffee"><span><b>Expresso</b><small>R$ 5,00</small></span><button onclick="v2ChoosePix('Expresso','5,00')">Apoiar</button></div>
+          <div class="v2Coffee"><span><b>Cappuccino</b><small>R$ 10,00</small></span><button onclick="v2ChoosePix('Cappuccino','10,00')">Apoiar</button></div>
+          <div class="v2Coffee"><span><b>Café Premium</b><small>R$ 20,00</small></span><button onclick="v2ChoosePix('Café Premium','20,00')">Apoiar</button></div>
+        </div>
+        <div class="v2Pix" id="v2PixBox"></div>
+      </div></div></div>
+    <div class="v2Overlay" id="v2LetterOverlay"><div class="v2Panel">
+      <div class="v2Head"><h3>📖 Letra do hino</h3><button class="v2Close" onclick="v2Close('v2LetterOverlay')">×</button></div>
+      <div class="v2Body"><h3 class="v2LetterTitle" id="v2LetterNum"></h3><p class="v2LetterSub" id="v2LetterTitle"></p>
+        <div class="v2FontCtl"><button onclick="v2Font(-1)">A−</button><button onclick="v2Font(1)">A+</button></div>
+        <div id="v2LetterText"><p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p></div>
+      </div></div></div>`);
+    document.querySelectorAll('.v2Overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show')}));
+  }
+
+  function pixField(id,value){value=String(value);return id+String(value.length).padStart(2,'0')+value}
+  function crc16(str){
+    let crc=0xFFFF;
+    for(let i=0;i<str.length;i++){
+      crc^=str.charCodeAt(i)<<8;
+      for(let j=0;j<8;j++) crc=(crc&0x8000)?((crc<<1)^0x1021):(crc<<1);
+      crc&=0xFFFF;
+    }
+    return crc.toString(16).toUpperCase().padStart(4,'0');
+  }
+  function makePixPayload(amount){
+    const key='dougcamposandrade@gmail.com';
+    const merchant='DOUGLAS CAMPOS ANDRADE'.slice(0,25);
+    const city='ITAPECERICA DA SERRA'.slice(0,15);
+    const gui=pixField('00','BR.GOV.BCB.PIX')+pixField('01',key);
+    const add=pixField('05','***');
+    let p=pixField('00','01')+pixField('26',gui)+pixField('52','0000')+pixField('53','986')+
+      pixField('54',Number(amount).toFixed(2))+pixField('58','BR')+pixField('59',merchant)+
+      pixField('60',city)+pixField('62',add)+'6304';
+    return p+crc16(p);
+  }
+  window.v2ChoosePix=(name,value)=>{
+    const amount=parseFloat(String(value).replace(',','.'));
+    const payload=makePixPayload(amount);
+    const box=document.getElementById('v2PixBox');box.classList.add('show');
+    box.innerHTML='<b>'+esc(name)+' — R$ '+esc(value)+'</b><br><br>'+
+      '<div style="font-weight:700;color:#263641">PIX Copia e Cola</div>'+
+      '<textarea id="v2PixCode" readonly style="width:100%;height:88px;margin:8px 0;padding:9px;border:1px solid #d8c9a8;border-radius:9px;font-size:.72rem;resize:none">'+esc(payload)+'</textarea>'+
+      '<button type="button" id="v2CopyPix" class="v2Primary">📋 Copiar código PIX</button>'+
+      '<button type="button" id="v2ShowKey" style="border:0;background:transparent;color:#765b28;font-weight:700;margin-top:9px">Ver chave PIX</button>'+
+      '<div id="v2KeyArea" style="display:none;margin-top:7px;word-break:break-all"><small>Chave PIX</small><br><b>dougcamposandrade@gmail.com</b><br><small>Douglas Campos Andrade · Itapecerica da Serra/SP</small></div>'+
+      '<p style="margin:10px 0 0;font-size:.76rem;color:#746e66">O pagamento é realizado no aplicativo do seu banco. O Guia não recebe dados bancários nem confirma o pagamento.</p>';
+    document.getElementById('v2CopyPix').onclick=async()=>{
+      try{await navigator.clipboard.writeText(payload);document.getElementById('v2CopyPix').textContent='✓ Código copiado'}
+      catch(e){document.getElementById('v2PixCode').select()}
+    };
+    document.getElementById('v2ShowKey').onclick=()=>{
+      const a=document.getElementById('v2KeyArea');a.style.display=a.style.display==='none'?'block':'none';
+    };
+  };
+  let letterSize=1;
+  window.v2Font=d=>{letterSize=Math.max(.8,Math.min(1.7,letterSize+d*.1));document.getElementById('v2LetterText').style.fontSize=letterSize+'rem'};
+  window.v2OpenLetter=h=>{
+    document.getElementById('v2LetterNum').textContent='Hino '+h.num;
+    document.getElementById('v2LetterTitle').textContent=h.titulo||'';
+    document.getElementById('v2LetterOverlay').classList.add('show');
+  };
+
+  function setupMark(){
+    const input=document.getElementById('v2MarkInput'), results=document.getElementById('v2MarkResults'), toast=document.getElementById('v2MarkToast');
+    input.addEventListener('input',()=>{
+      const q=input.value.trim().toLowerCase(); toast.classList.remove('show');
+      if(!q){results.innerHTML='';return}
+      const list=uniqueHymns().filter(h=>String(h.num)===q || String(h.titulo||'').toLowerCase().includes(q)).slice(0,12);
+      results.innerHTML=list.length?list.map((h,i)=>`<button class="v2Result" data-i="${i}"><strong>${esc(h.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></button>`).join(''):'<div class="v2Result">Nenhum hino encontrado.</div>';
+      results.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{
+        const h=list[i];
+        try{
+          HYMN_STORE.addCall(h,'');
+          if(typeof refreshPersonalUI==='function')refreshPersonalUI();
+          if(typeof updateHymnActionButtons==='function')updateHymnActionButtons(h);
+          refresh();
+          results.innerHTML='';input.value='';
+          toast.classList.add('show');
+          toast.innerHTML='<b>✓ Hino '+esc(h.num)+' registrado</b><div class="v2MiniActions"><button id="v2ObsNow">▤ Adicionar observação</button><button id="v2UndoNow">↶ Desfazer</button></div>';
+          document.getElementById('v2ObsNow').onclick=()=>{close('v2MarkOverlay');try{openHymnDetail(h);setTimeout(()=>document.getElementById('hdObserve')?.click(),100)}catch(e){}};
+          document.getElementById('v2UndoNow').onclick=()=>{try{HYMN_STORE.undoLastCall(h.num);refresh();if(typeof refreshPersonalUI==='function')refreshPersonalUI();toast.innerHTML='<b>Registro desfeito.</b>'}catch(e){}};
+        }catch(e){toast.classList.add('show');toast.textContent='Não foi possível registrar neste protótipo.'}
+      });
+    });
+  }
+
+  // Add Letra button whenever an existing hymn modal is opened.
+  function installLetterHook(){
+    const old=window.openHymnDetail;
+    if(typeof old!=='function') return;
+    window.openHymnDetail=function(h){
+      const r=old.apply(this,arguments);
+      setTimeout(()=>{
+        const modal=document.querySelector('#hymnDetail,.hymn-detail,.detail-modal') || document.body;
+        let b=document.getElementById('v2LetterBtn');
+        if(!b){
+          b=document.createElement('button');b.id='v2LetterBtn';b.type='button';
+          b.textContent='📖 Letra';b.className='v2Primary';
+          const target=document.getElementById('hdObserve')?.parentElement || modal;
+          target.appendChild(b);
+        }
+        b.onclick=()=>v2OpenLetter(h);
+      },0);
+      return r;
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{overlays();mount();setupMark();installLetterHook();});
+})();
+</script>
+
+</body></html>
