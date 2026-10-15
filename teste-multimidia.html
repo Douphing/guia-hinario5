@@ -617,7 +617,7 @@ function openCategory(cat,targetNum=null){
       if(hymn){
         hymn.scrollIntoView({behavior:"smooth",block:"center"});
         hymn.classList.add("hino-destaque");
-        setTimeout(()=>hymn.classList.remove("hino-destaque"),2800);
+        setTimeout(()=>hymn.classList.remove("hino-destaque"),5200);
       }else target.scrollIntoView({behavior:"smooth",block:"start"});
     },80);
   }else target.scrollIntoView({behavior:"smooth",block:"start"});
@@ -1529,64 +1529,92 @@ function loadHymnMedia(kind,media,button){
 </style>
 
 
+
+
+
+
+
+
 <style>
-/* V12 — contexto da navegação */
-.context-heading{
- margin:10px 0 14px;
- padding:10px 14px;
- border-left:4px solid #b6842c;
- border-radius:0 12px 12px 0;
- background:linear-gradient(90deg,rgba(224,235,240,.78),rgba(253,251,247,.55));
- color:#102a43;
- font-family:Georgia,serif;
- font-size:clamp(21px,5vw,29px);
- font-weight:700;
+/* V13 — pesquisa orienta o toque + título da ocasião fixo */
+
+/* Ao navegar por uma ocasião, o cabeçalho real da seção fica preso abaixo da barra principal. */
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
+ position:sticky;
+ top:72px;
+ z-index:9;
+ margin:0 -4px 12px;
+ padding:9px 8px 8px;
+ background:rgba(253,251,247,.96);
+ backdrop-filter:blur(8px);
+ -webkit-backdrop-filter:blur(8px);
+ border-bottom:2px solid #b78a34;
+ box-shadow:0 5px 12px rgba(30,30,20,.07);
 }
-.context-heading small{
- display:block;margin-top:2px;
- color:#84652d;font:700 11px/1.2 Arial,sans-serif;
- letter-spacing:.08em;text-transform:uppercase;
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2{
+ color:#102a43;
+}
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2:before{
+ content:"Ocasião · ";
+ color:#9b7429;
+ font:800 .48em/1 Arial,sans-serif;
+ text-transform:uppercase;
+ letter-spacing:.06em;
+ vertical-align:middle;
+}
+
+/* Resultado vindo da pesquisa: destaque forte, mas elegante, e convite explícito ao toque. */
+.card.hino-destaque{
+ position:relative;
+ border:2px solid #b78a34!important;
+ background:linear-gradient(135deg,#fffdf6,#fff7e7)!important;
+ box-shadow:
+   0 0 0 4px rgba(183,138,52,.16),
+   0 9px 24px rgba(93,66,18,.18)!important;
+ transform:scale(1.012);
+ transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
+ padding-bottom:42px!important;
+}
+.card.hino-destaque:after{
+ content:"Toque para abrir os detalhes";
+ position:absolute;
+ left:76px;
+ bottom:10px;
+ display:inline-flex;
+ align-items:center;
+ min-height:24px;
+ padding:4px 10px;
+ border-radius:999px;
+ background:#102a43;
+ color:#fff;
+ font:700 11px/1.15 Arial,sans-serif;
+ letter-spacing:.01em;
+ box-shadow:0 3px 8px rgba(15,42,67,.16);
+}
+.card.hino-destaque:before{
+ content:"↗";
+ position:absolute;
+ left:57px;
+ bottom:14px;
+ color:#b78a34;
+ font:900 16px/1 Arial,sans-serif;
+}
+
+/* Mantém o título fixo legível em celulares pequenos. */
+@media(max-width:600px){
+ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
+   top:72px;
+   padding:8px 6px 7px;
+ }
+ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2{
+   font-size:1.55rem;
+ }
+ .card.hino-destaque:after{
+   left:62px;
+   font-size:10.5px;
+ }
+ .card.hino-destaque:before{left:45px}
 }
 </style>
-
-
-<script>
-(function(){
-  function ensureContextHeading(text, subtitle){
-    if(!text) return;
-    let el=document.getElementById('listContextHeading');
-    if(!el){
-      el=document.createElement('div');
-      el.id='listContextHeading';
-      el.className='context-heading';
-      const anchor=document.querySelector('main, .container, #app, body');
-      const firstList=document.querySelector('.hymn-list, .lista-hinos, [data-hymn-list], .occasion-section, section');
-      if(firstList && firstList.parentNode) firstList.parentNode.insertBefore(el,firstList);
-      else if(anchor) anchor.insertBefore(el,anchor.firstChild);
-    }
-    el.innerHTML=(subtitle?'<small>'+subtitle+'</small>':'')+text;
-  }
-  window.setHymnListContext=ensureContextHeading;
-
-  /* Ao clicar em uma ocasião/categoria, conserva o nome como título da lista.
-     Usa texto/atributos existentes, sem alterar a estrutura de dados. */
-  document.addEventListener('click',function(ev){
-    const t=ev.target.closest('[data-occasion],[data-ocasiao],.occasion-link,.occasion-card,.category-card,.category-link');
-    if(!t) return;
-    const name=t.dataset.occasion||t.dataset.ocasiao||
-      (t.querySelector('[data-title],h2,h3,strong')?.textContent)||t.textContent;
-    const clean=(name||'').replace(/\s+/g,' ').trim();
-    if(clean) setTimeout(()=>ensureContextHeading(clean,'Ocasião'),40);
-  });
-
-  /* Índice mantém o comportamento de ir para a lista; identifica esse contexto quando possível. */
-  document.addEventListener('click',function(ev){
-    const t=ev.target.closest('#indexBtn,.index-btn,[data-action="index"],a[href*="indice"],button');
-    if(!t) return;
-    const tx=(t.textContent||'').trim().toLowerCase();
-    if(tx==='índice'||tx==='indice') setTimeout(()=>ensureContextHeading('Índice de hinos','Navegação'),40);
-  });
-})();
-</script>
 
 </body></html>
