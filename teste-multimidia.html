@@ -2335,7 +2335,7 @@ function downloadCallsCsv(){
     try{return HYMN_STORE.calls().filter(x=>x.type!=='note').length}catch(e){return 0}
   }
   function favCount(){
-    try{return HYMN_STORE.favs().length}catch(e){return 0}
+    try{return Object.keys(HYMN_STORE.read(HYMN_STORE.favKey,{})).length}catch(e){return 0}
   }
   function refresh(){
     const a=document.getElementById('v2FavCount'),b=document.getElementById('v2CallCount');
