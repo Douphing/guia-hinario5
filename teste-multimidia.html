@@ -2349,7 +2349,7 @@ function downloadCallsCsv(){
     const anchor = document.querySelector('main') || document.body;
     const q=document.createElement('div');
     q.id='v2QuickBar';
-    q.innerHTML='<button type="button" id="v2Search">🔎 Pesquisar</button><button type="button" id="v2Share">↗ Compartilhar</button><button type="button" class="v2-support" id="v2Support">☕ Apoiar</button>';
+    q.innerHTML='<button type="button" id="v2BackIndex">← Índice</button><button type="button" id="v2Search">🔎 Pesquisar</button><button type="button" id="v2Share">↗ Compartilhar</button><button type="button" class="v2-support" id="v2Support">☕ Apoiar</button>';
     const p=document.createElement('div');
     p.id='v2PersonalBar';
     p.innerHTML='<button type="button" id="v2Fav">★ Favoritos <span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls">✓ Chamados <span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
@@ -2374,6 +2374,7 @@ function downloadCallsCsv(){
       }
     });
 
+    document.getElementById('v2BackIndex').onclick=()=>{try{showIndexScreen()}catch(e){location.hash='#indice'}};
     document.getElementById('v2Search').onclick=()=>{
       const old=[...document.querySelectorAll('button,a')].find(x=>/pesquisar hinos/i.test(x.textContent||'') && !x.closest('#v2QuickBar'));
       if(old) old.click(); else document.querySelector('#searchInput,input[type="search"]')?.focus();
@@ -2411,7 +2412,6 @@ function downloadCallsCsv(){
     <div class="v2Overlay" id="v2LetterOverlay"><div class="v2Panel">
       <div class="v2Head"><h3>📖 Letra do hino</h3><button class="v2Close" onclick="v2Close('v2LetterOverlay')">×</button></div>
       <div class="v2Body"><h3 class="v2LetterTitle" id="v2LetterNum"></h3><p class="v2LetterSub" id="v2LetterTitle"></p>
-        <div class="v2FontCtl"><button onclick="v2Font(-1)">A−</button><button onclick="v2Font(1)">A+</button></div>
         <div id="v2LetterText"><p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p></div>
       </div></div></div>`);
     document.querySelectorAll('.v2Overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show')}));
@@ -2501,8 +2501,9 @@ function downloadCallsCsv(){
         if(!b){
           b=document.createElement('button');b.id='v2LetterBtn';b.type='button';
           b.textContent='📖 Letra';b.className='v2Primary';
-          const target=document.getElementById('hdObserve')?.parentElement || modal;
-          target.appendChild(b);
+          const actions=document.getElementById('hdObserve')?.parentElement;
+          if(actions && actions.parentElement) actions.insertAdjacentElement('afterend',b);
+          else modal.appendChild(b);
         }
         b.onclick=()=>v2OpenLetter(h);
       },0);
@@ -2513,5 +2514,56 @@ function downloadCallsCsv(){
   document.addEventListener('DOMContentLoaded',()=>{overlays();mount();setupMark();installLetterHook();});
 })();
 </script>
+
+
+<style id="v2-correcoes-anexos">
+/* Navegação contextual compacta */
+#v2QuickBar{
+  position:sticky!important;
+  top:0!important;
+  z-index:80!important;
+  max-width:none!important;
+  margin:0 -12px 8px!important;
+  padding:8px 12px!important;
+  background:rgba(239,235,224,.97)!important;
+  border-bottom:1px solid #d8c9a8!important;
+  backdrop-filter:blur(8px);
+  justify-content:center!important;
+}
+body.index-mode #v2BackIndex{display:none!important}
+body:not(.index-mode) #v2BackIndex{display:inline-flex!important}
+body:not(.index-mode) #v2PersonalBar{display:none!important}
+
+/* Nas categorias o título encosta na barra, sem a antiga área vazia. */
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
+  top:55px!important;
+  margin-top:0!important;
+}
+body:not(.index-mode) .section-divider{display:none!important}
+
+/* Letra é uma ação secundária, centralizada e fora da grade Chamado/Observação. */
+#hymnDetail #v2LetterBtn{
+  display:block!important;
+  width:auto!important;
+  min-width:118px!important;
+  max-width:190px!important;
+  margin:0 auto 12px!important;
+  padding:9px 18px!important;
+  border:1px solid #d5c6a5!important;
+  border-radius:11px!important;
+  background:#fffaf0!important;
+  color:#71551f!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+@media(max-width:520px){
+  #v2QuickBar{gap:5px!important;padding:7px 8px!important;margin-left:-12px!important;margin-right:-12px!important}
+  #v2QuickBar button{padding:8px 7px!important;font-size:.75rem!important;min-height:38px!important}
+  body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{top:52px!important}
+}
+@media(max-width:360px){
+  #v2QuickBar button{font-size:.7rem!important;padding-inline:5px!important}
+}
+</style>
 
 </body></html>
