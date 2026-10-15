@@ -1073,13 +1073,17 @@ window.addEventListener('appinstalled', function () {
 
 <div id="hymnDetail" role="dialog" aria-modal="true" aria-labelledby="hdTitle">
  <div class="hd-card">
-  <div class="hd-head">
+  <header class="hd-hero">
+   <div class="hd-staff hd-staff-left" aria-hidden="true"><span class="hd-clef">𝄞</span></div>
+   <div class="hd-staff hd-staff-right" aria-hidden="true"><span>♪</span><span>♫</span><span>♪</span></div>
    <button class="hd-close" id="hdClose" aria-label="Fechar">×</button>
    <div class="hd-num" id="hdNum"></div>
    <h2 id="hdTitle"></h2>
-  </div>
+   <div class="hd-swoosh" aria-hidden="true"><i></i><i></i></div>
+  </header>
   <div class="hd-meta" id="hdMeta"></div>
-  <div class="hd-actions"><button type="button" id="hdFav">☆ Favoritar</button><button type="button" id="hdCalled">✓ Marcar como chamado</button></div>
+  <div class="hd-actions"><button type="button" id="hdFav"><span class="hd-solid-star">★</span> Favoritar</button><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar como chamado</button></div>
+  <div class="hd-divider" aria-hidden="true"><span>𝄞</span></div>
   <div id="hdMediaArea"></div>
  </div>
 </div>
@@ -1095,10 +1099,10 @@ function openHymnDetail(h,cat){
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
 
- const iconBook='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 24c10-4 19-3 28 4v29c-9-6-18-7-28-4V24Zm56 0c-10-4-19-3-28 4v29c9-6 18-7 28-4V24Z" fill="currentColor"/><path d="M32 28v29" stroke="#a87518" stroke-width="2"/></svg>';
- const iconHands='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M29 5c-5 5-8 12-8 20v8l-5-7c-3-4-8-1-6 5l8 17c3 6 8 10 14 11V23c0-8-1-14-3-18Zm6 0c5 5 8 12 8 20v8l5-7c3-4 8-1 6 5l-8 17c-3 6-8 10-14 11V23c0-8 1-14 3-18Z" fill="currentColor"/></svg>';
- const iconPrayerWord='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M5 39c9-3 18-2 27 4v16c-9-5-18-6-27-3V39Zm54 0c-9-3-18-2-27 4v16c9-5 18-6 27-3V39Z" fill="currentColor"/><path d="M29 4c-5 5-7 11-7 18v10l-5-7c-3-4-7-1-6 4l6 13h8l7 5V22c0-8-1-14-3-18Zm6 0c5 5 7 11 7 18v10l5-7c3-4 7-1 6 4l-6 13h-8l-7 5V22c0-8 1-14 3-18Z" fill="currentColor"/><path d="M32 43v16" stroke="#a87518" stroke-width="2"/></svg>';
- const iconPeople='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="18" r="9" fill="currentColor"/><circle cx="13" cy="27" r="7" fill="currentColor"/><circle cx="51" cy="27" r="7" fill="currentColor"/><path d="M20 55V45c0-10 5-16 12-16s12 6 12 16v10H20ZM3 55v-8c0-9 4-14 10-14 4 0 7 2 9 5-3 4-4 9-4 15v2H3Zm58 0H46v-2c0-6-1-11-4-15 2-3 5-5 9-5 6 0 10 5 10 14v8Z" fill="currentColor"/><path d="M24 55c3-2 5-3 8-3s5 1 8 3c-3 0-5 1-8 3-3-2-5-3-8-3Z" fill="currentColor"/></svg>';
+ const iconBook='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M5 35c11-4 21-3 31 4v27c-10-6-20-7-31-4V35Zm62 0c-11-4-21-3-31 4v27c10-6 20-7 31-4V35Z" fill="currentColor"/><path d="M36 39v27" stroke="#9a6816" stroke-width="2.2"/></svg>';
+ const iconHands='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M31 5c-6 6-9 13-9 21v9l-6-8c-3-4-8-1-6 5l9 18c3 6 9 10 17 11V24c0-8-2-15-5-19Zm10 0c6 6 9 13 9 21v9l6-8c3-4 8-1 6 5l-9 18c-3 6-9 10-17 11V24c0-8 2-15 5-19Z" fill="currentColor"/></svg>';
+ const iconPrayerWord='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M7 44c10-4 20-3 29 3v19c-9-5-19-6-29-3V44Zm58 0c-10-4-20-3-29 3v19c9-5 19-6 29-3V44Z" fill="currentColor"/><path d="M31 4c-5 5-8 12-8 20v10l-6-8c-3-4-8-1-6 5l7 14 10-1 8 5V23c0-8-2-15-5-19Zm10 0c5 5 8 12 8 20v10l6-8c3-4 8-1 6 5l-7 14-10-1-8 5V23c0-8 2-15 5-19Z" fill="currentColor"/><path d="M36 47v19" stroke="#9a6816" stroke-width="2.2"/><path d="M8 29l-5-1m9-8-4-4m52 13 5-1m-9-8 4-4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+ const iconPeople='<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="20" r="10" fill="currentColor"/><circle cx="15" cy="29" r="8" fill="currentColor"/><circle cx="57" cy="29" r="8" fill="currentColor"/><path d="M22 63V49c0-11 6-18 14-18s14 7 14 18v14H22ZM3 63V51c0-10 5-16 12-16 5 0 9 3 11 7-3 5-5 11-5 19v2H3Zm66 0H51v-2c0-8-2-14-5-19 2-4 6-7 11-7 7 0 12 6 12 16v12Z" fill="currentColor"/><path d="M27 63c3-2 6-3 9-3s6 1 9 3c-3 0-6 1-9 4-3-3-6-4-9-4Z" fill="currentColor"/></svg>';
  const occNorm=occ.toLowerCase();
  let occIcon=iconBook;
  if(occNorm.includes('oração')&&occNorm.includes('palavra')) occIcon=iconPrayerWord;
@@ -1112,7 +1116,7 @@ function openHymnDetail(h,cat){
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
-   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-media"><button class="hd-play" data-kind="instrumental">♫ Ouvir instrumental</button><button class="hd-play" data-kind="spotify">Spotify</button><button class="hd-play" data-kind="youtube">▶ YouTube</button><button class="hd-play" data-kind="youtubeMusic">♪ YouTube Music</button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
+   area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir Hino</div><div class="hd-media"><button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>Ouvir instrumental</span><b>›</b></button><button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify">●</i><span>Spotify</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube">▶</i><span>YouTube</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic">▶</i><span>YouTube Music</span><b>›</b></button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
    area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
    area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. O teste multimídia está disponível no Hino 45.</div>';
@@ -1158,71 +1162,119 @@ function loadHymnMedia(kind,media,button){
 </script>
 
 
+
+
+
 <style>
-/* V7 — cabeçalho compacto e ícones fiéis às referências */
-#hymnDetail .hd-head{
-  padding:2px 44px 8px 0;
-  text-align:left;
+/* V8 — reprodução de alta fidelidade da referência aprovada */
+#hymnDetail{padding:10px;background:rgba(15,24,31,.72)}
+#hymnDetail .hd-card{
+ width:min(690px,calc(100vw - 20px));max-height:calc(100dvh - 20px);
+ padding:18px 22px 20px;border-radius:24px;
+ background:linear-gradient(135deg,#fffdf8 0%,#fbf4e6 100%);
+ border:1px solid #c99632;box-shadow:0 22px 70px rgba(0,0,0,.42);
+ overflow-x:hidden;overflow-y:auto
 }
-#hymnDetail .hd-num{
-  justify-content:flex-start;
-  gap:9px;
-  margin:0;
-  line-height:1;
-}
-#hymnDetail .hd-num>span:first-child{
-  font-family:Georgia,serif;
-  font-size:16px;
-  letter-spacing:.08em;
-  color:#8f651f;
-}
-#hymnDetail .hd-num .hd-number{
-  font-size:38px;
-  color:#b47f1f;
-}
-#hymnDetail h2{
-  text-align:left;
-  font-size:25px;
-  margin:3px 0 0;
-  line-height:1.02;
-}
-#hymnDetail .hd-close{top:0;right:0}
-#hymnDetail .hd-meta{margin-top:4px}
-#hymnDetail .hd-meta-icon svg{
-  width:52px;
-  height:52px;
-  color:#fff7df;
-  filter:drop-shadow(0 2px 1px rgba(75,45,0,.28));
-}
-#hymnDetail .hd-meta-row{
-  grid-template-columns:78px 1fr;
-}
-#hymnDetail .hd-meta-icon{
-  min-height:74px;
-}
-#hymnDetail .hd-meta-copy{
-  position:relative;
-  padding-left:18px;
-}
-#hymnDetail .hd-meta-copy:before{
-  content:"";
-  position:absolute;
-  left:8px;
-  top:14px;
-  bottom:14px;
-  width:1px;
-  background:rgba(151,103,28,.62);
-}
+#hymnDetail .hd-card:before,#hymnDetail .hd-card:after{display:none}
+#hymnDetail .hd-hero{position:relative;min-height:174px;padding:32px 58px 14px 66px;overflow:hidden}
+#hymnDetail .hd-staff{position:absolute;top:10px;height:82px;width:47%;opacity:.52;pointer-events:none;
+ background:repeating-linear-gradient(to bottom,transparent 0 10px,rgba(184,129,38,.52) 10px 12px)}
+#hymnDetail .hd-staff-left{left:-8px;transform:rotate(-5deg)}
+#hymnDetail .hd-staff-right{right:-8px;transform:rotate(-5deg);display:flex;align-items:center;justify-content:space-around;color:#b98228;font-size:35px;padding-top:20px}
+#hymnDetail .hd-clef{position:absolute;left:12px;top:-15px;font-size:105px;line-height:1;color:#a96f12;text-shadow:1px 2px 0 #e5bd66}
+#hymnDetail .hd-close{position:absolute;right:0;top:0;width:48px;height:48px;background:#f1e6d0!important;border:1px solid #dfc99f!important;color:#0f2941!important;font-size:28px;z-index:3}
+#hymnDetail .hd-num{position:relative;z-index:2;justify-content:flex-start;gap:12px;margin:0;color:#966516;font-family:Georgia,serif}
+#hymnDetail .hd-num>span:first-child{font-size:22px;letter-spacing:.04em;font-weight:900}
+#hymnDetail .hd-num .hd-number{font-size:72px;line-height:.72;color:#b47b17;text-shadow:0 2px 0 #f4d58d,2px 3px 2px rgba(79,48,5,.22)}
+#hymnDetail h2{position:relative;z-index:2;text-align:left;margin:15px 0 0;color:#0f2941;font-family:Georgia,serif;font-size:40px;line-height:.98}
+#hymnDetail .hd-swoosh{position:absolute;right:16%;bottom:5px;width:43%;height:32px}
+#hymnDetail .hd-swoosh i{position:absolute;inset:auto 0 0;border-bottom:4px solid #b67c16;border-radius:0 0 70% 70%;height:20px;transform:rotate(2deg)}
+#hymnDetail .hd-swoosh i+ i{bottom:7px;left:12%;width:82%;border-width:2px}
+
+#hymnDetail .hd-meta{gap:12px;margin:4px 0 13px}
+#hymnDetail .hd-meta-row{grid-template-columns:116px 1fr;min-height:96px;border-radius:20px;background:linear-gradient(90deg,#fffaf0,#f7ecd7);border:1px solid #d9bf8a;box-shadow:0 8px 17px rgba(77,53,19,.17)}
+#hymnDetail .hd-meta-icon{min-height:96px;background:linear-gradient(145deg,#d5a039,#a66d10);border-radius:20px 0 0 20px;color:#fff8df;box-shadow:inset -8px 0 14px rgba(78,44,0,.13)}
+#hymnDetail .hd-meta-icon svg{width:75px;height:75px;filter:drop-shadow(0 2px 1px rgba(66,38,0,.35))}
+#hymnDetail .hd-meta-copy{position:relative;padding:15px 20px 14px 34px}
+#hymnDetail .hd-meta-copy:before{content:"";position:absolute;left:17px;top:20px;bottom:20px;width:1px;background:#9a6a20}
+#hymnDetail .hd-meta-label{font-family:Georgia,serif;color:#79501a;font-size:14px;font-weight:900;letter-spacing:.02em}
+#hymnDetail .hd-meta-value{font-family:Georgia,serif;color:#0f2941;font-size:28px;line-height:1.05}
+
+#hymnDetail .hd-actions{grid-template-columns:1fr 1.18fr;gap:12px;margin:13px 0}
+#hymnDetail .hd-actions button{min-height:52px;border:1.5px solid #b98120!important;border-radius:22px;background:#fffaf0!important;color:#0f2941!important;font-size:15px;box-shadow:none}
+#hymnDetail .hd-solid-star,#hymnDetail .hd-solid-check{color:#69410d;font-size:27px;vertical-align:-2px;margin-right:7px}
+#hymnDetail .hd-divider{display:flex;align-items:center;gap:10px;color:#ad7418;margin:4px 0 2px}
+#hymnDetail .hd-divider:before,#hymnDetail .hd-divider:after{content:"";height:1px;background:#c89d50;flex:1}
+#hymnDetail .hd-divider span{font-size:27px}
+
+#hymnDetail .hd-media-title{justify-content:flex-start;font-family:Georgia,serif;color:#0f2941;font-size:29px;margin:2px 0 10px}
+#hymnDetail .hd-media-title:before,#hymnDetail .hd-media-title:after{display:none}
+#hymnDetail .hd-note{font-size:34px}
+#hymnDetail .hd-media{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#hymnDetail .hd-play{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:18px!important;white-space:nowrap;overflow:hidden}
+#hymnDetail .hd-play b{font-size:26px;font-weight:400;margin-left:auto}
+#hymnDetail .hd-play[data-kind="instrumental"]{grid-column:1/-1;min-height:56px;padding:10px 18px;background:linear-gradient(#c9942f,#9b650d)!important;border-color:#8b5908!important;font-family:Georgia,serif;font-size:19px}
+#hymnDetail .hd-score{font-size:25px}
+#hymnDetail .hd-platform{background:linear-gradient(#102f49,#071d2f)!important;color:white!important;border:1px solid #061727!important;font-size:13px;padding:8px 11px}
+#hymnDetail .brand{display:inline-grid;place-items:center;flex:0 0 31px;width:31px;height:31px;border-radius:50%;font-style:normal;font-size:14px;color:#fff}
+#hymnDetail .brand.spotify{background:#1ed760;color:#082617}
+#hymnDetail .brand.youtube{background:#ff1f22;border-radius:7px}
+#hymnDetail .brand.ytmusic{background:#ff1f22;border:3px solid #fff;outline:2px solid #ff1f22}
+#hymnDetail .hd-slot{margin-top:12px;border-radius:18px}
+#hymnDetail #hdSpotify iframe{height:152px!important;border-radius:18px}
+#hymnDetail #hdYoutube iframe{width:min(100%,520px)!important;border-radius:18px}
+#hymnDetail .hd-links{padding:8px 4px 1px;text-align:left}
+#hymnDetail .hd-links a{font-size:14px;color:#0f2941}
+
 @media(max-width:520px){
-  #hymnDetail .hd-head{padding:1px 40px 6px 2px}
-  #hymnDetail .hd-num>span:first-child{font-size:14px}
-  #hymnDetail .hd-num .hd-number{font-size:34px}
-  #hymnDetail h2{font-size:21px;max-width:90%}
-  #hymnDetail .hd-meta-row{grid-template-columns:68px 1fr}
-  #hymnDetail .hd-meta-icon{min-height:62px}
-  #hymnDetail .hd-meta-icon svg{width:48px;height:48px}
-  #hymnDetail .hd-meta-copy{padding-left:16px}
-  #hymnDetail .hd-meta-copy:before{left:7px;top:11px;bottom:11px}
+ #hymnDetail{padding:5px}
+ #hymnDetail .hd-card{width:100%;max-height:calc(100dvh - 10px);padding:10px 11px 13px;border-radius:18px}
+ #hymnDetail .hd-hero{min-height:126px;padding:24px 42px 8px 47px}
+ #hymnDetail .hd-staff{height:58px}
+ #hymnDetail .hd-clef{font-size:73px;left:8px;top:-9px}
+ #hymnDetail .hd-staff-right{font-size:22px}
+ #hymnDetail .hd-close{width:38px;height:38px;font-size:22px}
+ #hymnDetail .hd-num{gap:7px}
+ #hymnDetail .hd-num>span:first-child{font-size:15px}
+ #hymnDetail .hd-num .hd-number{font-size:49px}
+ #hymnDetail h2{font-size:27px;margin-top:10px;max-width:100%}
+ #hymnDetail .hd-swoosh{height:22px;bottom:1px;width:44%}
+ #hymnDetail .hd-swoosh i{height:13px;border-width:3px}
+ #hymnDetail .hd-meta{gap:8px;margin:4px 0 8px}
+ #hymnDetail .hd-meta-row{grid-template-columns:78px 1fr;min-height:70px;border-radius:15px}
+ #hymnDetail .hd-meta-icon{min-height:70px;border-radius:15px 0 0 15px}
+ #hymnDetail .hd-meta-icon svg{width:57px;height:57px}
+ #hymnDetail .hd-meta-copy{padding:9px 9px 8px 22px}
+ #hymnDetail .hd-meta-copy:before{left:10px;top:13px;bottom:13px}
+ #hymnDetail .hd-meta-label{font-size:10px}
+ #hymnDetail .hd-meta-value{font-size:19px}
+ #hymnDetail .hd-actions{gap:7px;margin:8px 0}
+ #hymnDetail .hd-actions button{min-height:40px;border-radius:15px;font-size:11px;padding:6px 4px}
+ #hymnDetail .hd-solid-star,#hymnDetail .hd-solid-check{font-size:20px;margin-right:3px}
+ #hymnDetail .hd-divider{margin:0}
+ #hymnDetail .hd-divider span{font-size:20px}
+ #hymnDetail .hd-media-title{font-size:23px;margin:0 0 6px}
+ #hymnDetail .hd-note{font-size:26px}
+ #hymnDetail .hd-media{gap:5px}
+ #hymnDetail .hd-play[data-kind="instrumental"]{min-height:43px;font-size:15px;padding:7px 11px}
+ #hymnDetail .hd-platform{min-height:43px;font-size:10px;padding:5px 6px;gap:4px}
+ #hymnDetail .brand{flex-basis:25px;width:25px;height:25px;font-size:11px}
+ #hymnDetail .hd-play b{font-size:20px}
+ #hymnDetail.media-open .hd-hero{min-height:110px;padding-top:16px}
+ #hymnDetail.media-open h2{font-size:23px;margin-top:5px}
+ #hymnDetail.media-open .hd-meta-row{min-height:58px;grid-template-columns:66px 1fr}
+ #hymnDetail.media-open .hd-meta-icon{min-height:58px}
+ #hymnDetail.media-open .hd-meta-icon svg{width:47px;height:47px}
+ #hymnDetail.media-open .hd-actions button{min-height:36px}
+ #hymnDetail.media-open .hd-divider{display:none}
+ #hymnDetail.media-open .hd-media-title{font-size:20px}
+ #hymnDetail.media-open #hdYoutube iframe{width:min(100%,330px)!important}
+ #hymnDetail .hd-links{padding-top:5px}
+}
+@media(max-width:365px){
+ #hymnDetail .hd-platform span{font-size:9px}
+ #hymnDetail .brand{display:none}
+ #hymnDetail .hd-actions{grid-template-columns:1fr 1fr}
 }
 </style>
 
