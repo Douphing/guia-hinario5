@@ -1278,4 +1278,106 @@ function loadHymnMedia(kind,media,button){
 }
 </style>
 
+
+<style>
+/* V9 — correção de escala e legibilidade mobile */
+#hymnDetail{align-items:center;padding:8px;background:rgba(18,26,32,.62)}
+#hymnDetail .hd-card{
+ width:min(600px,calc(100vw - 16px));
+ max-height:calc(100dvh - 16px);
+ padding:12px 14px 14px;
+ overflow-y:auto;overflow-x:hidden;
+ background:#fdfbf7;
+}
+#hymnDetail .hd-hero{
+ min-height:116px;padding:18px 46px 7px 48px;
+ background:linear-gradient(180deg,rgba(255,253,247,.97),rgba(253,248,237,.96));
+ border-radius:14px;
+}
+#hymnDetail .hd-staff{height:52px;opacity:.28}
+#hymnDetail .hd-clef{font-size:67px;top:-7px;left:7px;color:#a9741c}
+#hymnDetail .hd-staff-right{font-size:20px;color:#b58a46}
+#hymnDetail .hd-num{gap:7px}
+#hymnDetail .hd-num>span:first-child{font-size:14px}
+#hymnDetail .hd-num .hd-number{font-size:45px}
+#hymnDetail h2{font-size:25px;margin-top:6px;line-height:1.02;color:#0f2941}
+#hymnDetail .hd-swoosh{bottom:2px;height:18px}
+#hymnDetail .hd-close{width:36px;height:36px;font-size:21px}
+
+#hymnDetail .hd-meta{gap:7px;margin:7px 0}
+#hymnDetail .hd-meta-row{grid-template-columns:66px 1fr;min-height:60px;border-radius:14px}
+#hymnDetail .hd-meta-icon{min-height:60px;border-radius:14px 0 0 14px}
+#hymnDetail .hd-meta-icon svg{width:47px;height:47px}
+#hymnDetail .hd-meta-copy{padding:7px 9px 7px 20px}
+#hymnDetail .hd-meta-copy:before{left:9px;top:11px;bottom:11px}
+#hymnDetail .hd-meta-label{font-size:9px}
+#hymnDetail .hd-meta-value{font-size:17px}
+
+#hymnDetail .hd-actions{gap:7px;margin:7px 0}
+#hymnDetail .hd-actions button{min-height:36px;border-radius:13px;font-size:11px;padding:5px 4px}
+#hymnDetail .hd-solid-star,#hymnDetail .hd-solid-check{font-size:18px;margin-right:3px}
+#hymnDetail .hd-divider{margin:0}
+#hymnDetail .hd-divider span{font-size:18px}
+#hymnDetail .hd-media-title{font-size:21px;margin:0 0 5px}
+#hymnDetail .hd-note{font-size:23px}
+
+#hymnDetail .hd-media{gap:5px}
+#hymnDetail .hd-play{min-height:36px;border-radius:12px!important}
+#hymnDetail .hd-play[data-kind="instrumental"]{min-height:40px;font-size:14px;padding:6px 10px}
+#hymnDetail .hd-score{font-size:20px}
+#hymnDetail .hd-platform{min-height:37px;font-size:9px;padding:4px 6px;gap:3px}
+#hymnDetail .brand{flex-basis:23px;width:23px;height:23px;font-size:10px}
+#hymnDetail .hd-play b{font-size:17px}
+
+#hymnDetail .hd-slot{margin-top:7px}
+#hymnDetail #hdYoutube iframe{
+ width:min(100%,350px)!important;
+ aspect-ratio:16/9!important;height:auto!important;
+ max-height:197px!important;margin:auto;
+}
+#hymnDetail #hdSpotify iframe{height:112px!important}
+#hymnDetail .hd-links{padding:4px 2px 1px;line-height:1.1}
+#hymnDetail .hd-links a{font-size:12px}
+
+/* Quando um player é aberto, compacta o topo para manter player + link dentro da viewport. */
+#hymnDetail.media-open .hd-hero{min-height:92px;padding-top:10px;padding-bottom:3px}
+#hymnDetail.media-open .hd-staff{height:40px}
+#hymnDetail.media-open .hd-clef{font-size:55px}
+#hymnDetail.media-open .hd-num .hd-number{font-size:38px}
+#hymnDetail.media-open h2{font-size:21px;margin-top:2px}
+#hymnDetail.media-open .hd-swoosh{display:none}
+#hymnDetail.media-open .hd-meta{gap:5px;margin:5px 0}
+#hymnDetail.media-open .hd-meta-row{grid-template-columns:58px 1fr;min-height:50px}
+#hymnDetail.media-open .hd-meta-icon{min-height:50px}
+#hymnDetail.media-open .hd-meta-icon svg{width:39px;height:39px}
+#hymnDetail.media-open .hd-meta-copy{padding-top:4px;padding-bottom:4px}
+#hymnDetail.media-open .hd-meta-value{font-size:15px}
+#hymnDetail.media-open .hd-actions{margin:5px 0}
+#hymnDetail.media-open .hd-actions button{min-height:32px}
+#hymnDetail.media-open .hd-divider{display:none}
+#hymnDetail.media-open .hd-media-title{font-size:18px;margin-bottom:3px}
+#hymnDetail.media-open .hd-play[data-kind="instrumental"]{min-height:35px}
+#hymnDetail.media-open .hd-platform{min-height:33px}
+#hymnDetail.media-open #hdYoutube iframe{width:min(100%,315px)!important;max-height:177px!important}
+
+@media(min-width:700px){
+ #hymnDetail .hd-card{width:min(620px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:16px 20px}
+ #hymnDetail .hd-hero{min-height:140px;padding:25px 52px 10px 60px}
+ #hymnDetail .hd-clef{font-size:82px}
+ #hymnDetail .hd-num>span:first-child{font-size:17px}
+ #hymnDetail .hd-num .hd-number{font-size:55px}
+ #hymnDetail h2{font-size:31px}
+ #hymnDetail .hd-meta-row{grid-template-columns:78px 1fr;min-height:72px}
+ #hymnDetail .hd-meta-icon{min-height:72px}
+ #hymnDetail .hd-meta-icon svg{width:56px;height:56px}
+ #hymnDetail .hd-meta-label{font-size:11px}
+ #hymnDetail .hd-meta-value{font-size:21px}
+ #hymnDetail .hd-actions button{min-height:42px;font-size:13px}
+ #hymnDetail .hd-media-title{font-size:25px}
+ #hymnDetail .hd-play[data-kind="instrumental"]{min-height:47px;font-size:16px}
+ #hymnDetail .hd-platform{min-height:42px;font-size:11px}
+ #hymnDetail #hdYoutube iframe{width:min(100%,430px)!important;max-height:242px!important}
+}
+</style>
+
 </body></html>
