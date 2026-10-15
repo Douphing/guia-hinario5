@@ -1321,6 +1321,7 @@ function refreshPersonalUI(){
  }
 }
 function openPersonal(view){
+ const csvBtn=document.getElementById('callsCsvBtn'); if(csvBtn)csvBtn.hidden=(view!=='calls');
  window.__personalView=view;
  const modal=document.getElementById('personalModal');
  modal.classList.add('show');modal.setAttribute('aria-hidden','false');
@@ -2109,7 +2110,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
-  <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
+  <div class="personal-head"><button type="button" class="personal-download" onclick="downloadCallsCsv()" id="callsCsvBtn">⬇ Baixar CSV</button><h3 id="personalTitle">Minha biblioteca</h3><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
   <div id="personalContent" class="personal-content"></div>
  </div>
 </div>
@@ -2126,4 +2127,21 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 })();
 </script>
 
+
+<script>
+function downloadCallsCsv(){
+ const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
+ if(!items.length){alert('Ainda não há hinos chamados para baixar.');return}
+ const escCsv=v=>'"'+String(v??'').replace(/\r?\n/g,' ').replace(/"/g,'""')+'"';
+ const rows=[['Hino','Título','Data','Hora','Observação']];
+ items.forEach(x=>{
+   const d=new Date(x.at);
+   rows.push([x.num||'',x.titulo||'',isNaN(d)?'':d.toLocaleDateString('pt-BR'),isNaN(d)?'':d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),x.note||'']);
+ });
+ const csv='\uFEFF'+rows.map(r=>r.map(escCsv).join(';')).join('\r\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='hinos-chamados-'+new Date().toISOString().slice(0,10)+'.csv';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+</script>
 </body></html>
