@@ -1093,6 +1093,49 @@ const MULTIMIDIA={
  "45":{audio:"audio/hino-45.mp3",spotify:"0834t6lumVQ5FKetjMgREw",youtube:"aFtzMzwvMfo",youtubeMusic:"DF966OAKcUQ"}
 };
 
+
+/* V17 — favoritos e histórico simples de hinos chamados (armazenamento local) */
+const HYMN_STORE={
+ favKey:'guia-h5-favoritos-v1',
+ calledKey:'guia-h5-chamados-v1',
+ read(key){try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(e){return {}}},
+ write(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}},
+ isFav(num){return !!this.read(this.favKey)[String(num)]},
+ toggleFav(h){
+   const data=this.read(this.favKey), k=String(h.num);
+   if(data[k]) delete data[k];
+   else data[k]={num:h.num,titulo:h.titulo,at:new Date().toISOString()};
+   this.write(this.favKey,data);
+   return !!data[k];
+ },
+ isCalled(num){return !!this.read(this.calledKey)[String(num)]},
+ toggleCalled(h){
+   const data=this.read(this.calledKey), k=String(h.num);
+   if(data[k]) delete data[k];
+   else data[k]={num:h.num,titulo:h.titulo,at:new Date().toISOString()};
+   this.write(this.calledKey,data);
+   return !!data[k];
+ }
+};
+
+function updateHymnActionButtons(h){
+ const fav=document.getElementById('hdFav');
+ const called=document.getElementById('hdCalled');
+ const isFav=HYMN_STORE.isFav(h.num);
+ const isCalled=HYMN_STORE.isCalled(h.num);
+
+ fav.classList.toggle('is-active',isFav);
+ fav.setAttribute('aria-pressed',String(isFav));
+ fav.innerHTML='<span class="hd-solid-star">★</span> '+(isFav?'Favoritado':'Favoritar');
+
+ called.classList.toggle('is-active',isCalled);
+ called.setAttribute('aria-pressed',String(isCalled));
+ called.innerHTML='<span class="hd-solid-check">✓</span> '+(isCalled?'Chamado':'Marcar como chamado');
+
+ fav.onclick=function(){HYMN_STORE.toggleFav(h);updateHymnActionButtons(h)};
+ called.onclick=function(){HYMN_STORE.toggleCalled(h);updateHymnActionButtons(h)};
+}
+
 function openHymnDetail(h,cat){
  const modal=document.getElementById('hymnDetail');
  document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
@@ -1109,6 +1152,8 @@ function openHymnDetail(h,cat){
  document.getElementById('hdMeta').innerHTML=
   '<div class="hd-meta-row"><span class="hd-meta-icon hd-meta-composite">'+occIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Ocasiões</span><span class="hd-meta-value">'+esc(occ)+'</span></span></div>'+
   (h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-icon hd-meta-composite">'+appIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Apropriação</span><span class="hd-meta-value">'+esc(h.apropriacao)+'</span></span></div>':'');
+
+ updateHymnActionButtons(h);
 
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
@@ -1537,6 +1582,24 @@ function loadHymnMedia(kind,media,button){
 
 
 <!-- V16: Oração redesenhada + Culto Oficial = congregação reunida em torno do púlpito/estante, sem cruz/templo -->
+
+<style id="v17-actions">
+/* V17 — estados reais dos botões Favorito e Chamado */
+#hymnDetail .hd-actions button{
+ transition:transform .16s ease,background .18s ease,color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+#hymnDetail .hd-actions button:active{transform:scale(.97)}
+#hymnDetail #hdFav.is-active,
+#hymnDetail #hdCalled.is-active{
+ background:linear-gradient(145deg,#d8aa48,#b9801d)!important;
+ border-color:#b9801d!important;
+ color:#fff!important;
+ box-shadow:0 4px 12px rgba(121,82,18,.20);
+}
+#hymnDetail #hdFav.is-active .hd-solid-star,
+#hymnDetail #hdCalled.is-active .hd-solid-check{color:#fff!important}
+</style>
+
 <style id="v15-icon-system">
 /* V15 — sistema visual de ícones: títulos + combinações no modal */
 .section-head h2{
@@ -1576,8 +1639,8 @@ function loadHymnMedia(kind,media,button){
   baptism: SVG('<path d="M32 7C24 18 20 25 20 31a12 12 0 0 0 24 0c0-6-4-13-12-24Z" fill="currentColor"/><path d="M8 47c8-6 16-6 24 0s16 6 24 0M8 55c8-6 16-6 24 0s16 6 24 0" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>'),
   supper: SVG('<path d="M17 12h30l-4 21c-1 6-5 9-11 9s-10-3-11-9l-4-21Z" fill="currentColor"/><path d="M32 41v11M22 54h20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M45 45c7 0 11 4 11 9H39c0-5 2-9 6-9Z" fill="currentColor"/>'),
   funeral: SVG('<path d="M13 48c9-14 21-23 39-29-2 17-13 29-32 34l-7-5Z" fill="currentColor"/><path d="M18 48c9-8 18-14 29-22" fill="none" stroke="#a66f16" stroke-width="2.2" stroke-linecap="round"/>'),
-  opening: SVG('<path d="M13 10h28v44H13z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M35 32h21m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'),
-  closing: SVG('<path d="M23 10h28v44H23z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M29 32H8m8-8-8 8 8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'),
+  opening: SVG('<path d="M7 27 32 8l25 19v29H7V27Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M31 28 14 21v31l17-8V28Zm2 0 17-7v31l-17-8V28Z" fill="currentColor"/><circle cx="25" cy="38" r="2.1" fill="#b77c17"/><circle cx="39" cy="38" r="2.1" fill="#b77c17"/><path d="M31 28v24h2V28" fill="currentColor"/>'),
+  closing: SVG('<path d="M7 27 32 8l25 19v29H7V27Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M14 24h36v30H14V24Z" fill="currentColor"/><path d="M32 24v30" stroke="#b77c17" stroke-width="2"/><circle cx="28" cy="39" r="2.2" fill="#b77c17"/><circle cx="36" cy="39" r="2.2" fill="#b77c17"/>'),
   chorus: SVG('<circle cx="32" cy="22" r="8" fill="currentColor"/><circle cx="15" cy="28" r="7" fill="currentColor"/><circle cx="49" cy="28" r="7" fill="currentColor"/><path d="M20 53v-8c0-9 5-14 12-14s12 5 12 14v8H20ZM4 53v-7c0-8 4-12 11-12 4 0 7 2 9 5-2 4-3 8-3 14H4Zm56 0H43c0-6-1-10-3-14 2-3 5-5 9-5 7 0 11 4 11 12v7Z" fill="currentColor"/><path d="M45 11v12m0-12 9-2v11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="23" r="3" fill="currentColor"/><circle cx="51" cy="20" r="3" fill="currentColor"/>'),
   youth: SVG('<circle cx="22" cy="22" r="8" fill="currentColor"/><circle cx="43" cy="20" r="7" fill="currentColor"/><path d="M8 53V43c0-9 5-14 14-14s14 5 14 14v10H8Zm28 0V42c0-6-2-10-5-13 3-2 7-3 12-1 8 2 13 7 13 15v10H36Z" fill="currentColor"/><path d="M47 8v10l7-2v-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="19" r="3" fill="currentColor"/><circle cx="52" cy="17" r="3" fill="currentColor"/>'),
   general: SVG('<path d="M20 18c0-5 4-9 9-9v29c0 7-5 12-12 12-5 0-9-3-9-8s4-9 10-9c2 0 4 .4 6 1V18h-4Z" fill="currentColor"/><path d="M29 12c8 1 14 5 19 11v8c-5-6-11-9-19-10v-9Z" fill="currentColor"/>'),
