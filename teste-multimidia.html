@@ -2343,7 +2343,18 @@ function downloadCallsCsv(){
     if(a)a.textContent=favCount(); if(b)b.textContent=callCount();
   }
   window.v2RefreshCounts=refresh;
-  function close(id){document.getElementById(id)?.classList.remove('show')}
+  function resetMark(){
+    const input=document.getElementById('v2MarkInput');
+    const results=document.getElementById('v2MarkResults');
+    const toast=document.getElementById('v2MarkToast');
+    if(input) input.value='';
+    if(results) results.innerHTML='';
+    if(toast){toast.innerHTML='';toast.classList.remove('show')}
+  }
+  function close(id){
+    document.getElementById(id)?.classList.remove('show');
+    if(id==='v2MarkOverlay') resetMark();
+  }
   window.v2Close=close;
 
   function mount(){
@@ -2386,7 +2397,7 @@ function downloadCallsCsv(){
       if(old) old.click(); else if(navigator.share) navigator.share({title:document.title,url:location.href});
     };
     document.getElementById('v2Support').onclick=()=>document.getElementById('v2SupportOverlay').classList.add('show');
-    document.getElementById('v2Mark').onclick=()=>{document.getElementById('v2MarkOverlay').classList.add('show');setTimeout(()=>document.getElementById('v2MarkInput').focus(),80)};
+    document.getElementById('v2Mark').onclick=()=>{resetMark();document.getElementById('v2MarkOverlay').classList.add('show');setTimeout(()=>document.getElementById('v2MarkInput').focus(),80)};
     document.getElementById('v2Fav').onclick=()=>{try{openPersonal('favorites')}catch(e){}};
     document.getElementById('v2Calls').onclick=()=>{try{openPersonal('calls')}catch(e){}};
     refresh();
@@ -2473,9 +2484,13 @@ function downloadCallsCsv(){
       const q=input.value.trim().toLowerCase(); toast.classList.remove('show');
       if(!q){results.innerHTML='';return}
       const list=uniqueHymns().filter(h=>String(h.num)===q || String(h.titulo||'').toLowerCase().includes(q)).slice(0,12);
-      results.innerHTML=list.length?list.map((h,i)=>`<button class="v2Result" data-i="${i}"><strong>${esc(h.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></button>`).join(''):'<div class="v2Result">Nenhum hino encontrado.</div>';
-      results.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{
-        const h=list[i];
+      results.innerHTML=list.length?list.map((h,i)=>`
+        <div class="v2Result v2MarkChoice">
+          <div class="v2MarkInfo"><strong>${esc(h.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></div>
+          <button type="button" class="v2MarkConfirm" data-i="${i}">✓ Marcar</button>
+        </div>`).join(''):'<div class="v2Result">Nenhum hino encontrado.</div>';
+      results.querySelectorAll('.v2MarkConfirm').forEach(b=>b.onclick=()=>{
+        const h=list[Number(b.dataset.i)];
         try{
           HYMN_STORE.addCall(h,'');
           if(typeof refreshPersonalUI==='function')refreshPersonalUI();
@@ -2483,7 +2498,7 @@ function downloadCallsCsv(){
           refresh();
           results.innerHTML='';input.value='';
           toast.classList.add('show');
-          toast.innerHTML='<b>✓ Hino '+esc(h.num)+' registrado</b><div class="v2MiniActions"><button id="v2ObsNow">▤ Adicionar observação</button><button id="v2UndoNow">↶ Desfazer</button></div>';
+          toast.innerHTML='<b>✓ Hino '+esc(h.num)+' registrado</b><div style="margin-top:5px">Deseja adicionar uma observação?</div><div class="v2MiniActions"><button id="v2ObsNow">▤ Adicionar observação</button><button id="v2UndoNow">↶ Desfazer</button></div>';
           document.getElementById('v2ObsNow').onclick=()=>{close('v2MarkOverlay');try{openHymnDetail(h);setTimeout(()=>document.getElementById('hdObserve')?.click(),100)}catch(e){}};
           document.getElementById('v2UndoNow').onclick=()=>{try{HYMN_STORE.undoLastCall(h.num);refresh();if(typeof refreshPersonalUI==='function')refreshPersonalUI();toast.innerHTML='<b>Registro desfeito.</b>'}catch(e){}};
         }catch(e){toast.classList.add('show');toast.textContent='Não foi possível registrar neste protótipo.'}
@@ -2578,6 +2593,35 @@ body:not(.index-mode) #indice{
 /* No índice, ele continua normalmente disponível. */
 body.index-mode #indice{
   display:block!important;
+}
+</style>
+
+
+<style id="v2-fix-mark-and-index-spacing">
+.v2MarkChoice{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+}
+.v2MarkInfo{min-width:0;flex:1}
+.v2MarkConfirm{
+  flex:0 0 auto;
+  border:0;
+  border-radius:10px;
+  background:#b8892c;
+  color:#fff;
+  font-weight:800;
+  padding:10px 13px;
+}
+body.index-mode #indice .index-item,
+body.index-mode #indice .occasion-card,
+body.index-mode #indice > a,
+body.index-mode #indice > button{
+  margin-bottom:12px!important;
+}
+body.index-mode #indice{
+  row-gap:12px!important;
 }
 </style>
 
