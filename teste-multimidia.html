@@ -1101,7 +1101,7 @@ function openHymnDetail(h,cat){
 
  const iconBook='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M5 35c11-4 21-3 31 4v27c-10-6-20-7-31-4V35Zm62 0c-11-4-21-3-31 4v27c10-6 20-7 31-4V35Z" fill="currentColor"/><path d="M36 39v27" stroke="#9a6816" stroke-width="2.2"/></svg>';
  const iconHands='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M31 5c-6 6-9 13-9 21v9l-6-8c-3-4-8-1-6 5l9 18c3 6 9 10 17 11V24c0-8-2-15-5-19Zm10 0c6 6 9 13 9 21v9l6-8c3-4 8-1 6 5l-9 18c-3 6-9 10-17 11V24c0-8 2-15 5-19Z" fill="currentColor"/></svg>';
- const iconPrayerWord='<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M9 49c10-4 21-3 31 4v18c-10-6-21-7-31-3V49Zm62 0c-10-4-21-3-31 4v18c10-6 21-7 31-3V49Z" fill="currentColor"/><path d="M40 53v18" fill="none" stroke="#a26d17" stroke-width="2"/><path d="M35 8c-5 5-7 12-7 20v12l-6-8c-3-4-7-1-6 4l7 13 12 2 5 4V27c0-8-2-14-5-19Zm10 0c5 5 7 12 7 20v12l6-8c3-4 7-1 6 4l-7 13-12 2-5 4V27c0-8 2-14 5-19Z" fill="currentColor"/><path d="M40 10v31M15 24l-6-3m12-7-4-6m48 16 6-3m-12-7 4-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+ const iconPrayerWord='<svg viewBox="0 0 80 80" aria-hidden="true"><g fill="currentColor"><path d="M8 50c10-4 21-3 32 4v17c-11-6-22-7-32-3V50Zm64 0c-10-4-21-3-32 4v17c11-6 22-7 32-3V50Z"/><path d="M35 10c-5 6-7 12-7 19v12l-7-8c-3-3-7 0-5 5l8 12 12 2 4 3V28c0-8-2-14-5-18Zm10 0c5 6 7 12 7 19v12l7-8c3-3 7 0 5 5l-8 12-12 2-4 3V28c0-8 2-14 5-18Z"/></g><path d="M40 12v31M40 54v17" stroke="#a36d16" stroke-width="2"/><g stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M15 25l-6-3M21 16l-4-6M65 25l6-3M59 16l4-6"/></g></svg>';
  const iconPeople='<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="20" r="10" fill="currentColor"/><circle cx="15" cy="29" r="8" fill="currentColor"/><circle cx="57" cy="29" r="8" fill="currentColor"/><path d="M22 63V49c0-11 6-18 14-18s14 7 14 18v14H22ZM3 63V51c0-10 5-16 12-16 5 0 9 3 11 7-3 5-5 11-5 19v2H3Zm66 0H51v-2c0-8-2-14-5-19 2-4 6-7 11-7 7 0 12 6 12 16v12Z" fill="currentColor"/><path d="M27 63c3-2 6-3 9-3s6 1 9 3c-3 0-6 1-9 4-3-3-6-4-9-4Z" fill="currentColor"/></svg>';
  const occNorm=occ.toLowerCase();
  let occIcon=iconBook;
@@ -1527,5 +1527,66 @@ function loadHymnMedia(kind,media,button){
  #hymnDetail .hd-platform span{font-size:9px!important}
 }
 </style>
+
+
+<style>
+/* V12 — contexto da navegação */
+.context-heading{
+ margin:10px 0 14px;
+ padding:10px 14px;
+ border-left:4px solid #b6842c;
+ border-radius:0 12px 12px 0;
+ background:linear-gradient(90deg,rgba(224,235,240,.78),rgba(253,251,247,.55));
+ color:#102a43;
+ font-family:Georgia,serif;
+ font-size:clamp(21px,5vw,29px);
+ font-weight:700;
+}
+.context-heading small{
+ display:block;margin-top:2px;
+ color:#84652d;font:700 11px/1.2 Arial,sans-serif;
+ letter-spacing:.08em;text-transform:uppercase;
+}
+</style>
+
+
+<script>
+(function(){
+  function ensureContextHeading(text, subtitle){
+    if(!text) return;
+    let el=document.getElementById('listContextHeading');
+    if(!el){
+      el=document.createElement('div');
+      el.id='listContextHeading';
+      el.className='context-heading';
+      const anchor=document.querySelector('main, .container, #app, body');
+      const firstList=document.querySelector('.hymn-list, .lista-hinos, [data-hymn-list], .occasion-section, section');
+      if(firstList && firstList.parentNode) firstList.parentNode.insertBefore(el,firstList);
+      else if(anchor) anchor.insertBefore(el,anchor.firstChild);
+    }
+    el.innerHTML=(subtitle?'<small>'+subtitle+'</small>':'')+text;
+  }
+  window.setHymnListContext=ensureContextHeading;
+
+  /* Ao clicar em uma ocasião/categoria, conserva o nome como título da lista.
+     Usa texto/atributos existentes, sem alterar a estrutura de dados. */
+  document.addEventListener('click',function(ev){
+    const t=ev.target.closest('[data-occasion],[data-ocasiao],.occasion-link,.occasion-card,.category-card,.category-link');
+    if(!t) return;
+    const name=t.dataset.occasion||t.dataset.ocasiao||
+      (t.querySelector('[data-title],h2,h3,strong')?.textContent)||t.textContent;
+    const clean=(name||'').replace(/\s+/g,' ').trim();
+    if(clean) setTimeout(()=>ensureContextHeading(clean,'Ocasião'),40);
+  });
+
+  /* Índice mantém o comportamento de ir para a lista; identifica esse contexto quando possível. */
+  document.addEventListener('click',function(ev){
+    const t=ev.target.closest('#indexBtn,.index-btn,[data-action="index"],a[href*="indice"],button');
+    if(!t) return;
+    const tx=(t.textContent||'').trim().toLowerCase();
+    if(tx==='índice'||tx==='indice') setTimeout(()=>ensureContextHeading('Índice de hinos','Navegação'),40);
+  });
+})();
+</script>
 
 </body></html>
