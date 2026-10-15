@@ -511,7 +511,7 @@ const idx=document.querySelector("#indice"), content=document.querySelector("#co
 ORDER.forEach(cat=>{
  const a=document.createElement("a");a.href="#"+slug(cat);a.innerHTML=`<span>${esc(cat)}</span><small>${DATA[cat].length}</small>`;a.addEventListener("click",(e)=>{e.preventDefault();openCategory(cat);});idx.appendChild(a);
  const sec=document.createElement("section");sec.id=slug(cat);sec.dataset.cat=cat;
- const countLabel=cat==="Coros" ? `${DATA[cat].length} coros` : `${DATA[cat].length} hinos`; sec.innerHTML=`<div class="section-head"><h2>${esc(cat)}</h2><span class="count">${countLabel}</span></div><div class="grid"></div><a class="back" href="#indice">↑ Voltar ao índice</a>`;
+ const countLabel=cat==="Coros" ? `${DATA[cat].length} coros` : `${DATA[cat].length} hinos`; sec.innerHTML=`<div class="section-head" data-category="${esc(cat)}"><h2>${esc(cat)}</h2><span class="count">${countLabel}</span></div><div class="grid"></div><a class="back" href="#indice">↑ Voltar ao índice</a>`;
  const grid=sec.querySelector(".grid");
  DATA[cat].forEach(h=>{
    const occ=h.ocasiao.split("/").map(x=>x.trim()).filter(Boolean), others=occ.filter(x=>x!==cat);
@@ -1103,15 +1103,12 @@ function openHymnDetail(h,cat){
  const iconHands='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M31 5c-6 6-9 13-9 21v9l-6-8c-3-4-8-1-6 5l9 18c3 6 9 10 17 11V24c0-8-2-15-5-19Zm10 0c6 6 9 13 9 21v9l6-8c3-4 8-1 6 5l-9 18c-3 6-9 10-17 11V24c0-8 2-15 5-19Z" fill="currentColor"/></svg>';
  const iconPrayerWord='<svg viewBox="0 0 80 80" aria-hidden="true"><g fill="currentColor"><path d="M8 50c10-4 21-3 32 4v17c-11-6-22-7-32-3V50Zm64 0c-10-4-21-3-32 4v17c11-6 22-7 32-3V50Z"/><path d="M35 10c-5 6-7 12-7 19v12l-7-8c-3-3-7 0-5 5l8 12 12 2 4 3V28c0-8-2-14-5-18Zm10 0c5 6 7 12 7 19v12l7-8c3-3 7 0 5 5l-8 12-12 2-4 3V28c0-8 2-14 5-18Z"/></g><path d="M40 12v31M40 54v17" stroke="#a36d16" stroke-width="2"/><g stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M15 25l-6-3M21 16l-4-6M65 25l6-3M59 16l4-6"/></g></svg>';
  const iconPeople='<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="20" r="10" fill="currentColor"/><circle cx="15" cy="29" r="8" fill="currentColor"/><circle cx="57" cy="29" r="8" fill="currentColor"/><path d="M22 63V49c0-11 6-18 14-18s14 7 14 18v14H22ZM3 63V51c0-10 5-16 12-16 5 0 9 3 11 7-3 5-5 11-5 19v2H3Zm66 0H51v-2c0-8-2-14-5-19 2-4 6-7 11-7 7 0 12 6 12 16v12Z" fill="currentColor"/><path d="M27 63c3-2 6-3 9-3s6 1 9 3c-3 0-6 1-9 4-3-3-6-4-9-4Z" fill="currentColor"/></svg>';
- const occNorm=occ.toLowerCase();
- let occIcon=iconBook;
- if(occNorm.includes('oração')&&occNorm.includes('palavra')) occIcon=iconPrayerWord;
- else if(occNorm.includes('oração')) occIcon=iconHands;
- else if(occNorm.includes('palavra')) occIcon=iconBook;
+ const occIcon=(window.hymnCompositeIcon?window.hymnCompositeIcon(occ,'ocasiao'):iconBook);
+ const appIcon=(window.hymnCompositeIcon?window.hymnCompositeIcon(h.apropriacao||'Culto Oficial','apropriacao'):iconPeople);
 
  document.getElementById('hdMeta').innerHTML=
-  '<div class="hd-meta-row"><span class="hd-meta-icon">'+occIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Ocasiões</span><span class="hd-meta-value">'+esc(occ)+'</span></span></div>'+
-  (h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-icon">'+iconPeople+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Apropriação</span><span class="hd-meta-value">'+esc(h.apropriacao)+'</span></span></div>':'');
+  '<div class="hd-meta-row"><span class="hd-meta-icon hd-meta-composite">'+occIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Ocasiões</span><span class="hd-meta-value">'+esc(occ)+'</span></span></div>'+
+  (h.apropriacao?'<div class="hd-meta-row"><span class="hd-meta-icon hd-meta-composite">'+appIcon+'</span><span class="hd-meta-copy"><span class="hd-meta-label">Apropriação</span><span class="hd-meta-value">'+esc(h.apropriacao)+'</span></span></div>':'');
 
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
@@ -1538,40 +1535,109 @@ function loadHymnMedia(kind,media,button){
 
 
 
+
+<style id="v15-icon-system">
+/* V15 — sistema visual de ícones: títulos + combinações no modal */
+.section-head h2{
+ display:flex!important;
+ align-items:center!important;
+ gap:9px!important;
+ min-width:0;
+}
+.occasion-title-icon{
+ width:32px;height:32px;flex:0 0 32px;
+ display:inline-grid;place-items:center;
+ border-radius:9px;
+ background:linear-gradient(145deg,#d9aa43,#b77c17);
+ color:#fff;
+ box-shadow:0 2px 6px rgba(105,73,18,.18);
+}
+.occasion-title-icon svg{width:23px;height:23px;display:block}
+.section-head .occasion-title-text{min-width:0}
+#hymnDetail .hd-meta-composite svg{width:52px!important;height:52px!important;display:block}
+#hymnDetail .hd-meta-composite{overflow:hidden}
+@media(max-width:520px){
+ .occasion-title-icon{width:29px;height:29px;flex-basis:29px;border-radius:8px}
+ .occasion-title-icon svg{width:21px;height:21px}
+ .section-head h2{gap:7px!important}
+}
+</style>
+
 <script>
-/* V14 — biblioteca visual de ocasiões/apropriações */
+/* V15 — ícones vetoriais e composição automática de ocasiões */
 (function(){
+ const SVG=(body, vb='0 0 64 64')=>'<svg viewBox="'+vb+'" aria-hidden="true" focusable="false">'+body+'</svg>';
+
  const icons={
-  prayer:'<svg viewBox="0 0 64 64"><path d="M12 38c8-3 14-2 20 2v15c-7-4-14-5-20-2V38Zm40 0c-8-3-14-2-20 2v15c7-4 14-5 20-2V38Z" fill="currentColor"/><path d="M28 8c-4 5-5 10-5 16v10l-5-6c-3-3-6 0-4 4l6 10 9 2 3 3V22c0-6-1-10-4-14Zm8 0c4 5 5 10 5 16v10l5-6c3-3 6 0 4 4l-6 10-9 2-3 3V22c0-6 1-10 4-14Z" fill="currentColor"/></svg>',
-  word:'<svg viewBox="0 0 64 64"><path d="M7 14c9-3 17-2 25 4v36c-8-6-16-7-25-4V14Zm50 0c-9-3-17-2-25 4v36c8-6 16-7 25-4V14Z" fill="currentColor"/><path d="M32 18v36" stroke="#a36d16" stroke-width="2"/></svg>',
-  testimony:'<svg viewBox="0 0 64 64"><path d="M12 48h8V29h-8v19Zm16 0h8V20h-8v28Zm16 0h8V11h-8v37Z" fill="currentColor"/><path d="M10 53h45" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>',
-  baptism:'<svg viewBox="0 0 64 64"><path d="M8 39c8-7 16-7 24 0s16 7 24 0v9c-8 7-16 7-24 0s-16-7-24 0v-9Z" fill="currentColor"/><path d="M32 8c-7 10-11 16-11 22a11 11 0 0 0 22 0c0-6-4-12-11-22Z" fill="none" stroke="currentColor" stroke-width="4"/></svg>',
-  supper:'<svg viewBox="0 0 64 64"><path d="M10 45h44v7H10zM18 17h28l-4 21H22l-4-21Z" fill="currentColor"/><path d="M32 10v34" stroke="#a36d16" stroke-width="2"/></svg>',
-  funeral:'<svg viewBox="0 0 64 64"><path d="M12 46c10-12 20-18 40-25-4 18-15 29-34 31l-6-6Z" fill="currentColor"/><path d="M17 47c9-7 18-13 29-20" stroke="#a36d16" stroke-width="2"/></svg>',
-  opening:'<svg viewBox="0 0 64 64"><path d="M13 11h28v42H13z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M34 32H55m-7-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  closing:'<svg viewBox="0 0 64 64"><path d="M23 11h28v42H23z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M30 32H9m7-8-8 8 8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  official:'<svg viewBox="0 0 64 64"><circle cx="32" cy="19" r="9" fill="currentColor"/><circle cx="15" cy="25" r="7" fill="currentColor"/><circle cx="49" cy="25" r="7" fill="currentColor"/><path d="M21 52V39c0-8 5-13 11-13s11 5 11 13v13H21Zm-15 0V40c0-6 4-10 9-10 3 0 5 1 7 3-3 4-4 8-4 13v6H6Zm52 0H46v-6c0-5-1-9-4-13 2-2 4-3 7-3 5 0 9 4 9 10v12Z" fill="currentColor"/></svg>',
-  youth:'<svg viewBox="0 0 64 64"><circle cx="22" cy="20" r="8" fill="currentColor"/><circle cx="43" cy="20" r="8" fill="currentColor"/><path d="M8 52V40c0-8 6-13 14-13s14 5 14 13v12H8Zm28 0V40c0-5-2-9-5-12 3-2 7-2 12-1 8 2 13 7 13 15v10H36Z" fill="currentColor"/></svg>',
-  general:'<svg viewBox="0 0 64 64"><path d="M32 8l7 15 17 2-12 12 3 17-15-8-15 8 3-17L8 25l17-2 7-15Z" fill="currentColor"/></svg>'
+  word: SVG('<path d="M7 15c8-3 16-2 25 4v35c-8-6-16-7-25-4V15Zm50 0c-8-3-16-2-25 4v35c8-6 16-7 25-4V15Z" fill="currentColor"/><path d="M32 19v35" stroke="#a66f16" stroke-width="2"/>'),
+  prayer: SVG('<path d="M28 8c-4 5-6 11-6 17v11l-5-7c-2-3-6-1-5 3l7 12 10 3 3 5V23c0-7-1-11-4-15Zm8 0c4 5 6 11 6 17v11l5-7c2-3 6-1 5 3l-7 12-10 3-3 5V23c0-7 1-11 4-15Z" fill="currentColor"/><path d="M32 13v34" stroke="#a66f16" stroke-width="1.8"/>'),
+  testimony: SVG('<circle cx="25" cy="21" r="9" fill="currentColor"/><path d="M10 53V44c0-10 6-16 15-16s15 6 15 16v9H10Z" fill="currentColor"/><path d="M42 19c5 1 8 4 10 7M43 28c4 1 7 3 9 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>'),
+  baptism: SVG('<path d="M32 7C24 18 20 25 20 31a12 12 0 0 0 24 0c0-6-4-13-12-24Z" fill="currentColor"/><path d="M8 47c8-6 16-6 24 0s16 6 24 0M8 55c8-6 16-6 24 0s16 6 24 0" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>'),
+  supper: SVG('<path d="M17 12h30l-4 21c-1 6-5 9-11 9s-10-3-11-9l-4-21Z" fill="currentColor"/><path d="M32 41v11M22 54h20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M45 45c7 0 11 4 11 9H39c0-5 2-9 6-9Z" fill="currentColor"/>'),
+  funeral: SVG('<path d="M13 48c9-14 21-23 39-29-2 17-13 29-32 34l-7-5Z" fill="currentColor"/><path d="M18 48c9-8 18-14 29-22" fill="none" stroke="#a66f16" stroke-width="2.2" stroke-linecap="round"/>'),
+  opening: SVG('<path d="M13 10h28v44H13z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M35 32h21m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'),
+  closing: SVG('<path d="M23 10h28v44H23z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M29 32H8m8-8-8 8 8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'),
+  chorus: SVG('<circle cx="32" cy="22" r="8" fill="currentColor"/><circle cx="15" cy="28" r="7" fill="currentColor"/><circle cx="49" cy="28" r="7" fill="currentColor"/><path d="M20 53v-8c0-9 5-14 12-14s12 5 12 14v8H20ZM4 53v-7c0-8 4-12 11-12 4 0 7 2 9 5-2 4-3 8-3 14H4Zm56 0H43c0-6-1-10-3-14 2-3 5-5 9-5 7 0 11 4 11 12v7Z" fill="currentColor"/><path d="M45 11v12m0-12 9-2v11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="23" r="3" fill="currentColor"/><circle cx="51" cy="20" r="3" fill="currentColor"/>'),
+  youth: SVG('<circle cx="22" cy="22" r="8" fill="currentColor"/><circle cx="43" cy="20" r="7" fill="currentColor"/><path d="M8 53V43c0-9 5-14 14-14s14 5 14 14v10H8Zm28 0V42c0-6-2-10-5-13 3-2 7-3 12-1 8 2 13 7 13 15v10H36Z" fill="currentColor"/><path d="M47 8v10l7-2v-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="19" r="3" fill="currentColor"/><circle cx="52" cy="17" r="3" fill="currentColor"/>'),
+  general: SVG('<path d="M20 18c0-5 4-9 9-9v29c0 7-5 12-12 12-5 0-9-3-9-8s4-9 10-9c2 0 4 .4 6 1V18h-4Z" fill="currentColor"/><path d="M29 12c8 1 14 5 19 11v8c-5-6-11-9-19-10v-9Z" fill="currentColor"/>'),
+  official: SVG('<circle cx="32" cy="19" r="9" fill="currentColor"/><circle cx="15" cy="26" r="7" fill="currentColor"/><circle cx="49" cy="26" r="7" fill="currentColor"/><path d="M20 54V42c0-10 5-16 12-16s12 6 12 16v12H20ZM4 54V44c0-8 4-12 11-12 4 0 7 2 9 5-3 4-4 9-4 17H4Zm56 0H44c0-8-1-13-4-17 2-3 5-5 9-5 7 0 11 4 11 12v10Z" fill="currentColor"/>')
  };
+
+ const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ function keyFor(label,type){
+   const x=norm(label);
+   if(x.includes('sem ocasiao')) return 'general';
+   if(x.includes('reuniao')||x.includes('jovens')||x==='rjm') return 'youth';
+   if(x.includes('coros')||x==='coro') return 'chorus';
+   if(x.includes('oracao')) return 'prayer';
+   if(x.includes('palavra')) return 'word';
+   if(x.includes('testemunho')) return 'testimony';
+   if(x.includes('batismo')) return 'baptism';
+   if(x.includes('santa ceia')||x.includes('ceia')) return 'supper';
+   if(x.includes('funeral')) return 'funeral';
+   if(x.includes('abertura')) return 'opening';
+   if(x.includes('encerramento')) return 'closing';
+   if((type||'')==='apropriacao' && x.includes('culto oficial')) return 'official';
+   return 'general';
+ }
+ function splitLabels(label){
+   return (label||'').split(/\s*(?:\/|•|;|\+)\s*/).map(x=>x.trim()).filter(Boolean);
+ }
+ function bodyOf(svg){return svg.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');}
+ function composite(label,type){
+   const labels=splitLabels(label);
+   const keys=[...new Set(labels.map(x=>keyFor(x,type)))];
+   if(keys.length<=1) return icons[keys[0]||keyFor(label,type)] || icons.general;
+
+   const chosen=keys.slice(0,3);
+   const positions = chosen.length===2
+     ? [{x:3,y:11,w:32,h:42},{x:30,y:11,w:32,h:42}]
+     : [{x:2,y:22,w:30,h:38},{x:18,y:2,w:30,h:38},{x:34,y:22,w:28,h:38}];
+
+   let body='';
+   chosen.forEach((k,i)=>{
+     const p=positions[i];
+     body+='<svg x="'+p.x+'" y="'+p.y+'" width="'+p.w+'" height="'+p.h+'" viewBox="0 0 64 64">'+bodyOf(icons[k]||icons.general)+'</svg>';
+   });
+   return SVG(body);
+ }
  window.HYMN_ICONS=icons;
- window.hymnIconFor=function(label,type){
-   const x=(label||'').toLowerCase();
-   if(x.includes('oração')&&x.includes('palavra')) return icons.prayer;
-   if(x.includes('oração')) return icons.prayer;
-   if(x.includes('palavra')) return icons.word;
-   if(x.includes('testemunho')) return icons.testimony;
-   if(x.includes('batismo')) return icons.baptism;
-   if(x.includes('ceia')) return icons.supper;
-   if(x.includes('funeral')) return icons.funeral;
-   if(x.includes('abertura')) return icons.opening;
-   if(x.includes('encerramento')) return icons.closing;
-   if((type||'').toLowerCase().includes('apro') || x.includes('culto oficial')) return icons.official;
-   if(x.includes('jov')) return icons.youth;
-   return icons.general;
- };
+ window.hymnCompositeIcon=composite;
+ window.hymnSingleIcon=(label,type)=>icons[keyFor(label,type)]||icons.general;
+
+ function decorateHeaders(){
+   document.querySelectorAll('.section-head[data-category]').forEach(head=>{
+     const cat=head.getAttribute('data-category')||'';
+     const h2=head.querySelector('h2');
+     if(!h2 || h2.querySelector('.occasion-title-icon')) return;
+     h2.innerHTML='<span class="occasion-title-icon">'+window.hymnSingleIcon(cat,'ocasiao')+'</span><span class="occasion-title-text">'+cat.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
+   });
+ }
+ decorateHeaders();
+ document.addEventListener('DOMContentLoaded',decorateHeaders);
 })();
 </script>
+
 
 <style>
 /* V14 — sticky sem fresta + destaque de pesquisa + biblioteca de ícones */
