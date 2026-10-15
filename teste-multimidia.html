@@ -371,6 +371,25 @@ body.welcome-mode{overflow:hidden}
   gtag('config', 'G-2ZQBRNW3HL');
 </script>
 
+
+<style id="v21-final">
+.card-actions{display:flex!important;align-items:center!important;gap:6px!important;margin-left:auto!important}
+.card-actions .card-call{display:none!important}
+.card-status{display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:#5f6972;font:700 .64rem/1.05 Arial,sans-serif;white-space:nowrap}
+.card-status .notes-summary{display:inline-flex;align-items:center;gap:2px;color:#9b7127}.card-status svg{width:12px;height:12px}
+.card-chevron{color:#9b742d;font:400 1.45rem/1 Georgia,serif}
+.card .title{padding-right:0!important}
+.hd-history-link{width:100%;border:0;background:transparent;color:#765b2c;display:flex;justify-content:center;align-items:center;gap:7px;padding:7px 5px 1px;font-size:.78rem;font-weight:800}
+.hd-history-link[hidden]{display:none!important}
+.personal-tabs{display:none!important}
+#callDialog{box-sizing:border-box!important;inset:auto 0 0 0!important;display:none;align-items:flex-end!important;justify-content:center!important;padding:4px 10px!important;overflow:hidden!important}
+#callDialog.show{display:flex!important}
+#callDialog .call-dialog-card{width:min(100%,430px)!important;max-height:calc(100% - 2px)!important;overflow:auto!important;padding:12px 16px 0!important}
+#callDialogHymn{margin:4px 0 7px!important}
+#callDialog textarea{min-height:52px!important;max-height:78px!important}
+#callDialog .call-dialog-actions{position:sticky!important;bottom:0!important;z-index:50!important;background:#fffdf8!important;margin:8px -16px 0!important;padding:9px 16px 10px!important;box-shadow:0 -5px 12px rgba(255,253,248,.96)!important}
+</style>
+
 </head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
@@ -522,12 +541,10 @@ ORDER.forEach(cat=>{
    const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();card.dataset.hino=String(h.num);card.setAttribute("role","button");card.setAttribute("tabindex","0");
    let tag=others.length?`<div class="tag">Também: ${esc(others.join(" • "))}</div>`:"";
    if(h.apropriacao && h.apropriacao!=="Culto Oficial") tag+=`<div class="tag">${esc(h.apropriacao)}</div>`;
-   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações rápidas"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><button type="button" class="card-call" title="Registrar chamado" aria-label="Registrar hino ${esc(h.num)} como chamado"><span class="call-label">Marcar</span></button></div></div>${tag}`;
-   const favQuick=card.querySelector(".card-fav"), callQuick=card.querySelector(".card-call");
+   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações do hino"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><span class="card-status"></span><span class="card-chevron" aria-hidden="true">›</span></div></div>${tag}`;
+   const favQuick=card.querySelector(".card-fav");
    favQuick.addEventListener("click",(e)=>{e.stopPropagation();HYMN_STORE.toggleFav(h);refreshPersonalUI();});
-   callQuick.addEventListener("click",(e)=>{e.stopPropagation();openCallDialog(h);});
    favQuick.addEventListener("keydown",(e)=>e.stopPropagation());
-   callQuick.addEventListener("keydown",(e)=>e.stopPropagation());
    card.addEventListener("click",()=>openHymnDetail(h,cat));
    card.addEventListener("keydown",(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openHymnDetail(h,cat);}});
    grid.appendChild(card);
@@ -1091,7 +1108,7 @@ window.addEventListener('appinstalled', function () {
    <div class="hd-swoosh" aria-hidden="true"><i></i><i></i></div>
   </header>
   <div class="hd-meta" id="hdMeta"></div>
-  <div class="hd-actions"><button type="button" id="hdFav"><span class="hd-solid-star">★</span> Favoritar</button><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar como chamado</button></div>
+  <div class="hd-actions"><button type="button" id="hdFav"><span class="hd-solid-star">★</span> Favoritar</button><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar como chamado</button></div><button type="button" id="hdHistory" class="hd-history-link" hidden><span>▤</span><span id="hdHistoryText">Histórico</span><span>›</span></button>
   <div class="hd-divider" aria-hidden="true"><span>𝄞</span></div>
   <div id="hdMediaArea"></div>
  </div>
@@ -1161,6 +1178,26 @@ function updateHymnActionButtons(h){
  called.removeAttribute('aria-pressed');
  called.innerHTML='<span class="hd-solid-check">✓</span> Registrar chamado'+(qty?' <small class="call-count">('+qty+')</small>':'');
  called.onclick=function(){openCallDialog(h)};
+ const hist=document.getElementById('hdHistory'), histText=document.getElementById('hdHistoryText');
+ if(hist){
+   const notes=HYMN_STORE.calls().filter(x=>String(x.num)===String(h.num)&&(x.note||'').trim()).length;
+   hist.hidden=!qty;
+   histText.textContent=qty+' chamado'+(qty>1?'s':'')+(notes?' · '+notes+' observaç'+(notes>1?'ões':'ão'):'');
+   hist.onclick=function(){window.__historyHymn=String(h.num);openPersonal('calls')};
+ }
+}
+
+
+function fitCallDialogToKeyboard(){
+ const dlg=document.getElementById('callDialog'),card=dlg&&dlg.querySelector('.call-dialog-card');
+ if(!dlg||!card)return;
+ const vv=window.visualViewport,h=vv?vv.height:window.innerHeight,top=vv?vv.offsetTop:0;
+ dlg.style.height=h+'px';dlg.style.top=top+'px';dlg.style.bottom='auto';
+ card.style.maxHeight=Math.max(260,h-8)+'px';
+}
+if(window.visualViewport){
+ visualViewport.addEventListener('resize',fitCallDialogToKeyboard);
+ visualViewport.addEventListener('scroll',fitCallDialogToKeyboard);
 }
 
 function openCallDialog(h){
@@ -1170,7 +1207,7 @@ function openCallDialog(h){
  const note=document.getElementById('callNote');
  note.value='';
  document.getElementById('callChars').textContent='0/150';
- dlg.classList.add('show');
+ dlg.classList.add('show');fitCallDialogToKeyboard();
  dlg.setAttribute('aria-hidden','false');
  setTimeout(()=>note.focus(),80);
 }
@@ -1220,13 +1257,12 @@ function refreshPersonalUI(){
  const counts={}; calls.forEach(x=>counts[String(x.num)]=(counts[String(x.num)]||0)+1);
 
  document.querySelectorAll('.card[data-hino]').forEach(card=>{
-   const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), c=card.querySelector('.card-call');
+   const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), status=card.querySelector('.card-status');
    if(f){const on=!!favs[k];f.classList.toggle('is-active',on);f.textContent=on?'★':'☆';f.setAttribute('aria-pressed',String(on))}
-   if(c){
-     const qty=counts[k]||0;
-     const hasNote=calls.some(x=>String(x.num)===k && (x.note||'').trim());
-     c.classList.toggle('is-active',qty>0);
-     c.innerHTML=qty?'<span class="call-label">Chamado '+qty+'</span>'+(hasNote?'<span class="note-mark">'+noteMiniIcon()+'</span>':''):'<span class="call-label">Marcar</span>';
+   if(status){
+     const qty=counts[k]||0, noteQty=calls.filter(x=>String(x.num)===k&&(x.note||'').trim()).length;
+     status.innerHTML=qty?'<span>'+qty+' chamado'+(qty>1?'s':'')+'</span>'+(noteQty?'<span class="notes-summary">'+noteMiniIcon()+' '+noteQty+'</span>'):'';
+     status.hidden=!qty;
    }
  });
  const ft=document.getElementById('favTotal'), ct=document.getElementById('callTotal');
@@ -1234,14 +1270,14 @@ function refreshPersonalUI(){
  if(ct)ct.textContent=calls.length;
  if(document.getElementById('personalModal')?.classList.contains('show')){
    if(window.__personalView==='favorites')renderFavorites();
-   if(window.__personalView==='calls')renderCalls();
+   if(window.__personalView==='calls')renderCalls(window.__historyHymn||undefined);
  }
 }
 function openPersonal(view){
  window.__personalView=view;
  const modal=document.getElementById('personalModal');
  modal.classList.add('show');modal.setAttribute('aria-hidden','false');
- if(view==='favorites')renderFavorites(); else renderCalls();
+ if(view==='favorites')renderFavorites(); else renderCalls(window.__historyHymn||undefined);
 }
 function closePersonal(){
  const modal=document.getElementById('personalModal');
@@ -1262,10 +1298,11 @@ function renderFavorites(){
 function fmtDate(iso){
  try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(iso))}catch(e){return iso||''}
 }
-function renderCalls(){
+function renderCalls(filterNum){
  const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
  title.textContent='✓ Hinos Chamados'; document.getElementById('downloadCalls').hidden=false;
- const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
+ let items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
+ if(filterNum){items=items.filter(x=>String(x.num)===String(filterNum));title.textContent='Histórico · Hino '+filterNum;}
  if(!items.length){box.innerHTML='<div class="personal-empty">Nenhum hino chamado foi registrado ainda.</div>';return}
  box.innerHTML=items.map(x=>`<article class="history-item history-clean" data-call-id="${esc(x.id)}"><div class="history-number">${esc(x.num)}</div><div class="history-main"><b>${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p><span class="history-note-icon">${noteMiniIcon()}</span>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div></article>`).join('');
  box.querySelectorAll('[data-call-id]').forEach(card=>card.onclick=()=>openCallRecord(card.dataset.callId));
@@ -2046,11 +2083,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
   <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><div class="personal-head-actions"><button type="button" id="downloadCalls" class="download-calls" hidden>↓ CSV</button><button type="button" id="closePersonal" aria-label="Fechar">×</button></div></div>
-  <div class="personal-tabs">
-   <button type="button" id="tabFavorites">★ Favoritos</button>
-   <button type="button" id="tabCalls">✓ Hinos chamados</button>
-  </div>
-  <div id="personalContent" class="personal-content"></div>
+<div id="personalContent" class="personal-content"></div>
  </div>
 </div>
 <script>
@@ -2058,9 +2091,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
  const fav=document.getElementById('openFavorites'), calls=document.getElementById('openCalledHistory');
  const close=document.getElementById('closePersonal'), modal=document.getElementById('personalModal');
  if(fav)fav.onclick=()=>openPersonal('favorites');
- if(calls)calls.onclick=()=>openPersonal('calls');
- document.getElementById('tabFavorites').onclick=()=>{window.__personalView='favorites';renderFavorites()};
- document.getElementById('tabCalls').onclick=()=>{window.__personalView='calls';renderCalls()};
+ if(calls)calls.onclick=()=>{window.__historyHymn=null;openPersonal('calls')};
  if(close)close.onclick=closePersonal;
  const dl=document.getElementById('downloadCalls');if(dl)dl.onclick=downloadCallsCSV;
  if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closePersonal()});
