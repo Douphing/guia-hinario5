@@ -1535,85 +1535,86 @@ function loadHymnMedia(kind,media,button){
 
 
 
+
+
+
+<script>
+/* V14 — biblioteca visual de ocasiões/apropriações */
+(function(){
+ const icons={
+  prayer:'<svg viewBox="0 0 64 64"><path d="M12 38c8-3 14-2 20 2v15c-7-4-14-5-20-2V38Zm40 0c-8-3-14-2-20 2v15c7-4 14-5 20-2V38Z" fill="currentColor"/><path d="M28 8c-4 5-5 10-5 16v10l-5-6c-3-3-6 0-4 4l6 10 9 2 3 3V22c0-6-1-10-4-14Zm8 0c4 5 5 10 5 16v10l5-6c3-3 6 0 4 4l-6 10-9 2-3 3V22c0-6 1-10 4-14Z" fill="currentColor"/></svg>',
+  word:'<svg viewBox="0 0 64 64"><path d="M7 14c9-3 17-2 25 4v36c-8-6-16-7-25-4V14Zm50 0c-9-3-17-2-25 4v36c8-6 16-7 25-4V14Z" fill="currentColor"/><path d="M32 18v36" stroke="#a36d16" stroke-width="2"/></svg>',
+  testimony:'<svg viewBox="0 0 64 64"><path d="M12 48h8V29h-8v19Zm16 0h8V20h-8v28Zm16 0h8V11h-8v37Z" fill="currentColor"/><path d="M10 53h45" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>',
+  baptism:'<svg viewBox="0 0 64 64"><path d="M8 39c8-7 16-7 24 0s16 7 24 0v9c-8 7-16 7-24 0s-16-7-24 0v-9Z" fill="currentColor"/><path d="M32 8c-7 10-11 16-11 22a11 11 0 0 0 22 0c0-6-4-12-11-22Z" fill="none" stroke="currentColor" stroke-width="4"/></svg>',
+  supper:'<svg viewBox="0 0 64 64"><path d="M10 45h44v7H10zM18 17h28l-4 21H22l-4-21Z" fill="currentColor"/><path d="M32 10v34" stroke="#a36d16" stroke-width="2"/></svg>',
+  funeral:'<svg viewBox="0 0 64 64"><path d="M12 46c10-12 20-18 40-25-4 18-15 29-34 31l-6-6Z" fill="currentColor"/><path d="M17 47c9-7 18-13 29-20" stroke="#a36d16" stroke-width="2"/></svg>',
+  opening:'<svg viewBox="0 0 64 64"><path d="M13 11h28v42H13z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M34 32H55m-7-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  closing:'<svg viewBox="0 0 64 64"><path d="M23 11h28v42H23z" fill="none" stroke="currentColor" stroke-width="5"/><path d="M30 32H9m7-8-8 8 8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  official:'<svg viewBox="0 0 64 64"><circle cx="32" cy="19" r="9" fill="currentColor"/><circle cx="15" cy="25" r="7" fill="currentColor"/><circle cx="49" cy="25" r="7" fill="currentColor"/><path d="M21 52V39c0-8 5-13 11-13s11 5 11 13v13H21Zm-15 0V40c0-6 4-10 9-10 3 0 5 1 7 3-3 4-4 8-4 13v6H6Zm52 0H46v-6c0-5-1-9-4-13 2-2 4-3 7-3 5 0 9 4 9 10v12Z" fill="currentColor"/></svg>',
+  youth:'<svg viewBox="0 0 64 64"><circle cx="22" cy="20" r="8" fill="currentColor"/><circle cx="43" cy="20" r="8" fill="currentColor"/><path d="M8 52V40c0-8 6-13 14-13s14 5 14 13v12H8Zm28 0V40c0-5-2-9-5-12 3-2 7-2 12-1 8 2 13 7 13 15v10H36Z" fill="currentColor"/></svg>',
+  general:'<svg viewBox="0 0 64 64"><path d="M32 8l7 15 17 2-12 12 3 17-15-8-15 8 3-17L8 25l17-2 7-15Z" fill="currentColor"/></svg>'
+ };
+ window.HYMN_ICONS=icons;
+ window.hymnIconFor=function(label,type){
+   const x=(label||'').toLowerCase();
+   if(x.includes('oração')&&x.includes('palavra')) return icons.prayer;
+   if(x.includes('oração')) return icons.prayer;
+   if(x.includes('palavra')) return icons.word;
+   if(x.includes('testemunho')) return icons.testimony;
+   if(x.includes('batismo')) return icons.baptism;
+   if(x.includes('ceia')) return icons.supper;
+   if(x.includes('funeral')) return icons.funeral;
+   if(x.includes('abertura')) return icons.opening;
+   if(x.includes('encerramento')) return icons.closing;
+   if((type||'').toLowerCase().includes('apro') || x.includes('culto oficial')) return icons.official;
+   if(x.includes('jov')) return icons.youth;
+   return icons.general;
+ };
+})();
+</script>
+
 <style>
-/* V13 — pesquisa orienta o toque + título da ocasião fixo */
+/* V14 — sticky sem fresta + destaque de pesquisa + biblioteca de ícones */
 
-/* Ao navegar por uma ocasião, o cabeçalho real da seção fica preso abaixo da barra principal. */
+/* A barra fixa de ocasião encosta na barra superior; nenhum card aparece na fresta. */
 body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
- position:sticky;
- top:72px;
- z-index:9;
- margin:0 -4px 12px;
- padding:9px 8px 8px;
- background:rgba(253,251,247,.96);
- backdrop-filter:blur(8px);
- -webkit-backdrop-filter:blur(8px);
- border-bottom:2px solid #b78a34;
- box-shadow:0 5px 12px rgba(30,30,20,.07);
+ position:sticky!important;
+ top:64px!important;
+ z-index:30!important;
+ margin:0 0 12px!important;
+ padding:9px 8px 8px!important;
+ background:#fdfbf7!important;
+ border-bottom:2px solid #b78a34!important;
+ box-shadow:0 5px 10px rgba(42,35,22,.08)!important;
 }
-body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2{
- color:#102a43;
-}
-body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2:before{
- content:"Ocasião · ";
- color:#9b7429;
- font:800 .48em/1 Arial,sans-serif;
- text-transform:uppercase;
- letter-spacing:.06em;
- vertical-align:middle;
+@media(max-width:600px){
+ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{top:64px!important}
 }
 
-/* Resultado vindo da pesquisa: destaque forte, mas elegante, e convite explícito ao toque. */
+/* Remove a tarja experimental "Navegação / Índice de hinos". */
+#listContextHeading,.context-heading{display:none!important}
+
+/* Pesquisa: card chama atenção por movimento + brilho e depois retorna ao lugar. */
 .card.hino-destaque{
  position:relative;
- border:2px solid #b78a34!important;
- background:linear-gradient(135deg,#fffdf6,#fff7e7)!important;
- box-shadow:
-   0 0 0 4px rgba(183,138,52,.16),
-   0 9px 24px rgba(93,66,18,.18)!important;
- transform:scale(1.012);
- transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
- padding-bottom:42px!important;
+ z-index:3;
+ border:2px solid #c19031!important;
+ background:linear-gradient(135deg,#fffdf7,#fff4d8)!important;
+ box-shadow:0 0 0 5px rgba(193,144,49,.20),0 10px 26px rgba(105,73,18,.24)!important;
+ animation:hymnFound 1.05s ease-in-out 0s 3 alternate;
 }
-.card.hino-destaque:after{
- content:"Toque para abrir os detalhes";
- position:absolute;
- left:76px;
- bottom:10px;
- display:inline-flex;
- align-items:center;
- min-height:24px;
- padding:4px 10px;
- border-radius:999px;
- background:#102a43;
- color:#fff;
- font:700 11px/1.15 Arial,sans-serif;
- letter-spacing:.01em;
- box-shadow:0 3px 8px rgba(15,42,67,.16);
+@keyframes hymnFound{
+ 0%{transform:translateX(0) scale(1)}
+ 45%{transform:translateX(9px) scale(1.018)}
+ 100%{transform:translateX(2px) scale(1.008)}
 }
-.card.hino-destaque:before{
- content:"↗";
- position:absolute;
- left:57px;
- bottom:14px;
- color:#b78a34;
- font:900 16px/1 Arial,sans-serif;
+@media(prefers-reduced-motion:reduce){
+ .card.hino-destaque{animation:none}
 }
 
-/* Mantém o título fixo legível em celulares pequenos. */
-@media(max-width:600px){
- body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
-   top:72px;
-   padding:8px 6px 7px;
- }
- body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2{
-   font-size:1.55rem;
- }
- .card.hino-destaque:after{
-   left:62px;
-   font-size:10.5px;
- }
- .card.hino-destaque:before{left:45px}
+/* Padrão para ícones de ocasião/apropriação */
+.hymn-category-icon svg,.hd-meta-icon svg{
+ width:100%;height:100%;display:block;color:#fff9e8;
 }
 </style>
 
