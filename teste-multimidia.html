@@ -1101,7 +1101,7 @@ function openHymnDetail(h,cat){
 
  const iconBook='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M5 35c11-4 21-3 31 4v27c-10-6-20-7-31-4V35Zm62 0c-11-4-21-3-31 4v27c10-6 20-7 31-4V35Z" fill="currentColor"/><path d="M36 39v27" stroke="#9a6816" stroke-width="2.2"/></svg>';
  const iconHands='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M31 5c-6 6-9 13-9 21v9l-6-8c-3-4-8-1-6 5l9 18c3 6 9 10 17 11V24c0-8-2-15-5-19Zm10 0c6 6 9 13 9 21v9l6-8c3-4 8-1 6 5l-9 18c-3 6-9 10-17 11V24c0-8 2-15 5-19Z" fill="currentColor"/></svg>';
- const iconPrayerWord='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M7 44c10-4 20-3 29 3v19c-9-5-19-6-29-3V44Zm58 0c-10-4-20-3-29 3v19c9-5 19-6 29-3V44Z" fill="currentColor"/><path d="M31 4c-5 5-8 12-8 20v10l-6-8c-3-4-8-1-6 5l7 14 10-1 8 5V23c0-8-2-15-5-19Zm10 0c5 5 8 12 8 20v10l6-8c3-4 8-1 6 5l-7 14-10-1-8 5V23c0-8 2-15 5-19Z" fill="currentColor"/><path d="M36 47v19" stroke="#9a6816" stroke-width="2.2"/><path d="M8 29l-5-1m9-8-4-4m52 13 5-1m-9-8 4-4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+ const iconPrayerWord='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M6 45c10-4 20-3 30 4v17c-10-5-20-6-30-3V45Zm60 0c-10-4-20-3-30 4v17c10-5 20-6 30-3V45Z" fill="currentColor"/><path d="M36 49v17" stroke="#9a6816" stroke-width="2"/><path d="M31 7c-4 4-6 9-6 15v13l-6-8c-2-3-6-1-5 3l7 14 11 2 4 3V24c0-7-2-13-5-17Zm10 0c4 4 6 9 6 15v13l6-8c2-3 6-1 5 3l-7 14-11 2-4 3V24c0-7 2-13 5-17Z" fill="currentColor"/><path d="M12 20l-5-3m11-5-3-5m45 13 5-3m-11-5 3-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
  const iconPeople='<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="20" r="10" fill="currentColor"/><circle cx="15" cy="29" r="8" fill="currentColor"/><circle cx="57" cy="29" r="8" fill="currentColor"/><path d="M22 63V49c0-11 6-18 14-18s14 7 14 18v14H22ZM3 63V51c0-10 5-16 12-16 5 0 9 3 11 7-3 5-5 11-5 19v2H3Zm66 0H51v-2c0-8-2-14-5-19 2-4 6-7 11-7 7 0 12 6 12 16v12Z" fill="currentColor"/><path d="M27 63c3-2 6-3 9-3s6 1 9 3c-3 0-6 1-9 4-3-3-6-4-9-4Z" fill="currentColor"/></svg>';
  const occNorm=occ.toLowerCase();
  let occIcon=iconBook;
@@ -1377,6 +1377,84 @@ function loadHymnMedia(kind,media,button){
  #hymnDetail .hd-play[data-kind="instrumental"]{min-height:47px;font-size:16px}
  #hymnDetail .hd-platform{min-height:42px;font-size:11px}
  #hymnDetail #hdYoutube iframe{width:min(100%,430px)!important;max-height:242px!important}
+}
+</style>
+
+
+<style>
+/* V10 — refinamentos após teste real no celular */
+
+/* Cabeçalho claro: mantém a identidade musical sem criar a faixa azul escura. */
+#hymnDetail .hd-hero{
+ background:linear-gradient(180deg,#fffdf8 0%,#faf2e2 100%)!important;
+ border:1px solid rgba(188,139,55,.18);
+}
+#hymnDetail .hd-staff{
+ opacity:.30!important;
+ background:repeating-linear-gradient(to bottom,transparent 0 9px,rgba(175,122,32,.48) 9px 10.5px)!important;
+}
+#hymnDetail .hd-staff-right{color:#b7832c!important;opacity:.45!important}
+#hymnDetail .hd-clef{color:#a66e12!important;opacity:.88}
+#hymnDetail .hd-num>span:first-child{color:#805617!important}
+#hymnDetail .hd-num .hd-number{color:#b67d18!important}
+#hymnDetail h2{color:#102a43!important;text-shadow:none!important}
+
+/* Ícone Oração + Palavra ganha mais definição. */
+#hymnDetail .hd-meta-icon svg{color:#fff9e7!important}
+
+/* Instrumental: remove a clave gigante que estourava o botão. */
+#hymnDetail .hd-play[data-kind="instrumental"]{
+ display:grid!important;
+ grid-template-columns:28px 1fr 18px;
+ align-items:center;
+ min-height:38px!important;
+ padding:5px 11px!important;
+ overflow:hidden!important;
+}
+#hymnDetail .hd-score{
+ display:grid;place-items:center;
+ width:26px;height:26px;
+ font-size:21px!important;line-height:1!important;
+ overflow:hidden;
+}
+#hymnDetail .hd-play[data-kind="instrumental"] span:nth-child(2){
+ text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#hymnDetail .hd-play[data-kind="instrumental"] b{margin:0!important;text-align:right}
+
+/* Plataformas: tipografia e cápsulas proporcionais. */
+#hymnDetail .hd-platform{
+ min-height:35px!important;
+ padding:4px 7px!important;
+ gap:5px!important;
+ font-size:11px!important;
+ font-weight:800!important;
+ justify-content:flex-start!important;
+}
+#hymnDetail .hd-platform span{
+ flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#hymnDetail .hd-platform b{margin-left:auto!important;font-size:18px!important}
+#hymnDetail .brand{
+ display:inline-grid!important;
+ flex:0 0 22px!important;width:22px!important;height:22px!important;
+ font-size:9px!important;
+}
+
+/* Mantém o link externo que funcionou bem na V9. */
+#hymnDetail .hd-links{display:block!important;min-height:20px!important}
+
+@media(max-width:520px){
+ #hymnDetail .hd-hero{min-height:108px!important;padding:14px 42px 5px 45px!important}
+ #hymnDetail .hd-clef{font-size:61px!important}
+ #hymnDetail .hd-num .hd-number{font-size:42px!important}
+ #hymnDetail h2{font-size:23px!important;margin-top:4px!important}
+ #hymnDetail .hd-platform{font-size:10.5px!important}
+ #hymnDetail .hd-media{gap:5px!important}
+}
+@media(max-width:380px){
+ #hymnDetail .hd-platform{font-size:9.5px!important;padding-inline:5px!important}
+ #hymnDetail .brand{flex-basis:19px!important;width:19px!important;height:19px!important}
 }
 </style>
 
