@@ -486,6 +486,26 @@ body.welcome-mode{overflow:hidden}
 }
 </style>
 
+
+<style id="v2-compact-test">
+/* Protótipo v2.0 — navegação compacta */
+.quickbar{display:flex!important;justify-content:center;gap:7px!important}
+.quickbar #openSearch{flex:0 1 auto!important;text-align:center!important}
+.quickbar button{width:auto!important;padding:9px 13px!important;font-size:.84rem!important;border-radius:10px!important}
+#supportGuide{min-width:42px!important;padding-inline:10px!important}
+body.index-mode #goIndex{display:none!important}
+body:not(.index-mode) #supportGuide{display:none!important}
+.personal-tools{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px!important;padding-top:8px!important}
+.personal-tools button{min-height:42px!important;padding:7px 8px!important;font-size:.78rem!important;gap:5px!important}
+#hymnDetail .hd-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#hymnDetail #hdLyrics{background:#fffaf0!important;color:#173149!important;border-color:#b98120!important}
+#quickMarkModal{position:fixed;inset:0;z-index:100000;display:none;place-items:center;padding:14px;background:rgba(15,25,38,.58);backdrop-filter:blur(2px)}
+#quickMarkModal.show{display:grid}.qm-panel{width:min(94vw,520px);max-height:82dvh;overflow:auto;background:#fffdf8;border:1px solid #d8b66d;border-radius:18px;box-shadow:0 18px 55px rgba(16,27,43,.28)}
+.qm-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #e3d8c0}.qm-head h3{margin:0;color:#172b45}.qm-close{background:transparent!important;color:#52606f!important;font-size:1.6rem!important;padding:0 5px!important}.qm-body{padding:14px}.qm-body input{font-size:16px}.qm-results{display:grid;gap:7px;margin-top:10px}.qm-item{display:flex;width:100%;text-align:left;align-items:center;gap:10px;background:#fff!important;color:#26394d!important;border:1px solid #ded3bc!important;padding:11px!important;border-radius:11px!important}.qm-item b{color:#a97822;min-width:35px}.qm-item span{font-family:Georgia,serif;font-weight:700}.qm-empty{padding:15px;text-align:center;color:#7b7468;font: .86rem Arial,sans-serif}
+.qm-toast{display:none;margin-top:10px;padding:11px;border-radius:10px;background:#eef3e9;color:#385338;font:bold .86rem Arial,sans-serif}.qm-toast.show{display:block}
+@media(max-width:600px){.quickbar button{padding:9px 10px!important;font-size:.78rem!important}.personal-tools{width:92%;gap:5px!important}.personal-tools button{padding:6px 5px!important;font-size:.72rem!important}.personal-tools b{min-width:19px;height:19px;font-size:.65rem}#hymnDetail .hd-actions{grid-template-columns:1fr 1fr!important}#hymnDetail #hdLyrics{grid-column:1/-1!important}}
+@media(min-width:900px){.quickbar{justify-content:flex-start!important}.toolbar .wrap{max-width:1120px}.personal-tools{max-width:620px;margin-left:auto;margin-right:auto}}
+</style>
 </head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
@@ -533,13 +553,15 @@ body.welcome-mode{overflow:hidden}
 
 <header><div class="brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><h1>Hinário nº 5</h1><p>Guia Visual de Hinos por Ocasião</p></header>
 <div class="toolbar"><div class="wrap quickbar">
-<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino"> 🔎 Pesquisar hinos </button>
+<button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino">🔎 Pesquisar</button>
 <button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button>
-<button class="navbtn" id="goIndex" type="button">Índice</button>
+<button class="navbtn" id="goIndex" type="button">← Índice</button>
+<button class="navbtn" id="supportGuide" type="button" title="Apoiar o Guia" aria-label="Apoiar o Guia">☕</button>
 </div></div>
 <div class="personal-tools wrap" aria-label="Minha biblioteca">
   <button type="button" id="openFavorites">★ <span>Favoritos</span><b id="favTotal">0</b></button>
-  <button type="button" id="openCalledHistory">✓ <span>Hinos chamados</span><b id="callTotal">0</b></button>
+  <button type="button" id="openCalledHistory">✓ <span>Chamados</span><b id="callTotal">0</b></button>
+  <button type="button" id="openQuickMark">✓ <span>Marcar hino</span></button>
 </div>
 <div id="searchModal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" id="modalBackdrop"></div>
@@ -1204,7 +1226,7 @@ window.addEventListener('appinstalled', function () {
    <div class="hd-swoosh" aria-hidden="true"><i></i><i></i></div>
   </header>
   <div class="hd-meta" id="hdMeta"></div>
-  <div class="hd-actions"><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar hino chamado</button><button type="button" id="hdObserve"><span class="hd-sheet-icon">▤</span> Registrar observação</button></div><button type="button" id="hdHistory" class="hd-history-link" hidden><span>▤</span><span id="hdHistoryText">Histórico</span><span aria-hidden="true">›</span></button>
+  <div class="hd-actions"><button type="button" id="hdCalled"><span class="hd-solid-check">✓</span> Marcar hino chamado</button><button type="button" id="hdObserve"><span class="hd-sheet-icon">▤</span> Registrar observação</button><button type="button" id="hdLyrics"><span class="hd-sheet-icon">▤</span> Letra</button></div><button type="button" id="hdHistory" class="hd-history-link" hidden><span>▤</span><span id="hdHistoryText">Histórico</span><span aria-hidden="true">›</span></button>
   <div class="hd-divider" aria-hidden="true"><span>𝄞</span></div>
   <div id="hdMediaArea"></div>
  </div>
@@ -2185,6 +2207,8 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 </script>
 
 
+
+<div id="quickMarkModal" aria-hidden="true"><div class="qm-panel" role="dialog" aria-modal="true" aria-labelledby="qmTitle"><div class="qm-head"><h3 id="qmTitle">✓ Marcar hino chamado</h3><button type="button" class="qm-close" id="closeQuickMark" aria-label="Fechar">×</button></div><div class="qm-body"><input id="quickMarkSearch" type="search" inputmode="search" autocomplete="off" placeholder="Número ou parte do título"><div id="quickMarkResults" class="qm-results"></div><div id="quickMarkToast" class="qm-toast"></div></div></div></div>
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
   <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" class="personal-download" onclick="downloadCallsCsv()" id="callsCsvBtn" title="Baixar CSV" aria-label="Baixar CSV">↓ CSV</button><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
@@ -2221,4 +2245,4 @@ function downloadCallsCsv(){
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 </script>
-</body></html>
+\n<script id="v2-compact-test-js">\n(function(){\n const markModal=document.getElementById('quickMarkModal'), openBtn=document.getElementById('openQuickMark'), closeBtn=document.getElementById('closeQuickMark'), input=document.getElementById('quickMarkSearch'), results=document.getElementById('quickMarkResults'), toast=document.getElementById('quickMarkToast');\n function unique(){const m=new Map();Object.values(DATA).flat().forEach(h=>{const k=String(h.num);if(!m.has(k))m.set(k,h)});return [...m.values()]}\n function close(){markModal.classList.remove('show');markModal.setAttribute('aria-hidden','true');input.value='';results.innerHTML='';toast.classList.remove('show')}\n function render(){const q=input.value.trim().toLowerCase();toast.classList.remove('show');if(!q){results.innerHTML='<div class="qm-empty">Digite o número ou parte do título.</div>';return}const found=unique().filter(h=>String(h.num).toLowerCase()===q||String(h.titulo).toLowerCase().includes(q)).slice(0,8);if(!found.length){results.innerHTML='<div class="qm-empty">Nenhum hino encontrado.</div>';return}results.innerHTML=found.map(h=>'<button type="button" class="qm-item" data-qm="'+String(h.num).replace(/"/g,'&quot;')+'"><b>'+h.num+'</b><span>'+h.titulo+'</span></button>').join('');results.querySelectorAll('[data-qm]').forEach(b=>b.onclick=()=>{const h=findHymn(b.dataset.qm);if(!h)return;HYMN_STORE.addCall(h,'');refreshPersonalUI();updateHymnActionButtons(h);toast.textContent='✓ Hino '+h.num+' registrado como chamado.';toast.classList.add('show');results.innerHTML='';input.value='';});}\n if(openBtn)openBtn.onclick=()=>{markModal.classList.add('show');markModal.setAttribute('aria-hidden','false');render();setTimeout(()=>input.focus(),80)};\n if(closeBtn)closeBtn.onclick=close;if(input)input.addEventListener('input',render);markModal.addEventListener('click',e=>{if(e.target===markModal)close()});\n const support=document.getElementById('supportGuide');if(support)support.onclick=()=>alert('☕ Protótipo: aqui abrirá a tela discreta de apoio ao Guia.');\n const lyrics=document.getElementById('hdLyrics');if(lyrics)lyrics.onclick=()=>alert('📖 Protótipo: aqui será aberta a letra do hino quando houver conteúdo autorizado.');\n})();\n</script>\n</body></html>
