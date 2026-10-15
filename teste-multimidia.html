@@ -387,6 +387,19 @@ body.welcome-mode{overflow:hidden}
 #callDialog .call-dialog-actions{position:sticky!important;bottom:0!important;z-index:5!important;background:#fffdf8!important;margin:9px -16px 0!important;padding:9px 16px 11px!important;box-shadow:0 -5px 12px rgba(255,253,248,.96)!important}
 </style>
 
+<style id="v22-list-actions-test">
+.line1{align-items:center!important}
+.card-fav-front{flex:0 0 32px!important;width:32px!important;height:32px!important;display:grid!important;place-items:center!important;padding:0!important;margin:0 1px 0 -2px!important;border:0!important;background:transparent!important;color:#a98038!important;font-size:1.55rem!important;line-height:1!important;box-shadow:none!important;border-radius:50%!important}
+.card-fav-front.is-active{color:#b5842d!important}.line1 .num{min-width:43px!important}.line1 .title{flex:1!important;min-width:0!important}
+.card-actions{display:flex!important;align-items:center!important;gap:5px!important;margin-left:auto!important}
+.card-call-mini{position:relative!important;flex:0 0 31px!important;width:31px!important;height:31px!important;padding:0!important;border:1.5px solid #b28a47!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:#fffdf7!important;color:#8b692e!important;box-shadow:none!important}
+.card-call-mini .mini-check{font:bold .92rem Arial,sans-serif!important;line-height:1!important}
+.card-call-mini sup{position:absolute!important;right:-5px!important;top:-6px!important;min-width:16px!important;height:16px!important;padding:0 4px!important;display:none!important;align-items:center!important;justify-content:center!important;border-radius:999px!important;background:#2b353e!important;color:#fff!important;border:2px solid #f9f7f0!important;font:bold .60rem/12px Arial,sans-serif!important}
+.card-call-mini.has-calls{background:#b18438!important;color:#fff!important;border-color:#b18438!important}.card-call-mini.has-calls sup{display:flex!important}
+.card-chevron{flex:0 0 auto!important;margin-left:1px!important}
+.card-status{display:none!important}
+@media(max-width:390px){.card-fav-front{width:29px!important;height:29px!important;flex-basis:29px!important;font-size:1.4rem!important}.line1 .num{min-width:38px!important}.card-call-mini{width:29px!important;height:29px!important;flex-basis:29px!important}}
+</style>
 </head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
@@ -538,10 +551,12 @@ ORDER.forEach(cat=>{
    const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();card.dataset.hino=String(h.num);card.setAttribute("role","button");card.setAttribute("tabindex","0");
    let tag=others.length?`<div class="tag">Também: ${esc(others.join(" • "))}</div>`:"";
    if(h.apropriacao && h.apropriacao!=="Culto Oficial") tag+=`<div class="tag">${esc(h.apropriacao)}</div>`;
-   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações do hino"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><span class="card-status" aria-live="polite"></span><span class="card-chevron" aria-hidden="true">›</span></div></div>${tag}`;
-   const favQuick=card.querySelector(".card-fav");
+   card.innerHTML=`<div class="line1"><button type="button" class="card-fav card-fav-front" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações do hino"><button type="button" class="card-call-mini" title="Registrar chamado" aria-label="Registrar hino ${esc(h.num)} como chamado"><span class="mini-check">✓</span><sup></sup></button><span class="card-chevron" aria-hidden="true">›</span></div></div>${tag}`;
+   const favQuick=card.querySelector(".card-fav"), callQuick=card.querySelector(".card-call-mini");
    favQuick.addEventListener("click",(e)=>{e.stopPropagation();HYMN_STORE.toggleFav(h);refreshPersonalUI();});
    favQuick.addEventListener("keydown",(e)=>e.stopPropagation());
+   callQuick.addEventListener("click",(e)=>{e.stopPropagation();openCallDialog(h);});
+   callQuick.addEventListener("keydown",(e)=>e.stopPropagation());
    card.addEventListener("click",()=>openHymnDetail(h,cat));
    card.addEventListener("keydown",(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openHymnDetail(h,cat);}});
    grid.appendChild(card);
@@ -1258,13 +1273,13 @@ function refreshPersonalUI(){
  const counts={}; calls.forEach(x=>counts[String(x.num)]=(counts[String(x.num)]||0)+1);
 
  document.querySelectorAll('.card[data-hino]').forEach(card=>{
-   const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), status=card.querySelector('.card-status');
+   const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), callBtn=card.querySelector('.card-call-mini');
    if(f){const on=!!favs[k];f.classList.toggle('is-active',on);f.textContent=on?'★':'☆';f.setAttribute('aria-pressed',String(on))}
-   if(status){
+   if(callBtn){
      const qty=counts[k]||0;
-     const notes=calls.filter(x=>String(x.num)===k && (x.note||'').trim()).length;
-     status.innerHTML=qty?'<span>'+qty+' chamado'+(qty>1?'s':'')+'</span>'+(notes?'<span class="card-note">▤ '+notes+'</span>':''):'';
-     status.hidden=!qty;
+     callBtn.classList.toggle('has-calls',qty>0);
+     const sup=callBtn.querySelector('sup');
+     if(sup)sup.textContent=qty?String(qty):'';
    }
  });
  const ft=document.getElementById('favTotal'), ct=document.getElementById('callTotal');
