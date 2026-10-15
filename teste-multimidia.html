@@ -522,7 +522,7 @@ ORDER.forEach(cat=>{
    const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();card.dataset.hino=String(h.num);card.setAttribute("role","button");card.setAttribute("tabindex","0");
    let tag=others.length?`<div class="tag">Também: ${esc(others.join(" • "))}</div>`:"";
    if(h.apropriacao && h.apropriacao!=="Culto Oficial") tag+=`<div class="tag">${esc(h.apropriacao)}</div>`;
-   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações rápidas"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><button type="button" class="card-call" title="Registrar chamado" aria-label="Registrar hino ${esc(h.num)} como chamado">✓<small></small></button></div></div>${tag}`;
+   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações rápidas"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><button type="button" class="card-call" title="Registrar chamado" aria-label="Registrar hino ${esc(h.num)} como chamado"><span class="call-label">Marcar</span></button></div></div>${tag}`;
    const favQuick=card.querySelector(".card-fav"), callQuick=card.querySelector(".card-call");
    favQuick.addEventListener("click",(e)=>{e.stopPropagation();HYMN_STORE.toggleFav(h);refreshPersonalUI();});
    callQuick.addEventListener("click",(e)=>{e.stopPropagation();openCallDialog(h);});
@@ -1211,6 +1211,9 @@ function allUniqueHymns(){
 }
 function findHymn(num){return allUniqueHymns().find(h=>String(h.num)===String(num))}
 
+function noteMiniIcon(){
+ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 3v4h4M9 11h6M9 15h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+}
 function refreshPersonalUI(){
  const favs=HYMN_STORE.read(HYMN_STORE.favKey,{});
  const calls=HYMN_STORE.calls();
@@ -1220,8 +1223,10 @@ function refreshPersonalUI(){
    const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), c=card.querySelector('.card-call');
    if(f){const on=!!favs[k];f.classList.toggle('is-active',on);f.textContent=on?'★':'☆';f.setAttribute('aria-pressed',String(on))}
    if(c){
-     const qty=counts[k]||0;c.classList.toggle('is-active',qty>0);
-     const sm=c.querySelector('small'); if(sm)sm.textContent=qty?String(qty):'';
+     const qty=counts[k]||0;
+     const hasNote=calls.some(x=>String(x.num)===k && (x.note||'').trim());
+     c.classList.toggle('is-active',qty>0);
+     c.innerHTML=qty?'<span class="call-label">Chamado '+qty+'</span>'+(hasNote?'<span class="note-mark">'+noteMiniIcon()+'</span>':''):'<span class="call-label">Marcar</span>';
    }
  });
  const ft=document.getElementById('favTotal'), ct=document.getElementById('callTotal');
@@ -1244,35 +1249,45 @@ function closePersonal(){
 }
 function renderFavorites(){
  const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
- title.textContent='★ Meus Favoritos';
+ title.textContent='★ Meus Favoritos'; document.getElementById('downloadCalls').hidden=true;
  const favs=HYMN_STORE.read(HYMN_STORE.favKey,{});
  const items=Object.values(favs).sort((a,b)=>String(a.num).localeCompare(String(b.num),undefined,{numeric:true}));
  if(!items.length){box.innerHTML='<div class="personal-empty">Você ainda não favoritou nenhum hino.</div>';return}
- box.innerHTML=items.map(x=>`<article class="personal-item">
-   <button class="personal-open" type="button" data-open-hymn="${esc(x.num)}"><b>Hino ${esc(x.num)}</b><span>${esc(x.titulo||'')}</span></button>
-   <button class="personal-remove" type="button" data-unfav="${esc(x.num)}" title="Remover dos favoritos">★</button>
- </article>`).join('');
- box.querySelectorAll('[data-open-hymn]').forEach(btn=>btn.onclick=()=>{
-   const h=findHymn(btn.dataset.openHymn); if(h){closePersonal();openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}
- });
- box.querySelectorAll('[data-unfav]').forEach(btn=>btn.onclick=()=>{
-   const h=findHymn(btn.dataset.unfav); if(h){HYMN_STORE.toggleFav(h);refreshPersonalUI()}
- });
+ box.innerHTML=items.map(x=>{
+   const h=findHymn(x.num), occ=h?(h.ocasiao||''):'';
+   return `<article class="personal-item favorite-clean" data-open-hymn="${esc(x.num)}"><div class="fav-num">${esc(x.num)}</div><div class="fav-copy"><b>${esc(x.titulo||'')}</b>${occ?`<span>${esc(occ.replace(/\s*\/\s*/g,' • '))}</span>`:''}</div></article>`;
+ }).join('');
+ box.querySelectorAll('[data-open-hymn]').forEach(card=>card.onclick=()=>{const h=findHymn(card.dataset.openHymn);if(h){closePersonal();openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}});
 }
 function fmtDate(iso){
  try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(iso))}catch(e){return iso||''}
 }
 function renderCalls(){
  const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
- title.textContent='✓ Hinos Chamados';
+ title.textContent='✓ Hinos Chamados'; document.getElementById('downloadCalls').hidden=false;
  const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
  if(!items.length){box.innerHTML='<div class="personal-empty">Nenhum hino chamado foi registrado ainda.</div>';return}
- box.innerHTML=items.map(x=>`<article class="history-item">
-   <div class="history-main"><b>Hino ${esc(x.num)} — ${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div>
-   <div class="history-actions"><button type="button" data-edit-call="${esc(x.id)}">Editar</button><button type="button" data-delete-call="${esc(x.id)}">Excluir</button></div>
- </article>`).join('');
- box.querySelectorAll('[data-edit-call]').forEach(btn=>btn.onclick=()=>editCallNote(btn.dataset.editCall));
- box.querySelectorAll('[data-delete-call]').forEach(btn=>btn.onclick=()=>deleteCallRecord(btn.dataset.deleteCall));
+ box.innerHTML=items.map(x=>`<article class="history-item history-clean" data-call-id="${esc(x.id)}"><div class="history-number">${esc(x.num)}</div><div class="history-main"><b>${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p><span class="history-note-icon">${noteMiniIcon()}</span>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div></article>`).join('');
+ box.querySelectorAll('[data-call-id]').forEach(card=>card.onclick=()=>openCallRecord(card.dataset.callId));
+}
+function openCallRecord(id){
+ const item=HYMN_STORE.calls().find(x=>x.id===id); if(!item)return;
+ window.__activeCallId=id;
+ document.getElementById('recordHymn').textContent='Hino '+item.num+' — '+(item.titulo||'');
+ document.getElementById('recordDate').textContent=fmtDate(item.at);
+ document.getElementById('recordNote').innerHTML=item.note?'<span class="history-note-icon">'+noteMiniIcon()+'</span>'+esc(item.note):'<em>Sem observação</em>';
+ document.getElementById('recordModal').classList.add('show');
+}
+function closeCallRecord(){document.getElementById('recordModal').classList.remove('show')}
+function editActiveCall(){const id=window.__activeCallId;closeCallRecord();editCallNote(id)}
+function deleteActiveCall(){const id=window.__activeCallId,item=HYMN_STORE.calls().find(x=>x.id===id);if(!item)return;if(confirm('Excluir este registro do Hino '+item.num+'?')){HYMN_STORE.deleteCall(id);closeCallRecord();refreshPersonalUI()}}
+function downloadCallsCSV(){
+ const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(a.at)-new Date(b.at));
+ if(!items.length){alert('Ainda não há registros de hinos chamados.');return}
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"', rows=[['Hino','Título','Data','Hora','Observação']];
+ items.forEach(x=>{const d=new Date(x.at);rows.push([x.num,x.titulo||'',d.toLocaleDateString('pt-BR'),d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),x.note||''])});
+ const blob=new Blob(['\ufeff'+rows.map(r=>r.map(q).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='hinos-chamados-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 function editCallNote(id){
  const item=HYMN_STORE.calls().find(x=>x.id===id); if(!item)return;
@@ -1735,6 +1750,19 @@ function loadHymnMedia(kind,media,button){
 
 
 
+<style id="v20-polish">
+.card-actions .card-call{width:auto!important;min-width:52px!important;height:30px!important;padding:0 7px!important;display:flex!important;align-items:center!important;gap:4px!important;font-size:.7rem!important;font-weight:800!important;background:transparent!important;color:#856224!important;border-color:#d7c49a!important}
+.card-actions .card-call.is-active{background:#fffaf0!important;color:#70521e!important}
+.note-mark,.history-note-icon{display:inline-flex;width:14px;height:14px;flex:0 0 14px;color:#9b7127}.note-mark svg,.history-note-icon svg{width:14px;height:14px}
+.favorite-clean,.history-clean{cursor:pointer!important;padding:13px!important}
+.favorite-clean{display:flex!important;align-items:center!important;gap:13px!important}.fav-num,.history-number{font:700 1.25rem Georgia,serif;color:#b17d25;min-width:38px}.fav-copy b{display:block;color:#20354c}.fav-copy span{display:block;margin-top:4px;color:#68737c;font-size:.8rem}
+.history-clean{display:flex!important;gap:12px!important;align-items:flex-start!important}.history-main{min-width:0;flex:1}.history-main p{display:flex;gap:6px;align-items:flex-start;line-height:1.35}
+.personal-head-actions{display:flex;align-items:center;gap:8px}.personal-head .download-calls{border:1px solid #d8c8a4!important;background:#fff!important;color:#76571f!important;font-size:.7rem!important;font-weight:800!important;padding:6px 8px!important;border-radius:8px!important}
+.call-dialog-card{max-height:calc(100dvh - 18px)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;padding-bottom:0!important}.call-dialog-card textarea{min-height:60px!important;max-height:110px!important}.call-dialog-actions{position:sticky!important;bottom:0!important;background:#fffdf8!important;margin:10px -18px 0!important;padding:10px 18px 12px!important;border-top:1px solid #eadfc8!important}
+#recordModal{position:fixed;inset:0;z-index:100002;display:none;place-items:center;padding:18px;background:rgba(15,25,38,.5)}#recordModal.show{display:grid}.record-card{width:min(92vw,430px);background:#fffdf8;border:1px solid #d8b66d;border-radius:18px;padding:18px}.record-head{display:flex;justify-content:space-between;gap:10px}.record-head h3{margin:0;color:#172b45;font:700 1.1rem Georgia,serif}.record-head button{border:0;background:transparent;font-size:1.5rem}#recordDate{display:block;margin:6px 0 13px;color:#777064;font-size:.8rem}#recordNote{display:flex;gap:7px;padding:11px;background:#f8f3e9;border-radius:10px}.record-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:13px}.record-actions button{border:1px solid #d8c8a4;background:#fff;color:#30465d;padding:8px 10px;border-radius:8px;font-weight:800}
+@media(max-height:650px){#callDialog{place-items:start center!important;padding:6px 12px!important}.call-dialog-card{max-height:calc(100dvh - 12px)!important}.call-dialog-card textarea{min-height:52px!important}}
+</style>
+
 <style id="v19-personal-library">
 .personal-tools{display:flex;gap:9px;padding:9px 0 2px}
 .personal-tools button{
@@ -2017,7 +2045,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
-  <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
+  <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><div class="personal-head-actions"><button type="button" id="downloadCalls" class="download-calls" hidden>↓ CSV</button><button type="button" id="closePersonal" aria-label="Fechar">×</button></div></div>
   <div class="personal-tabs">
    <button type="button" id="tabFavorites">★ Favoritos</button>
    <button type="button" id="tabCalls">✓ Hinos chamados</button>
@@ -2034,10 +2062,13 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
  document.getElementById('tabFavorites').onclick=()=>{window.__personalView='favorites';renderFavorites()};
  document.getElementById('tabCalls').onclick=()=>{window.__personalView='calls';renderCalls()};
  if(close)close.onclick=closePersonal;
+ const dl=document.getElementById('downloadCalls');if(dl)dl.onclick=downloadCallsCSV;
  if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closePersonal()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closePersonal()});
  setTimeout(refreshPersonalUI,0);
 })();
 </script>
 
+<div id="recordModal"><div class="record-card"><div class="record-head"><h3 id="recordHymn">Registro</h3><button type="button" onclick="closeCallRecord()">×</button></div><time id="recordDate"></time><div id="recordNote"></div><div class="record-actions"><button type="button" onclick="editActiveCall()">Editar observação</button><button type="button" onclick="deleteActiveCall()">Excluir registro</button></div></div></div>
+<script>document.getElementById('recordModal').addEventListener('click',e=>{if(e.target.id==='recordModal')closeCallRecord()});</script>
 </body></html>
