@@ -1075,11 +1075,9 @@ window.addEventListener('appinstalled', function () {
  <div class="hd-card">
   <div class="hd-head">
    <button class="hd-close" id="hdClose" aria-label="Fechar">×</button>
-   <div class="hd-kicker">♫ Hinário Nº 5 ♫</div>
    <div class="hd-num" id="hdNum"></div>
    <h2 id="hdTitle"></h2>
   </div>
-  <div class="hd-ornament"><span>♬</span></div>
   <div class="hd-meta" id="hdMeta"></div>
   <div class="hd-actions"><button type="button" id="hdFav">☆ Favoritar</button><button type="button" id="hdCalled">✓ Marcar como chamado</button></div>
   <div id="hdMediaArea"></div>
@@ -1097,10 +1095,10 @@ function openHymnDetail(h,cat){
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
 
- const iconBook='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M5 18c9-3 18-2 27 4v34c-9-5-18-6-27-3V18Z" fill="rgba(255,255,255,.14)" stroke="currentColor" stroke-width="2.5"/><path d="M59 18c-9-3-18-2-27 4v34c9-5 18-6 27-3V18Z" fill="rgba(255,255,255,.14)" stroke="currentColor" stroke-width="2.5"/><path d="M32 22v34M11 26c6-1 11 0 16 2M11 33c6-1 11 0 16 2M53 26c-6-1-11 0-16 2M53 33c-6-1-11 0-16 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
- const iconHands='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M30 8c-5 5-7 10-7 16v9l-5-7c-3-4-7-1-5 4l8 17c2 5 6 8 11 9V24c0-7-1-13-2-16Z" fill="rgba(255,255,255,.12)" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M34 8c5 5 7 10 7 16v9l5-7c3-4 7-1 5 4l-8 17c-2 5-6 8-11 9V24c0-7 1-13 2-16Z" fill="rgba(255,255,255,.12)" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></svg>';
- const iconPrayerWord='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 40c10-4 19-3 28 3v15c-9-5-18-6-28-3V40Z" fill="rgba(255,255,255,.16)" stroke="currentColor" stroke-width="2.5"/><path d="M60 40c-10-4-19-3-28 3v15c9-5 18-6 28-3V40Z" fill="rgba(255,255,255,.16)" stroke="currentColor" stroke-width="2.5"/><path d="M32 43v15" stroke="currentColor" stroke-width="2.4"/><path d="M29 5c-5 5-7 10-7 16v10l-5-7c-3-4-7-1-5 4l6 13M35 5c5 5 7 10 7 16v10l5-7c3-4 7-1 5 4l-6 13M32 8v32" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- const iconPeople='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="18" r="8" fill="rgba(255,255,255,.18)" stroke="currentColor" stroke-width="2.6"/><circle cx="13" cy="25" r="6" fill="rgba(255,255,255,.18)" stroke="currentColor" stroke-width="2.6"/><circle cx="51" cy="25" r="6" fill="rgba(255,255,255,.18)" stroke="currentColor" stroke-width="2.6"/><path d="M20 54v-8c0-9 5-15 12-15s12 6 12 15v8M4 53v-7c0-7 4-12 9-12 4 0 7 2 9 5M60 53v-7c0-7-4-12-9-12-4 0-7 2-9 5" fill="rgba(255,255,255,.10)" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>';
+ const iconBook='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 24c10-4 19-3 28 4v29c-9-6-18-7-28-4V24Zm56 0c-10-4-19-3-28 4v29c9-6 18-7 28-4V24Z" fill="currentColor"/><path d="M32 28v29" stroke="#a87518" stroke-width="2"/></svg>';
+ const iconHands='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M29 5c-5 5-8 12-8 20v8l-5-7c-3-4-8-1-6 5l8 17c3 6 8 10 14 11V23c0-8-1-14-3-18Zm6 0c5 5 8 12 8 20v8l5-7c3-4 8-1 6 5l-8 17c-3 6-8 10-14 11V23c0-8 1-14 3-18Z" fill="currentColor"/></svg>';
+ const iconPrayerWord='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M5 39c9-3 18-2 27 4v16c-9-5-18-6-27-3V39Zm54 0c-9-3-18-2-27 4v16c9-5 18-6 27-3V39Z" fill="currentColor"/><path d="M29 4c-5 5-7 11-7 18v10l-5-7c-3-4-7-1-6 4l6 13h8l7 5V22c0-8-1-14-3-18Zm6 0c5 5 7 11 7 18v10l5-7c3-4 7-1 6 4l-6 13h-8l-7 5V22c0-8 1-14 3-18Z" fill="currentColor"/><path d="M32 43v16" stroke="#a87518" stroke-width="2"/></svg>';
+ const iconPeople='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="18" r="9" fill="currentColor"/><circle cx="13" cy="27" r="7" fill="currentColor"/><circle cx="51" cy="27" r="7" fill="currentColor"/><path d="M20 55V45c0-10 5-16 12-16s12 6 12 16v10H20ZM3 55v-8c0-9 4-14 10-14 4 0 7 2 9 5-3 4-4 9-4 15v2H3Zm58 0H46v-2c0-6-1-11-4-15 2-3 5-5 9-5 6 0 10 5 10 14v8Z" fill="currentColor"/><path d="M24 55c3-2 5-3 8-3s5 1 8 3c-3 0-5 1-8 3-3-2-5-3-8-3Z" fill="currentColor"/></svg>';
  const occNorm=occ.toLowerCase();
  let occIcon=iconBook;
  if(occNorm.includes('oração')&&occNorm.includes('palavra')) occIcon=iconPrayerWord;
@@ -1158,5 +1156,74 @@ function loadHymnMedia(kind,media,button){
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 })();
 </script>
+
+
+<style>
+/* V7 — cabeçalho compacto e ícones fiéis às referências */
+#hymnDetail .hd-head{
+  padding:2px 44px 8px 0;
+  text-align:left;
+}
+#hymnDetail .hd-num{
+  justify-content:flex-start;
+  gap:9px;
+  margin:0;
+  line-height:1;
+}
+#hymnDetail .hd-num>span:first-child{
+  font-family:Georgia,serif;
+  font-size:16px;
+  letter-spacing:.08em;
+  color:#8f651f;
+}
+#hymnDetail .hd-num .hd-number{
+  font-size:38px;
+  color:#b47f1f;
+}
+#hymnDetail h2{
+  text-align:left;
+  font-size:25px;
+  margin:3px 0 0;
+  line-height:1.02;
+}
+#hymnDetail .hd-close{top:0;right:0}
+#hymnDetail .hd-meta{margin-top:4px}
+#hymnDetail .hd-meta-icon svg{
+  width:52px;
+  height:52px;
+  color:#fff7df;
+  filter:drop-shadow(0 2px 1px rgba(75,45,0,.28));
+}
+#hymnDetail .hd-meta-row{
+  grid-template-columns:78px 1fr;
+}
+#hymnDetail .hd-meta-icon{
+  min-height:74px;
+}
+#hymnDetail .hd-meta-copy{
+  position:relative;
+  padding-left:18px;
+}
+#hymnDetail .hd-meta-copy:before{
+  content:"";
+  position:absolute;
+  left:8px;
+  top:14px;
+  bottom:14px;
+  width:1px;
+  background:rgba(151,103,28,.62);
+}
+@media(max-width:520px){
+  #hymnDetail .hd-head{padding:1px 40px 6px 2px}
+  #hymnDetail .hd-num>span:first-child{font-size:14px}
+  #hymnDetail .hd-num .hd-number{font-size:34px}
+  #hymnDetail h2{font-size:21px;max-width:90%}
+  #hymnDetail .hd-meta-row{grid-template-columns:68px 1fr}
+  #hymnDetail .hd-meta-icon{min-height:62px}
+  #hymnDetail .hd-meta-icon svg{width:48px;height:48px}
+  #hymnDetail .hd-meta-copy{padding-left:16px}
+  #hymnDetail .hd-meta-copy:before{left:7px;top:11px;bottom:11px}
+}
+</style>
 
 </body></html>
