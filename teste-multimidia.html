@@ -429,6 +429,63 @@ body.welcome-mode{overflow:hidden}
 }
 </style>
 
+
+<style id="v25-history-visual-refresh">
+/* V25 — restaura o visual compacto do modal de Hinos Chamados. */
+.personal-head{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;align-items:center!important;gap:10px!important;
+ padding:14px 16px!important;border-bottom:1px solid #e3d8c0!important;background:#fffdf8!important;
+}
+.personal-head h3{
+ min-width:0!important;margin:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+ color:#172b45!important;font:700 1.28rem/1.1 Georgia,serif!important;
+}
+#callsCsvBtn.personal-download{
+ width:auto!important;min-width:78px!important;height:44px!important;margin:0!important;padding:0 14px!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ border:1px solid #d8c8a4!important;border-radius:12px!important;background:#fffdf8!important;
+ color:#7b5c1e!important;box-shadow:none!important;white-space:nowrap!important;
+ font:700 .90rem/1 Arial,sans-serif!important;letter-spacing:0!important;
+}
+#callsCsvBtn.personal-download:hover,#callsCsvBtn.personal-download:focus-visible{
+ background:#fbf4e5!important;border-color:#c9ad71!important;outline:none!important;
+}
+#callsCsvBtn[hidden]{display:none!important}
+#closePersonal{
+ width:38px!important;height:44px!important;padding:0!important;display:grid!important;place-items:center!important;
+ border:0!important;background:transparent!important;color:#52606f!important;font:700 2rem/1 Arial,sans-serif!important;
+}
+.personal-content{padding:12px 14px 14px!important;background:#fffdf8!important}
+.history-item{
+ border:1px solid #e0d5bf!important;border-radius:15px!important;background:#fff!important;
+ padding:14px 15px 9px!important;margin-bottom:10px!important;box-shadow:none!important;
+}
+.history-row{display:grid!important;grid-template-columns:52px minmax(0,1fr)!important;gap:12px!important;align-items:start!important}
+.history-num{color:#a77b2d!important;font:400 1.55rem/1.1 Georgia,serif!important;padding-top:1px!important}
+.history-copy{min-width:0!important}
+.history-main b{display:block!important;color:#20354c!important;font:700 1.08rem/1.18 Georgia,serif!important}
+.history-main time{display:block!important;margin-top:4px!important;color:#776f62!important;font-size:.82rem!important}
+.history-main p{margin:9px 0 0!important;color:#4d5d69!important;font:400 .98rem/1.3 Georgia,serif!important}
+.history-main .no-note{color:#989083!important;font-style:italic!important}
+.history-actions{display:flex!important;justify-content:flex-end!important;gap:4px!important;margin-top:6px!important}
+.history-actions button{
+ padding:4px 7px!important;border:0!important;background:transparent!important;color:#66717b!important;
+ border-radius:7px!important;font:700 .73rem/1 Arial,sans-serif!important;box-shadow:none!important;
+}
+.history-actions button:hover,.history-actions button:focus-visible{background:#f7f2e8!important;color:#30465d!important;outline:none!important}
+@media(max-width:420px){
+ .personal-head{gap:7px!important;padding:13px 13px!important}
+ .personal-head h3{font-size:1.12rem!important}
+ #callsCsvBtn.personal-download{min-width:72px!important;height:42px!important;padding:0 11px!important;font-size:.84rem!important;border-radius:11px!important}
+ #closePersonal{width:34px!important;height:42px!important;font-size:1.85rem!important}
+ .personal-content{padding:10px!important}
+ .history-item{padding:13px 13px 8px!important}
+ .history-row{grid-template-columns:46px minmax(0,1fr)!important;gap:10px!important}
+ .history-num{font-size:1.42rem!important}
+ .history-main b{font-size:1.02rem!important}
+}
+</style>
+
 </head>
 <body id="top" class="index-mode welcome-mode">
  <!-- Pop-up para instalação do Guia -->
@@ -1361,7 +1418,12 @@ function renderCalls(filterNum){
  }
  if(!items.length){box.innerHTML='<div class="personal-empty">Nenhum hino chamado foi registrado ainda.</div>';return}
  box.innerHTML=items.map(x=>`<article class="history-item">
-   <div class="history-main"><b>Hino ${esc(x.num)} — ${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div>
+   <div class="history-main">
+    <div class="history-row">
+     <span class="history-num">${esc(x.num)}</span>
+     <div class="history-copy"><b>${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div>
+    </div>
+   </div>
    <div class="history-actions"><button type="button" data-edit-call="${esc(x.id)}">Editar</button><button type="button" data-delete-call="${esc(x.id)}">Excluir</button></div>
  </article>`).join('');
  box.querySelectorAll('[data-edit-call]').forEach(btn=>btn.onclick=()=>editCallNote(btn.dataset.editCall));
@@ -2110,7 +2172,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
 
 <div id="personalModal" aria-hidden="true">
  <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
-  <div class="personal-head"><button type="button" class="personal-download" onclick="downloadCallsCsv()" id="callsCsvBtn">⬇ Baixar CSV</button><h3 id="personalTitle">Minha biblioteca</h3><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
+  <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" class="personal-download" onclick="downloadCallsCsv()" id="callsCsvBtn" title="Baixar CSV" aria-label="Baixar CSV">↓ CSV</button><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
   <div id="personalContent" class="personal-content"></div>
  </div>
 </div>
