@@ -2498,9 +2498,10 @@ function downloadCallsCsv(){
           refresh();
           results.innerHTML='';input.value='';
           toast.classList.add('show');
-          toast.innerHTML='<b>✓ Hino '+esc(h.num)+' registrado</b><div style="margin-top:5px">Deseja adicionar uma observação?</div><div class="v2MiniActions"><button id="v2ObsNow">▤ Adicionar observação</button><button id="v2UndoNow">↶ Desfazer</button></div>';
+          toast.innerHTML='<b>✓ Hino '+esc(h.num)+' registrado</b><div style="margin-top:5px">Deseja adicionar uma observação?</div><div class="v2MiniActions"><button id="v2ObsNow">▤ Sim, adicionar</button><button id="v2FinishNow">Não, concluir</button></div><button type="button" id="v2UndoNow" class="v2UndoLink">↶ Desfazer marcação</button>';
           document.getElementById('v2ObsNow').onclick=()=>{close('v2MarkOverlay');try{openHymnDetail(h);setTimeout(()=>document.getElementById('hdObserve')?.click(),100)}catch(e){}};
-          document.getElementById('v2UndoNow').onclick=()=>{try{HYMN_STORE.undoLastCall(h.num);refresh();if(typeof refreshPersonalUI==='function')refreshPersonalUI();toast.innerHTML='<b>Registro desfeito.</b>'}catch(e){}};
+          document.getElementById('v2FinishNow').onclick=()=>close('v2MarkOverlay');
+          document.getElementById('v2UndoNow').onclick=()=>{try{HYMN_STORE.undoLastCall(h.num);refresh();if(typeof refreshPersonalUI==='function')refreshPersonalUI();toast.innerHTML='<b>Registro desfeito.</b><div style="margin-top:5px">A marcação do Hino '+esc(h.num)+' foi removida.</div><button type="button" id="v2CloseAfterUndo" class="v2Primary">Concluir</button>';document.getElementById('v2CloseAfterUndo').onclick=()=>close('v2MarkOverlay')}catch(e){}};
         }catch(e){toast.classList.add('show');toast.textContent='Não foi possível registrar neste protótipo.'}
       });
     });
@@ -2622,6 +2623,22 @@ body.index-mode #indice > button{
 }
 body.index-mode #indice{
   row-gap:12px!important;
+}
+</style>
+
+
+<style id="v2-fix-confirmacao-chamado">
+.v2UndoLink{
+  display:block;
+  margin:11px auto 0;
+  padding:6px 9px;
+  border:0;
+  background:transparent;
+  color:#776b58;
+  font-size:.8rem;
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
 }
 </style>
 
