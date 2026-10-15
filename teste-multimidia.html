@@ -1101,7 +1101,7 @@ function openHymnDetail(h,cat){
 
  const iconBook='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M5 35c11-4 21-3 31 4v27c-10-6-20-7-31-4V35Zm62 0c-11-4-21-3-31 4v27c10-6 20-7 31-4V35Z" fill="currentColor"/><path d="M36 39v27" stroke="#9a6816" stroke-width="2.2"/></svg>';
  const iconHands='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M31 5c-6 6-9 13-9 21v9l-6-8c-3-4-8-1-6 5l9 18c3 6 9 10 17 11V24c0-8-2-15-5-19Zm10 0c6 6 9 13 9 21v9l6-8c3-4 8-1 6 5l-9 18c-3 6-9 10-17 11V24c0-8 2-15 5-19Z" fill="currentColor"/></svg>';
- const iconPrayerWord='<svg viewBox="0 0 72 72" aria-hidden="true"><path d="M6 45c10-4 20-3 30 4v17c-10-5-20-6-30-3V45Zm60 0c-10-4-20-3-30 4v17c10-5 20-6 30-3V45Z" fill="currentColor"/><path d="M36 49v17" stroke="#9a6816" stroke-width="2"/><path d="M31 7c-4 4-6 9-6 15v13l-6-8c-2-3-6-1-5 3l7 14 11 2 4 3V24c0-7-2-13-5-17Zm10 0c4 4 6 9 6 15v13l6-8c2-3 6-1 5 3l-7 14-11 2-4 3V24c0-7 2-13 5-17Z" fill="currentColor"/><path d="M12 20l-5-3m11-5-3-5m45 13 5-3m-11-5 3-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+ const iconPrayerWord='<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M9 49c10-4 21-3 31 4v18c-10-6-21-7-31-3V49Zm62 0c-10-4-21-3-31 4v18c10-6 21-7 31-3V49Z" fill="currentColor"/><path d="M40 53v18" fill="none" stroke="#a26d17" stroke-width="2"/><path d="M35 8c-5 5-7 12-7 20v12l-6-8c-3-4-7-1-6 4l7 13 12 2 5 4V27c0-8-2-14-5-19Zm10 0c5 5 7 12 7 20v12l6-8c3-4 7-1 6 4l-7 13-12 2-5 4V27c0-8 2-14 5-19Z" fill="currentColor"/><path d="M40 10v31M15 24l-6-3m12-7-4-6m48 16 6-3m-12-7 4-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
  const iconPeople='<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="20" r="10" fill="currentColor"/><circle cx="15" cy="29" r="8" fill="currentColor"/><circle cx="57" cy="29" r="8" fill="currentColor"/><path d="M22 63V49c0-11 6-18 14-18s14 7 14 18v14H22ZM3 63V51c0-10 5-16 12-16 5 0 9 3 11 7-3 5-5 11-5 19v2H3Zm66 0H51v-2c0-8-2-14-5-19 2-4 6-7 11-7 7 0 12 6 12 16v12Z" fill="currentColor"/><path d="M27 63c3-2 6-3 9-3s6 1 9 3c-3 0-6 1-9 4-3-3-6-4-9-4Z" fill="currentColor"/></svg>';
  const occNorm=occ.toLowerCase();
  let occIcon=iconBook;
@@ -1116,7 +1116,7 @@ function openHymnDetail(h,cat){
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
-   area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir Hino</div><div class="hd-media"><button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>Ouvir instrumental</span><b>›</b></button><button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify">●</i><span>Spotify</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube">▶</i><span>YouTube</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic">▶</i><span>YouTube Music</span><b>›</b></button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
+   area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir Hino</div><div class="hd-media"><button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>Ouvir instrumental</span><b>›</b></button><button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
    area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
    area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. O teste multimídia está disponível no Hino 45.</div>';
@@ -1455,6 +1455,76 @@ function loadHymnMedia(kind,media,button){
 @media(max-width:380px){
  #hymnDetail .hd-platform{font-size:9.5px!important;padding-inline:5px!important}
  #hymnDetail .brand{flex-basis:19px!important;width:19px!important;height:19px!important}
+}
+</style>
+
+
+<style>
+/* V11 — direção visual aprovada: Exemplo A */
+#hymnDetail .hd-hero{
+ background:linear-gradient(135deg,#f8fbfc 0%,#edf3f5 52%,#f9f4e9 100%)!important;
+ border:1px solid rgba(181,135,55,.28)!important;
+}
+#hymnDetail .hd-staff{
+ opacity:.34!important;
+ background:repeating-linear-gradient(to bottom,transparent 0 9px,rgba(177,124,34,.55) 9px 10.5px)!important;
+}
+#hymnDetail .hd-staff-right{color:#b27c22!important;opacity:.58!important}
+#hymnDetail .hd-clef{color:#a86f12!important;opacity:.96!important}
+#hymnDetail h2{color:#0f2941!important}
+#hymnDetail .hd-swoosh i{border-color:#b47814!important}
+
+/* Ícones de metadados do exemplo A */
+#hymnDetail .hd-meta-icon{
+ background:linear-gradient(145deg,#d9a33d,#a86d10)!important;
+}
+#hymnDetail .hd-meta-icon svg{
+ width:54px!important;height:54px!important;
+ color:#fff9e7!important;
+ filter:drop-shadow(0 2px 1px rgba(72,43,5,.28))!important;
+}
+
+/* Instrumental: símbolo musical compacto, sem estouro. */
+#hymnDetail .hd-play[data-kind="instrumental"]{
+ grid-template-columns:24px 1fr 16px!important;
+ min-height:39px!important;
+}
+#hymnDetail .hd-score{
+ width:22px!important;height:22px!important;font-size:18px!important;
+}
+
+/* Cápsulas no equilíbrio visual do exemplo A. */
+#hymnDetail .hd-platform{
+ min-height:38px!important;
+ padding:5px 8px!important;
+ gap:6px!important;
+ font-size:11px!important;
+ border-radius:14px!important;
+}
+#hymnDetail .brand{
+ display:block!important;
+ flex:0 0 26px!important;
+ width:26px!important;height:26px!important;
+ background:none!important;border:0!important;outline:0!important;
+}
+#hymnDetail .brand svg{display:block;width:100%;height:100%}
+#hymnDetail .hd-platform span{
+ font-size:11px!important;font-weight:800!important;
+}
+#hymnDetail .hd-platform b{font-size:18px!important}
+
+/* Player e link externo permanecem como na versão aprovada. */
+#hymnDetail .hd-links{display:block!important}
+
+@media(max-width:520px){
+ #hymnDetail .hd-meta-icon svg{width:48px!important;height:48px!important}
+ #hymnDetail .hd-platform{min-height:36px!important;padding:4px 6px!important;gap:4px!important}
+ #hymnDetail .brand{flex-basis:23px!important;width:23px!important;height:23px!important}
+ #hymnDetail .hd-platform span{font-size:10px!important}
+}
+@media(max-width:370px){
+ #hymnDetail .brand{flex-basis:20px!important;width:20px!important;height:20px!important}
+ #hymnDetail .hd-platform span{font-size:9px!important}
 }
 </style>
 
