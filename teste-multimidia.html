@@ -1391,6 +1391,7 @@ function refreshPersonalUI(){
    if(window.__personalView==='favorites')renderFavorites();
    if(window.__personalView==='calls')renderCalls(window.__historyHymn||undefined);
  }
+ if(typeof window.v2RefreshCounts==='function') window.v2RefreshCounts();
 }
 function openPersonal(view){
  const csvBtn=document.getElementById('callsCsvBtn'); if(csvBtn)csvBtn.hidden=(view!=='calls');
@@ -2341,6 +2342,7 @@ function downloadCallsCsv(){
     const a=document.getElementById('v2FavCount'),b=document.getElementById('v2CallCount');
     if(a)a.textContent=favCount(); if(b)b.textContent=callCount();
   }
+  window.v2RefreshCounts=refresh;
   function close(id){document.getElementById(id)?.classList.remove('show')}
   window.v2Close=close;
 
@@ -2563,6 +2565,19 @@ body:not(.index-mode) .section-divider{display:none!important}
 }
 @media(max-width:360px){
   #v2QuickBar button{font-size:.7rem!important;padding-inline:5px!important}
+}
+</style>
+
+
+<style id="v2-fix-contexto-e-contadores">
+/* Em uma categoria, o índice deixa de fazer parte do fluxo da página.
+   Assim, rolar para cima para no cabeçalho da categoria, não no índice. */
+body:not(.index-mode) #indice{
+  display:none!important;
+}
+/* No índice, ele continua normalmente disponível. */
+body.index-mode #indice{
+  display:block!important;
 }
 </style>
 
