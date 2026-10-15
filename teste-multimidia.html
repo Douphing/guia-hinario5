@@ -422,6 +422,10 @@ body.welcome-mode{overflow:hidden}
 <button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button>
 <button class="navbtn" id="goIndex" type="button">Índice</button>
 </div></div>
+<div class="personal-tools wrap" aria-label="Minha biblioteca">
+  <button type="button" id="openFavorites">★ <span>Favoritos</span><b id="favTotal">0</b></button>
+  <button type="button" id="openCalledHistory">✓ <span>Hinos chamados</span><b id="callTotal">0</b></button>
+</div>
 <div id="searchModal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" id="modalBackdrop"></div>
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
@@ -518,7 +522,12 @@ ORDER.forEach(cat=>{
    const card=document.createElement("article");card.className="card";card.dataset.search=(h.num+" "+h.titulo).toLowerCase();card.dataset.hino=String(h.num);card.setAttribute("role","button");card.setAttribute("tabindex","0");
    let tag=others.length?`<div class="tag">Também: ${esc(others.join(" • "))}</div>`:"";
    if(h.apropriacao && h.apropriacao!=="Culto Oficial") tag+=`<div class="tag">${esc(h.apropriacao)}</div>`;
-   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div></div>${tag}`;
+   card.innerHTML=`<div class="line1"><div class="num">${esc(h.num)}</div><div class="title">${esc(h.titulo)}</div><div class="card-actions" aria-label="Ações rápidas"><button type="button" class="card-fav" title="Favoritar" aria-label="Favoritar hino ${esc(h.num)}">☆</button><button type="button" class="card-call" title="Registrar chamado" aria-label="Registrar hino ${esc(h.num)} como chamado">✓<small></small></button></div></div>${tag}`;
+   const favQuick=card.querySelector(".card-fav"), callQuick=card.querySelector(".card-call");
+   favQuick.addEventListener("click",(e)=>{e.stopPropagation();HYMN_STORE.toggleFav(h);refreshPersonalUI();});
+   callQuick.addEventListener("click",(e)=>{e.stopPropagation();openCallDialog(h);});
+   favQuick.addEventListener("keydown",(e)=>e.stopPropagation());
+   callQuick.addEventListener("keydown",(e)=>e.stopPropagation());
    card.addEventListener("click",()=>openHymnDetail(h,cat));
    card.addEventListener("keydown",(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openHymnDetail(h,cat);}});
    grid.appendChild(card);
@@ -1125,6 +1134,13 @@ const HYMN_STORE={
      if(String(data[i].num)===String(num)){data.splice(i,1);break}
    }
    this.write(this.calledLogKey,data);
+ },
+ updateCall(id,note){
+   const data=this.calls(), item=data.find(x=>x.id===id);
+   if(item){item.note=(note||'').trim().slice(0,150);this.write(this.calledLogKey,data)}
+ },
+ deleteCall(id){
+   this.write(this.calledLogKey,this.calls().filter(x=>x.id!==id));
  }
 };
 
@@ -1139,7 +1155,7 @@ function updateHymnActionButtons(h){
  fav.classList.toggle('is-active',isFav);
  fav.setAttribute('aria-pressed',String(isFav));
  fav.innerHTML='<span class="hd-solid-star">★</span> '+(isFav?'Favoritado':'Favoritar');
- fav.onclick=function(){HYMN_STORE.toggleFav(h);updateHymnActionButtons(h)};
+ fav.onclick=function(){HYMN_STORE.toggleFav(h);updateHymnActionButtons(h);refreshPersonalUI()};
 
  called.classList.toggle('is-active',qty>0);
  called.removeAttribute('aria-pressed');
@@ -1169,11 +1185,13 @@ function saveCall(){
  const h=V18_CURRENT_HYMN;
  closeCallDialog();
  updateHymnActionButtons(h);
+ refreshPersonalUI();
  showCallToast('Chamado registrado'+(note.trim()?' com observação':'')+'.',h);
 }
 function undoLastCall(h){
  HYMN_STORE.undoLastCall(h.num);
  updateHymnActionButtons(h);
+ refreshPersonalUI();
  showCallToast('Último registro desfeito.',null);
 }
 function showCallToast(msg,h){
@@ -1183,6 +1201,89 @@ function showCallToast(msg,h){
  if(h) document.getElementById('undoCallBtn').onclick=()=>{undoLastCall(h);t.classList.remove('show')};
  clearTimeout(window.__callToastTimer);
  window.__callToastTimer=setTimeout(()=>t.classList.remove('show'),5000);
+}
+
+
+function allUniqueHymns(){
+ const map=new Map();
+ ORDER.forEach(cat=>(DATA[cat]||[]).forEach(h=>{if(!map.has(String(h.num)))map.set(String(h.num),h)}));
+ return [...map.values()];
+}
+function findHymn(num){return allUniqueHymns().find(h=>String(h.num)===String(num))}
+
+function refreshPersonalUI(){
+ const favs=HYMN_STORE.read(HYMN_STORE.favKey,{});
+ const calls=HYMN_STORE.calls();
+ const counts={}; calls.forEach(x=>counts[String(x.num)]=(counts[String(x.num)]||0)+1);
+
+ document.querySelectorAll('.card[data-hino]').forEach(card=>{
+   const k=String(card.dataset.hino), f=card.querySelector('.card-fav'), c=card.querySelector('.card-call');
+   if(f){const on=!!favs[k];f.classList.toggle('is-active',on);f.textContent=on?'★':'☆';f.setAttribute('aria-pressed',String(on))}
+   if(c){
+     const qty=counts[k]||0;c.classList.toggle('is-active',qty>0);
+     const sm=c.querySelector('small'); if(sm)sm.textContent=qty?String(qty):'';
+   }
+ });
+ const ft=document.getElementById('favTotal'), ct=document.getElementById('callTotal');
+ if(ft)ft.textContent=Object.keys(favs).length;
+ if(ct)ct.textContent=calls.length;
+ if(document.getElementById('personalModal')?.classList.contains('show')){
+   if(window.__personalView==='favorites')renderFavorites();
+   if(window.__personalView==='calls')renderCalls();
+ }
+}
+function openPersonal(view){
+ window.__personalView=view;
+ const modal=document.getElementById('personalModal');
+ modal.classList.add('show');modal.setAttribute('aria-hidden','false');
+ if(view==='favorites')renderFavorites(); else renderCalls();
+}
+function closePersonal(){
+ const modal=document.getElementById('personalModal');
+ modal.classList.remove('show');modal.setAttribute('aria-hidden','true');
+}
+function renderFavorites(){
+ const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
+ title.textContent='★ Meus Favoritos';
+ const favs=HYMN_STORE.read(HYMN_STORE.favKey,{});
+ const items=Object.values(favs).sort((a,b)=>String(a.num).localeCompare(String(b.num),undefined,{numeric:true}));
+ if(!items.length){box.innerHTML='<div class="personal-empty">Você ainda não favoritou nenhum hino.</div>';return}
+ box.innerHTML=items.map(x=>`<article class="personal-item">
+   <button class="personal-open" type="button" data-open-hymn="${esc(x.num)}"><b>Hino ${esc(x.num)}</b><span>${esc(x.titulo||'')}</span></button>
+   <button class="personal-remove" type="button" data-unfav="${esc(x.num)}" title="Remover dos favoritos">★</button>
+ </article>`).join('');
+ box.querySelectorAll('[data-open-hymn]').forEach(btn=>btn.onclick=()=>{
+   const h=findHymn(btn.dataset.openHymn); if(h){closePersonal();openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}
+ });
+ box.querySelectorAll('[data-unfav]').forEach(btn=>btn.onclick=()=>{
+   const h=findHymn(btn.dataset.unfav); if(h){HYMN_STORE.toggleFav(h);refreshPersonalUI()}
+ });
+}
+function fmtDate(iso){
+ try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(iso))}catch(e){return iso||''}
+}
+function renderCalls(){
+ const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
+ title.textContent='✓ Hinos Chamados';
+ const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
+ if(!items.length){box.innerHTML='<div class="personal-empty">Nenhum hino chamado foi registrado ainda.</div>';return}
+ box.innerHTML=items.map(x=>`<article class="history-item">
+   <div class="history-main"><b>Hino ${esc(x.num)} — ${esc(x.titulo||'')}</b><time>${esc(fmtDate(x.at))}</time>${x.note?`<p>${esc(x.note)}</p>`:'<p class="no-note">Sem observação</p>'}</div>
+   <div class="history-actions"><button type="button" data-edit-call="${esc(x.id)}">Editar</button><button type="button" data-delete-call="${esc(x.id)}">Excluir</button></div>
+ </article>`).join('');
+ box.querySelectorAll('[data-edit-call]').forEach(btn=>btn.onclick=()=>editCallNote(btn.dataset.editCall));
+ box.querySelectorAll('[data-delete-call]').forEach(btn=>btn.onclick=()=>deleteCallRecord(btn.dataset.deleteCall));
+}
+function editCallNote(id){
+ const item=HYMN_STORE.calls().find(x=>x.id===id); if(!item)return;
+ const value=prompt('Editar observação do Hino '+item.num+':',item.note||'');
+ if(value===null)return;
+ HYMN_STORE.updateCall(id,value);refreshPersonalUI();
+}
+function deleteCallRecord(id){
+ const item=HYMN_STORE.calls().find(x=>x.id===id); if(!item)return;
+ if(!confirm('Excluir este registro do Hino '+item.num+'?'))return;
+ HYMN_STORE.deleteCall(id);refreshPersonalUI();
 }
 
 function openHymnDetail(h,cat){
@@ -1633,6 +1734,56 @@ function loadHymnMedia(kind,media,button){
 <!-- V16: Oração redesenhada + Culto Oficial = congregação reunida em torno do púlpito/estante, sem cruz/templo -->
 
 
+
+<style id="v19-personal-library">
+.personal-tools{display:flex;gap:9px;padding:9px 0 2px}
+.personal-tools button{
+ flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+ border:1px solid #d8c8a4;background:#fffdf8;color:#26394d;
+ padding:9px 12px;border-radius:11px;box-shadow:0 2px 8px rgba(40,35,25,.05)
+}
+.personal-tools b{min-width:21px;height:21px;padding:0 5px;border-radius:999px;display:inline-grid;place-items:center;background:#b98529;color:white;font-size:.72rem}
+.line1{position:relative}
+.title{padding-right:72px}
+.card-actions{margin-left:auto;display:flex;gap:5px;align-self:center}
+.card-actions button{
+ width:31px;height:31px;padding:0;border-radius:9px;border:1px solid #d8c8a4;
+ background:#fff;color:#a97822;font-size:1.18rem;display:grid;place-items:center;position:relative;
+}
+.card-actions button.is-active{background:#c59232;color:#fff;border-color:#b77c17}
+.card-actions .card-call small{
+ position:absolute;right:-5px;top:-6px;min-width:16px;height:16px;padding:0 3px;border-radius:999px;
+ background:#24384e;color:#fff;font:700 10px/16px Arial,sans-serif;
+}
+#personalModal{position:fixed;inset:0;z-index:99998;display:none;place-items:center;padding:16px;background:rgba(15,25,38,.5);backdrop-filter:blur(2px)}
+#personalModal.show{display:grid}
+.personal-panel{width:min(94vw,600px);max-height:min(82dvh,760px);display:flex;flex-direction:column;background:#fffdf8;border:1px solid #d8b66d;border-radius:18px;box-shadow:0 18px 55px rgba(16,27,43,.25);overflow:hidden}
+.personal-head{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid #e3d8c0}
+.personal-head h3{margin:0;color:#172b45;font:700 1.2rem Georgia,serif}
+.personal-head button{border:0;background:transparent;color:#52606f;font-size:1.7rem;padding:0 4px}
+.personal-tabs{display:flex;gap:7px;padding:10px 12px;background:#f7f2e8}
+.personal-tabs button{flex:1;background:#fff;color:#26394d;border:1px solid #d8c8a4;padding:9px;border-radius:10px}
+.personal-content{overflow:auto;padding:12px}
+.personal-item,.history-item{border:1px solid #e0d5bf;border-radius:13px;background:#fff;padding:11px;margin-bottom:9px}
+.personal-item{display:flex;align-items:center;gap:8px}
+.personal-open{flex:1!important;text-align:left!important;background:transparent!important;color:#26394d!important;padding:3px!important}
+.personal-open b,.personal-open span{display:block}.personal-open span{margin-top:3px;font-family:Georgia,serif}
+.personal-remove{width:36px;height:36px;padding:0;background:#c59232;color:#fff}
+.history-main b,.history-main time{display:block}.history-main b{color:#20354c}.history-main time{margin-top:4px;color:#776f62;font-size:.78rem}
+.history-main p{margin:8px 0 0;color:#3e4e5e}.history-main .no-note{color:#989083;font-style:italic}
+.history-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:9px}
+.history-actions button{padding:7px 10px;background:#fff;color:#30465d;border:1px solid #d8c8a4;border-radius:8px}
+.personal-empty{text-align:center;padding:34px 18px;color:#7b7468}
+@media(max-width:600px){
+ .personal-tools{width:92%;padding-top:8px}
+ .personal-tools button{font-size:.82rem;padding:8px 7px}
+ .title{padding-right:0}
+ .line1{align-items:center}
+ .card-actions{gap:4px}
+ .card-actions button{width:30px;height:30px}
+}
+</style>
+
 <style id="v18-call-dialog">
 .call-count{font-size:.78em;font-weight:700}
 #callDialog{
@@ -1860,6 +2011,32 @@ body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
  const dlg=document.getElementById('callDialog');
  if(dlg) dlg.addEventListener('click',e=>{if(e.target===dlg)closeCallDialog()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCallDialog()});
+})();
+</script>
+
+
+<div id="personalModal" aria-hidden="true">
+ <div class="personal-panel" role="dialog" aria-modal="true" aria-labelledby="personalTitle">
+  <div class="personal-head"><h3 id="personalTitle">Minha biblioteca</h3><button type="button" id="closePersonal" aria-label="Fechar">×</button></div>
+  <div class="personal-tabs">
+   <button type="button" id="tabFavorites">★ Favoritos</button>
+   <button type="button" id="tabCalls">✓ Hinos chamados</button>
+  </div>
+  <div id="personalContent" class="personal-content"></div>
+ </div>
+</div>
+<script>
+(function(){
+ const fav=document.getElementById('openFavorites'), calls=document.getElementById('openCalledHistory');
+ const close=document.getElementById('closePersonal'), modal=document.getElementById('personalModal');
+ if(fav)fav.onclick=()=>openPersonal('favorites');
+ if(calls)calls.onclick=()=>openPersonal('calls');
+ document.getElementById('tabFavorites').onclick=()=>{window.__personalView='favorites';renderFavorites()};
+ document.getElementById('tabCalls').onclick=()=>{window.__personalView='calls';renderCalls()};
+ if(close)close.onclick=closePersonal;
+ if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closePersonal()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePersonal()});
+ setTimeout(refreshPersonalUI,0);
 })();
 </script>
 
