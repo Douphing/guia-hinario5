@@ -1261,7 +1261,9 @@ function refreshPersonalUI(){
    if(f){const on=!!favs[k];f.classList.toggle('is-active',on);f.textContent=on?'★':'☆';f.setAttribute('aria-pressed',String(on))}
    if(status){
      const qty=counts[k]||0, noteQty=calls.filter(x=>String(x.num)===k&&(x.note||'').trim()).length;
-     status.innerHTML=qty?'<span>'+qty+' chamado'+(qty>1?'s':'')+'</span>'+(noteQty?'<span class="notes-summary">'+noteMiniIcon()+' '+noteQty+'</span>'):'';
+     status.innerHTML=qty
+       ? '<span>'+qty+' chamado'+(qty>1?'s':'')+'</span>'+(noteQty?'<span class="notes-summary">'+noteMiniIcon()+' '+noteQty+'</span>':'')
+       : '';
      status.hidden=!qty;
    }
  });
