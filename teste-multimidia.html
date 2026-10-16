@@ -2731,4 +2731,101 @@ body.index-mode #indice{width:100%!important;max-width:1120px!important;margin-l
 }
 </style>
 
+
+
+<style id="v2-layout-correcoes-1610">
+/* Correções pontuais: modal desktop, barra mobile e capa desktop. */
+html,body{max-width:100%;overflow-x:hidden}
+
+/* Capa inicial: evita corte/desalinhamento em monitores desktop e notebooks. */
+@media (min-width:701px){
+  .welcome-screen{
+    overflow:auto!important;
+    padding:20px!important;
+    align-items:center!important;
+  }
+  .welcome-card{
+    width:min(760px,calc(100vw - 48px))!important;
+    min-height:0!important;
+    max-height:calc(100dvh - 40px)!important;
+    padding:28px 34px 24px!important;
+  }
+  .welcome-card .welcome-rule{margin:18px 0 14px!important}
+  .welcome-card .welcome-note{font-size:3rem!important;margin-bottom:2px!important}
+  .welcome-card h1{font-size:4rem!important;margin:7px 0 4px!important;line-height:1!important}
+  .welcome-card h2{font-size:2rem!important;line-height:1.12!important}
+  .welcome-card p{margin:18px 0 16px!important;font-size:1rem!important}
+  #enterGuide{padding:15px 20px!important}
+  .welcome-card small{margin-top:14px!important}
+  .welcome-card .about-cover-link{margin-top:9px!important}
+}
+
+/* Modal do hino no desktop: usa melhor a largura e reduz a altura necessária. */
+@media (min-width:800px){
+  #hymnDetail{padding:16px!important}
+  #hymnDetail .hd-card{
+    width:min(900px,calc(100vw - 40px))!important;
+    max-height:calc(100dvh - 32px)!important;
+    padding:14px 20px 16px!important;
+  }
+  #hymnDetail .hd-hero{
+    min-height:132px!important;
+    padding:20px 58px 8px 62px!important;
+  }
+  #hymnDetail .hd-clef{font-size:78px!important}
+  #hymnDetail .hd-num .hd-number{font-size:52px!important}
+  #hymnDetail h2{font-size:31px!important;margin-top:6px!important}
+  #hymnDetail .hd-meta{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+    margin:6px 0 9px!important;
+  }
+  #hymnDetail .hd-meta-row{
+    grid-template-columns:76px minmax(0,1fr)!important;
+    min-height:70px!important;
+  }
+  #hymnDetail .hd-meta-icon{min-height:70px!important}
+  #hymnDetail .hd-meta-icon svg{width:52px!important;height:52px!important}
+  #hymnDetail .hd-meta-copy{padding:8px 11px 8px 24px!important}
+  #hymnDetail .hd-meta-copy:before{left:11px!important;top:13px!important;bottom:13px!important}
+  #hymnDetail .hd-meta-value{font-size:20px!important}
+  #hymnDetail .hd-actions{margin:8px 0!important;gap:10px!important}
+  #hymnDetail .hd-actions button{min-height:40px!important}
+  #hymnDetail #v2LetterBtn{margin-bottom:7px!important;padding:7px 16px!important}
+  #hymnDetail .hd-divider{margin:0!important}
+  #hymnDetail .hd-media-title{font-size:24px!important;margin:0 0 7px!important}
+  #hymnDetail .hd-play[data-kind="instrumental"]{min-height:43px!important}
+}
+
+/* Barra de navegação em celular/tablet: colunas iguais e sem textos cortados. */
+@media (max-width:700px){
+  #v2QuickBar{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 auto 9px!important;
+    padding:8px 7px!important;
+    gap:7px!important;
+    display:grid!important;
+    align-items:stretch!important;
+  }
+  body.index-mode #v2QuickBar{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  body:not(.index-mode) #v2QuickBar{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #v2QuickBar button{
+    width:100%!important;
+    min-width:0!important;
+    min-height:42px!important;
+    padding:8px 4px!important;
+    font-size:clamp(.66rem,2.55vw,.78rem)!important;
+    line-height:1.08!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    justify-content:center!important;
+  }
+}
+@media (max-width:390px){
+  #v2QuickBar{gap:5px!important;padding-inline:4px!important}
+  #v2QuickBar button{font-size:.66rem!important;padding-inline:2px!important}
+}
+</style>
 </body></html>
