@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://douphing.github.io/guia-hinario5/sitemap.xml
+Sitemap: https://douphing.github.io/guia-hinario5/sitemap.txt
