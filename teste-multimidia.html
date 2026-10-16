@@ -3060,4 +3060,47 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
 }
 </style>
+
+<style id="v2-mobile-menu-proporcional-1610">
+/* Mobile final: dá mais espaço ao rótulo Compartilhar sem quebrar ou espremer os demais. */
+@media (max-width:700px){
+  .toolbar>.wrap.quickbar{
+    width:calc(100% - 12px)!important;
+  }
+  body:not(.index-mode) #v2QuickBar{
+    grid-template-columns:.88fr 1fr 1.34fr .92fr!important;
+    gap:5px!important;
+  }
+  body.index-mode #v2QuickBar{
+    grid-template-columns:1fr 1.22fr .92fr!important;
+    gap:6px!important;
+  }
+  #v2QuickBar button{
+    min-height:46px!important;
+    padding:7px 3px!important;
+    gap:3px!important;
+    font-size:clamp(10px,2.8vw,11.5px)!important;
+    letter-spacing:-.10px!important;
+    overflow:visible!important;
+  }
+  #v2QuickBar button>span:last-child{
+    overflow:visible!important;
+    text-overflow:clip!important;
+  }
+}
+@media (max-width:380px){
+  body:not(.index-mode) #v2QuickBar{
+    grid-template-columns:.86fr .98fr 1.36fr .90fr!important;
+    gap:3px!important;
+  }
+  #v2QuickBar button{
+    padding-inline:2px!important;
+    gap:2px!important;
+    font-size:9.4px!important;
+  }
+  #v2QuickBar .v2SvgIcon{width:11px!important;height:11px!important;flex-basis:11px!important}
+  #v2QuickBar .v2SvgIcon svg{width:11px!important;height:11px!important}
+  #v2QuickBar .v2CoffeeMini{font-size:11px!important}
+}
+</style>
 </body></html>
