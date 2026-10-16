@@ -2937,4 +2937,62 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+
+<style id="v2-modal-desktop-altura-corrigida">
+/* Desktop/notebook com viewport mais baixa: mantém o player e o link externo visíveis. */
+@media (min-width:800px) and (max-height:800px){
+  #hymnDetail{padding:10px!important}
+  #hymnDetail .hd-card{
+    max-height:calc(100dvh - 20px)!important;
+    padding:10px 16px 12px!important;
+  }
+  #hymnDetail .hd-hero{
+    min-height:104px!important;
+    padding:10px 52px 4px 54px!important;
+  }
+  #hymnDetail .hd-staff{height:42px!important}
+  #hymnDetail .hd-clef{font-size:58px!important;top:-5px!important}
+  #hymnDetail .hd-num>span:first-child{font-size:14px!important}
+  #hymnDetail .hd-num .hd-number{font-size:40px!important}
+  #hymnDetail h2{font-size:24px!important;margin-top:2px!important;line-height:1!important}
+  #hymnDetail .hd-swoosh{height:15px!important;bottom:1px!important}
+
+  #hymnDetail .hd-meta{gap:7px!important;margin:5px 0 6px!important}
+  #hymnDetail .hd-meta-row{
+    grid-template-columns:64px minmax(0,1fr)!important;
+    min-height:58px!important;
+    border-radius:14px!important;
+  }
+  #hymnDetail .hd-meta-icon{min-height:58px!important;border-radius:14px 0 0 14px!important}
+  #hymnDetail .hd-meta-icon svg{width:43px!important;height:43px!important}
+  #hymnDetail .hd-meta-copy{padding:5px 8px 5px 20px!important}
+  #hymnDetail .hd-meta-copy:before{left:9px!important;top:9px!important;bottom:9px!important}
+  #hymnDetail .hd-meta-label{font-size:9px!important}
+  #hymnDetail .hd-meta-value{font-size:16px!important;line-height:1.02!important}
+
+  #hymnDetail .hd-actions{margin:5px 0!important;gap:8px!important}
+  #hymnDetail .hd-actions button{min-height:34px!important;padding:5px 8px!important;font-size:12px!important}
+  #hymnDetail #v2LetterBtn{margin:4px auto 5px!important;padding:5px 14px!important;min-height:32px!important}
+  #hymnDetail .hd-divider{margin:0!important;height:20px!important}
+  #hymnDetail .hd-divider span{font-size:18px!important}
+
+  #hymnDetail .hd-media-title{font-size:20px!important;margin:0 0 4px!important}
+  #hymnDetail .hd-note{font-size:23px!important}
+  #hymnDetail .hd-media{gap:5px!important}
+  #hymnDetail .hd-play[data-kind="instrumental"]{min-height:34px!important;padding:4px 10px!important;font-size:13px!important}
+  #hymnDetail .hd-platform{min-height:32px!important;padding:3px 7px!important}
+  #hymnDetail .brand{width:21px!important;height:21px!important;flex-basis:21px!important}
+
+  #hymnDetail.media-open .hd-slot{margin-top:5px!important}
+  #hymnDetail.media-open #hdSpotify iframe{height:108px!important}
+  #hymnDetail.media-open #hdYoutube iframe{width:min(100%,360px)!important;max-height:203px!important}
+  #hymnDetail .hd-links{
+    min-height:18px!important;
+    margin-top:3px!important;
+    padding:2px 4px 0!important;
+    line-height:1!important;
+  }
+  #hymnDetail .hd-links a{font-size:11px!important}
+}
+</style>
 </body></html>
