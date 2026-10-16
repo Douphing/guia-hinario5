@@ -2862,4 +2862,65 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 (function(){function syncV2Sticky(){const bar=document.querySelector('.toolbar');if(!bar)return;document.documentElement.style.setProperty('--v2-toolbar-h',Math.ceil(bar.getBoundingClientRect().height)+'px')}window.addEventListener('resize',syncV2Sticky,{passive:true});window.addEventListener('orientationchange',()=>setTimeout(syncV2Sticky,120),{passive:true});document.addEventListener('DOMContentLoaded',()=>{syncV2Sticky();setTimeout(syncV2Sticky,100);if('ResizeObserver' in window){const b=document.querySelector('.toolbar');if(b)new ResizeObserver(syncV2Sticky).observe(b)}})})();
 </script>
 
+
+<style id="v2-mobile-menu-fit-final-1610">
+/* Mobile: 4 ações em uma única linha, com nomes completos e sem corte. */
+@media (max-width:700px){
+  .toolbar>.wrap.quickbar{
+    width:calc(100% - 16px)!important;
+    max-width:none!important;
+  }
+  #v2QuickBar{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:4px!important;
+    width:100%!important;
+  }
+  body.index-mode #v2QuickBar{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  #v2QuickBar button{
+    width:100%!important;
+    min-width:0!important;
+    min-height:46px!important;
+    padding:7px 1px!important;
+    gap:2px!important;
+    font-family:Arial,sans-serif!important;
+    font-size:10px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    letter-spacing:-.08px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  #v2QuickBar button>span:last-child{
+    display:inline-block!important;
+    min-width:0!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  #v2QuickBar .v2SvgIcon{
+    width:12px!important;
+    height:12px!important;
+    flex:0 0 12px!important;
+  }
+  #v2QuickBar .v2SvgIcon svg{
+    width:12px!important;
+    height:12px!important;
+  }
+  #v2QuickBar .v2CoffeeMini{
+    font-size:12px!important;
+    line-height:1!important;
+  }
+}
+@media (min-width:430px) and (max-width:700px){
+  #v2QuickBar button{font-size:11px!important;gap:3px!important;padding-inline:2px!important}
+  #v2QuickBar .v2SvgIcon{width:13px!important;height:13px!important;flex-basis:13px!important}
+  #v2QuickBar .v2SvgIcon svg{width:13px!important;height:13px!important}
+  #v2QuickBar .v2CoffeeMini{font-size:13px!important}
+}
+</style>
+
 </body></html>
