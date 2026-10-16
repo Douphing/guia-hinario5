@@ -2460,7 +2460,7 @@ function downloadCallsCsv(){
       '<textarea id="v2PixCode" readonly style="width:100%;height:88px;margin:8px 0;padding:9px;border:1px solid #d8c9a8;border-radius:9px;font-size:.72rem;resize:none">'+esc(payload)+'</textarea>'+
       '<button type="button" id="v2CopyPix" class="v2Primary">📋 Copiar código PIX</button>'+
       '<button type="button" id="v2ShowKey" style="border:0;background:transparent;color:#765b28;font-weight:700;margin-top:9px">Ver chave PIX</button>'+
-      '<div id="v2KeyArea" style="display:none;margin-top:7px;word-break:break-all"><small>Chave PIX</small><br><b>dougcamposandrade@gmail.com</b><br><small>Douglas Campos Andrade · Itapecerica da Serra/SP</small></div>'+
+      '<div id="v2KeyArea" style="display:none;margin-top:7px;word-break:break-all"><small>Chave PIX</small><br><b>bb7c79dd-d9bd-4222-876d-48949f2dbc65</b><br><small>Douglas Campos Andrade · Itapecerica da Serra/SP</small></div>'+
       '<p style="margin:10px 0 0;font-size:.76rem;color:#746e66">O pagamento é realizado no aplicativo do seu banco. O Guia não recebe dados bancários nem confirma o pagamento.</p>';
     document.getElementById('v2CopyPix').onclick=async()=>{
       try{await navigator.clipboard.writeText(payload);document.getElementById('v2CopyPix').textContent='✓ Código copiado'}
