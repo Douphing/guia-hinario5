@@ -2412,9 +2412,9 @@ function downloadCallsCsv(){
         <div id="v2MarkResults"></div><div class="v2Toast" id="v2MarkToast"></div>
       </div></div></div>
     <div class="v2Overlay" id="v2SupportOverlay"><div class="v2Panel">
-      <div class="v2Head"><h3>☕ Apoiar o Guia</h3><button class="v2Close" onclick="v2Close('v2SupportOverlay')">×</button></div>
+      <div class="v2Head"><h3>☕ Pague um café </h3><button class="v2Close" onclick="v2Close('v2SupportOverlay')">×</button></div>
       <div class="v2Body"><div class="v2CoffeeIcon">☕</div>
-        <p class="v2CoffeeIntro">Apoie o desenvolvimento contínuo do Guia com uma contribuição voluntária. O apoio ajuda a manter e aprimorar o projeto.</p>
+        <p class="v2CoffeeIntro">Ajude a manter este projeto ativo com uma contribuição voluntária</p>
         <div class="v2CoffeeList">
           <div class="v2Coffee"><span><b>Expresso</b><small>R$ 5,00</small></span><button onclick="v2ChoosePix('Expresso','5,00')">Apoiar</button></div>
           <div class="v2Coffee"><span><b>Cappuccino</b><small>R$ 10,00</small></span><button onclick="v2ChoosePix('Cappuccino','10,00')">Apoiar</button></div>
@@ -2441,7 +2441,7 @@ function downloadCallsCsv(){
     return crc.toString(16).toUpperCase().padStart(4,'0');
   }
   function makePixPayload(amount){
-    const key='dougcamposandrade@gmail.com';
+    const key='bb7c79dd-d9bd-4222-876d-48949f2dbc65';
     const merchant='DOUGLAS CAMPOS ANDRADE'.slice(0,25);
     const city='ITAPECERICA DA SERRA'.slice(0,15);
     const gui=pixField('00','BR.GOV.BCB.PIX')+pixField('01',key);
@@ -2460,7 +2460,7 @@ function downloadCallsCsv(){
       '<textarea id="v2PixCode" readonly style="width:100%;height:88px;margin:8px 0;padding:9px;border:1px solid #d8c9a8;border-radius:9px;font-size:.72rem;resize:none">'+esc(payload)+'</textarea>'+
       '<button type="button" id="v2CopyPix" class="v2Primary">📋 Copiar código PIX</button>'+
       '<button type="button" id="v2ShowKey" style="border:0;background:transparent;color:#765b28;font-weight:700;margin-top:9px">Ver chave PIX</button>'+
-      '<div id="v2KeyArea" style="display:none;margin-top:7px;word-break:break-all"><small>Chave PIX</small><br><b>dougcamposandrade@gmail.com</b><br><small>Douglas Campos Andrade · Itapecerica da Serra/SP</small></div>'+
+      '<div id="v2KeyArea" style="display:none;margin-top:7px;word-break:break-all"><small>Chave PIX</small><br><b>bb7c79dd-d9bd-4222-876d-48949f2dbc65</b><br><small>Douglas Campos Andrade · Itapecerica da Serra/SP</small></div>'+
       '<p style="margin:10px 0 0;font-size:.76rem;color:#746e66">O pagamento é realizado no aplicativo do seu banco. O Guia não recebe dados bancários nem confirma o pagamento.</p>';
     document.getElementById('v2CopyPix').onclick=async()=>{
       try{await navigator.clipboard.writeText(payload);document.getElementById('v2CopyPix').textContent='✓ Código copiado'}
@@ -2642,7 +2642,6 @@ body.index-mode #indice{
 }
 </style>
 
-
 <style id="mh-compact-style">
 #mhDivider{grid-column:1/-1;margin:13px 2px 1px;color:#8b6727;font:700 .72rem Arial,sans-serif;letter-spacing:.12em}
 #mhIndex{grid-column:1/-1!important;border:1.5px solid #c7a15b!important;background:linear-gradient(135deg,#fffaf0,#edf3f5)!important;align-items:center!important}
@@ -2676,5 +2675,60 @@ body.index-mode #indice{
 </script>
 <div class="v2Overlay" id="mhOverlay"><div class="v2Panel"><div class="v2Head"><h3>🎼 Hinos para Meia-Hora</h3><button class="v2Close" id="mhClose">×</button></div><div class="v2Body"><div class="mhNotice"><b>Relação sugestiva.</b> Não altera a ocasião nem a apropriação original do hino.</div><div class="mhSearchRow"><input id="mhSearch" class="v2Input" type="search" inputmode="search" placeholder="Número ou título..."></div><div class="mhMeta" id="mhMeta"></div><div class="mhList" id="mhList"></div></div></div></div>
 <div class="v2Overlay" id="mhMetro"><div class="v2Panel"><div class="v2Head"><h3>♩ Metrônomo</h3><button class="v2Close" id="mhMetroClose">×</button></div><div class="v2Body mhMeter"><h4 id="mhMeterHymn"></h4><p id="mhMeterTitle"></p><div style="font:.72rem Arial,sans-serif;color:#746c62">Faixa sugerida</div><div class="mhRangeBig" id="mhRange"></div><input id="mhSlider" type="range"><div class="mhControls"><button id="mhMinus">−</button><div>BPM atual: <b id="mhNow"></b></div><button id="mhPlus">+</button></div><button id="mhPlay">▶</button><div class="mhHelp">Referência auxiliar para estudo. O andamento final deve respeitar as orientações musicais aplicáveis.</div></div></div></div>
+
+<style id="v2-responsive-layout-final">
+/* Ajuste responsivo final: mantém barra e conteúdo no mesmo eixo visual. */
+#v2QuickBar{
+  width:100%!important;
+  max-width:760px!important;
+  margin:0 auto 12px!important;
+  padding:10px 12px!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:14px!important;
+  border:1px solid rgba(216,201,168,.75)!important;
+  border-radius:0 0 14px 14px!important;
+}
+#v2QuickBar button{
+  flex:0 0 auto!important;
+  min-width:126px!important;
+  min-height:40px!important;
+  padding:9px 14px!important;
+  font-size:.82rem!important;
+  white-space:nowrap!important;
+}
+#v2PersonalBar{
+  width:100%!important;max-width:760px!important;margin:12px auto 20px!important;
+  padding:0!important;gap:12px!important;
+}
+#v2PersonalBar button{min-width:0!important}
+body.index-mode #indice{width:100%!important;max-width:1120px!important;margin-left:auto!important;margin-right:auto!important}
+#mhDivider,#mhIndex{box-sizing:border-box!important}
+@media (min-width:850px){
+  #v2QuickBar{justify-content:center!important}
+  #v2PersonalBar{grid-template-columns:repeat(3,minmax(0,1fr))!important;justify-content:stretch!important}
+  #v2PersonalBar button{width:100%!important}
+}
+@media (max-width:600px){
+  #v2QuickBar{
+    width:100%!important;max-width:100%!important;margin:0 auto 10px!important;
+    padding:8px 4px!important;gap:9px!important;border-left:0!important;border-right:0!important;border-radius:0!important;
+  }
+  #v2QuickBar button{
+    flex:1 1 0!important;min-width:0!important;padding:9px 5px!important;font-size:.76rem!important;
+  }
+  body:not(.index-mode) #v2QuickBar{gap:5px!important}
+  body:not(.index-mode) #v2QuickBar button{font-size:.70rem!important;padding-inline:3px!important}
+  #v2PersonalBar{padding:0!important;gap:8px!important;margin:10px auto 16px!important}
+  #v2PersonalBar button{font-size:.76rem!important;padding:7px 4px!important}
+}
+@media (max-width:370px){
+  #v2QuickBar{gap:5px!important}
+  #v2QuickBar button{font-size:.70rem!important;padding-inline:3px!important}
+  #v2PersonalBar{gap:5px!important}
+  #v2PersonalBar button{font-size:.70rem!important}
+}
+</style>
 
 </body></html>
