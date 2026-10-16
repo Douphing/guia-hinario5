@@ -527,7 +527,7 @@ body.welcome-mode{overflow:hidden}
     <p>Consulta rápida por ocasião, número ou título.</p>
     <button id="enterGuide" type="button">ABRIR GUIA</button>
     <small>480 hinos + 6 coros</small>
-   <a href="#" class="about-cover-link" onclick="event.preventDefault(); abrirSobre();">ⓘ Sobre o Guia · v1.0</a>
+   <a href="#" class="about-cover-link" onclick="event.preventDefault(); abrirSobre();">ⓘ Sobre o Guia · v2.0</a>
   </div>
 </div>
 
@@ -596,7 +596,7 @@ body.welcome-mode{overflow:hidden}
       </div>
 
       <div class="about-version">
-        <strong>Versão 1.0</strong><br>
+        <strong>Versão 2.0</strong><br>
         Guia Visual de Hinos por Ocasião — Hinário nº 5<br>
         Atualizado em outubro de 2026.
       </div>
@@ -652,7 +652,7 @@ const q=document.querySelector("#search");
 const modal=document.querySelector("#searchModal"), results=document.querySelector("#searchResults");
 const openBtn=document.querySelector("#openSearch"), closeBtn=document.querySelector("#closeSearch");
 function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>q.focus(),120);renderResults();}
-function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");q.blur();}
+function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");q.value="";results.innerHTML="";q.blur();}
 function renderResults(){
  const term=q.value.trim().toLowerCase();
  results.innerHTML="";
