@@ -2399,8 +2399,22 @@ function downloadCallsCsv(){
 
     document.getElementById('v2BackIndex').onclick=()=>{try{showIndexScreen()}catch(e){location.hash='#indice'}};
     document.getElementById('v2Search').onclick=()=>{
-      const old=[...document.querySelectorAll('button,a')].find(x=>/pesquisar hinos/i.test(x.textContent||'') && !x.closest('#v2QuickBar'));
-      if(old) old.click(); else document.querySelector('#searchInput,input[type="search"]')?.focus();
+      // O botão original #openSearch é removido ao montar a barra v2.
+      // Abra o modal pela função original do Guia, preservando toda a lógica de pesquisa.
+      if(typeof openModal==='function'){
+        openModal();
+        return;
+      }
+      // Fallback defensivo caso a função original não esteja disponível.
+      const searchModal=document.getElementById('searchModal');
+      const searchInput=document.getElementById('search');
+      if(searchModal){
+        searchModal.classList.add('open');
+        searchModal.setAttribute('aria-hidden','false');
+        document.body.classList.add('modal-open');
+        if(typeof renderResults==='function') renderResults();
+        setTimeout(()=>searchInput?.focus(),120);
+      }
     };
     document.getElementById('v2Share').onclick=()=>{
       const old=[...document.querySelectorAll('button,a')].find(x=>/compartilhar/i.test(x.textContent||'') && !x.closest('#v2QuickBar'));
