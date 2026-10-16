@@ -2745,7 +2745,8 @@ body.index-mode #indice{width:100%!important;max-width:1120px!important;margin-l
 
 <style id="v2-layout-correcoes-1610">
 /* Correções pontuais: modal desktop, barra mobile e capa desktop. */
-html,body{max-width:100%;overflow-x:hidden}
+html{max-width:100%;overflow-x:clip}
+body{max-width:100%;overflow-x:clip}
 
 /* Capa inicial: evita corte/desalinhamento em monitores desktop e notebooks. */
 @media (min-width:701px){
@@ -2839,77 +2840,8 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 </style>
 
-<style id="v2-sticky-final-1610">
-/* Correção final de navegação: sem menu flutuante; sticky natural. */
-:root{--v2-nav-h:64px}
-#v2QuickBar{
-  position:sticky!important;
-  top:0!important;
-  z-index:90!important;
-  transform:none!important;
-  inset:auto!important;
-  background:rgba(239,235,224,.985)!important;
-}
-#v2QuickBar button{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:6px!important;
-  line-height:1!important;
-  vertical-align:middle!important;
-}
-#v2QuickBar .v2BtnIcon,#v2QuickBar .v2BtnLabel{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  line-height:1!important;margin:0!important;padding:0!important;vertical-align:middle!important;
-}
-#v2QuickBar .v2BtnIcon{flex:0 0 auto!important;font-family:Arial,sans-serif!important}
-#v2QuickBar .v2BtnLabel{flex:0 1 auto!important;white-space:nowrap!important}
-#v2QuickBar .v2LabelShort{display:none!important}
-body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
-  position:sticky!important;
-  top:var(--v2-nav-h)!important;
-  z-index:70!important;
-  margin-top:0!important;
-  background:#fdfbf7!important;
-}
-body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-nav-h) + 8px)!important}
-@media(max-width:700px){
-  :root{--v2-nav-h:60px}
-  #v2QuickBar{padding:8px 6px!important;gap:7px!important}
-  #v2QuickBar button{height:44px!important;min-height:44px!important;padding:0 4px!important;gap:4px!important;font-size:.72rem!important;overflow:visible!important}
-  #v2QuickBar .v2BtnIcon{font-size:.78rem!important}
-  body:not(.index-mode) #v2QuickBar .v2LabelFull{display:none!important}
-  body:not(.index-mode) #v2QuickBar .v2LabelShort{display:inline-flex!important}
-  body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{top:var(--v2-nav-h)!important}
-}
-@media(max-width:390px){
-  #v2QuickBar{gap:4px!important;padding-inline:4px!important}
-  #v2QuickBar button{font-size:.67rem!important;gap:3px!important;padding-inline:2px!important}
-  #v2QuickBar .v2BtnIcon{font-size:.72rem!important}
-}
-</style>
-
-<style id="v2-sticky-viewport-fix-1610">
-/* A navegação participa do fluxo normal, mas permanece presa ao topo durante a rolagem. */
-#v2QuickBar{
-  position:sticky!important;
-  top:0!important;
-  z-index:120!important;
-  width:min(1120px,94%)!important;
-  margin:0 auto!important;
-}
-/* O cabeçalho da ocasião fica imediatamente abaixo da navegação. */
-body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
-  position:sticky!important;
-  top:var(--v2-nav-h)!important;
-  z-index:110!important;
-}
-@media(max-width:600px){
-  #v2QuickBar{width:92%!important}
-}
-</style>
-
 <style id="v2-nav-producao-final-1610">
+/* IMPORTANTE: overflow-x:clip evita criar um ancestral rolável que quebraria position:sticky. */
 /* Navegação final: reutiliza a toolbar sticky original do index de produção. */
 :root{--v2-toolbar-h:62px}
 .toolbar{position:sticky!important;top:0!important;z-index:300!important;background:rgba(239,235,224,.985)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:10px 0!important;border-bottom:1px solid #d8c9a8!important}
