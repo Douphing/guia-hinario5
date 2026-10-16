@@ -3028,4 +3028,36 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
 }
 </style>
+
+<style id="v2-youtube-desktop-fit-final">
+/* YouTube/YouTube Music no desktop: mantém o player 16:9 inteiro dentro do modal. */
+@media (min-width:800px){
+  #hymnDetail.media-open #hdYoutube{
+    overflow:visible!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+  }
+  #hymnDetail.media-open #hdYoutube iframe{
+    width:min(100%,calc(24dvh * 1.7777778))!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    max-height:24dvh!important;
+    object-fit:contain!important;
+    margin:0 auto!important;
+  }
+}
+@media (min-width:800px) and (max-height:800px){
+  #hymnDetail.media-open #hdYoutube iframe{
+    width:min(100%,330px)!important;
+    max-height:186px!important;
+  }
+}
+@media (min-width:800px) and (max-height:700px){
+  #hymnDetail.media-open #hdYoutube iframe{
+    width:min(100%,300px)!important;
+    max-height:169px!important;
+  }
+}
+</style>
 </body></html>
