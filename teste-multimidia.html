@@ -2367,7 +2367,8 @@ function downloadCallsCsv(){
     p.id='v2PersonalBar';
     p.innerHTML='<button type="button" id="v2Fav">★ Favoritos <span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls">✓ Chamados <span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
     anchor.insertAdjacentElement('afterbegin',p);
-    anchor.insertAdjacentElement('afterbegin',q);
+    // A barra de navegação fica fora do <main> para o sticky acompanhar toda a página.
+    anchor.insertAdjacentElement('beforebegin',q);
 
     // Hide only the old top action row / personal shortcuts where detectable.
     const candidates=[...document.querySelectorAll('button,a')];
@@ -2876,6 +2877,26 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-nav-h) + 
   #v2QuickBar{gap:4px!important;padding-inline:4px!important}
   #v2QuickBar button{font-size:.67rem!important;gap:3px!important;padding-inline:2px!important}
   #v2QuickBar .v2BtnIcon{font-size:.72rem!important}
+}
+</style>
+
+<style id="v2-sticky-viewport-fix-1610">
+/* A navegação participa do fluxo normal, mas permanece presa ao topo durante a rolagem. */
+#v2QuickBar{
+  position:sticky!important;
+  top:0!important;
+  z-index:120!important;
+  width:min(1120px,94%)!important;
+  margin:0 auto!important;
+}
+/* O cabeçalho da ocasião fica imediatamente abaixo da navegação. */
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
+  position:sticky!important;
+  top:var(--v2-nav-h)!important;
+  z-index:110!important;
+}
+@media(max-width:600px){
+  #v2QuickBar{width:92%!important}
 }
 </style>
 </body></html>
