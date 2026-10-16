@@ -2362,7 +2362,7 @@ function downloadCallsCsv(){
     const anchor = document.querySelector('main') || document.body;
     const q=document.createElement('div');
     q.id='v2QuickBar';
-    q.innerHTML='<button type="button" id="v2BackIndex">← <span class="v2-label-full">Índice</span><span class="v2-label-short">Índice</span></button><button type="button" id="v2Search">🔎 <span class="v2-label-full">Pesquisar</span><span class="v2-label-short">Buscar</span></button><button type="button" id="v2Share">↗ <span class="v2-label-full">Compartilhar</span><span class="v2-label-short">Compart.</span></button><button type="button" class="v2-support" id="v2Support">☕ <span class="v2-label-full">Apoiar</span><span class="v2-label-short">Apoiar</span></button>';
+    q.innerHTML='<button type="button" id="v2BackIndex"><span class="v2BtnIcon">←</span><span class="v2BtnLabel">Índice</span></button><button type="button" id="v2Search"><span class="v2BtnIcon">🔎</span><span class="v2BtnLabel">Pesquisar</span></button><button type="button" id="v2Share"><span class="v2BtnIcon">↗</span><span class="v2BtnLabel v2LabelFull">Compartilhar</span><span class="v2BtnLabel v2LabelShort">Compart.</span></button><button type="button" class="v2-support" id="v2Support"><span class="v2BtnIcon">☕</span><span class="v2BtnLabel">Apoiar</span></button>';
     const p=document.createElement('div');
     p.id='v2PersonalBar';
     p.innerHTML='<button type="button" id="v2Fav">★ Favoritos <span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls">✓ Chamados <span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
@@ -2829,92 +2829,53 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 </style>
 
-
-<style id="v2-fix-sticky-header-menu-1610">
-/* Correção: cabeçalho + menu permanecem visíveis e a navegação não salta por baixo deles. */
-:root{--v2-header-h:0px;--v2-menu-h:0px;--v2-sticky-h:0px}
-.v2-label-short{display:none}
-
-/* O cabeçalho principal e a barra de ações formam a área fixa de navegação. */
-body:not(.welcome-mode) > header{
+<style id="v2-sticky-final-1610">
+/* Correção final de navegação: sem menu flutuante; sticky natural. */
+:root{--v2-nav-h:64px}
+#v2QuickBar{
   position:sticky!important;
   top:0!important;
-  z-index:120!important;
+  z-index:90!important;
+  transform:none!important;
+  inset:auto!important;
+  background:rgba(239,235,224,.985)!important;
 }
-body:not(.welcome-mode) > .toolbar{
-  position:sticky!important;
-  top:var(--v2-header-h)!important;
-  z-index:119!important;
-  padding:0!important;
+#v2QuickBar button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  line-height:1!important;
+  vertical-align:middle!important;
 }
-body:not(.welcome-mode) > .toolbar .wrap.quickbar{display:none!important}
-
-/* A barra v2 fica dentro da toolbar visualmente e não é empurrada ao abrir uma ocasião. */
-#v2QuickBar{
-  position:fixed!important;
-  top:var(--v2-header-h)!important;
-  left:50%!important;
-  transform:translateX(-50%)!important;
-  z-index:125!important;
-  margin:0!important;
-  background:rgba(239,235,224,.98)!important;
-  backdrop-filter:blur(8px)!important;
+#v2QuickBar .v2BtnIcon,#v2QuickBar .v2BtnLabel{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  line-height:1!important;margin:0!important;padding:0!important;vertical-align:middle!important;
 }
-body:not(.welcome-mode){padding-top:var(--v2-menu-h)!important}
-
-/* Título da ocasião fica logo abaixo do cabeçalho/menu fixos. */
+#v2QuickBar .v2BtnIcon{flex:0 0 auto!important;font-family:Arial,sans-serif!important}
+#v2QuickBar .v2BtnLabel{flex:0 1 auto!important;white-space:nowrap!important}
+#v2QuickBar .v2LabelShort{display:none!important}
 body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{
-  top:var(--v2-sticky-h)!important;
+  position:sticky!important;
+  top:var(--v2-nav-h)!important;
+  z-index:70!important;
+  margin-top:0!important;
+  background:#fdfbf7!important;
 }
-#indice,#content section{scroll-margin-top:calc(var(--v2-sticky-h) + 18px)!important}
-
+body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-nav-h) + 8px)!important}
 @media(max-width:700px){
-  #v2QuickBar{
-    left:0!important;right:0!important;transform:none!important;
-    width:100%!important;max-width:none!important;
-    padding:8px 12px!important;gap:8px!important;
-  }
-  body:not(.index-mode) #v2QuickBar{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-  #v2QuickBar button{
-    min-width:0!important;width:100%!important;
-    padding:8px 3px!important;font-size:.72rem!important;
-    letter-spacing:-.01em!important;overflow:visible!important;
-  }
-  body:not(.index-mode) #v2QuickBar .v2-label-full{display:none!important}
-  body:not(.index-mode) #v2QuickBar .v2-label-short{display:inline!important}
+  :root{--v2-nav-h:60px}
+  #v2QuickBar{padding:8px 6px!important;gap:7px!important}
+  #v2QuickBar button{height:44px!important;min-height:44px!important;padding:0 4px!important;gap:4px!important;font-size:.72rem!important;overflow:visible!important}
+  #v2QuickBar .v2BtnIcon{font-size:.78rem!important}
+  body:not(.index-mode) #v2QuickBar .v2LabelFull{display:none!important}
+  body:not(.index-mode) #v2QuickBar .v2LabelShort{display:inline-flex!important}
+  body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{top:var(--v2-nav-h)!important}
 }
 @media(max-width:390px){
-  #v2QuickBar{padding-inline:7px!important;gap:6px!important}
-  #v2QuickBar button{font-size:.68rem!important;padding-inline:2px!important}
+  #v2QuickBar{gap:4px!important;padding-inline:4px!important}
+  #v2QuickBar button{font-size:.67rem!important;gap:3px!important;padding-inline:2px!important}
+  #v2QuickBar .v2BtnIcon{font-size:.72rem!important}
 }
 </style>
-<script id="v2-sticky-metrics-1610">
-(function(){
-  function updateStickyMetrics(){
-    const header=document.querySelector('body > header');
-    const bar=document.getElementById('v2QuickBar');
-    if(!header||!bar)return;
-    const hh=Math.ceil(header.getBoundingClientRect().height);
-    const bh=Math.ceil(bar.getBoundingClientRect().height);
-    document.documentElement.style.setProperty('--v2-header-h',hh+'px');
-    document.documentElement.style.setProperty('--v2-menu-h',bh+'px');
-    document.documentElement.style.setProperty('--v2-sticky-h',(hh+bh)+'px');
-  }
-  function init(){
-    updateStickyMetrics();
-    window.addEventListener('resize',updateStickyMetrics,{passive:true});
-    window.addEventListener('orientationchange',()=>setTimeout(updateStickyMetrics,80),{passive:true});
-    if('ResizeObserver' in window){
-      const ro=new ResizeObserver(updateStickyMetrics);
-      const h=document.querySelector('body > header'), b=document.getElementById('v2QuickBar');
-      if(h)ro.observe(h); if(b)ro.observe(b);
-    }
-    document.addEventListener('click',e=>{
-      if(e.target.closest('#v2QuickBar,.index a,.index button')) setTimeout(updateStickyMetrics,30);
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
-
 </body></html>
