@@ -2391,7 +2391,16 @@ function downloadCallsCsv(){
   }
   #v2LetterOverlay .v2Head{
     flex:0 0 auto;
-    padding:12px 14px;
+    min-height:0;
+    padding:7px 12px;
+  }
+  #v2LetterOverlay .v2Head h3{
+    font-size:.96rem;
+    line-height:1.15;
+  }
+  #v2LetterOverlay .v2Head .v2Close{
+    font-size:1.45rem;
+    padding:2px 4px;
   }
   #v2LetterOverlay .v2Body{
     flex:1 1 auto;
@@ -2483,7 +2492,9 @@ function downloadCallsCsv(){
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
 
   @media(max-width:420px){
-    #v2LetterOverlay .v2Head{padding:11px 12px}
+    #v2LetterOverlay .v2Head{padding:6px 10px}
+    #v2LetterOverlay .v2Head h3{font-size:.92rem}
+    #v2LetterOverlay .v2Head .v2Close{font-size:1.38rem}
     #v2LetterOverlay .v2Body{padding:9px 8px 10px}
     .v2LetterTop{gap:7px;margin-bottom:8px}
     .v2LetterTitle{font-size:1.16rem}
