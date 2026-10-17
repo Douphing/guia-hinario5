@@ -1231,6 +1231,36 @@ const MULTIMIDIA={
  "45":{audio:"audio/hino-45.mp3",spotify:"0834t6lumVQ5FKetjMgREw",youtube:"aFtzMzwvMfo",youtubeMusic:"DF966OAKcUQ"}
 };
 
+const LETRAS={
+ "45":{
+  titulo:"Oh! Quanto nos amaste!",
+  estrofes:[
+   [
+    "Manda-nos, ó Senhor, bênçãos lá dos céus,",
+    "Que conforto nos dão, ó eterno Deus,",
+    "Para Teus feitos anunciar",
+    "E o Teu santo Nome louvar."
+   ],
+   [
+    "Manda Tua Palavra, ó Formador,",
+    "Pelo Espírito Santo Consolador;",
+    "Desejamos melhor compreender",
+    "Teu divino e santo querer."
+   ],
+   [
+    "Continua, Senhor, a nos ensinar;",
+    "Nossas mentes Tu podes iluminar",
+    "Para que nós possamos vencer",
+    "E, ao fim, galardão receber."
+   ]
+  ],
+  coro:[
+   "Oh! Quanto nos amaste, bondoso Criador!",
+   "Dá-nos mais do Teu santo e puro amor."
+  ]
+ }
+};
+
 
 /* V18 — favoritos + registros individuais de hinos chamados */
 const HYMN_STORE={
@@ -2352,6 +2382,12 @@ function downloadCallsCsv(){
   .v2FontCtl button{border:1px solid #d6c7a8;background:#fff;border-radius:9px;padding:8px 13px;font-weight:700}
   #v2LetterText{background:#fff;border:1px solid #ded5c5;border-radius:13px;padding:17px;
     font:1rem/1.65 Georgia,serif;color:#34312d}
+  .v2Stanza{position:relative;padding-left:28px;margin:0 0 18px}
+  .v2Stanza:last-child{margin-bottom:0}
+  .v2StanzaNum{position:absolute;left:0;top:0;color:#9b7228;font:bold .92rem Arial,sans-serif}
+  .v2VerseLine{min-height:1.4em}
+  .v2Chorus{margin:20px 0 0;padding:14px 15px;border-left:3px solid #b8892c;border-radius:0 10px 10px 0;background:#fbf6e9}
+  .v2ChorusTitle{display:block;margin:0 0 6px;color:#8d6825;font:bold .78rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em}
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
   @media(min-width:850px){
     #v2QuickBar{justify-content:flex-start}
@@ -2561,6 +2597,23 @@ function downloadCallsCsv(){
     registrarEventoGA('abrir_letra',gaHinoParams(h));
     document.getElementById('v2LetterNum').textContent='Hino '+h.num;
     document.getElementById('v2LetterTitle').textContent=h.titulo||'';
+
+    const box=document.getElementById('v2LetterText');
+    const letra=LETRAS[String(h.num)];
+    if(letra){
+      const estrofes=(letra.estrofes||[]).map((estrofe,i)=>
+        '<div class="v2Stanza"><span class="v2StanzaNum">'+(i+1)+'.</span>'+
+        estrofe.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+
+        '</div>'
+      ).join('');
+      const coro=(letra.coro&&letra.coro.length)
+        ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
+        : '';
+      box.innerHTML=estrofes+coro;
+    }else{
+      box.innerHTML='<p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p>';
+    }
+
     document.getElementById('v2LetterOverlay').classList.add('show');
   };
 
