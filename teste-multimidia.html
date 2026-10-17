@@ -2382,12 +2382,11 @@ function downloadCallsCsv(){
   .v2FontCtl button{border:1px solid #d6c7a8;background:#fff;border-radius:9px;padding:8px 13px;font-weight:700}
   #v2LetterText{background:#fff;border:1px solid #ded5c5;border-radius:13px;padding:17px;
     font:1rem/1.65 Georgia,serif;color:#34312d}
-  .v2Stanza{position:relative;padding-left:28px;margin:0 0 18px}
-  .v2Stanza:last-child{margin-bottom:0}
-  .v2StanzaNum{position:absolute;left:0;top:0;color:#9b7228;font:bold .92rem Arial,sans-serif}
-  .v2VerseLine{min-height:1.4em}
-  .v2Chorus{margin:20px 0 0;padding:14px 15px;border-left:3px solid #b8892c;border-radius:0 10px 10px 0;background:#fbf6e9}
-  .v2ChorusTitle{display:block;margin:0 0 6px;color:#8d6825;font:bold .78rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em}
+  .v2Stanza{margin:0 0 18px;padding:0;text-align:center}
+  .v2StanzaNum{position:static;display:inline;margin-right:6px;color:inherit;font:inherit}
+  .v2VerseLine{min-height:1.4em;text-align:center}
+  .v2Chorus{margin:18px auto 30px;padding:0;border:0;background:transparent;text-align:center}
+  .v2Chorus .v2VerseLine{font-weight:500}
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
   @media(min-width:850px){
     #v2QuickBar{justify-content:flex-start}
@@ -2601,15 +2600,17 @@ function downloadCallsCsv(){
     const box=document.getElementById('v2LetterText');
     const letra=LETRAS[String(h.num)];
     if(letra){
-      const estrofes=(letra.estrofes||[]).map((estrofe,i)=>
-        '<div class="v2Stanza"><span class="v2StanzaNum">'+(i+1)+'.</span>'+
-        estrofe.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+
-        '</div>'
-      ).join('');
-      const coro=(letra.coro&&letra.coro.length)
-        ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
+      const temCoro=letra.coro&&letra.coro.length;
+      const coro=temCoro
+        ? '<div class="v2Chorus">'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
         : '';
-      box.innerHTML=estrofes+coro;
+      const estrofes=(letra.estrofes||[]).map((estrofe,i)=>{
+        const linhas=estrofe.map((l,j)=>
+          '<div class="v2VerseLine">'+(j===0?'<span class="v2StanzaNum">'+(i+1)+'.</span>':'')+esc(l)+'</div>'
+        ).join('');
+        return '<div class="v2Stanza">'+linhas+'</div>'+(i===0 ? coro : '');
+      }).join('');
+      box.innerHTML=estrofes;
     }else{
       box.innerHTML='<p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p>';
     }
