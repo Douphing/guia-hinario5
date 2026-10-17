@@ -2376,18 +2376,123 @@ function downloadCallsCsv(){
     background:#fffdf7;text-align:center;font: .88rem Arial,sans-serif;color:#514b43
   }
   .v2Pix.show{display:block}
-  .v2LetterTitle{text-align:center;color:#263641;margin:2px 0 3px}
-  .v2LetterSub{text-align:center;color:#9b7228;margin:0 0 13px;font-weight:700}
-  .v2FontCtl{display:flex;justify-content:center;gap:7px;margin-bottom:13px}
-  .v2FontCtl button{border:1px solid #d6c7a8;background:#fff;border-radius:9px;padding:8px 13px;font-weight:700}
-  #v2LetterText{background:#fff;border:1px solid #ded5c5;border-radius:13px;padding:17px;
-    font:1rem/1.65 Georgia,serif;color:#34312d}
-  .v2Stanza{margin:0 0 18px;padding:0;text-align:center}
+  /* Modal da letra — ocupa melhor a tela e mantém rolagem apenas no conteúdo */
+  #v2LetterOverlay{
+    padding:max(8px,env(safe-area-inset-top)) 7px max(8px,env(safe-area-inset-bottom));
+    overflow:hidden;
+    align-items:flex-start;
+  }
+  #v2LetterOverlay .v2Panel{
+    width:min(560px,100%);
+    height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+    max-height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+    display:flex;
+    flex-direction:column;
+  }
+  #v2LetterOverlay .v2Head{
+    flex:0 0 auto;
+    padding:12px 14px;
+  }
+  #v2LetterOverlay .v2Body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:11px 10px 12px;
+  }
+
+  .v2LetterTop{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin:0 2px 10px;
+  }
+  .v2LetterTop>div:first-child{min-width:0;flex:1}
+  .v2LetterTitle{text-align:left;color:#263641;margin:0 0 2px;font-size:1.28rem}
+  .v2LetterSub{text-align:left;color:#9b7228;margin:0;font-weight:700;line-height:1.2}
+
+  .v2FontCtl{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    margin:0;
+    padding:3px;
+    border:1px solid #d8c9aa;
+    border-radius:11px;
+    background:#f7f2e7;
+  }
+  .v2FontCtl button{
+    min-width:38px;
+    min-height:34px;
+    border:0;
+    background:#fff;
+    color:#263641;
+    border-radius:8px;
+    padding:6px 8px;
+    font:700 .84rem Arial,sans-serif;
+    box-shadow:0 1px 2px rgba(0,0,0,.06);
+  }
+  .v2FontCtl span{
+    min-width:42px;
+    text-align:center;
+    color:#75664d;
+    font:700 .68rem Arial,sans-serif;
+  }
+
+  #v2LetterText{
+    background:#fff;
+    border:1px solid #ded5c5;
+    border-radius:13px;
+    padding:15px 13px 17px;
+    font:1rem/1.58 Georgia,serif;
+    color:#34312d;
+  }
+  .v2Stanza{margin:0 0 20px;padding:0;text-align:center}
+  .v2Stanza:last-child{margin-bottom:0}
   .v2StanzaNum{position:static;display:inline;margin-right:6px;color:inherit;font:inherit}
-  .v2VerseLine{min-height:1.4em;text-align:center}
-  .v2Chorus{margin:18px auto 30px;padding:0;border:0;background:transparent;text-align:center}
+  .v2VerseLine{min-height:1.35em;text-align:center}
+
+  /* Tarja dourada que identifica visualmente o coro */
+  .v2Chorus{
+    margin:15px -13px 24px;
+    padding:0 13px 14px;
+    border-top:1px solid #d2ad67;
+    border-bottom:1px solid #e5d3ad;
+    background:#fbf6e9;
+    text-align:center;
+  }
+  .v2ChorusTitle{
+    display:block;
+    margin:0 -13px 12px;
+    padding:6px 10px;
+    background:linear-gradient(90deg,#a97826,#c69a49,#a97826);
+    color:#fffaf0;
+    font:700 .70rem Arial,sans-serif;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    text-align:center;
+  }
   .v2Chorus .v2VerseLine{font-weight:500}
+
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
+
+  @media(max-width:420px){
+    #v2LetterOverlay .v2Head{padding:11px 12px}
+    #v2LetterOverlay .v2Body{padding:9px 8px 10px}
+    .v2LetterTop{gap:7px;margin-bottom:8px}
+    .v2LetterTitle{font-size:1.16rem}
+    .v2LetterSub{font-size:.90rem}
+    .v2FontCtl{gap:2px}
+    .v2FontCtl button{min-width:34px;min-height:32px;padding:5px 6px;font-size:.78rem}
+    .v2FontCtl span{min-width:36px;font-size:.62rem}
+    #v2LetterText{padding:14px 11px 16px;line-height:1.52}
+    .v2Chorus{margin-left:-11px;margin-right:-11px}
+    .v2ChorusTitle{margin-left:-11px;margin-right:-11px}
+  }
   @media(min-width:850px){
     #v2QuickBar{justify-content:flex-start}
     #v2QuickBar button{min-height:38px;padding:8px 12px;font-size:.82rem}
@@ -2543,7 +2648,18 @@ function downloadCallsCsv(){
       </div></div></div>
     <div class="v2Overlay" id="v2LetterOverlay"><div class="v2Panel">
       <div class="v2Head"><h3>📖 Letra do hino</h3><button class="v2Close" onclick="v2Close('v2LetterOverlay')">×</button></div>
-      <div class="v2Body"><h3 class="v2LetterTitle" id="v2LetterNum"></h3><p class="v2LetterSub" id="v2LetterTitle"></p>
+      <div class="v2Body">
+        <div class="v2LetterTop">
+          <div>
+            <h3 class="v2LetterTitle" id="v2LetterNum"></h3>
+            <p class="v2LetterSub" id="v2LetterTitle"></p>
+          </div>
+          <div class="v2FontCtl" role="group" aria-label="Tamanho da letra">
+            <button type="button" onclick="v2Font(-1)" aria-label="Diminuir tamanho da letra">A−</button>
+            <span id="v2FontValue" aria-live="polite">100%</span>
+            <button type="button" onclick="v2Font(1)" aria-label="Aumentar tamanho da letra">A+</button>
+          </div>
+        </div>
         <div id="v2LetterText"><p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p></div>
       </div></div></div>`);
     document.querySelectorAll('.v2Overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show')}));
@@ -2591,7 +2707,13 @@ function downloadCallsCsv(){
     };
   };
   let letterSize=1;
-  window.v2Font=d=>{letterSize=Math.max(.8,Math.min(1.7,letterSize+d*.1));document.getElementById('v2LetterText').style.fontSize=letterSize+'rem'};
+  window.v2Font=d=>{
+    letterSize=Math.max(.8,Math.min(1.7,Math.round((letterSize+d*.1)*10)/10));
+    const letterBox=document.getElementById('v2LetterText');
+    if(letterBox) letterBox.style.fontSize=letterSize+'rem';
+    const value=document.getElementById('v2FontValue');
+    if(value) value.textContent=Math.round(letterSize*100)+'%';
+  };
   window.v2OpenLetter=h=>{
     registrarEventoGA('abrir_letra',gaHinoParams(h));
     document.getElementById('v2LetterNum').textContent='Hino '+h.num;
@@ -2602,7 +2724,7 @@ function downloadCallsCsv(){
     if(letra){
       const temCoro=letra.coro&&letra.coro.length;
       const coro=temCoro
-        ? '<div class="v2Chorus">'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
+        ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
         : '';
       const estrofes=(letra.estrofes||[]).map((estrofe,i)=>{
         const linhas=estrofe.map((l,j)=>
@@ -2615,6 +2737,8 @@ function downloadCallsCsv(){
       box.innerHTML='<p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p>';
     }
 
+    const fontValue=document.getElementById('v2FontValue');
+    if(fontValue) fontValue.textContent=Math.round(letterSize*100)+'%';
     document.getElementById('v2LetterOverlay').classList.add('show');
   };
 
