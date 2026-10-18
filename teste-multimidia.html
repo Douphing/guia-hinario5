@@ -1109,6 +1109,18 @@ window.addEventListener('appinstalled', function () {
  border:0!important;border-radius:12px;overflow:hidden
 }
 #hymnDetail .hd-slot audio{display:block;width:100%;max-width:100%;height:40px;margin:0}
+#hymnDetail .hd-audio-progress{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ margin:0 0 8px;padding:8px 11px;border:1px solid #e2d4b6;border-radius:10px;
+ background:#fbf6e9;color:#5e574d;font:700 .76rem Arial,sans-serif;
+}
+#hymnDetail .hd-audio-progress strong{color:#9b7228}
+#hymnDetail .hd-audio-progress.is-done{background:#eef3e9;border-color:#cbd7bf}
+#hymnDetail .hd-audio-test{
+ margin:8px 0 0;padding:8px 10px;border-radius:9px;background:#fff7e8;
+ border:1px dashed #d5b677;color:#725d36;font:600 .70rem/1.35 Arial,sans-serif;
+}
+
 #hdSpotify iframe{height:152px!important}
 #hdYoutube iframe{height:auto!important;aspect-ratio:16/9!important;max-height:300px}
 #hymnDetail .hd-links{width:100%;max-width:100%;margin-top:7px;text-align:center;overflow-wrap:anywhere}
@@ -1228,7 +1240,15 @@ window.addEventListener('appinstalled', function () {
 
 <script>
 const MULTIMIDIA={
- "45":{audio:"audio/hino-45.mp3",spotify:"0834t6lumVQ5FKetjMgREw",youtube:"aFtzMzwvMfo",youtubeMusic:"DF966OAKcUQ"}
+ "45":{
+  audio:"audio/hino-45.mp3",
+  spotify:"0834t6lumVQ5FKetjMgREw",
+  youtube:"aFtzMzwvMfo",
+  youtubeMusic:"DF966OAKcUQ"
+ },
+ "Coro 1":{
+  audio:"audio/coro-1.mp3"
+ }
 };
 
 const LETRAS={
@@ -1254,9 +1274,23 @@ const LETRAS={
     "E, ao fim, galardão receber."
    ]
   ],
+  tipo:"hino",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
   coro:[
    "Oh! Quanto nos amaste, bondoso Criador!",
    "Dá-nos mais do Teu santo e puro amor."
+  ]
+ },
+ "Coro 1":{
+  tipo:"coro",
+  titulo:"Aleluia! Aleluia!",
+  linhas:[
+   "Aleluia! Aleluia! Aleluia! Aleluia!",
+   "Glória ao Redentor!",
+   "Aleluia! Aleluia! Aleluia! Aleluia!",
+   "Glória ao Redentor! Glória ao Redentor!",
+   "Aleluia! Santo Remidor! Aleluia! Nosso Salvador!",
+   "Aleluia! Glória a Jesus!"
   ]
  }
 };
@@ -1529,7 +1563,7 @@ function openHymnDetail(h,cat){
  window.__gaOrigemConsulta='';
  registrarEventoGA('abrir_detalhe_hino', gaHinoParams(h,{
    origem_consulta:gaOrigem,
-   piloto_multimidia:String(h.num)==='45'?'sim':'nao'
+   piloto_multimidia:(String(h.num)==='45'||String(h.num)==='Coro 1')?'sim':'nao'
  }));
  document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
  document.getElementById('hdTitle').textContent=h.titulo;
@@ -1551,28 +1585,88 @@ function openHymnDetail(h,cat){
  const area=document.getElementById('hdMediaArea');
  const media=MULTIMIDIA[String(h.num)];
  if(media){
-   area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir Hino</div><div class="hd-media"><button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>Ouvir instrumental</span><b>›</b></button><button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button><button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button></div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
+   const mediaBtns=[];
+   if(media.audio) mediaBtns.push('<button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>'+ (media.audioTeste?'Testar reprodução':'Ouvir instrumental') +'</span><b>›</b></button>');
+   if(media.spotify) mediaBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
+   if(media.youtube) mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
+   if(media.youtubeMusic) mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
+   area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div><div class="hd-media">'+mediaBtns.join('')+'</div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
    area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
-   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. O teste multimídia está disponível no Hino 45.</div>';
+   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
  }
  modal.classList.remove('media-open');
  modal.classList.add('open');
  document.documentElement.style.overflow='hidden';
 }
 
+function calcularRepeticoesAudio(h){
+ const chave=String(h&&h.num||'');
+ if(chave.startsWith('Coro ')) return 1;
+ const letra=LETRAS[chave];
+ const qtd=letra&&Array.isArray(letra.estrofes)?letra.estrofes.length:0;
+ return Math.max(1,qtd||1);
+}
+
 function loadHymnMedia(kind,media,button){
  const au=document.getElementById('hdAudio'),sp=document.getElementById('hdSpotify'),yt=document.getElementById('hdYoutube'),links=document.getElementById('hdLinks');
  registrarEventoGA('abrir_midia', gaHinoParams(window.__gaCurrentHymn,{
    tipo_midia:String(kind),
-   piloto_multimidia:String(window.__gaCurrentHymn?.num)==='45'?'sim':'nao'
+   piloto_multimidia:(String(window.__gaCurrentHymn?.num)==='45'||String(window.__gaCurrentHymn?.num)==='Coro 1')?'sim':'nao'
  }));
  au.innerHTML='';sp.innerHTML='';yt.innerHTML='';links.innerHTML='';
  document.querySelectorAll('#hymnDetail .hd-play').forEach(b=>b.classList.remove('active'));button.classList.add('active');
  document.getElementById('hymnDetail').classList.add('media-open');
 
  if(kind==='instrumental'){
-   const a=document.createElement('audio');a.controls=true;a.preload='metadata';a.src=media.audio;a.setAttribute('playsinline','');au.appendChild(a);
+   const h=window.__gaCurrentHymn||{};
+   const total=calcularRepeticoesAudio(h);
+   let ciclo=1;
+
+   const status=document.createElement('div');
+   status.className='hd-audio-progress';
+   const atualizarStatus=(done=false)=>{
+     if(String(h.num).startsWith('Coro ')){
+       status.innerHTML='<span>Coro</span><strong>'+(done?'Execução concluída':'Execução única')+'</strong>';
+     }else{
+       status.innerHTML='<span>Reprodução conforme as estrofes</span><strong>'+(done?('Concluído · '+total+' de '+total):('Estrofe '+ciclo+' de '+total))+'</strong>';
+     }
+     status.classList.toggle('is-done',done);
+   };
+   atualizarStatus(false);
+   au.appendChild(status);
+
+   const a=document.createElement('audio');
+   a.controls=true;a.preload='metadata';a.src=media.audio;a.setAttribute('playsinline','');
+   au.appendChild(a);
+
+   if(media.audioTeste){
+     const n=document.createElement('div');
+     n.className='hd-audio-test';
+     n.textContent='Áudio de teste do item selecionado.';
+     au.appendChild(n);
+   }
+
+   a.addEventListener('ended',()=>{
+     if(ciclo<total){
+       ciclo++;
+       atualizarStatus(false);
+       a.currentTime=0;
+       setTimeout(()=>{
+         const p=a.play();
+         if(p&&typeof p.catch==='function')p.catch(()=>{});
+       },450);
+     }else{
+       atualizarStatus(true);
+     }
+   });
+
+   a.addEventListener('play',()=>{
+     if(a.currentTime<0.25 && ciclo>=total && status.classList.contains('is-done')){
+       ciclo=1;
+       atualizarStatus(false);
+     }
+   });
  }else if(kind==='spotify'){
    const f=document.createElement('iframe');
    f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
@@ -2376,16 +2470,16 @@ function downloadCallsCsv(){
     background:#fffdf7;text-align:center;font: .88rem Arial,sans-serif;color:#514b43
   }
   .v2Pix.show{display:block}
-  /* Modal da letra — responsivo: compacto no desktop e tela útil no celular */
+  /* Modal da letra — ocupa melhor a tela e mantém rolagem apenas no conteúdo */
   #v2LetterOverlay{
-    padding:18px 14px;
+    padding:max(8px,env(safe-area-inset-top)) 7px max(8px,env(safe-area-inset-bottom));
     overflow:hidden;
-    align-items:center;
+    align-items:flex-start;
   }
   #v2LetterOverlay .v2Panel{
-    width:min(680px,96vw);
-    height:auto;
-    max-height:calc(100vh - 36px);
+    width:min(560px,100%);
+    height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+    max-height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
     display:flex;
     flex-direction:column;
   }
@@ -2490,18 +2584,6 @@ function downloadCallsCsv(){
   .v2Chorus .v2VerseLine{font-weight:500}
 
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
-
-  @media(max-width:700px){
-    #v2LetterOverlay{
-      padding:max(8px,env(safe-area-inset-top)) 7px max(8px,env(safe-area-inset-bottom));
-      align-items:flex-start;
-    }
-    #v2LetterOverlay .v2Panel{
-      width:min(560px,100%);
-      height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
-      max-height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
-    }
-  }
 
   @media(max-width:420px){
     #v2LetterOverlay .v2Head{padding:6px 10px}
@@ -2740,23 +2822,28 @@ function downloadCallsCsv(){
   };
   window.v2OpenLetter=h=>{
     registrarEventoGA('abrir_letra',gaHinoParams(h));
-    document.getElementById('v2LetterNum').textContent='Hino '+h.num;
+    const ehCoro=String(h.num).startsWith('Coro ');
+    document.getElementById('v2LetterNum').textContent=ehCoro?String(h.num):('Hino '+h.num);
     document.getElementById('v2LetterTitle').textContent=h.titulo||'';
 
     const box=document.getElementById('v2LetterText');
     const letra=LETRAS[String(h.num)];
     if(letra){
-      const temCoro=letra.coro&&letra.coro.length;
-      const coro=temCoro
-        ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
-        : '';
-      const estrofes=(letra.estrofes||[]).map((estrofe,i)=>{
-        const linhas=estrofe.map((l,j)=>
-          '<div class="v2VerseLine">'+(j===0?'<span class="v2StanzaNum">'+(i+1)+'.</span>':'')+esc(l)+'</div>'
-        ).join('');
-        return '<div class="v2Stanza">'+linhas+'</div>'+(i===0 ? coro : '');
-      }).join('');
-      box.innerHTML=estrofes;
+      if(letra.tipo==='coro' && Array.isArray(letra.linhas)){
+        box.innerHTML='<div class="v2Stanza">'+letra.linhas.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>';
+      }else{
+        const temCoro=letra.coro&&letra.coro.length;
+        const coro=temCoro
+          ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
+          : '';
+        const estrofes=(letra.estrofes||[]).map((estrofe,i)=>{
+          const linhas=estrofe.map((l,j)=>
+            '<div class="v2VerseLine">'+(j===0?'<span class="v2StanzaNum">'+(i+1)+'.</span>':'')+esc(l)+'</div>'
+          ).join('');
+          return '<div class="v2Stanza">'+linhas+'</div>'+(i===0 ? coro : '');
+        }).join('');
+        box.innerHTML=estrofes;
+      }
     }else{
       box.innerHTML='<p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p>';
     }
