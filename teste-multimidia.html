@@ -1109,9 +1109,15 @@ window.addEventListener('appinstalled', function () {
  border:0!important;border-radius:12px;overflow:hidden
 }
 #hymnDetail .hd-slot audio{display:block;width:100%;max-width:100%;height:40px;margin:0}
+#hymnDetail #hdAudio{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;
+ overflow:visible!important;
+}
+#hymnDetail #hdAudio audio{width:100%!important;flex:0 0 auto!important}
 #hymnDetail .hd-audio-progress{
- display:flex;align-items:center;justify-content:space-between;gap:10px;
- margin:0 0 8px;padding:8px 11px;border:1px solid #e2d4b6;border-radius:10px;
+ display:flex;align-items:center;justify-content:center;gap:12px;
+ width:min(330px,100%);align-self:center;margin:10px auto 0;padding:9px 16px;
+ border:1px solid #e2d4b6;border-radius:12px;
  background:#fbf6e9;color:#5e574d;font:700 .76rem Arial,sans-serif;
 }
 #hymnDetail .hd-audio-progress strong{color:#9b7228}
@@ -1709,6 +1715,10 @@ function loadHymnMedia(kind,media,button){
    a.controls=true;a.preload='metadata';a.src=media.audio;a.setAttribute('playsinline','');
    au.appendChild(a);
    au.appendChild(status);
+   a.addEventListener('error',()=>{
+     status.classList.remove('is-done');
+     status.innerHTML='<span>Áudio</span><strong>Arquivo não encontrado</strong>';
+   });
 
    if(media.audioTeste){
      const n=document.createElement('div');
