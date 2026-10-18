@@ -9,7 +9,7 @@
 <title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title>
 
 <meta name="description"
-      content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título. Relações para Palavra, Oração, Batismo, Santa Ceia, Funeral e outras ocasiões. Guia independente e não oficial.">
+      content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título, incluindo a relação sugestiva de Hinos para Meia-Hora com andamento. Guia independente e não oficial.">
 
 <meta name="robots" content="index,follow">
 <meta name="googlebot" content="index,follow">
@@ -736,6 +736,7 @@ body:not(.index-mode) #content section:not(.hidden-by-nav){
     <a href="hinos-funeral.html">Funeral</a>
     <a href="hinos-abertura.html">Abertura</a>
     <a href="hinos-encerramento.html">Encerramento</a>
+    <a href="hinos-meia-hora.html">Meia-Hora</a>
   </nav>
 </section>
 
@@ -3287,7 +3288,7 @@ body.index-mode #indice{
  function stop(){if(timer)clearInterval(timer);timer=null;const b=document.getElementById('mhPlay');if(b)b.textContent='▶'} function start(){stop();const bpm=+document.getElementById('mhSlider').value;const h=current?HM.get(current.num)||{}:{};registrarEventoGA('iniciar_metronomo',{numero_hino:String(current?.num||''),titulo_hino:String(h.titulo||''),bpm_atual:bpm,bpm_min:current?.min||0,bpm_max:current?.max||0});beep();timer=setInterval(beep,60000/bpm);document.getElementById('mhPlay').textContent='■'}
  function sync(){document.getElementById('mhNow').textContent=document.getElementById('mhSlider').value;if(timer)start()}
  function openMeter(x){current=x;stop();const h=HM.get(x.num)||{titulo:''},s=document.getElementById('mhSlider');registrarEventoGA('abrir_metronomo',{numero_hino:String(x.num),titulo_hino:String(h.titulo||''),bpm_min:x.min,bpm_max:x.max});document.getElementById('mhMeterHymn').textContent='Hino '+x.num;document.getElementById('mhMeterTitle').textContent=h.titulo||'';document.getElementById('mhRange').textContent='♩ '+x.min+' – '+x.max+' BPM';s.min=x.min;s.max=x.max;s.value=Math.round((x.min+x.max)/2);sync();show('mhMetro')}
- function init(){mountIndex();render('');document.getElementById('mhSearch').oninput=e=>render(e.target.value);document.getElementById('mhClose').onclick=()=>hide('mhOverlay');document.getElementById('mhMetroClose').onclick=()=>hide('mhMetro');document.getElementById('mhSlider').oninput=sync;document.getElementById('mhMinus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.max(+s.min,+s.value-1);sync()};document.getElementById('mhPlus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.min(+s.max,+s.value+1);sync()};document.getElementById('mhPlay').onclick=()=>timer?stop():start();document.getElementById('mhOverlay').onclick=e=>{if(e.target.id==='mhOverlay')hide('mhOverlay')};document.getElementById('mhMetro').onclick=e=>{if(e.target.id==='mhMetro')hide('mhMetro')}}
+ function init(){mountIndex();render('');if(new URLSearchParams(location.search).get('meia-hora')==='1'){setTimeout(()=>{render('');show('mhOverlay')},120)}document.getElementById('mhSearch').oninput=e=>render(e.target.value);document.getElementById('mhClose').onclick=()=>hide('mhOverlay');document.getElementById('mhMetroClose').onclick=()=>hide('mhMetro');document.getElementById('mhSlider').oninput=sync;document.getElementById('mhMinus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.max(+s.min,+s.value-1);sync()};document.getElementById('mhPlus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.min(+s.max,+s.value+1);sync()};document.getElementById('mhPlay').onclick=()=>timer?stop():start();document.getElementById('mhOverlay').onclick=e=>{if(e.target.id==='mhOverlay')hide('mhOverlay')};document.getElementById('mhMetro').onclick=e=>{if(e.target.id==='mhMetro')hide('mhMetro')}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
