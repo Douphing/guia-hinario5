@@ -2376,16 +2376,16 @@ function downloadCallsCsv(){
     background:#fffdf7;text-align:center;font: .88rem Arial,sans-serif;color:#514b43
   }
   .v2Pix.show{display:block}
-  /* Modal da letra — ocupa melhor a tela e mantém rolagem apenas no conteúdo */
+  /* Modal da letra — responsivo: compacto no desktop e tela útil no celular */
   #v2LetterOverlay{
-    padding:max(8px,env(safe-area-inset-top)) 7px max(8px,env(safe-area-inset-bottom));
+    padding:18px 14px;
     overflow:hidden;
-    align-items:flex-start;
+    align-items:center;
   }
   #v2LetterOverlay .v2Panel{
-    width:min(560px,100%);
-    height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
-    max-height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+    width:min(680px,96vw);
+    height:auto;
+    max-height:calc(100vh - 36px);
     display:flex;
     flex-direction:column;
   }
@@ -2490,6 +2490,18 @@ function downloadCallsCsv(){
   .v2Chorus .v2VerseLine{font-weight:500}
 
   .v2Empty{text-align:center;color:#716b62;font-family:Arial,sans-serif}
+
+  @media(max-width:700px){
+    #v2LetterOverlay{
+      padding:max(8px,env(safe-area-inset-top)) 7px max(8px,env(safe-area-inset-bottom));
+      align-items:flex-start;
+    }
+    #v2LetterOverlay .v2Panel{
+      width:min(560px,100%);
+      height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+      max-height:calc(100dvh - max(8px,env(safe-area-inset-top)) - max(8px,env(safe-area-inset-bottom)));
+    }
+  }
 
   @media(max-width:420px){
     #v2LetterOverlay .v2Head{padding:6px 10px}
