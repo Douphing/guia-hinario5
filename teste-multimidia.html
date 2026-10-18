@@ -3563,12 +3563,16 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 #shareHymnDialog .sh-preview-label{margin:4px 0 6px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}
 #shareHymnDialog .sh-preview{white-space:pre-wrap;background:#f5f2ea;border:1px solid #ded5c4;border-radius:12px;padding:12px;min-height:105px;color:#34414a;font:400 .88rem/1.42 Arial,sans-serif}
 #shareHymnDialog .sh-privacy{margin:9px 1px 0;color:#766e60;font:400 .75rem/1.35 Arial,sans-serif}
-#shareHymnDialog .sh-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:9px;margin-top:14px}
-#shareHymnDialog .sh-actions button{min-height:45px;border-radius:12px;padding:10px 12px;font:700 .88rem Arial,sans-serif;cursor:pointer}
+#shareHymnDialog .sh-channel-label{margin:12px 0 7px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+#shareHymnDialog .sh-channels{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}
+#shareHymnDialog .sh-channels button{min-height:48px;border-radius:12px;padding:10px 12px;font:700 .88rem Arial,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+#shareHymnDialog #shWhatsApp{border:1px solid #169b50;background:#25d366;color:#103f25}
+#shareHymnDialog #shTelegram{border:1px solid #168ac0;background:#229ed9;color:#fff}
 #shareHymnDialog #shCopy{border:1px solid #d2c39f;background:#fffaf0;color:#173149}
 #shareHymnDialog #shShare{border:1px solid #a67828;background:#a67828;color:#fff}
-#shareHymnDialog .sh-result{min-height:20px;margin-top:9px;text-align:center;color:#65725f;font:700 .78rem Arial,sans-serif}
-@media(max-width:430px){#shareHymnDialog{padding:9px}#shareHymnDialog .sh-card{padding:15px;border-radius:17px}#shareHymnDialog .sh-actions{grid-template-columns:1fr}#hymnDetail .hd-share-hymn{font-size:.86rem;padding:10px 12px}}
+#shareHymnDialog #shCopyLink{width:100%;margin-top:9px;min-height:40px;border:0;background:transparent;color:#76591f;text-decoration:underline;font:700 .82rem Arial,sans-serif;cursor:pointer}
+#shareHymnDialog .sh-result{min-height:20px;margin-top:8px;text-align:center;color:#65725f;font:700 .78rem Arial,sans-serif}
+@media(max-width:430px){#shareHymnDialog{padding:9px}#shareHymnDialog .sh-card{padding:15px;border-radius:17px}#shareHymnDialog .sh-channels{grid-template-columns:1fr 1fr}#shareHymnDialog .sh-channels button{font-size:.82rem;padding:9px 7px}#hymnDetail .hd-share-hymn{font-size:.86rem;padding:10px 12px}}
 </style>
 
 <div id="shareHymnDialog" aria-hidden="true">
@@ -3583,7 +3587,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   <div class="sh-preview-label">Prévia da mensagem</div>
   <div class="sh-preview" id="shPreview"></div>
   <div class="sh-privacy">A observação só será compartilhada se a opção acima estiver marcada. Ela não é gravada no link.</div>
-  <div class="sh-actions"><button type="button" id="shCopy">Copiar mensagem</button><button type="button" id="shShare">↗ Compartilhar</button></div>
+  <div class="sh-channel-label">Compartilhar por</div>
+  <div class="sh-channels">
+   <button type="button" id="shWhatsApp" aria-label="Compartilhar pelo WhatsApp">◉ WhatsApp</button>
+   <button type="button" id="shTelegram" aria-label="Compartilhar pelo Telegram">➤ Telegram</button>
+   <button type="button" id="shCopy">⧉ Copiar mensagem</button>
+   <button type="button" id="shShare">↗ Mais opções</button>
+  </div>
+  <button type="button" id="shCopyLink">🔗 Copiar somente o link</button>
   <div class="sh-result" id="shResult" aria-live="polite"></div>
  </div>
 </div>
@@ -3606,14 +3617,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function latestObservation(h){
    return records(h).filter(x=>clean(x.note)).sort((a,b)=>new Date(b.at)-new Date(a.at))[0]||null;
  }
- function message(){
+ function message(includeLink=true){
    if(!current)return '';
    const lines=['🎵 Hinário nº 5 — '+(String(current.num).startsWith('Coro ')?String(current.num):'Hino '+current.num),'“'+current.titulo+'”'];
    const recs=records(current), obs=latestObservation(current);
    if($('shIncludeCalled').checked && recs.length) lines.push('', '✓ Marcado como chamado'+(recs.length>1?' ('+recs.length+' registros)':''));
    if($('shIncludeFav').checked && HYMN_STORE.isFav(current.num)) lines.push('★ Está nos meus favoritos');
    if($('shIncludeObs').checked && obs) lines.push('', '📝 Observação: '+clean(obs.note));
-   lines.push('', '🔗 Abrir este hino no Guia:', directUrl(current));
+   if(includeLink) lines.push('', '🔗 Abrir este hino no Guia:', directUrl(current));
    return lines.join('\n');
  }
  function updatePreview(){ $('shPreview').textContent=message(); }
@@ -3635,19 +3646,44 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  ['shIncludeObs','shIncludeCalled','shIncludeFav'].forEach(id=>$(id).addEventListener('change',updatePreview));
  $('shClose').onclick=close;dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.classList.contains('show'))close()});
+ function trackShare(acao){
+   if(typeof registrarEventoGA==='function'&&current) registrarEventoGA('compartilhar_hino',gaHinoParams(current,{acao}));
+ }
+ $('shWhatsApp').onclick=()=>{
+   const url='https://wa.me/?text='+encodeURIComponent(message(true));
+   trackShare('whatsapp');
+   window.open(url,'_blank','noopener');
+ };
+ $('shTelegram').onclick=()=>{
+   const url='https://t.me/share/url?url='+encodeURIComponent(directUrl(current))+'&text='+encodeURIComponent(message(false));
+   trackShare('telegram');
+   window.open(url,'_blank','noopener');
+ };
  $('shCopy').onclick=async()=>{
-   const txt=message();
+   const txt=message(true);
    try{await navigator.clipboard.writeText(txt);$('shResult').textContent='✓ Mensagem copiada.'}
    catch(e){window.prompt('Copie a mensagem:',txt)}
-   if(typeof registrarEventoGA==='function'&&current)registrarEventoGA('compartilhar_hino',gaHinoParams(current,{acao:'copiar'}));
+   trackShare('copiar_mensagem');
+ };
+ $('shCopyLink').onclick=async()=>{
+   const url=directUrl(current);
+   try{await navigator.clipboard.writeText(url);$('shResult').textContent='✓ Link copiado.'}
+   catch(e){window.prompt('Copie o link:',url)}
+   trackShare('copiar_link');
  };
  $('shShare').onclick=async()=>{
-   const txt=message();
+   const title=(String(current.num).startsWith('Coro ')?String(current.num):'Hino '+current.num)+' — '+current.titulo;
    try{
-     if(navigator.share){await navigator.share({title:(String(current.num).startsWith('Coro ')?String(current.num):'Hino '+current.num)+' — '+current.titulo,text:txt});$('shResult').textContent='✓ Compartilhamento aberto.'}
-     else{await navigator.clipboard.writeText(txt);$('shResult').textContent='✓ Mensagem copiada para compartilhar.'}
-     if(typeof registrarEventoGA==='function'&&current)registrarEventoGA('compartilhar_hino',gaHinoParams(current,{acao:'compartilhar'}));
-   }catch(e){if(e&&e.name!=='AbortError')window.prompt('Copie a mensagem:',txt)}
+     if(navigator.share){
+       await navigator.share({title,text:message(false),url:directUrl(current)});
+       $('shResult').textContent='✓ Menu de compartilhamento aberto.';
+       trackShare('mais_opcoes');
+     }else{
+       await navigator.clipboard.writeText(message(true));
+       $('shResult').textContent='Seu navegador não oferece o menu nativo. A mensagem foi copiada.';
+       trackShare('fallback_copiar');
+     }
+   }catch(e){if(e&&e.name!=='AbortError')window.prompt('Copie a mensagem:',message(true))}
  };
  const btn=$('hdShareHymn');if(btn)btn.addEventListener('click',()=>open(window.__gaCurrentHymn));
 
