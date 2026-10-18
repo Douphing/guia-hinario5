@@ -3787,4 +3787,32 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+
+<!-- V7 — correção final de navegação fixa: desktop + mobile -->
+<style id="v7-menu-cabecalho-fixos">
+:root{--v7-toolbar-h:64px;--v7-section-head-h:72px}
+body.index-mode .toolbar{position:sticky!important;top:0!important}
+body:not(.index-mode) .toolbar{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:3200!important;margin:0!important}
+body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{position:fixed!important;top:var(--v7-toolbar-h)!important;left:50%!important;transform:translateX(-50%)!important;width:min(1120px,94vw)!important;z-index:3100!important;margin:0!important;padding:12px 14px 10px!important;background:rgba(253,251,247,.985)!important;border-bottom:3px solid var(--gold)!important;box-shadow:0 5px 14px rgba(42,35,25,.08)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);bottom:auto!important}
+body:not(.index-mode) #content section:not(.hidden-by-nav){margin-top:0!important;padding-top:calc(var(--v7-toolbar-h) + var(--v7-section-head-h) + 14px)!important;scroll-margin-top:0!important}
+@media (min-width:701px){body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{width:min(1120px,94%)!important}}
+@media (max-width:700px){body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{width:calc(100vw - 28px)!important;padding:10px 12px 9px!important}body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head h2{min-width:0!important}}
+@media (max-width:390px){body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head{width:calc(100vw - 20px)!important;padding-inline:10px!important}}
+</style>
+<script id="v7-medidas-cabecalho-menu-fixos">
+(function(){
+ function syncFixedNavigation(){
+  const toolbar=document.querySelector('.toolbar');
+  if(toolbar){const th=Math.ceil(toolbar.getBoundingClientRect().height);if(th>0)document.documentElement.style.setProperty('--v7-toolbar-h',th+'px')}
+  const head=document.querySelector('body:not(.index-mode) #content section:not(.hidden-by-nav) .section-head');
+  if(head){const hh=Math.ceil(head.getBoundingClientRect().height);if(hh>0)document.documentElement.style.setProperty('--v7-section-head-h',hh+'px')}
+ }
+ function scheduleSync(){requestAnimationFrame(function(){syncFixedNavigation();setTimeout(syncFixedNavigation,60)})}
+ document.addEventListener('DOMContentLoaded',function(){scheduleSync();if('ResizeObserver' in window){const ro=new ResizeObserver(scheduleSync);const t=document.querySelector('.toolbar');if(t)ro.observe(t);document.querySelectorAll('#content .section-head').forEach(el=>ro.observe(el))}if('MutationObserver' in window){new MutationObserver(scheduleSync).observe(document.body,{attributes:true,attributeFilter:['class'],subtree:false})}});
+ window.addEventListener('resize',scheduleSync,{passive:true});
+ window.addEventListener('orientationchange',function(){setTimeout(scheduleSync,120)},{passive:true});
+ document.addEventListener('click',function(){setTimeout(scheduleSync,40)},{passive:true});
+})();
+</script>
+
 </body></html>
