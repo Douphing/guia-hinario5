@@ -579,6 +579,24 @@ body:not(.index-mode) #content section:not(.hidden-by-nav){
 }
 </style>
 
+
+<style id="v10-midias-internas">
+#hymnDetail .hd-source-validation{
+  padding:14px 16px!important;border:1px solid #dfd2b7!important;border-radius:14px!important;
+  background:#f7f2e8!important;color:#645b4e!important;text-align:left!important;line-height:1.35!important
+}
+#hymnDetail .hd-source-validation strong{color:#173149!important}
+#hymnDetail .hd-internal-source-note{
+  display:grid;gap:3px;margin:9px 0 2px;padding:9px 12px;border-radius:11px;background:#fffaf0;
+  border:1px solid #dfd2b7;color:#6f6658;font:400 .82rem/1.3 Arial,sans-serif;text-align:left
+}
+#hymnDetail .hd-internal-source-note strong{color:#173149;font-size:.86rem}
+#hymnDetail .hd-internal-source-note span{display:block}
+@media(max-width:700px){
+  #hymnDetail .hd-source-validation{padding:11px 12px!important;font-size:.84rem!important}
+  #hymnDetail .hd-internal-source-note{font-size:.76rem;padding:8px 10px}
+}
+</style>
 </head>
 <!-- CANDIDATO V9: produção + piloto multimídia; não publicado -->
 <body id="top" class="index-mode welcome-mode">
@@ -1876,9 +1894,22 @@ function loadHymnMedia(kind,media,button){
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
    const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
    if(!directId && searchUrl){
-     yt.innerHTML='<div class="hd-unavailable" style="margin-top:10px">Fonte profissional priorizada: <strong>Orquestra Sacra</strong>. O link abaixo abre a busca exata nesta plataforma.</div>';
-     links.innerHTML='<a href="'+searchUrl+'" target="_blank" rel="noopener">Buscar Orquestra Sacra ↗</a>';
-     try{window.open(searchUrl,'_blank','noopener')}catch(e){}
+     /* V10: nunca abre busca externa automaticamente. Mantém o usuário dentro do Guia. */
+     yt.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>Orquestra Sacra</strong><br>Esta gravação profissional está confirmada para este Coro. O vídeo direto desta plataforma ainda está em validação e, por isso, nenhuma página externa será aberta.</div>';
+     links.innerHTML='';
+     if(media.spotify){
+       const pf=document.createElement('iframe');
+       pf.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
+       pf.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+       pf.loading='lazy';
+       pf.title='Orquestra Sacra - reprodução profissional';
+       pf.setAttribute('scrolling','no');
+       sp.appendChild(pf);
+       const note=document.createElement('div');
+       note.className='hd-internal-source-note';
+       note.innerHTML='<strong>Ouvir no próprio Guia</strong><span>Enquanto validamos o vídeo direto, a faixa profissional da Orquestra Sacra permanece disponível acima.</span>';
+       links.appendChild(note);
+     }
      return;
    }
    const id=directId;
