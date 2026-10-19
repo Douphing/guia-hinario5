@@ -624,6 +624,54 @@ body:not(.index-mode) #content section:not(.hidden-by-nav){
   #hymnDetail .hd-internal-source-note{font-size:.76rem;padding:8px 10px}
 }
 </style>
+
+<style id="v29-personal-tools-badges-alinhados">
+/* V29 — contadores de Favoritos e Chamados alinhados abaixo do rótulo. */
+.personal-tools button{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  min-height:66px;
+}
+.personal-tools .personal-tool-title{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+}
+.personal-tools button> b{
+  margin:0!important;
+  flex:0 0 auto!important;
+  align-self:center!important;
+}
+@media(max-width:600px){
+  .personal-tools button{min-height:64px!important;padding:8px 7px!important}
+  .personal-tools .personal-tool-title{font-size:.82rem!important}
+}
+</style>
+
+<style id="v30-marcar-hino-dourado">
+/* V30 — botão Marcar hino destacado em dourado, mantendo Favoritos/Chamados neutros. */
+#v2PersonalBar #v2Mark{
+  background:#b8892c!important;
+  color:#fff!important;
+  border-color:#a97920!important;
+  box-shadow:0 2px 7px rgba(137,96,22,.16)!important;
+}
+#v2PersonalBar #v2Mark:hover,
+#v2PersonalBar #v2Mark:focus-visible{
+  background:#a97920!important;
+  border-color:#946816!important;
+  outline:none!important;
+}
+#v2PersonalBar #v2Mark:active{
+  transform:translateY(1px);
+}
+</style>
 </head>
 <!-- CANDIDATO V9: produção + piloto multimídia; não publicado -->
 <!-- V12: Coros 1-4 e 6 com links diretos no modal; Coro 5 sem fallback externo até ID direto confirmado. -->
@@ -679,8 +727,8 @@ body:not(.index-mode) #content section:not(.hidden-by-nav){
 <button class="navbtn" id="goIndex" type="button">Índice</button>
 </div></div>
 <div class="personal-tools wrap" aria-label="Minha biblioteca">
-  <button type="button" id="openFavorites">★ <span>Favoritos</span><b id="favTotal">0</b></button>
-  <button type="button" id="openCalledHistory">✓ <span>Hinos chamados</span><b id="callTotal">0</b></button>
+  <button type="button" id="openFavorites"><span class="personal-tool-title">★ <span>Favoritos</span></span><b id="favTotal">0</b></button>
+  <button type="button" id="openCalledHistory"><span class="personal-tool-title">✓ <span>Hinos chamados</span></span><b id="callTotal">0</b></button>
 </div>
 <div id="searchModal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" id="modalBackdrop"></div>
