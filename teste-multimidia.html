@@ -653,6 +653,22 @@ body:not(.index-mode) #content section:not(.hidden-by-nav){
   .personal-tools .personal-tool-title{font-size:.82rem!important}
 }
 </style>
+
+<style id="v30-marcar-hino-dourado">
+/* V30 — destaca a ação Marcar hino sem alterar Favoritos/Chamados. */
+#v2PersonalBar #v2Mark{
+  background:#b8892c!important;
+  color:#fff!important;
+  border-color:#b8892c!important;
+  box-shadow:0 3px 8px rgba(184,137,44,.20)!important;
+}
+#v2PersonalBar #v2Mark:hover,
+#v2PersonalBar #v2Mark:focus-visible{
+  background:#a97b25!important;
+  border-color:#a97b25!important;
+  outline:none!important;
+}
+</style>
 </head>
 <!-- CANDIDATO V9: produção + piloto multimídia; não publicado -->
 <!-- V12: Coros 1-4 e 6 com links diretos no modal; Coro 5 sem fallback externo até ID direto confirmado. -->
@@ -3036,7 +3052,7 @@ function downloadCallsCsv(){
     q.innerHTML='<button type="button" id="v2BackIndex"><span class="v2SvgIcon">'+iconIndex+'</span><span>Índice</span></button><button type="button" id="v2Search"><span class="v2SvgIcon">'+iconSearch+'</span><span>Pesquisar</span></button><button type="button" id="v2Share"><span class="v2SvgIcon">'+iconShare+'</span><span>Compartilhar</span></button><button type="button" class="v2-support" id="v2Support"><span class="v2CoffeeMini" aria-hidden="true">☕</span><span>Apoiar</span></button>';
     const p=document.createElement('div');
     p.id='v2PersonalBar';
-    p.innerHTML='<button type="button" id="v2Fav">★ Favoritos <span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls">✓ Chamados <span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
+    p.innerHTML='<button type="button" id="v2Fav"><span class="v2-tool-label">★ Favoritos</span><span class="v2-badge" id="v2FavCount">0</span></button><button type="button" id="v2Calls"><span class="v2-tool-label">✓ Chamados</span><span class="v2-badge" id="v2CallCount">0</span></button><button type="button" id="v2Mark">✓ Marcar hino</button>';
     const toolbarWrap=document.querySelector('.toolbar .quickbar');
     if(toolbarWrap){
       toolbarWrap.innerHTML='';
@@ -4076,4 +4092,9 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+<style id="personal-counter-alignment">
+#v2PersonalBar #v2Fav,#v2PersonalBar #v2Calls{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:66px!important}
+#v2PersonalBar .v2-tool-label{display:block;line-height:1.2;white-space:nowrap}
+#v2PersonalBar .v2-badge{display:grid!important;place-items:center;margin:0!important;box-sizing:border-box;width:26px;min-width:26px;height:26px;padding:0!important;flex:0 0 26px;line-height:1}
+</style>
 </body></html>
