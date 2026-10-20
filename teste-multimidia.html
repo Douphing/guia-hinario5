@@ -4988,4 +4988,111 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+
+<style id="v617-preview-embutida">
+/* V6.17 — próximas ocasiões ficam "embutidas" sob o botão Mostrar mais,
+   sem invadir/cortar o título RELAÇÕES SUGESTIVAS. */
+
+/* Botão permanece à frente das prévias. */
+#indexMoreToggle{
+  position:relative!important;
+  z-index:8!important;
+  margin-bottom:0!important;
+}
+
+/* Área curta: as próximas guias aparecem só como continuidade,
+   logo por baixo do botão, sem criar um bloco alto. */
+#indexMorePreview{
+  position:relative!important;
+  z-index:2!important;
+  height:50px!important;
+  margin:-9px 0 4px!important;
+  overflow:hidden!important;
+}
+
+/* As opções reais ficam encaixadas "por trás" do botão. */
+#indexMorePreview .index-shadow-preview-card{
+  left:2.2%!important;
+  right:2.2%!important;
+  width:95.6%!important;
+  min-height:58px!important;
+  border-radius:13px!important;
+  box-shadow:0 5px 12px rgba(45,38,26,.07)!important;
+  filter:saturate(.42)!important;
+}
+
+/* Primeira próxima ocasião: começa quase debaixo do botão. */
+#indexMorePreview .index-shadow-preview-card:nth-child(1){
+  top:4px!important;
+  opacity:.28!important;
+  transform:scale(.985)!important;
+  z-index:3!important;
+}
+
+/* Segunda: mais recuada. */
+#indexMorePreview .index-shadow-preview-card:nth-child(2){
+  top:20px!important;
+  opacity:.14!important;
+  transform:scale(.955)!important;
+  z-index:2!important;
+}
+
+/* Terceira: só sugere continuidade. */
+#indexMorePreview .index-shadow-preview-card:nth-child(3){
+  top:34px!important;
+  opacity:.07!important;
+  transform:scale(.925)!important;
+  z-index:1!important;
+}
+
+/* Fade curto: não invade o título abaixo. */
+#indexMorePreview::after{
+  height:18px!important;
+  background:linear-gradient(
+    to bottom,
+    rgba(239,235,224,0),
+    rgba(239,235,224,.72) 72%,
+    rgba(239,235,224,1)
+  )!important;
+}
+
+/* Título fica imediatamente depois da prévia, com área própria garantida. */
+#mhDivider{
+  position:relative!important;
+  z-index:6!important;
+  display:block!important;
+  clear:both!important;
+  margin:0 2px 4px!important;
+  padding-top:2px!important;
+  line-height:1.2!important;
+  overflow:visible!important;
+}
+
+/* Quando estiver expandido, não há prévia: título sobe um pouco mais. */
+#indexMorePreview[hidden] + #mhDivider{
+  margin-top:2px!important;
+}
+
+/* Mobile: ainda mais compacto. */
+@media(max-width:699px){
+  #indexMorePreview{
+    height:46px!important;
+    margin:-8px 0 3px!important;
+  }
+  #indexMorePreview .index-shadow-preview-card{
+    left:2.4%!important;
+    right:2.4%!important;
+    width:95.2%!important;
+    min-height:54px!important;
+  }
+  #indexMorePreview .index-shadow-preview-card:nth-child(1){top:4px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(2){top:18px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(3){top:31px!important}
+  #mhDivider{
+    margin-top:0!important;
+    padding-top:1px!important;
+  }
+}
+</style>
+
 </body></html>
