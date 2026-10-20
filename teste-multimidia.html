@@ -4468,31 +4468,36 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
      <a href="https://youtu.be/Uhl8fmA2Ii8" target="_blank" rel="noopener"><span>Vídeo público — andamento / uso do metrônomo</span><span>↗</span></a>
      <a href="https://youtu.be/fOm5co-O0Hs" target="_blank" rel="noopener"><span>Vídeo público — expressão e dinâmica</span><span>↗</span></a>
     </div>
-    <div class="mhPrepExamples">
+    <div class="mhPrepExamples is-compact">
       <h4>Exemplos práticos localizados na pasta da reunião</h4>
-      <div class="study-resource-list mhPrepExampleCards">
-        <div class="study-resource is-local mhPrepExampleCard">
-          <span>Hino de Meia Hora com proporção errada<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
-          <span class="study-resource-lock">Pasta</span>
-        </div>
-        <div class="study-resource is-local mhPrepExampleCard">
-          <span>Hino de Meia Hora com intensidade e registração suave<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
-          <span class="study-resource-lock">Pasta</span>
-        </div>
-        <div class="study-resource is-local mhPrepExampleCard">
-          <span>Hino 34 — andamento da Meia Hora<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
-          <span class="study-resource-lock">Pasta</span>
-        </div>
-        <div class="study-resource is-local mhPrepExampleCard">
-          <span>Uso do pedal de expressão para Meia Hora<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
-          <span class="study-resource-lock">Pasta</span>
-        </div>
-        <div class="study-resource is-local mhPrepExampleCard">
-          <span>Uso do metrônomo<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
-          <span class="study-resource-lock">Pasta</span>
-        </div>
+      <div class="mhPrepCompactGrid">
+        <a class="mhCompactCard" href="https://drive.google.com/file/d/1bz4FxbpWNw9vU0b2OvftKEuWMSvUv2WG/view" target="_blank" rel="noopener">
+          <strong>Proporção errada</strong>
+          <span class="mhCompactMeta">Meia Hora</span>
+          <span class="mhCompactBadge">Drive ↗</span>
+        </a>
+        <a class="mhCompactCard" href="https://drive.google.com/file/d/1Cxcg4jhB9hG-G6nPP4SG0vnYL5PYlbLp/view" target="_blank" rel="noopener">
+          <strong>Intensidade e registração suave</strong>
+          <span class="mhCompactMeta">Meia Hora</span>
+          <span class="mhCompactBadge">Drive ↗</span>
+        </a>
+        <a class="mhCompactCard" href="https://drive.google.com/file/d/1nt7mM69n8bde-GkznRAwRDfWLUwk7E00/view" target="_blank" rel="noopener">
+          <strong>Hino 34 — andamento</strong>
+          <span class="mhCompactMeta">Meia Hora</span>
+          <span class="mhCompactBadge">Drive ↗</span>
+        </a>
+        <a class="mhCompactCard" href="https://drive.google.com/file/d/1ZL2vs6Ns4WOScNjTWOydS5_x8Jj1kDEU/view" target="_blank" rel="noopener">
+          <strong>Uso do pedal de expressão</strong>
+          <span class="mhCompactMeta">Meia Hora</span>
+          <span class="mhCompactBadge">Drive ↗</span>
+        </a>
+        <a class="mhCompactCard" href="https://drive.google.com/file/d/14miJfcO8Ht_aOhUCrNsmxZTLgv7EgGK1/view" target="_blank" rel="noopener">
+          <strong>Uso do metrônomo</strong>
+          <span class="mhCompactMeta">Meia Hora</span>
+          <span class="mhCompactBadge">Drive ↗</span>
+        </a>
       </div>
-      <small>Esses materiais aparecem como cards informativos porque a disponibilidade pública dos links da pasta ainda não foi validada.</small>
+      <small>Cards compactos para abrir os materiais no Google Drive. O acesso dependerá das permissões de cada arquivo.</small>
     </div>
     <div class="mhPrepSource">Referências citadas no material da Reunião de Aprimoramento Musical para Organistas: MOR Volume 2, p. 113; MOR Volume 1, p. 19; MOR Volume 2, p. 51.</div>
    </div>`;
@@ -5479,5 +5484,113 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   window.addEventListener('load', boot);
 })();
 </script>
+
+
+<style id="v626-drive-cards-style">
+.mhPrepDriveCard{
+  cursor:pointer!important;
+  text-decoration:none!important;
+  color:inherit!important;
+}
+.mhPrepDriveCard:hover,
+.mhPrepDriveCard:focus-visible{
+  transform:translateY(-1px)!important;
+  box-shadow:0 4px 12px rgba(33,48,69,.08)!important;
+  border-color:#c9aa67!important;
+  background:#fffdf7!important;
+  outline:none!important;
+}
+.mhPrepDriveCard .study-resource-lock{
+  background:#d9ecfb!important;
+  color:#2d5f87!important;
+}
+</style>
+
+
+<style id="v627-meia-hora-cards-compactos-style">
+.mhPrepExamples.is-compact{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:1px dashed #d8c8a5;
+  background:#fbf8f0;
+}
+.mhPrepCompactGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:8px;
+  margin-top:8px;
+}
+.mhCompactCard{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-height:84px;
+  padding:11px 12px;
+  border:1px solid #ddcfab;
+  border-radius:14px;
+  background:#fffdf8;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 1px 2px rgba(33,48,69,.03);
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease;
+}
+.mhCompactCard:hover,
+.mhCompactCard:focus-visible{
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(33,48,69,.08);
+  border-color:#c9aa67;
+  background:#fffefb;
+  outline:none;
+}
+.mhCompactCard strong{
+  display:block;
+  color:#24354b;
+  font:800 .79rem/1.22 Arial,sans-serif;
+  padding-right:72px;
+}
+.mhCompactMeta{
+  color:#8b806f;
+  font:.62rem/1.2 Arial,sans-serif;
+}
+.mhCompactBadge{
+  position:absolute;
+  right:10px;
+  top:10px;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#d9ecfb;
+  color:#2d5f87;
+  font:800 .58rem/1 Arial,sans-serif;
+  white-space:nowrap;
+}
+@media(max-width:699px){
+  .mhPrepExamples.is-compact{
+    padding:9px;
+  }
+  .mhPrepCompactGrid{
+    grid-template-columns:1fr;
+    gap:7px;
+  }
+  .mhCompactCard{
+    min-height:68px;
+    padding:10px 11px;
+  }
+  .mhCompactCard strong{
+    font-size:.75rem;
+    padding-right:68px;
+  }
+  .mhCompactMeta{
+    font-size:.59rem;
+  }
+  .mhCompactBadge{
+    top:9px;
+    right:9px;
+    padding:4px 7px;
+    font-size:.56rem;
+  }
+}
+</style>
 
 </body></html>
