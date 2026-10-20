@@ -5107,4 +5107,29 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+
+<style id="v620-preview-fino-ajustado">
+/* V6.20 — mostra só uma faixa mais discreta do próximo card,
+   aproximando o botão sem encobrir demais. */
+#indexMorePreview{
+  height:24px!important;          /* mostra apenas uma amostra do próximo card */
+  margin:0 0 8px!important;       /* aproxima o botão mantendo o ritmo da lista */
+}
+
+#indexMorePreview .index-shadow-preview-card{
+  opacity:.18!important;
+}
+
+#indexMoreToggle{
+  margin:0 0 6px!important;
+}
+
+@media(max-width:699px){
+  #indexMorePreview{
+    height:22px!important;
+    margin-bottom:7px!important;
+  }
+}
+</style>
+
 </body></html>
