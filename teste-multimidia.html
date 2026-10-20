@@ -3881,7 +3881,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 .sh-preview{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f2ea;border:1px solid #ded5c4;border-radius:12px;padding:12px;min-height:72px;color:#34414a;font:400 .85rem/1.42 Arial,sans-serif}
 .sh-option{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;margin:4px 0 11px;border:1px solid #e2d7c0;border-radius:12px;background:#fff}.sh-option input{width:18px;height:18px;margin:1px 0 0;accent-color:#a67828;flex:0 0 auto}.sh-option span{font:700 .88rem/1.25 Arial,sans-serif;color:#344756}.sh-option small{display:block;margin-top:3px;color:#746d61;font:400 .75rem/1.3 Arial,sans-serif}.sh-option.disabled{opacity:.52}
 .sh-channel-label{margin:12px 0 7px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}.sh-channels{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}.sh-channels button{min-height:45px;border-radius:12px;padding:9px 10px;font:700 .84rem Arial,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}.sh-wa{border:1px solid #169b50;background:#25d366;color:#103f25}.sh-tg{border:1px solid #168ac0;background:#229ed9;color:#fff}.sh-copy{border:1px solid #d2c39f;background:#fffaf0;color:#173149}.sh-more{border:1px solid #a67828;background:#a67828;color:#fff}.sh-link-only{width:100%;margin-top:8px;min-height:38px;border:0;background:transparent;color:#76591f;text-decoration:underline;font:700 .80rem Arial,sans-serif;cursor:pointer}.sh-result{min-height:20px;margin-top:8px;text-align:center;color:#65725f;font:700 .76rem Arial,sans-serif}
-.sr-meta{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;margin:4px 0 11px;padding:10px 11px;border-radius:11px;background:#f5f2ea;border:1px solid #ded5c4;font:.80rem/1.35 Arial,sans-serif}.sr-meta b{color:#80642f}.sr-note-wrap{margin:10px 0}.sr-note-toggle{width:100%;min-height:40px;border:1px solid #d6c69f;border-radius:10px;background:#fffaf0;color:#173149;font:700 .80rem Arial,sans-serif;cursor:pointer}.sr-note{display:none;margin-top:7px;padding:10px 11px;border-radius:10px;border:1px solid #e1d5bd;background:#fff;color:#394853;font:.82rem/1.4 Arial,sans-serif;white-space:pre-wrap}.sr-note.show{display:block}.sr-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.sr-actions button{min-height:44px;border-radius:11px;font:700 .82rem Arial,sans-serif;cursor:pointer}.sr-open{border:1px solid #c9ad71;background:#fffaf0;color:#173149}.sr-save{border:1px solid #a67828;background:#a67828;color:#fff}.sr-save:disabled{opacity:.58;cursor:default}.sr-close-btn{grid-column:1/-1;border:1px solid #d8d2c8;background:#fff;color:#58636d}.sr-status{min-height:21px;margin-top:8px;text-align:center;color:#55705d;font:700 .77rem Arial,sans-serif}
+.sr-meta{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;margin:4px 0 11px;padding:10px 11px;border-radius:11px;background:#f5f2ea;border:1px solid #ded5c4;font:.80rem/1.35 Arial,sans-serif}.sr-meta b{color:#80642f}.sr-note-wrap{margin:10px 0}.sr-note-toggle{width:100%;min-height:40px;border:1px solid #d6c69f;border-radius:10px;background:#fffaf0;color:#173149;font:700 .80rem Arial,sans-serif;cursor:pointer}.sr-note{display:none;margin-top:7px;padding:10px 11px;border-radius:10px;border:1px solid #e1d5bd;background:#fff;color:#394853;font:.82rem/1.4 Arial,sans-serif;white-space:pre-wrap}.sr-note.show{display:block}.sr-save-primary{width:100%;min-height:46px;margin:8px 0 0;border:1px solid #a67828;border-radius:11px;background:#a67828;color:#fff;font:800 .84rem Arial,sans-serif;cursor:pointer}.sr-save-primary:disabled{opacity:.58;cursor:default}.sr-auto-note{margin:7px 2px 3px;color:#776f63;text-align:center;font:600 .72rem/1.3 Arial,sans-serif}.sr-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:9px}.sr-actions button{min-height:42px;border-radius:11px;font:700 .80rem Arial,sans-serif;cursor:pointer}.sr-open{border:1px solid #c9ad71;background:#fffaf0;color:#173149}.sr-close-btn{border:1px solid #d8d2c8;background:#fff;color:#58636d}.sr-status{min-height:21px;margin-top:6px;text-align:center;color:#55705d;font:700 .77rem Arial,sans-serif}
 @media(max-width:430px){#shareHymnDialog,#recordShareDialog,#sharedRecordDialog{padding:9px}#shareHymnDialog .sh-card,#recordShareDialog .sh-card,#sharedRecordDialog .sr-card{padding:14px;border-radius:17px}.sh-channels{gap:7px}.sh-channels button{font-size:.78rem;padding:8px 6px}.sr-actions{grid-template-columns:1fr}.sr-close-btn{grid-column:auto}#hymnDetail .hd-share-hymn{font-size:.86rem;padding:10px 12px}}
 </style>
 
@@ -3918,13 +3918,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   <div class="sr-hymn"><b id="srNumber"></b><span id="srHymnTitle"></span></div>
   <div class="sr-meta"><b>Registro</b><span>✓ Hino chamado</span><b>Data</b><span id="srDate"></span></div>
   <div class="sr-note-wrap" id="srNoteWrap"><button type="button" class="sr-note-toggle" id="srNoteToggle">▤ Mostrar anotação</button><div class="sr-note" id="srNote"></div></div>
-  <div class="sr-explain">Abrir, mostrar a anotação ou fechar não salva nada. O registro só entra nos seus dados se você escolher “Adicionar aos meus registros”.</div>
-  <div class="sr-actions"><button type="button" class="sr-open" id="srOpenHymn">🎵 Abrir hino</button><button type="button" class="sr-save" id="srSave">＋ Adicionar aos meus registros</button><button type="button" class="sr-close-btn" id="srClose">Fechar</button></div>
+  <button type="button" class="sr-save-primary" id="srSave">＋ Adicionar aos meus registros</button>
+  <div class="sr-auto-note">ⓘ Nada é salvo automaticamente.</div>
+  <div class="sr-actions"><button type="button" class="sr-open" id="srOpenHymn">🎵 Abrir hino</button><button type="button" class="sr-close-btn" id="srClose">Fechar</button></div>
   <div class="sr-status" id="srStatus" aria-live="polite"></div>
  </div>
 </div>
 
-<!-- V35 — Compartilhamento compacto: fragmento #r=, mensagem sem emojis 4-byte e compatibilidade com links antigos -->
+<!-- V6.4 — Recebimento simplificado: salvar logo após a anotação, orientação curta e ações secundárias abaixo -->
 <script id="share-hymn-v36-script">
 (function(){
  const $=id=>document.getElementById(id), clean=v=>String(v==null?'':v).trim();
@@ -4306,5 +4307,51 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(document.getElementById('studyHymnScreen')?.classList.contains('show')){hideStudyDetail();return}if(document.getElementById('studyOverlay')?.classList.contains('show'))hideOverlay()});
 })();
 </script>
+
+<style id="v65-midias-mobile-sem-esmagar">
+/* V6.5 — no celular, plataformas de mídia ganham espaço real em vez de três botões comprimidos. */
+@media(max-width:520px){
+  #hymnDetail .hd-media{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  #hymnDetail .hd-play[data-kind="instrumental"]{
+    grid-column:1/-1!important;
+  }
+  #hymnDetail .hd-platform{
+    min-height:42px!important;
+    padding:6px 9px!important;
+    gap:6px!important;
+    justify-content:center!important;
+    font-size:11px!important;
+  }
+  #hymnDetail .hd-platform span{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    font-size:11px!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+  }
+  #hymnDetail .hd-platform b{display:none!important}
+  #hymnDetail .brand{
+    display:inline-grid!important;
+    flex:0 0 24px!important;
+    width:24px!important;
+    height:24px!important;
+  }
+  #hymnDetail .hd-platform[data-kind="youtubeMusic"]{
+    grid-column:1/-1!important;
+    width:calc(50% - 3.5px)!important;
+    justify-self:center!important;
+  }
+}
+@media(max-width:370px){
+  #hymnDetail .hd-platform{font-size:10.5px!important;padding-inline:7px!important}
+  #hymnDetail .hd-platform span{font-size:10.5px!important}
+  #hymnDetail .brand{flex-basis:22px!important;width:22px!important;height:22px!important}
+}
+</style>
 
 </body></html>
