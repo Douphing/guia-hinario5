@@ -1651,6 +1651,25 @@ const HYMN_STORE={
      });
    }
  },
+ importCall(record){
+   if(!record||record.num==null)return null;
+   const data=this.calls();
+   const h=(typeof findHymn==='function'?findHymn(record.num):null)||{};
+   const receivedAt=String(record.at||'').trim();
+   const item={
+     id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+     num:record.num,
+     titulo:String(record.titulo||h.titulo||''),
+     at:receivedAt||new Date().toISOString(),
+     note:String(record.note||'').trim().slice(0,CALL_NOTE_MAX)
+   };
+   data.push(item);
+   this.write(this.calledLogKey,data);
+   try{registrarEventoGA('salvar_registro_compartilhado',{
+     numero_hino:String(item.num||''),titulo_hino:String(item.titulo||''),tem_observacao:item.note?'sim':'nao'
+   })}catch(e){}
+   return item;
+ },
  deleteCall(id){
    this.write(this.calledLogKey,this.calls().filter(x=>x.id!==id));
  }
@@ -1885,31 +1904,20 @@ function renderCalls(filterNum){
  box.querySelectorAll('[data-edit-call]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();editCallNote(btn.dataset.editCall)});
  box.querySelectorAll('[data-delete-call]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();deleteCallRecord(btn.dataset.deleteCall)});
 }
-function calledRecordMessage(item){
+function calledRecordMessage(item,includeNote=true){
  const h=findHymn(item.num)||{num:item.num,titulo:item.titulo||''};
- const base=(location.origin&&location.origin!=='null')?(location.origin+location.pathname):location.href.split('?')[0].split('#')[0];
- const url=base+'?hino='+encodeURIComponent(h.num);
  const lines=['🎵 Hino '+h.num+' — '+h.titulo,'✓ Hino chamado','🗓 '+fmtDate(item.at)];
- if((item.note||'').trim())lines.push('📝 '+item.note.trim());
- lines.push('🔗 '+url);
- return {h,text:lines.join('\\n'),url};
+ if(includeNote&&(item.note||'').trim())lines.push('📝 '+item.note.trim());
+ return {h,text:lines.join('\n')};
 }
-async function shareCalledRecord(id){
+function shareCalledRecord(id){
+ if(typeof window.openRecordShareDialog==='function'){
+   window.openRecordShareDialog(id);
+   return;
+ }
  const item=HYMN_STORE.calls().find(x=>x.id===id);if(!item)return;
- const data=calledRecordMessage(item);
- registrarEventoGA('compartilhar_hino_chamado',gaHinoParams(data.h,{registro_id:String(id)}));
- try{
-   if(navigator.share){
-     await navigator.share({title:'Hino '+data.h.num+' — '+data.h.titulo,text:data.text});
-     return;
-   }
-   if(navigator.clipboard){
-     await navigator.clipboard.writeText(data.text);
-     showCallToast('Mensagem copiada para compartilhar.',null);
-     return;
-   }
- }catch(e){if(e&&e.name==='AbortError')return}
- window.prompt('Copie a mensagem para compartilhar:',data.text);
+ const data=calledRecordMessage(item,true);
+ if(navigator.clipboard)navigator.clipboard.writeText(data.text).catch(()=>{});
 }
 function editCallNote(id){
  const item=HYMN_STORE.calls().find(x=>x.id===id);if(!item)return;
@@ -3851,7 +3859,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<!-- PILOTO: compartilhamento individual de hino -->
+<!-- V33: compartilhamento limpo do hino + registro individual compartilhável -->
 <style id="share-hymn-pilot-style">
 #hymnDetail .hd-share-hymn{
   width:min(360px,100%);margin:7px auto 9px;padding:11px 16px;
@@ -3860,191 +3868,131 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   font:700 .92rem/1.1 Arial,sans-serif;box-shadow:none;cursor:pointer
 }
 #hymnDetail .hd-share-hymn:hover,#hymnDetail .hd-share-hymn:focus-visible{background:#fbf1dc;outline:none}
-#shareHymnDialog{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(13,24,33,.70);backdrop-filter:blur(3px)}
-#shareHymnDialog.show{display:flex}
-#shareHymnDialog .sh-card{width:min(500px,96vw);max-height:calc(100dvh - 36px);overflow:auto;background:#fffdf8;border:2px solid #b78a34;border-radius:20px;box-shadow:0 18px 55px rgba(0,0,0,.34);padding:18px;color:#263746}
-#shareHymnDialog .sh-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid #e2d7c0}
-#shareHymnDialog .sh-head strong{font:700 1.25rem Georgia,serif;color:#173149}
-#shareHymnDialog .sh-close{width:38px;height:38px;padding:0;border:0;background:transparent;color:#52606f;font:700 1.8rem/1 Arial,sans-serif;cursor:pointer}
-#shareHymnDialog .sh-hymn{padding:14px 2px 11px}
-#shareHymnDialog .sh-hymn b{display:block;color:#a67828;font:700 1.05rem Georgia,serif}
-#shareHymnDialog .sh-hymn span{display:block;margin-top:3px;color:#173149;font:700 1.12rem Georgia,serif}
-#shareHymnDialog .sh-options{display:grid;gap:8px;margin:6px 0 14px}
-#shareHymnDialog .sh-option{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;border:1px solid #e2d7c0;border-radius:12px;background:#fff}
-#shareHymnDialog .sh-option input{width:18px;height:18px;margin:1px 0 0;accent-color:#a67828;flex:0 0 auto}
-#shareHymnDialog .sh-option span{font:700 .91rem/1.25 Arial,sans-serif;color:#344756}
-#shareHymnDialog .sh-option small{display:block;margin-top:3px;color:#746d61;font:400 .78rem/1.3 Arial,sans-serif}
-#shareHymnDialog .sh-option.disabled{opacity:.52}
-#shareHymnDialog .sh-preview-label{margin:4px 0 6px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}
-#shareHymnDialog .sh-preview{white-space:pre-wrap;background:#f5f2ea;border:1px solid #ded5c4;border-radius:12px;padding:12px;min-height:105px;color:#34414a;font:400 .88rem/1.42 Arial,sans-serif}
-#shareHymnDialog .sh-privacy{margin:9px 1px 0;color:#766e60;font:400 .75rem/1.35 Arial,sans-serif}
-#shareHymnDialog .sh-channel-label{margin:12px 0 7px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}
-#shareHymnDialog .sh-channels{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}
-#shareHymnDialog .sh-channels button{min-height:48px;border-radius:12px;padding:10px 12px;font:700 .88rem Arial,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
-#shareHymnDialog #shWhatsApp{border:1px solid #169b50;background:#25d366;color:#103f25}
-#shareHymnDialog #shTelegram{border:1px solid #168ac0;background:#229ed9;color:#fff}
-#shareHymnDialog #shCopy{border:1px solid #d2c39f;background:#fffaf0;color:#173149}
-#shareHymnDialog #shShare{border:1px solid #a67828;background:#a67828;color:#fff}
-#shareHymnDialog #shCopyLink{width:100%;margin-top:9px;min-height:40px;border:0;background:transparent;color:#76591f;text-decoration:underline;font:700 .82rem Arial,sans-serif;cursor:pointer}
-#shareHymnDialog .sh-result{min-height:20px;margin-top:8px;text-align:center;color:#65725f;font:700 .78rem Arial,sans-serif}
-@media(max-width:430px){#shareHymnDialog{padding:9px}#shareHymnDialog .sh-card{padding:15px;border-radius:17px}#shareHymnDialog .sh-channels{grid-template-columns:1fr 1fr}#shareHymnDialog .sh-channels button{font-size:.82rem;padding:9px 7px}#hymnDetail .hd-share-hymn{font-size:.86rem;padding:10px 12px}}
-
-/* V4 piloto — ações secundárias compactas para preservar espaço das mídias */
-#hymnDetail .hd-secondary-actions{
-  width:min(430px,100%);
-  margin:4px auto 6px;
-  display:grid;
-  grid-template-columns:1fr 1.25fr;
-  gap:7px;
-  align-items:stretch;
-}
-#hymnDetail .hd-secondary-actions #v2LetterBtn,
-#hymnDetail .hd-secondary-actions .hd-share-hymn{
-  width:100%!important;
-  min-width:0!important;
-  max-width:none!important;
-  min-height:34px!important;
-  margin:0!important;
-  padding:6px 9px!important;
-  border-radius:10px!important;
-  font-size:.80rem!important;
-  line-height:1.05!important;
-}
-#hymnDetail .hd-history-link{padding-bottom:3px!important}
-@media(max-width:430px){
-  #hymnDetail .hd-secondary-actions{margin:3px auto 4px;gap:6px;grid-template-columns:.85fr 1.15fr}
-  #hymnDetail .hd-secondary-actions #v2LetterBtn,
-  #hymnDetail .hd-secondary-actions .hd-share-hymn{min-height:31px!important;padding:5px 6px!important;font-size:.72rem!important}
-}
+#shareHymnDialog,#recordShareDialog,#sharedRecordDialog{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(13,24,33,.70);backdrop-filter:blur(3px)}
+#shareHymnDialog{z-index:12000}#recordShareDialog{z-index:100110}#sharedRecordDialog{z-index:100120}
+#shareHymnDialog.show,#recordShareDialog.show,#sharedRecordDialog.show{display:flex}
+#shareHymnDialog .sh-card,#recordShareDialog .sh-card,#sharedRecordDialog .sr-card{width:min(500px,96vw);max-height:calc(100dvh - 36px);overflow:auto;background:#fffdf8;border:2px solid #b78a34;border-radius:20px;box-shadow:0 18px 55px rgba(0,0,0,.34);padding:18px;color:#263746}
+.sh-head,.sr-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid #e2d7c0}
+.sh-head strong,.sr-head strong{font:700 1.22rem Georgia,serif;color:#173149}
+.sh-close,.sr-close{width:38px;height:38px;padding:0;border:0;background:transparent;color:#52606f;font:700 1.8rem/1 Arial,sans-serif;cursor:pointer}
+.sh-hymn,.sr-hymn{padding:14px 2px 11px}.sh-hymn b,.sr-hymn b{display:block;color:#a67828;font:700 1.02rem Georgia,serif}.sh-hymn span,.sr-hymn span{display:block;margin-top:3px;color:#173149;font:700 1.08rem Georgia,serif}
+.sh-explain,.sr-explain{margin:2px 0 11px;padding:10px 11px;border:1px solid #e2d7c0;border-radius:11px;background:#f7f3ea;color:#625d53;font:400 .79rem/1.38 Arial,sans-serif}
+.sh-preview-label{margin:4px 0 6px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.sh-preview{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f2ea;border:1px solid #ded5c4;border-radius:12px;padding:12px;min-height:72px;color:#34414a;font:400 .85rem/1.42 Arial,sans-serif}
+.sh-option{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;margin:4px 0 11px;border:1px solid #e2d7c0;border-radius:12px;background:#fff}.sh-option input{width:18px;height:18px;margin:1px 0 0;accent-color:#a67828;flex:0 0 auto}.sh-option span{font:700 .88rem/1.25 Arial,sans-serif;color:#344756}.sh-option small{display:block;margin-top:3px;color:#746d61;font:400 .75rem/1.3 Arial,sans-serif}.sh-option.disabled{opacity:.52}
+.sh-channel-label{margin:12px 0 7px;color:#80642f;font:700 .75rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em}.sh-channels{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px}.sh-channels button{min-height:45px;border-radius:12px;padding:9px 10px;font:700 .84rem Arial,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}.sh-wa{border:1px solid #169b50;background:#25d366;color:#103f25}.sh-tg{border:1px solid #168ac0;background:#229ed9;color:#fff}.sh-copy{border:1px solid #d2c39f;background:#fffaf0;color:#173149}.sh-more{border:1px solid #a67828;background:#a67828;color:#fff}.sh-link-only{width:100%;margin-top:8px;min-height:38px;border:0;background:transparent;color:#76591f;text-decoration:underline;font:700 .80rem Arial,sans-serif;cursor:pointer}.sh-result{min-height:20px;margin-top:8px;text-align:center;color:#65725f;font:700 .76rem Arial,sans-serif}
+.sr-meta{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;margin:4px 0 11px;padding:10px 11px;border-radius:11px;background:#f5f2ea;border:1px solid #ded5c4;font:.80rem/1.35 Arial,sans-serif}.sr-meta b{color:#80642f}.sr-note-wrap{margin:10px 0}.sr-note-toggle{width:100%;min-height:40px;border:1px solid #d6c69f;border-radius:10px;background:#fffaf0;color:#173149;font:700 .80rem Arial,sans-serif;cursor:pointer}.sr-note{display:none;margin-top:7px;padding:10px 11px;border-radius:10px;border:1px solid #e1d5bd;background:#fff;color:#394853;font:.82rem/1.4 Arial,sans-serif;white-space:pre-wrap}.sr-note.show{display:block}.sr-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.sr-actions button{min-height:44px;border-radius:11px;font:700 .82rem Arial,sans-serif;cursor:pointer}.sr-open{border:1px solid #c9ad71;background:#fffaf0;color:#173149}.sr-save{border:1px solid #a67828;background:#a67828;color:#fff}.sr-save:disabled{opacity:.58;cursor:default}.sr-close-btn{grid-column:1/-1;border:1px solid #d8d2c8;background:#fff;color:#58636d}.sr-status{min-height:21px;margin-top:8px;text-align:center;color:#55705d;font:700 .77rem Arial,sans-serif}
+@media(max-width:430px){#shareHymnDialog,#recordShareDialog,#sharedRecordDialog{padding:9px}#shareHymnDialog .sh-card,#recordShareDialog .sh-card,#sharedRecordDialog .sr-card{padding:14px;border-radius:17px}.sh-channels{gap:7px}.sh-channels button{font-size:.78rem;padding:8px 6px}.sr-actions{grid-template-columns:1fr}.sr-close-btn{grid-column:auto}#hymnDetail .hd-share-hymn{font-size:.86rem;padding:10px 12px}}
 </style>
 
 <div id="shareHymnDialog" aria-hidden="true">
  <div class="sh-card" role="dialog" aria-modal="true" aria-labelledby="shTitle">
   <div class="sh-head"><strong id="shTitle">↗ Compartilhar hino</strong><button type="button" class="sh-close" id="shClose" aria-label="Fechar">×</button></div>
   <div class="sh-hymn"><b id="shNumber"></b><span id="shHymnTitle"></span></div>
-  <div class="sh-options">
-   <label class="sh-option" id="shObsWrap"><input type="checkbox" id="shIncludeObs"><span>Incluir minha observação<small id="shObsInfo">Nenhuma observação registrada.</small></span></label>
-   <label class="sh-option" id="shCalledWrap"><input type="checkbox" id="shIncludeCalled"><span>Informar que foi chamado<small id="shCalledInfo"></small></span></label>
-   <label class="sh-option" id="shFavWrap"><input type="checkbox" id="shIncludeFav"><span>Informar que está nos favoritos<small id="shFavInfo"></small></span></label>
-  </div>
-  <div class="sh-preview-label">Prévia da mensagem</div>
-  <div class="sh-preview" id="shPreview"></div>
-  <div class="sh-privacy">A observação só será compartilhada se a opção acima estiver marcada. Ela não é gravada no link.</div>
+  <div class="sh-explain">Este compartilhamento abre somente o hino. Favoritos, marcações e anotações pessoais não são enviados.</div>
+  <div class="sh-preview-label">Link do hino</div><div class="sh-preview" id="shPreview"></div>
   <div class="sh-channel-label">Compartilhar por</div>
-  <div class="sh-channels">
-   <button type="button" id="shWhatsApp" aria-label="Compartilhar pelo WhatsApp">◉ WhatsApp</button>
-   <button type="button" id="shTelegram" aria-label="Compartilhar pelo Telegram">➤ Telegram</button>
-   <button type="button" id="shCopy">⧉ Copiar mensagem</button>
-   <button type="button" id="shShare">↗ Mais opções</button>
-  </div>
-  <button type="button" id="shCopyLink">🔗 Copiar somente o link</button>
+  <div class="sh-channels"><button type="button" class="sh-wa" id="shWhatsApp">◉ WhatsApp</button><button type="button" class="sh-tg" id="shTelegram">➤ Telegram</button><button type="button" class="sh-copy" id="shCopy">⧉ Copiar link</button><button type="button" class="sh-more" id="shShare">↗ Mais opções</button></div>
   <div class="sh-result" id="shResult" aria-live="polite"></div>
  </div>
 </div>
 
-<script id="share-hymn-pilot-script">
-(function(){
- const dlg=document.getElementById('shareHymnDialog');
- if(!dlg)return;
- let current=null;
- const $=id=>document.getElementById(id);
- const clean=v=>String(v==null?'':v).trim();
- function directUrl(h){
-   const key=encodeURIComponent(String(h.num));
-   if(location.protocol==='http:'||location.protocol==='https:'){
-     return location.origin+location.pathname+'?hino='+key;
-   }
-   return 'https://douphing.github.io/guia-hinario5/?hino='+key;
- }
- function records(h){return HYMN_STORE.calls().filter(x=>String(x.num)===String(h.num));}
- function latestObservation(h){
-   return records(h).filter(x=>clean(x.note)).sort((a,b)=>new Date(b.at)-new Date(a.at))[0]||null;
- }
- function message(includeLink=true){
-   if(!current)return '';
-   const lines=['🎵 Hinário nº 5 — '+(String(current.num).startsWith('Coro ')?String(current.num):'Hino '+current.num),'“'+current.titulo+'”'];
-   const recs=records(current), obs=latestObservation(current);
-   if($('shIncludeCalled').checked && recs.length) lines.push('', '✓ Marcado como chamado'+(recs.length>1?' ('+recs.length+' registros)':''));
-   if($('shIncludeFav').checked && HYMN_STORE.isFav(current.num)) lines.push('★ Está nos meus favoritos');
-   if($('shIncludeObs').checked && obs) lines.push('', '📝 Observação: '+clean(obs.note));
-   if(includeLink) lines.push('', '🔗 Abrir este hino no Guia:', directUrl(current));
-   return lines.join('\n');
- }
- function updatePreview(){ $('shPreview').textContent=message(); }
- function configure(h){
-   current=h;
-   const recs=records(h), obs=latestObservation(h), fav=HYMN_STORE.isFav(h.num);
-   $('shNumber').textContent=String(h.num).startsWith('Coro ')?String(h.num):'Hino '+h.num;
-   $('shHymnTitle').textContent=h.titulo;
-   $('shIncludeObs').disabled=!obs;$('shIncludeObs').checked=!!obs;$('shObsWrap').classList.toggle('disabled',!obs);
-   $('shObsInfo').textContent=obs?('“'+clean(obs.note)+'”'):'Nenhuma observação registrada.';
-   $('shIncludeCalled').disabled=!recs.length;$('shIncludeCalled').checked=!!recs.length;$('shCalledWrap').classList.toggle('disabled',!recs.length);
-   $('shCalledInfo').textContent=recs.length?(recs.length+' registro'+(recs.length>1?'s':'')):'Ainda não foi marcado como chamado.';
-   $('shIncludeFav').disabled=!fav;$('shIncludeFav').checked=!!fav;$('shFavWrap').classList.toggle('disabled',!fav);
-   $('shFavInfo').textContent=fav?'Favoritado neste dispositivo.':'Não está nos favoritos.';
-   $('shResult').textContent='';updatePreview();
- }
- function open(h){if(!h)return;configure(h);dlg.classList.add('show');dlg.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
- function close(){dlg.classList.remove('show');dlg.setAttribute('aria-hidden','true');if(!document.getElementById('hymnDetail')?.classList.contains('open'))document.body.style.overflow='';}
- ['shIncludeObs','shIncludeCalled','shIncludeFav'].forEach(id=>$(id).addEventListener('change',updatePreview));
- $('shClose').onclick=close;dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.classList.contains('show'))close()});
- function trackShare(acao){
-   if(typeof registrarEventoGA==='function'&&current) registrarEventoGA('compartilhar_hino',gaHinoParams(current,{acao}));
- }
- $('shWhatsApp').onclick=()=>{
-   const url='https://wa.me/?text='+encodeURIComponent(message(true));
-   trackShare('whatsapp');
-   window.open(url,'_blank','noopener');
- };
- $('shTelegram').onclick=()=>{
-   const url='https://t.me/share/url?url='+encodeURIComponent(directUrl(current))+'&text='+encodeURIComponent(message(false));
-   trackShare('telegram');
-   window.open(url,'_blank','noopener');
- };
- $('shCopy').onclick=async()=>{
-   const txt=message(true);
-   try{await navigator.clipboard.writeText(txt);$('shResult').textContent='✓ Mensagem copiada.'}
-   catch(e){window.prompt('Copie a mensagem:',txt)}
-   trackShare('copiar_mensagem');
- };
- $('shCopyLink').onclick=async()=>{
-   const url=directUrl(current);
-   try{await navigator.clipboard.writeText(url);$('shResult').textContent='✓ Link copiado.'}
-   catch(e){window.prompt('Copie o link:',url)}
-   trackShare('copiar_link');
- };
- $('shShare').onclick=async()=>{
-   const title=(String(current.num).startsWith('Coro ')?String(current.num):'Hino '+current.num)+' — '+current.titulo;
-   try{
-     if(navigator.share){
-       await navigator.share({title,text:message(false),url:directUrl(current)});
-       $('shResult').textContent='✓ Menu de compartilhamento aberto.';
-       trackShare('mais_opcoes');
-     }else{
-       await navigator.clipboard.writeText(message(true));
-       $('shResult').textContent='Seu navegador não oferece o menu nativo. A mensagem foi copiada.';
-       trackShare('fallback_copiar');
-     }
-   }catch(e){if(e&&e.name!=='AbortError')window.prompt('Copie a mensagem:',message(true))}
- };
- const btn=$('hdShareHymn');if(btn)btn.addEventListener('click',()=>open(window.__gaCurrentHymn));
+<div id="recordShareDialog" aria-hidden="true">
+ <div class="sh-card" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
+  <div class="sh-head"><strong id="rsTitle">↗ Compartilhar registro</strong><button type="button" class="sh-close" id="rsClose" aria-label="Fechar">×</button></div>
+  <div class="sh-hymn"><b id="rsNumber"></b><span id="rsHymnTitle"></span></div>
+  <div class="sh-explain" id="rsDate"></div>
+  <label class="sh-option" id="rsNoteWrap"><input type="checkbox" id="rsIncludeNote"><span>Incluir a anotação deste registro<small id="rsNoteInfo"></small></span></label>
+  <div class="sh-preview-label">Prévia</div><div class="sh-preview" id="rsPreview"></div>
+  <div class="sh-explain">Somente este registro será compartilhado. Se a anotação estiver marcada, ela fará parte do link recebido.</div>
+  <div class="sh-channel-label">Compartilhar por</div>
+  <div class="sh-channels"><button type="button" class="sh-wa" id="rsWhatsApp">◉ WhatsApp</button><button type="button" class="sh-tg" id="rsTelegram">➤ Telegram</button><button type="button" class="sh-copy" id="rsCopy">⧉ Copiar mensagem</button><button type="button" class="sh-more" id="rsShare">↗ Mais opções</button></div>
+  <button type="button" class="sh-link-only" id="rsCopyLink">🔗 Copiar somente o link deste registro</button>
+  <div class="sh-result" id="rsResult" aria-live="polite"></div>
+ </div>
+</div>
 
- // Link direto compartilhável: ?hino=45 ou ?hino=Coro%201
- window.addEventListener('load',()=>{
-   try{
-     const key=new URLSearchParams(location.search).get('hino');
-     if(!key)return;
-     const h=findHymn(key);
-     if(!h)return;
-     document.body.classList.remove('welcome-mode');
-     window.__gaOrigemConsulta='link_compartilhado';
-     setTimeout(()=>openHymnDetail(h,h.ocasiao?.split('/')[0]||''),120);
-   }catch(e){}
- });
+<div id="sharedRecordDialog" aria-hidden="true">
+ <div class="sr-card" role="dialog" aria-modal="true" aria-labelledby="srTitle">
+  <div class="sr-head"><strong id="srTitle">↗ Registro compartilhado</strong><button type="button" class="sr-close" id="srTopClose" aria-label="Fechar">×</button></div>
+  <div class="sr-hymn"><b id="srNumber"></b><span id="srHymnTitle"></span></div>
+  <div class="sr-meta"><b>Registro</b><span>✓ Hino chamado</span><b>Data</b><span id="srDate"></span></div>
+  <div class="sr-note-wrap" id="srNoteWrap"><button type="button" class="sr-note-toggle" id="srNoteToggle">▤ Mostrar anotação</button><div class="sr-note" id="srNote"></div></div>
+  <div class="sr-explain">Abrir, mostrar a anotação ou fechar não salva nada. O registro só entra nos seus dados se você escolher “Adicionar aos meus registros”.</div>
+  <div class="sr-actions"><button type="button" class="sr-open" id="srOpenHymn">🎵 Abrir hino</button><button type="button" class="sr-save" id="srSave">＋ Adicionar aos meus registros</button><button type="button" class="sr-close-btn" id="srClose">Fechar</button></div>
+  <div class="sr-status" id="srStatus" aria-live="polite"></div>
+ </div>
+</div>
+
+<!-- V34 — Compartilhar registro substitui temporariamente o Histórico e o restaura ao fechar -->
+<script id="share-hymn-v33-script">
+(function(){
+ const $=id=>document.getElementById(id), clean=v=>String(v==null?'':v).trim();
+ const hymnDlg=$('shareHymnDialog'), recordDlg=$('recordShareDialog'), receivedDlg=$('sharedRecordDialog');
+ let currentHymn=null,currentRecord=null,receivedRecord=null,receivedSaved=false;
+ let recordShareReturn=null;
+ function baseUrl(){if(location.protocol==='http:'||location.protocol==='https:')return location.origin+location.pathname;return 'https://douphing.github.io/guia-hinario5/';}
+ function hymnUrl(h){return baseUrl()+'?hino='+encodeURIComponent(String(h.num));}
+ function bytesToB64url(str){const bytes=new TextEncoder().encode(str);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+ function b64urlToText(v){let s=String(v||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes);}
+ function recordPayload(item,includeNote){return {v:1,num:String(item.num),titulo:String(item.titulo||findHymn(item.num)?.titulo||''),at:String(item.at||''),note:includeNote?clean(item.note):''};}
+ function recordUrl(item,includeNote){return baseUrl()+'?registro='+encodeURIComponent(bytesToB64url(JSON.stringify(recordPayload(item,includeNote))));}
+ function decodeRecord(raw){try{const o=JSON.parse(b64urlToText(decodeURIComponent(raw)));if(!o||String(o.v)!=='1'||!clean(o.num)||!clean(o.at))return null;return {v:1,num:String(o.num),titulo:clean(o.titulo),at:String(o.at),note:clean(o.note).slice(0,CALL_NOTE_MAX)};}catch(e){return null}}
+ function show(dlg){if(!dlg)return;dlg.classList.add('show');dlg.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+ function hide(dlg){if(!dlg)return;dlg.classList.remove('show');dlg.setAttribute('aria-hidden','true');if(!document.querySelector('#hymnDetail.open,#studyHymnScreen.show,#studyOverlay.show,#shareHymnDialog.show,#recordShareDialog.show,#sharedRecordDialog.show'))document.body.style.overflow=''}
+ function copyText(txt,out){if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(out)out.textContent='✓ Copiado.'}).catch(()=>window.prompt('Copie:',txt));}else window.prompt('Copie:',txt)}
+
+ function openHymnShare(h){if(!h)return;currentHymn=h;$('shNumber').textContent=String(h.num).startsWith('Coro ')?String(h.num):'Hino '+h.num;$('shHymnTitle').textContent=h.titulo;$('shPreview').textContent=hymnUrl(h);$('shResult').textContent='';show(hymnDlg)}
+ $('shClose').onclick=()=>hide(hymnDlg);hymnDlg.onclick=e=>{if(e.target===hymnDlg)hide(hymnDlg)};
+ $('shWhatsApp').onclick=()=>{if(!currentHymn)return;window.open('https://wa.me/?text='+encodeURIComponent(hymnUrl(currentHymn)),'_blank','noopener')};
+ $('shTelegram').onclick=()=>{if(!currentHymn)return;window.open('https://t.me/share/url?url='+encodeURIComponent(hymnUrl(currentHymn)),'_blank','noopener')};
+ $('shCopy').onclick=()=>{if(currentHymn)copyText(hymnUrl(currentHymn),$('shResult'))};
+ $('shShare').onclick=async()=>{if(!currentHymn)return;const u=hymnUrl(currentHymn),title=(String(currentHymn.num).startsWith('Coro ')?String(currentHymn.num):'Hino '+currentHymn.num)+' — '+currentHymn.titulo;try{if(navigator.share)await navigator.share({title,url:u});else copyText(u,$('shResult'))}catch(e){if(e?.name!=='AbortError')copyText(u,$('shResult'))}};
+ const hymnShareBtn=$('hdShareHymn');if(hymnShareBtn)hymnShareBtn.addEventListener('click',()=>openHymnShare(window.__gaCurrentHymn));
+
+ function recordMessage(){if(!currentRecord)return '';const include=$('rsIncludeNote').checked,p=recordPayload(currentRecord,include),u=recordUrl(currentRecord,include);const lines=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at)];if(p.note)lines.push('📝 '+p.note);lines.push('🔗 Abrir registro compartilhado:',u);return lines.join('\n')}
+ function refreshRecordPreview(){if(!currentRecord)return;$('rsPreview').textContent=recordMessage()}
+ function rememberPersonalBeforeRecordShare(){
+   const personal=$('personalModal'),content=$('personalContent');
+   const active=!!personal?.classList.contains('show');
+   recordShareReturn=active?{
+     active:true,view:window.__personalView||'calls',historyHymn:window.__historyHymn||null,scrollTop:content?.scrollTop||0
+   }:{active:false};
+   if(active){
+     personal.classList.remove('show');
+     personal.setAttribute('aria-hidden','true');
+   }
+ }
+ function restorePersonalAfterRecordShare(){
+   const state=recordShareReturn;recordShareReturn=null;
+   if(!state?.active)return;
+   window.__historyHymn=state.historyHymn;
+   openPersonal(state.view||'calls');
+   const restore=()=>{const content=$('personalContent');if(content)content.scrollTop=state.scrollTop||0};
+   requestAnimationFrame(()=>requestAnimationFrame(restore));
+ }
+ function closeRecordShare(){hide(recordDlg);restorePersonalAfterRecordShare()}
+ function openRecordShare(id){const item=HYMN_STORE.calls().find(x=>x.id===id);if(!item)return;rememberPersonalBeforeRecordShare();currentRecord=item;const h=findHymn(item.num)||{num:item.num,titulo:item.titulo||''};$('rsNumber').textContent='Hino '+h.num;$('rsHymnTitle').textContent=h.titulo;$('rsDate').textContent='Registro de '+fmtDate(item.at);const hasNote=!!clean(item.note);$('rsIncludeNote').disabled=!hasNote;$('rsIncludeNote').checked=hasNote;$('rsNoteWrap').classList.toggle('disabled',!hasNote);$('rsNoteInfo').textContent=hasNote?'“'+clean(item.note)+'”':'Este registro não possui anotação.';$('rsResult').textContent='';refreshRecordPreview();show(recordDlg);try{registrarEventoGA('abrir_compartilhar_registro',{numero_hino:String(item.num),registro_id:String(item.id)})}catch(e){}}
+ window.openRecordShareDialog=openRecordShare;
+ $('rsIncludeNote').onchange=refreshRecordPreview;$('rsClose').onclick=closeRecordShare;recordDlg.onclick=e=>{if(e.target===recordDlg)closeRecordShare()};
+ $('rsWhatsApp').onclick=()=>{if(currentRecord)window.open('https://wa.me/?text='+encodeURIComponent(recordMessage()),'_blank','noopener')};
+ $('rsTelegram').onclick=()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include);const text=['✓ Hino chamado · '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent(text),'_blank','noopener')};
+ $('rsCopy').onclick=()=>{if(currentRecord)copyText(recordMessage(),$('rsResult'))};
+ $('rsCopyLink').onclick=()=>{if(!currentRecord)return;copyText(recordUrl(currentRecord,$('rsIncludeNote').checked),$('rsResult'))};
+ $('rsShare').onclick=async()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include),text=['✓ Hino chamado · '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');try{if(navigator.share)await navigator.share({title:'Hino '+p.num+' — '+p.titulo,text,url:u});else copyText(recordMessage(),$('rsResult'))}catch(e){if(e?.name!=='AbortError')copyText(recordMessage(),$('rsResult'))}};
+
+ function closeReceived(){hide(receivedDlg)}
+ function renderReceived(p){receivedRecord=p;receivedSaved=false;const h=findHymn(p.num)||{num:p.num,titulo:p.titulo||''};$('srNumber').textContent='Hino '+h.num;$('srHymnTitle').textContent=h.titulo||p.titulo;$('srDate').textContent=fmtDate(p.at);$('srStatus').textContent='';$('srSave').disabled=false;$('srSave').textContent='＋ Adicionar aos meus registros';const hasNote=!!clean(p.note);$('srNoteWrap').hidden=!hasNote;$('srNote').textContent=p.note||'';$('srNote').classList.remove('show');$('srNoteToggle').textContent='▤ Mostrar anotação';show(receivedDlg)}
+ $('srNoteToggle').onclick=()=>{const n=$('srNote'),visible=n.classList.toggle('show');$('srNoteToggle').textContent=visible?'▤ Ocultar anotação':'▤ Mostrar anotação'};
+ $('srOpenHymn').onclick=()=>{if(!receivedRecord)return;const h=findHymn(receivedRecord.num);closeReceived();if(h){window.__gaOrigemConsulta='registro_compartilhado';openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}};
+ $('srSave').onclick=()=>{if(!receivedRecord||receivedSaved)return;const saved=HYMN_STORE.importCall(receivedRecord);if(!saved){$('srStatus').textContent='Não foi possível salvar este registro.';return}receivedSaved=true;$('srSave').disabled=true;$('srSave').textContent='✓ Adicionado aos meus registros';$('srStatus').textContent='Cópia salva. Seus registros anteriores foram preservados.';try{refreshPersonalUI();const h=findHymn(saved.num);if(h&&typeof updateHymnActionButtons==='function')updateHymnActionButtons(h)}catch(e){}};
+ $('srClose').onclick=closeReceived;$('srTopClose').onclick=closeReceived;receivedDlg.onclick=e=>{if(e.target===receivedDlg)closeReceived()};
+
+ window.GUIDE_SHARE_V33={recordPayload,recordUrl,decodeRecord,openRecordShare,openHymnShare};
+ window.addEventListener('load',()=>{try{const qs=new URLSearchParams(location.search),raw=qs.get('registro');if(raw){const p=decodeRecord(raw);if(p){document.body.classList.remove('welcome-mode');setTimeout(()=>renderReceived(p),120);return}}const key=qs.get('hino');if(!key)return;const h=findHymn(key);if(!h)return;document.body.classList.remove('welcome-mode');window.__gaOrigemConsulta='link_compartilhado';setTimeout(()=>openHymnDetail(h,h.ocasiao?.split('/')[0]||''),120)}catch(e){}});
+ document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(recordDlg?.classList.contains('show')){closeRecordShare();return}if(hymnDlg?.classList.contains('show')){hide(hymnDlg);return}if(receivedDlg?.classList.contains('show'))closeReceived()});
 })();
 </script>
-
 
 <style id="v5-alinhamento-acoes-secundarias">
 /* V5 — Letra e Compartilhar com o mesmo tamanho e alinhamento no mobile/desktop. */
@@ -4098,7 +4046,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 #v2PersonalBar .v2-badge{display:grid!important;place-items:center;margin:0!important;box-sizing:border-box;width:26px;min-width:26px;height:26px;padding:0!important;flex:0 0 26px;line-height:1}
 </style>
 
-<!-- TESTE V31 — Sequência para Estudo + Meu Progresso aninhado; sem nova aba no topo -->
+<!-- TESTE V32 — Estudo por dificuldade em tela dedicada + cores das 5 fases da tabela -->
 <style id="v31-estudos-aninhados">
 #studyIndex{grid-column:1/-1!important;border:1.5px solid #c7a15b!important;background:linear-gradient(135deg,#fffaf0,#edf3f5)!important;align-items:center!important}
 #studyIndex .study-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -4153,6 +4101,86 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  .study-list{max-height:55dvh}
 }
 </style>
+<style id="v32-estudo-dificuldade-cores-fases">
+/* V32 — Estudo por dificuldade sem aumentar o modal + cores da tabela original. */
+:root{
+ --fase1-bg:#fff3cd;--fase1-border:#e4c45c;--fase1-accent:#b8892c;
+ --fase2-bg:#deecfd;--fase2-border:#a9c9ec;--fase2-accent:#4f7fae;
+ --fase3-bg:#e2e7ff;--fase3-border:#bac5ef;--fase3-accent:#6874b6;
+ --fase4-bg:#d5f5e6;--fase4-border:#a7ddc1;--fase4-accent:#4f8f6c;
+ --fase5-bg:#fde3e6;--fase5-border:#e7aab1;--fase5-accent:#b54b57;
+}
+.phase-1{--phase-bg:var(--fase1-bg);--phase-border:var(--fase1-border);--phase-accent:var(--fase1-accent)}
+.phase-2{--phase-bg:var(--fase2-bg);--phase-border:var(--fase2-border);--phase-accent:var(--fase2-accent)}
+.phase-3{--phase-bg:var(--fase3-bg);--phase-border:var(--fase3-border);--phase-accent:var(--fase3-accent)}
+.phase-4{--phase-bg:var(--fase4-bg);--phase-border:var(--fase4-border);--phase-accent:var(--fase4-accent)}
+.phase-5{--phase-bg:var(--fase5-bg);--phase-border:var(--fase5-border);--phase-accent:var(--fase5-accent)}
+.study-phase-card[class*="phase-"]{background:var(--phase-bg)!important;border-color:var(--phase-border)!important;position:relative;overflow:hidden}
+.study-phase-card[class*="phase-"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--phase-accent)}
+.study-phase-card[class*="phase-"] .study-mini-track span{background:var(--phase-accent)!important}
+.study-phase-card[class*="phase-"] b{color:var(--phase-accent)!important}
+.study-toolbar[class*="phase-"]{padding:8px 9px;border:1px solid var(--phase-border);border-radius:12px;background:var(--phase-bg)}
+.study-phase-title{display:flex;align-items:center;gap:7px}
+.study-phase-dot{width:10px;height:10px;border-radius:50%;background:var(--phase-accent);box-shadow:0 0 0 3px rgba(255,255,255,.65)}
+.study-row[class*="phase-"]{position:relative;overflow:hidden}
+.study-row[class*="phase-"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--phase-accent)}
+
+/* No modal principal, o estudo ocupa apenas uma faixa compacta e clicável. */
+#hdStudyInfo{
+ width:100%!important;min-height:42px!important;margin:5px 0 2px!important;padding:5px 9px 5px 12px!important;
+ display:grid!important;grid-template-columns:25px minmax(0,1fr) 18px!important;align-items:center!important;gap:7px!important;
+ border:1px solid var(--phase-border)!important;border-radius:11px!important;background:#fffdf8!important;color:#26394d!important;
+ position:relative!important;overflow:hidden!important;text-align:left!important;box-shadow:none!important;cursor:pointer!important;
+}
+#hdStudyInfo::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--phase-accent)}
+#hdStudyInfo .hd-study-book{font-size:16px;line-height:1;text-align:center}
+#hdStudyInfo .hd-study-main{min-width:0;display:block}
+#hdStudyInfo .hd-study-main strong{display:block;color:#26394d;font:800 .73rem/1.05 Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hdStudyInfo .hd-study-main small{display:block;margin-top:2px;color:#70695f;font:700 .63rem/1.05 Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hdStudyInfo .hd-study-phase{color:var(--phase-accent);font-weight:900}
+#hdStudyInfo .hd-study-arrow{color:var(--phase-accent);font:700 1.25rem/1 Arial,sans-serif;text-align:right}
+#hdStudyInfo:hover,#hdStudyInfo:focus-visible{outline:2px solid color-mix(in srgb,var(--phase-accent) 28%,transparent);outline-offset:1px}
+
+/* Tela dedicada: detalhes de estudo não competem com as mídias do modal do hino. */
+#studyHymnScreen{display:none;position:fixed;inset:0;z-index:100020;background:#f5f1e8;overflow:auto;color:#26394d}
+#studyHymnScreen.show{display:block}
+.study-detail-shell{width:min(760px,100%);min-height:100dvh;margin:0 auto;background:#fbf8ef;box-shadow:0 0 40px rgba(0,0,0,.12)}
+.study-detail-head{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:11px;padding:max(10px,env(safe-area-inset-top)) 14px 10px;background:#2b3741;color:#fff;border-bottom:3px solid #b8892c}
+.study-detail-head button{border:1px solid rgba(255,255,255,.28)!important;background:rgba(255,255,255,.08)!important;color:#fff!important;border-radius:10px!important;padding:8px 10px!important;font:700 .75rem Arial,sans-serif!important;white-space:nowrap}
+.study-detail-head strong{font:700 1rem Georgia,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.study-detail-body{padding:14px 14px 28px}
+.study-detail-hero{border:1px solid var(--phase-border);border-left:6px solid var(--phase-accent);border-radius:16px;background:linear-gradient(135deg,var(--phase-bg),#fffdf8 68%);padding:15px 15px 13px}
+.study-detail-phase{display:flex;align-items:center;gap:7px;color:var(--phase-accent);font:900 .78rem Arial,sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.study-detail-phase span{width:11px;height:11px;border-radius:50%;background:var(--phase-accent)}
+.study-detail-hero h2{margin:8px 0 4px;color:#173149;font:700 1.35rem/1.16 Georgia,serif}
+.study-detail-hero p{margin:0;color:#6d665c;font:700 .76rem Arial,sans-serif}
+.study-detail-block{margin-top:11px;padding:13px;border:1px solid #ded4c1;border-radius:14px;background:#fff}
+.study-detail-block h3{margin:0 0 8px;color:#26394d;font:800 .88rem Arial,sans-serif}
+.study-analysis-pending{padding:10px 11px;border-radius:10px;background:#f5f1e8;color:#71695f;font:.76rem/1.4 Arial,sans-serif}
+.study-analysis-pending b{color:#8a672a}
+.study-detail-statuses{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.study-detail-status{min-height:42px;border:1px solid #d9ccb1!important;border-radius:11px!important;background:#fffaf0!important;color:#4f5962!important;padding:7px 8px!important;font:800 .72rem Arial,sans-serif!important}
+.study-detail-status span{margin-right:5px}
+.study-detail-status.active{background:#2b3741!important;color:#fff!important;border-color:#2b3741!important;box-shadow:0 0 0 2px rgba(184,137,44,.18)}
+.study-detail-local{display:block;margin-top:8px;color:#81796e;font:.65rem Arial,sans-serif}
+.study-detail-source p{margin:0;color:#71695f;font:.73rem/1.4 Arial,sans-serif}
+
+/* Recupera espaço horizontal das plataformas no celular. */
+@media(max-width:520px){
+ #hymnDetail .hd-platform{padding:4px 5px!important;gap:4px!important;font-size:9.8px!important;justify-content:center!important}
+ #hymnDetail .hd-platform b{display:none!important}
+ #hymnDetail .hd-platform span{flex:0 1 auto!important;text-align:center!important;min-width:0!important}
+ #hymnDetail .brand{flex-basis:20px!important;width:20px!important;height:20px!important}
+ #hymnDetail .hd-media{gap:4px!important}
+}
+@media(max-width:380px){
+ #hymnDetail .hd-platform{font-size:9px!important;padding-inline:4px!important}
+ #hymnDetail .brand{flex-basis:18px!important;width:18px!important;height:18px!important}
+ #hdStudyInfo{min-height:40px!important;padding-top:4px!important;padding-bottom:4px!important}
+ #hdStudyInfo .hd-study-main strong{font-size:.70rem}
+ #hdStudyInfo .hd-study-main small{font-size:.60rem}
+}
+</style>
 <script id="v31-estudos-script">
 (function(){
  const PHASES={"1":["22","64","75","102","116","144","153","158","162","182","201","211","213","221","228","256","258","266","271","288","323","332","385","388","389","399","402","410","411","412","414","416","428","Coro 5"],"2":["4","7","8","12","14","18","28","47","52","56","63","72","73","80","90","103","104","105","106","113","115","123","128","133","151","154","169","170","172","178","183","195","219","220","234","244","246","252","263","269","272","280","284","292","299","308","310","316","321","327","338","341","345","347","352","354","358","362","367","371","376","382","383","395","418","427","430"],"3":["5","9","10","11","13","19","21","30","34","35","40","42","44","46","55","58","59","66","70","76","77","79","87","92","93","97","108","112","114","117","126","134","137","139","141","146","147","148","152","155","157","166","175","176","179","181","184","186","196","207","210","214","215","216","222","227","230","239","240","249","250","251","254","255","261","260","295","296","301","303","304","317","319","320","325","328","330","336","340","353","355","361","369","378","379","390","391","401","405","406","408","413","423","424","426","Coro 2","Coro 3","Coro 6"],"4":["3","6","16","17","24","25","29","36","53","57","60","65","67","68","69","74","78","83","84","85","80","91","96","100","101","107","110","111","118","119","120","122","124","125","127","140","142","143","145","156","159","160","161","163","174","185","190","191","192","197","203","204","208","209","212","217","218","223","224","229","232","233","238","242","243","253","264","265","268","273","277","279","283","286","287","294","297","302","305","306","311","312","315","324","328","329","331","333","334","335","339","343","344","348","349","360","360","370","300","306","307","302","396","420","422","425","Coro 1","Coro 4"],"5":["26","31","33","37","41","43","45","50","51","54","71","82","86","88","94","95","99","129","130","136","138","149","167","168","171","173","177","180","187","188","198","200","202","205","225","228","231","236","237","241","245","257","259","267","270","275","281","282","285","289","291","298","300","307","309","313","318","322","337","342","356","359","364","366","368","372","377","381","384","394","398","403","404","407","409","415","417","419","429"]};
@@ -4164,7 +4192,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   done:{icon:'✓',label:'Estudado'},
   review:{icon:'↻',label:'Revisar'}
  };
- let currentPhase=null,currentFilter='all',currentQuery='';
+ let currentPhase=null,currentFilter='all',currentQuery='',currentDetailHymn=null;
  function esc2(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
  function uniq(arr){return [...new Set((arr||[]).map(String))];}
  function hmap(){const m=new Map();try{Object.values(DATA).flat().forEach(h=>{if(!m.has(String(h.num)))m.set(String(h.num),h)})}catch(e){}return m}
@@ -4182,14 +4210,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   currentPhase=null;currentFilter='all';currentQuery='';
   const body=document.getElementById('studyBody');if(!body)return;
   const all=statsFor(allItems());
-  const phaseCards=[1,2,3,4,5].map(n=>{const st=statsFor(phaseItems(n));return `<button type="button" class="study-phase-card" data-phase="${n}"><div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total}</b></div><small>${st.study} em estudo · ${st.review} para revisar</small><div class="study-mini-track"><span style="width:${st.pct}%"></span></div></button>`}).join('');
+  const phaseCards=[1,2,3,4,5].map(n=>{const st=statsFor(phaseItems(n));return `<button type="button" class="study-phase-card phase-${n}" data-phase="${n}"><div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total}</b></div><small>${st.study} em estudo · ${st.review} para revisar</small><div class="study-mini-track"><span style="width:${st.pct}%"></span></div></button>`}).join('');
   body.innerHTML=`<div class="study-note"><b>Sequência sugerida de estudo.</b> O acompanhamento abaixo é pessoal e fica salvo somente neste dispositivo.</div><div class="study-progress-card"><div class="study-progress-top"><strong>Meu progresso</strong><b>${all.pct}%</b></div><div class="study-progress-track"><span style="width:${all.pct}%"></span></div><div class="study-progress-meta"><span>✓ ${all.done} estudados</span><span>◐ ${all.study} em estudo</span><span>↻ ${all.review} revisar</span></div></div><div class="study-phase-grid">${phaseCards}</div><div class="study-source">Teste de interface baseado na tabela de sequência em 5 fases fornecida para o projeto. A classificação permanece em validação antes de eventual publicação.</div>`;
   body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
  }
  function renderPhase(n){
   currentPhase=n;
   const body=document.getElementById('studyBody');if(!body)return;
-  body.innerHTML=`<div class="study-toolbar"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title">${n}ª Fase</div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número ou título..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list" id="studyList"></div>`;
+  body.innerHTML=`<div class="study-toolbar phase-${n}"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase</div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número ou título..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list phase-${n}" id="studyList"></div>`;
   document.getElementById('studyBack').onclick=renderHome;
   document.getElementById('studySearch').oninput=e=>{currentQuery=e.target.value.trim().toLowerCase();renderRows()};
   body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderRows()});
@@ -4202,7 +4230,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const total=phaseItems(currentPhase).length,st=statsFor(phaseItems(currentPhase));
   const cnt=document.getElementById('studyPhaseCount');if(cnt)cnt.textContent=st.done+'/'+total+' estudados';
   if(!items.length){box.innerHTML='<div class="study-empty">Nenhum hino encontrado neste filtro.</div>';return}
-  box.innerHTML=items.map(k=>{const h=HM.get(k)||{num:k,titulo:'Hino '+k,ocasiao:''},s=statusOf(k),m=STATUS[s];return `<div class="study-row"><button type="button" class="study-open" data-open="${esc2(k)}"><strong>${esc2(k)} — ${esc2(h.titulo||'')}</strong><small>${esc2(h.ocasiao||'')}</small></button><button type="button" class="study-status" data-status-btn="${esc2(k)}" data-status="${s}">${m.icon} ${m.label}</button></div>`}).join('');
+  box.innerHTML=items.map(k=>{const h=HM.get(k)||{num:k,titulo:'Hino '+k,ocasiao:''},s=statusOf(k),m=STATUS[s];return `<div class="study-row phase-${currentPhase}"><button type="button" class="study-open" data-open="${esc2(k)}"><strong>${esc2(k)} — ${esc2(h.titulo||'')}</strong><small>${esc2(h.ocasiao||'')}</small></button><button type="button" class="study-status" data-status-btn="${esc2(k)}" data-status="${s}">${m.icon} ${m.label}</button></div>`}).join('');
   box.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{const h=HM.get(String(b.dataset.open));if(!h)return;hideOverlay();try{window.__gaOrigemConsulta='sequencia_estudo';openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}catch(e){}});
   box.querySelectorAll('[data-status-btn]').forEach(b=>b.onclick=()=>{const k=String(b.dataset.statusBtn),cur=statusOf(k),idx=STATUS_ORDER.indexOf(cur),next=STATUS_ORDER[(idx+1)%STATUS_ORDER.length];setStatus(k,next);renderRows();});
  }
@@ -4210,19 +4238,62 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const idx=document.getElementById('indice');if(!idx||document.getElementById('studyIndex'))return;
   let divider=document.getElementById('mhDivider');
   if(!divider){divider=document.createElement('div');divider.id='mhDivider';divider.textContent='RELAÇÕES SUGESTIVAS';idx.appendChild(divider)}
-  const a=document.createElement('a');a.id='studyIndex';a.href='#';a.innerHTML='<span class="study-copy"><b>📚 Sequência para Estudo</b><small>5 fases + acompanhamento pessoal</small></span><span class="study-arrow">Abrir ›</span>';
+  const a=document.createElement('a');a.id='studyIndex';a.href='#';a.innerHTML='<span class="study-copy"><b>📚 Sequência de Estudo para Organistas</b><small>5 fases + acompanhamento pessoal</small></span><span class="study-arrow">Abrir ›</span>';
   a.onclick=e=>{e.preventDefault();try{registrarEventoGA('abrir_sequencia_estudo')}catch(x){}renderHome();showOverlay()};
   const mh=document.getElementById('mhIndex');if(mh)mh.insertAdjacentElement('afterend',a);else idx.appendChild(a);
  }
- function mountOverlay(){if(document.getElementById('studyOverlay'))return;document.body.insertAdjacentHTML('beforeend',`<div class="v2Overlay" id="studyOverlay" aria-hidden="true"><div class="v2Panel"><div class="v2Head"><h3>📚 Sequência para Estudo</h3><button class="v2Close" id="studyClose" aria-label="Fechar">×</button></div><div class="v2Body" id="studyBody"></div></div></div>`);document.getElementById('studyClose').onclick=hideOverlay;document.getElementById('studyOverlay').onclick=e=>{if(e.target.id==='studyOverlay')hideOverlay()};}
+ function mountOverlay(){if(document.getElementById('studyOverlay'))return;document.body.insertAdjacentHTML('beforeend',`<div class="v2Overlay" id="studyOverlay" aria-hidden="true"><div class="v2Panel"><div class="v2Head"><h3>📚 Estudos para Organistas</h3><button class="v2Close" id="studyClose" aria-label="Fechar">×</button></div><div class="v2Body" id="studyBody"></div></div></div>`);document.getElementById('studyClose').onclick=hideOverlay;document.getElementById('studyOverlay').onclick=e=>{if(e.target.id==='studyOverlay')hideOverlay()};}
  function phasesOf(num){const k=String(num),out=[];[1,2,3,4,5].forEach(n=>{if(phaseItems(n).includes(k))out.push(n)});return out}
+ function phaseTone(n){return 'phase-'+String(n)}
+ function detailStatusButtons(h){
+  const cur=statusOf(h.num);
+  return STATUS_ORDER.map(k=>`<button type="button" class="study-detail-status ${cur===k?'active':''}" data-detail-status="${k}"><span>${STATUS[k].icon}</span>${STATUS[k].label}</button>`).join('');
+ }
+ function renderStudyDetail(h){
+  if(!h)return;currentDetailHymn=h;
+  const screen=document.getElementById('studyHymnScreen'), body=document.getElementById('studyHymnBody');if(!screen||!body)return;
+  const ps=phasesOf(h.num),n=ps[0]||1,s=statusOf(h.num),m=STATUS[s];
+  const phaseText=ps.length?ps.map(x=>x+'ª Fase').join(' / '):'Fase não cadastrada';
+  body.innerHTML=`
+    <section class="study-detail-hero ${phaseTone(n)}">
+      <div class="study-detail-phase"><span></span>${phaseText}</div>
+      <h2>${String(h.num).startsWith('Coro ')?esc2(h.num):'Hino '+esc2(h.num)} — ${esc2(h.titulo||'')}</h2>
+      <p>Estudo por dificuldade · ${m.icon} ${m.label}</p>
+    </section>
+    <section class="study-detail-block">
+      <h3>Dificuldade técnica</h3>
+      <div class="study-analysis-pending"><b>Em levantamento.</b> O tipo de dificuldade será informado somente após validação em fonte confiável ou análise da própria partitura.</div>
+    </section>
+    <section class="study-detail-block">
+      <h3>Onde exige mais atenção</h3>
+      <div class="study-analysis-pending">Trechos, compassos e aspectos técnicos ainda serão identificados. Nenhuma dificuldade específica foi atribuída automaticamente.</div>
+    </section>
+    <section class="study-detail-block">
+      <h3>Meu progresso</h3>
+      <div class="study-detail-statuses">${detailStatusButtons(h)}</div>
+      <small class="study-detail-local">Seu progresso fica salvo somente neste dispositivo.</small>
+    </section>
+    <section class="study-detail-block study-detail-source">
+      <h3>Fonte da fase</h3>
+      <p>Sequência em 5 fases da tabela fornecida para o projeto. A análise técnica detalhada será mantida separada da classificação por fase.</p>
+    </section>`;
+  body.querySelectorAll('[data-detail-status]').forEach(btn=>btn.onclick=()=>{setStatus(h.num,btn.dataset.detailStatus);renderStudyDetail(h);injectHymnStudyInfo(h)});
+  screen.classList.add('show');screen.setAttribute('aria-hidden','false');
+  try{registrarEventoGA('abrir_estudo_hino',{numero_hino:String(h.num),fase_estudo:phaseText})}catch(e){}
+ }
+ function hideStudyDetail(){const screen=document.getElementById('studyHymnScreen');if(!screen)return;screen.classList.remove('show');screen.setAttribute('aria-hidden','true');if(currentDetailHymn)injectHymnStudyInfo(currentDetailHymn)}
+ function mountStudyDetail(){
+  if(document.getElementById('studyHymnScreen'))return;
+  document.body.insertAdjacentHTML('beforeend',`<div id="studyHymnScreen" aria-hidden="true"><div class="study-detail-shell"><div class="study-detail-head"><button type="button" id="studyDetailBack">← Voltar ao hino</button><strong>📚 Estudos para Organistas</strong></div><div id="studyHymnBody" class="study-detail-body"></div></div></div>`);
+  document.getElementById('studyDetailBack').onclick=hideStudyDetail;
+ }
  function injectHymnStudyInfo(h){
-  const meta=document.getElementById('hdMeta');if(!meta||!h)return;document.getElementById('hdStudyInfo')?.remove();const ps=phasesOf(h.num);if(!ps.length)return;const s=statusOf(h.num),m=STATUS[s];const d=document.createElement('div');d.id='hdStudyInfo';d.innerHTML='📚 Sequência de estudo · <b>'+ps.map(n=>n+'ª Fase').join(' / ')+'</b> · '+m.icon+' '+m.label;meta.insertAdjacentElement('afterend',d);
+  const meta=document.getElementById('hdMeta');if(!meta||!h)return;document.getElementById('hdStudyInfo')?.remove();const ps=phasesOf(h.num);if(!ps.length)return;const s=statusOf(h.num),m=STATUS[s],n=ps[0];const d=document.createElement('button');d.type='button';d.id='hdStudyInfo';d.className=phaseTone(n);d.setAttribute('aria-label','Abrir estudo por dificuldade deste hino');d.innerHTML='<span class="hd-study-book">📚</span><span class="hd-study-main"><strong>Estudo por dificuldade</strong><small><span class="hd-study-phase">'+ps.map(x=>x+'ª Fase').join(' / ')+'</span> · '+m.icon+' '+m.label+'</small></span><span class="hd-study-arrow">›</span>';d.onclick=()=>renderStudyDetail(h);meta.insertAdjacentElement('afterend',d);
  }
  function patchDetail(){try{const old=openHymnDetail;openHymnDetail=function(h,cat){old(h,cat);setTimeout(()=>injectHymnStudyInfo(h),0)}}catch(e){}}
- function init(){mountOverlay();mountIndex();patchDetail();if(new URLSearchParams(location.search).get('estudos')==='1'){setTimeout(()=>{renderHome();showOverlay();const f=+new URLSearchParams(location.search).get('fase');if(f>=1&&f<=5)renderPhase(f)},160)}}
+ function init(){mountOverlay();mountStudyDetail();mountIndex();patchDetail();if(new URLSearchParams(location.search).get('estudos')==='1'){setTimeout(()=>{renderHome();showOverlay();const f=+new URLSearchParams(location.search).get('fase');if(f>=1&&f<=5)renderPhase(f)},160)}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('studyOverlay')?.classList.contains('show'))hideOverlay()});
+ document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(document.getElementById('studyHymnScreen')?.classList.contains('show')){hideStudyDetail();return}if(document.getElementById('studyOverlay')?.classList.contains('show'))hideOverlay()});
 })();
 </script>
 
