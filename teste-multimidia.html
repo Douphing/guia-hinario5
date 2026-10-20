@@ -4325,7 +4325,19 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function esc2(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
  function normSearch(v){return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim()}
  function topicsFor(num){const k=String(num);return STUDY_TOPICS.filter(t=>t.hinos.includes(k))}
- function resourcesFor(topics,num){const k=String(num);const ids=[...new Set(topics.flatMap(t=>t.resources||[]))];return ids.map(id=>STUDY_RESOURCES[id]).filter(r=>r&&(!Array.isArray(r.hinos)||r.hinos.map(String).includes(k)))}
+ function resourcesFor(topics,num){
+  const k=String(num).trim();
+  const ids=[...new Set(topics.flatMap(t=>t.resources||[]))];
+  return ids
+    .map(id=>STUDY_RESOURCES[id])
+    .filter(Boolean)
+    .filter(r=>{
+      if(r.type==='drive'){
+        return Array.isArray(r.hinos) && r.hinos.some(h=>String(h).trim()===k);
+      }
+      return !Array.isArray(r.hinos) || r.hinos.some(h=>String(h).trim()===k);
+    });
+}
  function sourceLabels(topics){const ids=['phase_mor3',...topics.map(t=>t.source)].filter(Boolean);return [...new Set(ids)].map(id=>STUDY_SOURCES[id]).filter(Boolean)}
  function meiaHoraFor(num){try{return (window.__MEIA_HORA_BASE||[]).find(x=>String(x.num)===String(num))||null}catch(e){return null}}
  function uniq(arr){return [...new Set((arr||[]).map(String))];}
@@ -4394,11 +4406,21 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
    ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">${esc2(STUDY_SOURCES[t.source]||'Fonte cadastrada no material de estudo.')}</span></div>`).join('')}</div>`
    : `<div class="study-analysis-pending"><b>Em levantamento.</b> Ainda não há um ponto técnico específico cadastrado para este hino na base piloto.</div>`;
   const resourceHtml=resources.length
-   ? `<section class="study-detail-block"><h3>Recursos de apoio</h3><div class="study-resource-list">${resources.map(r=>r.type==='public'
-      ? `<a class="study-resource" href="${esc2(r.url)}" target="_blank" rel="noopener"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="arrow">↗</span></a>`
-      : (r.url
-        ? `<a class="study-resource study-resource-drive" href="${esc2(r.url)}" target="_blank" rel="noopener"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="study-resource-lock">Drive ↗</span></a>`
-        : `<div class="study-resource is-local"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="study-resource-lock">Material</span></div>`)).join('')}</div></section>`
+   ? `<section class="study-detail-block study-resources-block">
+        <div class="study-resource-head">
+          <h3>Recursos de apoio</h3>
+          <a class="study-open-folder" href="https://drive.google.com/drive/folders/18N_ccopTrM79e5KujubVRe4r6V5FOM6h" target="_blank" rel="noopener">📁 Abrir pasta ↗</a>
+        </div>
+        <div class="study-resource-list">${resources.map(r=>r.url
+          ? `<a class="study-resource study-resource-active ${r.type==='drive'?'study-resource-drive':''}" href="${esc2(r.url)}" target="_blank" rel="noopener">
+               <span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span>
+               <span class="study-resource-open">Abrir ↗</span>
+             </a>`
+          : `<div class="study-resource is-local">
+               <span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span>
+               <span class="study-resource-lock">Material</span>
+             </div>`).join('')}</div>
+      </section>`
    : '';
   const mhHtml=mh
    ? `<section class="study-detail-block"><h3>Preparação complementar</h3><div class="study-mh-bridge"><div><strong>Também está na base de Meia Hora</strong><small>Faixa sugerida cadastrada: ♩ ${mh.min}–${mh.max} BPM. A preparação inclui andamento, proporção dos valores, dinâmica e expressão.</small></div><button type="button" class="study-mh-open" data-open-mh>Preparação da Meia Hora ›</button></div></section>`
@@ -5931,6 +5953,59 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 .study-open-hymn:focus-visible{
   background:#fff!important;
   outline:none!important;
+}
+</style>
+
+
+<style id="v632-recursos-apoio-drive-style">
+.study-resource-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.study-resource-head h3{
+  margin:0!important;
+}
+.study-open-folder{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  padding:6px 9px;
+  border:1px solid #caa55a;
+  border-radius:999px;
+  background:#fff8e8;
+  color:#76561b;
+  text-decoration:none;
+  font:800 .58rem/1 Arial,sans-serif;
+}
+.study-open-folder:hover,
+.study-open-folder:focus-visible{
+  background:#fff2d0;
+  border-color:#b8841e;
+  outline:none;
+}
+.study-resource-active{
+  cursor:pointer!important;
+}
+.study-resource-open{
+  flex:0 0 auto;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#d9ecfb;
+  color:#2d5f87;
+  font:800 .58rem/1 Arial,sans-serif;
+  white-space:nowrap;
+}
+@media(max-width:520px){
+  .study-resource-head{
+    align-items:flex-start;
+  }
+  .study-open-folder{
+    padding:5px 8px;
+    font-size:.55rem;
+  }
 }
 </style>
 
