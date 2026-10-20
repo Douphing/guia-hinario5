@@ -4308,50 +4308,162 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 })();
 </script>
 
-<style id="v65-midias-mobile-sem-esmagar">
-/* V6.5 — no celular, plataformas de mídia ganham espaço real em vez de três botões comprimidos. */
-@media(max-width:520px){
-  #hymnDetail .hd-media{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:7px!important;
-  }
-  #hymnDetail .hd-play[data-kind="instrumental"]{
-    grid-column:1/-1!important;
-  }
-  #hymnDetail .hd-platform{
-    min-height:42px!important;
-    padding:6px 9px!important;
-    gap:6px!important;
-    justify-content:center!important;
-    font-size:11px!important;
-  }
-  #hymnDetail .hd-platform span{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    font-size:11px!important;
-    text-align:center!important;
-    white-space:nowrap!important;
-    overflow:visible!important;
-    text-overflow:clip!important;
-  }
-  #hymnDetail .hd-platform b{display:none!important}
-  #hymnDetail .brand{
-    display:inline-grid!important;
-    flex:0 0 24px!important;
-    width:24px!important;
-    height:24px!important;
-  }
-  #hymnDetail .hd-platform[data-kind="youtubeMusic"]{
-    grid-column:1/-1!important;
-    width:calc(50% - 3.5px)!important;
-    justify-self:center!important;
-  }
+
+<!-- V6.6 — ajusta o MODAL quando a mídia é aberta; preserva os botões de mídia da V6.4 -->
+<style id="v66-modal-midia-viewport-fit">
+/* O cartão passa a caber na viewport quando um player é aberto, sem alterar a grade/botões das plataformas. */
+#hymnDetail.media-open{
+  align-items:center!important;
+  justify-content:center!important;
+  padding:6px!important;
 }
-@media(max-width:370px){
-  #hymnDetail .hd-platform{font-size:10.5px!important;padding-inline:7px!important}
-  #hymnDetail .hd-platform span{font-size:10.5px!important}
-  #hymnDetail .brand{flex-basis:22px!important;width:22px!important;height:22px!important}
+#hymnDetail.media-open .hd-card{
+  width:min(760px,calc(100vw - 12px))!important;
+  max-width:760px!important;
+  max-height:calc(100dvh - 12px)!important;
+  overflow:hidden!important;
+  margin:auto!important;
+  padding:8px 12px 10px!important;
+}
+#hymnDetail.media-open .hd-hero{
+  min-height:92px!important;
+  padding:10px 48px 4px 50px!important;
+}
+#hymnDetail.media-open .hd-staff{height:39px!important}
+#hymnDetail.media-open .hd-clef{font-size:54px!important;top:-5px!important}
+#hymnDetail.media-open .hd-num{gap:6px!important}
+#hymnDetail.media-open .hd-num>span:first-child{font-size:13px!important}
+#hymnDetail.media-open .hd-num .hd-number{font-size:39px!important}
+#hymnDetail.media-open h2{font-size:22px!important;line-height:1!important;margin-top:1px!important}
+#hymnDetail.media-open .hd-swoosh{display:none!important}
+
+/* Metadados continuam visíveis, mas ocupam uma única faixa no modo de mídia. */
+#hymnDetail.media-open .hd-meta{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:6px!important;
+  margin:5px 0!important;
+}
+#hymnDetail.media-open .hd-meta-row{
+  grid-template-columns:54px minmax(0,1fr)!important;
+  min-height:52px!important;
+  border-radius:12px!important;
+}
+#hymnDetail.media-open .hd-meta-icon{
+  min-height:52px!important;
+  border-radius:12px 0 0 12px!important;
+}
+#hymnDetail.media-open .hd-meta-icon svg{width:36px!important;height:36px!important}
+#hymnDetail.media-open .hd-meta-copy{padding:4px 6px 4px 16px!important}
+#hymnDetail.media-open .hd-meta-copy:before{left:7px!important;top:8px!important;bottom:8px!important}
+#hymnDetail.media-open .hd-meta-label{font-size:8px!important}
+#hymnDetail.media-open .hd-meta-value{font-size:14px!important;line-height:1.02!important}
+
+/* Mantém estudo, marcações e ações acessíveis, apenas reduzindo a altura vertical. */
+#hymnDetail.media-open #hdStudyInfo{
+  min-height:36px!important;
+  margin:4px 0 3px!important;
+  padding:4px 8px 4px 10px!important;
+}
+#hymnDetail.media-open #hdStudyInfo .hd-study-main strong{font-size:.68rem!important}
+#hymnDetail.media-open #hdStudyInfo .hd-study-main small{font-size:.58rem!important}
+#hymnDetail.media-open .hd-actions{margin:4px 0!important;gap:6px!important}
+#hymnDetail.media-open .hd-actions button{min-height:32px!important;padding:4px 5px!important;font-size:10px!important}
+#hymnDetail.media-open .hd-history-link{padding:1px 4px 3px!important;font-size:.68rem!important;min-height:20px!important}
+#hymnDetail.media-open .hd-secondary-actions{margin:2px auto 4px!important;gap:6px!important}
+#hymnDetail.media-open .hd-secondary-actions #v2LetterBtn,
+#hymnDetail.media-open .hd-secondary-actions .hd-share-hymn{
+  height:30px!important;
+  min-height:30px!important;
+  font-size:.70rem!important;
+}
+#hymnDetail.media-open .hd-divider{display:none!important}
+#hymnDetail.media-open .hd-media-title{font-size:19px!important;margin:2px 0 4px!important}
+#hymnDetail.media-open .hd-note{font-size:21px!important}
+#hymnDetail.media-open .hd-slot{margin-top:5px!important}
+#hymnDetail.media-open .hd-links{min-height:16px!important;margin-top:2px!important;padding:1px 3px 0!important;line-height:1!important}
+#hymnDetail.media-open .hd-links a{font-size:10px!important}
+
+/* O player usa apenas o espaço restante do modal; os botões acima permanecem como na V6.4. */
+#hymnDetail.media-open #hdYoutube{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  overflow:hidden!important;
+}
+#hymnDetail.media-open #hdYoutube iframe{
+  width:min(100%,330px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  aspect-ratio:16/9!important;
+  max-height:185px!important;
+  margin:0 auto!important;
+}
+#hymnDetail.media-open #hdSpotify iframe{height:92px!important}
+
+/* Celular: mesma lógica, sem transformar ou empilhar os botões de Spotify/YouTube/YouTube Music. */
+@media(max-width:520px){
+  #hymnDetail.media-open{padding:4px!important}
+  #hymnDetail.media-open .hd-card{
+    width:calc(100vw - 8px)!important;
+    max-height:calc(100dvh - 8px)!important;
+    padding:6px 8px 8px!important;
+    border-radius:17px!important;
+  }
+  #hymnDetail.media-open .hd-hero{
+    min-height:78px!important;
+    padding:7px 38px 3px 40px!important;
+  }
+  #hymnDetail.media-open .hd-close{width:31px!important;height:31px!important;font-size:18px!important}
+  #hymnDetail.media-open .hd-staff{height:31px!important}
+  #hymnDetail.media-open .hd-clef{font-size:45px!important;left:5px!important;top:-4px!important}
+  #hymnDetail.media-open .hd-num>span:first-child{font-size:11px!important}
+  #hymnDetail.media-open .hd-num .hd-number{font-size:34px!important}
+  #hymnDetail.media-open h2{font-size:18px!important;margin-top:1px!important}
+
+  #hymnDetail.media-open .hd-meta{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px!important;margin:4px 0!important}
+  #hymnDetail.media-open .hd-meta-row{grid-template-columns:42px minmax(0,1fr)!important;min-height:46px!important;border-radius:10px!important}
+  #hymnDetail.media-open .hd-meta-icon{min-height:46px!important;border-radius:10px 0 0 10px!important}
+  #hymnDetail.media-open .hd-meta-icon svg{width:30px!important;height:30px!important}
+  #hymnDetail.media-open .hd-meta-copy{padding:3px 4px 3px 12px!important}
+  #hymnDetail.media-open .hd-meta-copy:before{left:5px!important;top:7px!important;bottom:7px!important}
+  #hymnDetail.media-open .hd-meta-label{font-size:7px!important}
+  #hymnDetail.media-open .hd-meta-value{font-size:11.5px!important;line-height:1.05!important}
+
+  #hymnDetail.media-open #hdStudyInfo{min-height:34px!important;margin:3px 0 2px!important;padding:3px 7px 3px 9px!important}
+  #hymnDetail.media-open #hdStudyInfo .hd-study-book{font-size:14px!important}
+  #hymnDetail.media-open #hdStudyInfo .hd-study-main strong{font-size:.64rem!important}
+  #hymnDetail.media-open #hdStudyInfo .hd-study-main small{font-size:.54rem!important}
+  #hymnDetail.media-open .hd-actions{margin:3px 0!important;gap:5px!important}
+  #hymnDetail.media-open .hd-actions button{min-height:30px!important;padding:3px 3px!important;font-size:9.5px!important}
+  #hymnDetail.media-open .hd-history-link{font-size:.63rem!important;min-height:18px!important;padding:0 3px 2px!important}
+  #hymnDetail.media-open .hd-secondary-actions{margin:1px auto 3px!important}
+  #hymnDetail.media-open .hd-secondary-actions #v2LetterBtn,
+  #hymnDetail.media-open .hd-secondary-actions .hd-share-hymn{height:28px!important;min-height:28px!important;font-size:.66rem!important}
+  #hymnDetail.media-open .hd-media-title{font-size:17px!important;margin:1px 0 3px!important}
+  #hymnDetail.media-open .hd-note{font-size:19px!important}
+  #hymnDetail.media-open #hdYoutube iframe{width:min(100%,300px)!important;max-height:169px!important}
+  #hymnDetail.media-open #hdSpotify iframe{height:82px!important}
+  #hymnDetail.media-open .hd-links a{font-size:9.5px!important}
+}
+
+/* Em telas excepcionalmente baixas, libera uma rolagem mínima como último recurso, em vez de cortar conteúdo. */
+@media(max-height:610px){
+  #hymnDetail.media-open .hd-card{overflow-y:auto!important;overscroll-behavior:contain!important}
 }
 </style>
+<script id="v66-media-scroll-reset">
+(function(){
+  const modal=document.getElementById('hymnDetail');
+  if(!modal)return;
+  modal.addEventListener('click',function(e){
+    const btn=e.target.closest('.hd-play');
+    if(!btn)return;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const card=modal.querySelector('.hd-card');
+      if(card)card.scrollTop=0;
+    }));
+  });
+})();
+</script>
 
 </body></html>
