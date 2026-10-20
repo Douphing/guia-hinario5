@@ -4515,16 +4515,16 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 
 
 
-<style id="v612-index-more-shadow-refined">
-/* V6.12 — próxima opções reais aparecem só parcialmente, em sombra. */
+<style id="v613-index-more-shadow-guides">
+/* V6.13 — deixa mais evidente que existem próximas faixas abaixo do botão. */
 #indexMoreToggle{
   grid-column:1/-1!important;
   position:relative!important;
-  z-index:5!important;
+  z-index:6!important;
   width:100%!important;
   max-width:none!important;
   min-height:44px!important;
-  margin:4px 0 2px!important;
+  margin:4px 0 0!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
@@ -4544,7 +4544,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   outline:none!important;
 }
 
-/* Chevron desenhado em CSS para não aparecer aquele "v" desalinhado. */
 #indexMoreToggle .index-more-chevron{
   width:9px!important;
   height:9px!important;
@@ -4562,12 +4561,12 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   transform:translateY(2px) rotate(225deg)!important;
 }
 
-/* Prévia: usa os cards REAIS seguintes, mas só mostra uma parte deles. */
+/* Área de prévia fica mais funda abaixo do botão. */
 #indexMorePreview{
   grid-column:1/-1!important;
   position:relative!important;
   width:100%!important;
-  height:58px!important;
+  height:112px!important;
   margin:0 0 8px!important;
   overflow:hidden!important;
   pointer-events:none!important;
@@ -4576,11 +4575,12 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 
 #indexMorePreview[hidden]{display:none!important}
 
+/* As próximas opções reais aparecem empilhadas, como páginas/faixas abaixo. */
 #indexMorePreview .index-shadow-preview-card{
   position:absolute!important;
-  left:1.2%!important;
-  right:1.2%!important;
-  width:97.6%!important;
+  left:1.3%!important;
+  right:1.3%!important;
+  width:97.4%!important;
   min-height:64px!important;
   margin:0!important;
   pointer-events:none!important;
@@ -4588,39 +4588,47 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   color:#5c554b!important;
   background:#fbf8f0!important;
   border-color:#d8cfbf!important;
-  box-shadow:0 5px 12px rgba(45,38,26,.08)!important;
-  filter:saturate(.45) blur(.15px)!important;
+  box-shadow:0 7px 16px rgba(45,38,26,.10)!important;
+  filter:saturate(.50)!important;
   transition:none!important;
 }
 
-/* Próxima opção — ainda dá para perceber o texto, mas claramente em sombra. */
+/* 1ª próxima opção: mais visível e mais abaixo do botão. */
 #indexMorePreview .index-shadow-preview-card:nth-child(1){
-  top:5px!important;
-  opacity:.30!important;
-  transform:scale(.985)!important;
+  top:13px!important;
+  opacity:.38!important;
+  transform:scale(.988)!important;
+  z-index:3!important;
+}
+
+/* 2ª próxima opção: recuada, mantendo a sensação de continuação. */
+#indexMorePreview .index-shadow-preview-card:nth-child(2){
+  top:43px!important;
+  opacity:.22!important;
+  transform:scale(.955)!important;
   z-index:2!important;
 }
 
-/* Segunda opção — só sugere que a lista continua. */
-#indexMorePreview .index-shadow-preview-card:nth-child(2){
-  top:27px!important;
-  opacity:.13!important;
-  transform:scale(.95)!important;
+/* 3ª próxima opção: só uma sugestão ao fundo. */
+#indexMorePreview .index-shadow-preview-card:nth-child(3){
+  top:72px!important;
+  opacity:.11!important;
+  transform:scale(.92)!important;
   z-index:1!important;
 }
 
-/* Fade inferior para as faixas desaparecerem naturalmente. */
+/* Fade apenas no rodapé; não apaga a primeira opção. */
 #indexMorePreview::after{
   content:"";
   position:absolute!important;
   inset:auto 0 0 0!important;
-  height:34px!important;
-  z-index:4!important;
+  height:32px!important;
+  z-index:5!important;
   pointer-events:none!important;
   background:linear-gradient(
     to bottom,
     rgba(239,235,224,0),
-    rgba(239,235,224,.78) 68%,
+    rgba(239,235,224,.72) 70%,
     rgba(239,235,224,1)
   )!important;
 }
@@ -4632,25 +4640,25 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 @media(max-width:699px){
   #indexMoreToggle{
     min-height:46px!important;
-    margin-top:2px!important;
     font-size:.84rem!important;
   }
   #indexMorePreview{
-    height:54px!important;
+    height:104px!important;
   }
   #indexMorePreview .index-shadow-preview-card{
-    left:1.5%!important;
-    right:1.5%!important;
-    width:97%!important;
+    left:1.6%!important;
+    right:1.6%!important;
+    width:96.8%!important;
     min-height:60px!important;
   }
-  #indexMorePreview .index-shadow-preview-card:nth-child(1){top:4px!important}
-  #indexMorePreview .index-shadow-preview-card:nth-child(2){top:24px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(1){top:11px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(2){top:39px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(3){top:67px!important}
 }
 </style>
 
 
-<script id="v611-index-show-more-script">
+<script id="v613-index-show-more-script">
 (function(){
   let expanded=false;
   let resizeTimer=null;
@@ -4674,13 +4682,23 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       btn.type='button';
       btn.id='indexMoreToggle';
       btn.setAttribute('aria-expanded','false');
-      btn.innerHTML='<span class="index-more-chevron" aria-hidden="true">⌄</span><span class="index-more-label">Mostrar mais</span>';
+      btn.innerHTML='<span class="index-more-chevron" aria-hidden="true"></span><span class="index-more-label">Mostrar mais</span>';
       idx.appendChild(btn);
 
       btn.addEventListener('click',()=>{
         expanded=!expanded;
         applyState();
-        if(!expanded){
+        if(expanded){
+          /* Leva o usuário diretamente para as próximas opções que acabaram de aparecer. */
+          requestAnimationFrame(()=>{
+            const firstRevealed=Array.from(idx.children).find(el =>
+              el.classList && el.classList.contains('index-more-newly-visible')
+            );
+            if(firstRevealed){
+              firstRevealed.scrollIntoView({block:'nearest',behavior:'smooth'});
+            }
+          });
+        }else{
           setTimeout(()=>btn.scrollIntoView({block:'nearest',behavior:'smooth'}),30);
         }
       });
@@ -4709,7 +4727,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       clone.removeAttribute('onclick');
       clone.removeAttribute('tabindex');
       clone.setAttribute('aria-hidden','true');
-      clone.classList.remove('index-more-hidden');
+      clone.classList.remove('index-more-hidden','index-more-newly-visible');
       clone.classList.add('index-shadow-preview-card');
       return clone;
     }
@@ -4725,7 +4743,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         ...occasions.slice(limit),
         mh,
         study
-      ].filter(Boolean).slice(0,2);
+      ].filter(Boolean).slice(0,3);
 
       nextItems.forEach(el=>preview.appendChild(makePreviewCard(el)));
       preview.hidden=nextItems.length===0;
@@ -4737,11 +4755,16 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       const limit=Math.min(visibleLimit(),occasions.length);
 
       occasions.forEach((el,i)=>{
-        el.classList.toggle('index-more-hidden',!expanded && i>=limit);
+        const hidden=!expanded && i>=limit;
+        el.classList.toggle('index-more-hidden',hidden);
+        el.classList.toggle('index-more-newly-visible',expanded && i===limit);
       });
 
       divider.classList.toggle('index-more-hidden',!expanded);
-      suggestions.forEach(el=>el.classList.toggle('index-more-hidden',!expanded));
+      suggestions.forEach((el,i)=>{
+        el.classList.toggle('index-more-hidden',!expanded);
+        el.classList.toggle('index-more-newly-visible',expanded && occasions.length<=limit && i===0);
+      });
 
       const hiddenCount=Math.max(0,(occasions.length-limit)+suggestions.length);
       btn.hidden=hiddenCount===0;
