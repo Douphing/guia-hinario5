@@ -4792,7 +4792,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<script id="v615-index-show-more-ocasioes-script">
+<script id="v618-index-show-more-ocasioes-script">
 (function(){
   let expanded=false;
   let resizeTimer=null;
@@ -4826,15 +4826,13 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       preview.setAttribute('aria-hidden','true');
     }
 
-    /* O botão e a prévia pertencem SOMENTE às ocasiões.
-       Relações Sugestivas ficam sempre visíveis e vêm depois. */
-    if(btn.parentElement!==idx || btn.nextElementSibling!==preview || preview.nextElementSibling!==divider){
-      idx.insertBefore(btn,divider);
-      idx.insertBefore(preview,divider);
-    }
+    /* Ordem recolhida:
+       ocasiões visíveis -> próximas ocasiões em sombra -> Mostrar mais -> Relações Sugestivas */
+    idx.insertBefore(preview,divider);
+    idx.insertBefore(btn,divider);
 
-    if(!btn.dataset.boundOccasions){
-      btn.dataset.boundOccasions='1';
+    if(!btn.dataset.boundOccasionsV618){
+      btn.dataset.boundOccasionsV618='1';
       btn.addEventListener('click',()=>{
         expanded=!expanded;
         applyState();
@@ -4882,7 +4880,8 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         return;
       }
 
-      /* A sombra mostra apenas as próximas OCASIÕES reais. */
+      /* Mostra em sombra somente as próximas ocasiões reais,
+         exatamente na sequência em que aparecerão ao expandir. */
       const nextItems=occasions.slice(limit,limit+3);
       nextItems.forEach(el=>preview.appendChild(makePreviewCard(el)));
       preview.hidden=nextItems.length===0;
@@ -4898,7 +4897,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         el.classList.toggle('index-more-newly-visible',expanded && i===limit);
       });
 
-      /* Relações Sugestivas nunca entram em Mostrar mais. */
+      /* Relações Sugestivas permanecem sempre visíveis. */
       divider.classList.remove('index-more-hidden');
       mh.classList.remove('index-more-hidden','index-more-newly-visible');
       study.classList.remove('index-more-hidden','index-more-newly-visible');
@@ -4915,6 +4914,10 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       }
 
       refreshPreview(occasions,limit);
+
+      /* Garante a ordem correta mesmo após redimensionar/recalcular. */
+      idx.insertBefore(preview,divider);
+      idx.insertBefore(btn,divider);
     }
 
     window.__applyIndexMoreState=applyState;
@@ -4989,108 +4992,120 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<style id="v617-preview-embutida">
-/* V6.17 — próximas ocasiões ficam "embutidas" sob o botão Mostrar mais,
-   sem invadir/cortar o título RELAÇÕES SUGESTIVAS. */
+<style id="v618-preview-acima-do-botao">
+/* V6.18 — próximas ocasiões aparecem ACIMA do botão Mostrar mais,
+   mantendo o mesmo ritmo visual/espaçamento dos cards reais. */
 
-/* Botão permanece à frente das prévias. */
-#indexMoreToggle{
-  position:relative!important;
-  z-index:8!important;
-  margin-bottom:0!important;
-}
-
-/* Área curta: as próximas guias aparecem só como continuidade,
-   logo por baixo do botão, sem criar um bloco alto. */
+/* A prévia ocupa o lugar natural das próximas opções. */
 #indexMorePreview{
+  grid-column:1/-1!important;
   position:relative!important;
   z-index:2!important;
-  height:50px!important;
-  margin:-9px 0 4px!important;
-  overflow:hidden!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  pointer-events:none!important;
 }
 
-/* As opções reais ficam encaixadas "por trás" do botão. */
+/* Cada clone mantém a mesma largura e espaçamento dos cards normais,
+   mudando apenas opacidade/contraste. */
 #indexMorePreview .index-shadow-preview-card{
-  left:2.2%!important;
-  right:2.2%!important;
-  width:95.6%!important;
-  min-height:58px!important;
-  border-radius:13px!important;
-  box-shadow:0 5px 12px rgba(45,38,26,.07)!important;
-  filter:saturate(.42)!important;
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0 0 10px!important;
+  transform:none!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  opacity:.26!important;
+  filter:saturate(.45)!important;
+  box-shadow:none!important;
+  background:var(--cream)!important;
+  border-color:var(--line)!important;
 }
 
-/* Primeira próxima ocasião: começa quase debaixo do botão. */
-#indexMorePreview .index-shadow-preview-card:nth-child(1){
-  top:4px!important;
-  opacity:.28!important;
-  transform:scale(.985)!important;
-  z-index:3!important;
-}
-
-/* Segunda: mais recuada. */
+/* Segunda e terceira ficam um pouco mais suaves, mas sem deslocamento. */
 #indexMorePreview .index-shadow-preview-card:nth-child(2){
-  top:20px!important;
-  opacity:.14!important;
-  transform:scale(.955)!important;
-  z-index:2!important;
+  opacity:.18!important;
 }
-
-/* Terceira: só sugere continuidade. */
 #indexMorePreview .index-shadow-preview-card:nth-child(3){
-  top:34px!important;
-  opacity:.07!important;
-  transform:scale(.925)!important;
-  z-index:1!important;
+  opacity:.11!important;
 }
 
-/* Fade curto: não invade o título abaixo. */
+/* Remove fades antigos: queremos ver os cards na posição real. */
 #indexMorePreview::after{
-  height:18px!important;
-  background:linear-gradient(
-    to bottom,
-    rgba(239,235,224,0),
-    rgba(239,235,224,.72) 72%,
-    rgba(239,235,224,1)
-  )!important;
+  content:none!important;
+  display:none!important;
 }
 
-/* Título fica imediatamente depois da prévia, com área própria garantida. */
+/* O botão fica logo depois das prévias, como continuação natural da lista. */
+#indexMoreToggle{
+  grid-column:1/-1!important;
+  position:relative!important;
+  z-index:5!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:44px!important;
+  margin:0 0 6px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  border:1px solid #d6c49d!important;
+  border-radius:14px!important;
+  background:#fffaf0!important;
+  color:#6f5524!important;
+  box-shadow:none!important;
+  font:800 .86rem/1 Arial,sans-serif!important;
+}
+
+#indexMoreToggle:hover,
+#indexMoreToggle:focus-visible{
+  background:#f7eedc!important;
+  border-color:#bd9954!important;
+  outline:none!important;
+}
+
+#indexMoreToggle .index-more-chevron{
+  width:9px!important;
+  height:9px!important;
+  display:inline-block!important;
+  flex:0 0 9px!important;
+  border-right:2px solid currentColor!important;
+  border-bottom:2px solid currentColor!important;
+  transform:translateY(-2px) rotate(45deg)!important;
+  font-size:0!important;
+  line-height:0!important;
+  transition:transform .16s ease!important;
+}
+
+#indexMoreToggle[aria-expanded="true"] .index-more-chevron{
+  transform:translateY(2px) rotate(225deg)!important;
+}
+
+/* Relações Sugestivas vêm logo após o botão, sem corte nem invasão. */
 #mhDivider{
   position:relative!important;
   z-index:6!important;
   display:block!important;
   clear:both!important;
-  margin:0 2px 4px!important;
-  padding-top:2px!important;
+  margin:2px 2px 4px!important;
+  padding-top:0!important;
   line-height:1.2!important;
   overflow:visible!important;
 }
 
-/* Quando estiver expandido, não há prévia: título sobe um pouco mais. */
-#indexMorePreview[hidden] + #mhDivider{
-  margin-top:2px!important;
-}
-
-/* Mobile: ainda mais compacto. */
 @media(max-width:699px){
-  #indexMorePreview{
-    height:46px!important;
-    margin:-8px 0 3px!important;
-  }
   #indexMorePreview .index-shadow-preview-card{
-    left:2.4%!important;
-    right:2.4%!important;
-    width:95.2%!important;
-    min-height:54px!important;
+    margin-bottom:8px!important;
   }
-  #indexMorePreview .index-shadow-preview-card:nth-child(1){top:4px!important}
-  #indexMorePreview .index-shadow-preview-card:nth-child(2){top:18px!important}
-  #indexMorePreview .index-shadow-preview-card:nth-child(3){top:31px!important}
-  #mhDivider{
-    margin-top:0!important;
-    padding-top:1px!important;
+  #indexMoreToggle{
+    min-height:46px!important;
+    font-size:.84rem!important;
+    margin-bottom:5px!important;
   }
 }
 </style>
