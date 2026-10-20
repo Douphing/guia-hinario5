@@ -3976,7 +3976,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function openRecordShare(id){const item=HYMN_STORE.calls().find(x=>x.id===id);if(!item)return;rememberPersonalBeforeRecordShare();currentRecord=item;const h=findHymn(item.num)||{num:item.num,titulo:item.titulo||''};$('rsNumber').textContent='Hino '+h.num;$('rsHymnTitle').textContent=h.titulo;$('rsDate').textContent='Registro de '+fmtDate(item.at);const hasNote=!!clean(item.note);$('rsIncludeNote').disabled=!hasNote;$('rsIncludeNote').checked=hasNote;$('rsNoteWrap').classList.toggle('disabled',!hasNote);$('rsNoteInfo').textContent=hasNote?'“'+clean(item.note)+'”':'Este registro não possui anotação.';$('rsResult').textContent='';refreshRecordPreview();show(recordDlg);try{registrarEventoGA('abrir_compartilhar_registro',{numero_hino:String(item.num),registro_id:String(item.id)})}catch(e){}}
  window.openRecordShareDialog=openRecordShare;
  $('rsIncludeNote').onchange=refreshRecordPreview;$('rsClose').onclick=closeRecordShare;recordDlg.onclick=e=>{if(e.target===recordDlg)closeRecordShare()};
- $('rsWhatsApp').onclick=()=>{if(currentRecord)window.open('https://wa.me/?text='+encodeURIComponent(recordMessage()),'_blank','noopener')};
+ function openWhatsAppRecordMessage(){
+  if(!currentRecord)return;
+  const msg=recordMessage(),encoded=encodeURIComponent(msg);
+  const mobile=/Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent||'');
+  const url=mobile?'https://wa.me/?text='+encoded:'https://web.whatsapp.com/send?text='+encoded;
+  window.open(url,'_blank','noopener');
+ }
+ $('rsWhatsApp').onclick=openWhatsAppRecordMessage;
  $('rsTelegram').onclick=()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include);const text=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent(text),'_blank','noopener')};
  $('rsCopy').onclick=()=>{if(currentRecord)copyText(recordMessage(),$('rsResult'))};
  $('rsCopyLink').onclick=()=>{if(!currentRecord)return;copyText(recordUrl(currentRecord,$('rsIncludeNote').checked),$('rsResult'))};
