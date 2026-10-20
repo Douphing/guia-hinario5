@@ -4792,7 +4792,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<script id="v618-index-show-more-ocasioes-script">
+<script id="v619-index-show-more-ocasioes-script">
 (function(){
   let expanded=false;
   let resizeTimer=null;
@@ -4826,13 +4826,11 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       preview.setAttribute('aria-hidden','true');
     }
 
-    /* Ordem recolhida:
-       ocasiões visíveis -> próximas ocasiões em sombra -> Mostrar mais -> Relações Sugestivas */
     idx.insertBefore(preview,divider);
     idx.insertBefore(btn,divider);
 
-    if(!btn.dataset.boundOccasionsV618){
-      btn.dataset.boundOccasionsV618='1';
+    if(!btn.dataset.boundOccasionsV619){
+      btn.dataset.boundOccasionsV619='1';
       btn.addEventListener('click',()=>{
         expanded=!expanded;
         applyState();
@@ -4880,11 +4878,14 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         return;
       }
 
-      /* Mostra em sombra somente as próximas ocasiões reais,
-         exatamente na sequência em que aparecerão ao expandir. */
-      const nextItems=occasions.slice(limit,limit+3);
-      nextItems.forEach(el=>preview.appendChild(makePreviewCard(el)));
-      preview.hidden=nextItems.length===0;
+      /* Apenas a próxima ocasião imediata. */
+      const nextItem=occasions[limit];
+      if(nextItem){
+        preview.appendChild(makePreviewCard(nextItem));
+        preview.hidden=false;
+      }else{
+        preview.hidden=true;
+      }
     }
 
     function applyState(){
@@ -4897,7 +4898,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         el.classList.toggle('index-more-newly-visible',expanded && i===limit);
       });
 
-      /* Relações Sugestivas permanecem sempre visíveis. */
       divider.classList.remove('index-more-hidden');
       mh.classList.remove('index-more-hidden','index-more-newly-visible');
       study.classList.remove('index-more-hidden','index-more-newly-visible');
@@ -4915,7 +4915,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 
       refreshPreview(occasions,limit);
 
-      /* Garante a ordem correta mesmo após redimensionar/recalcular. */
       idx.insertBefore(preview,divider);
       idx.insertBefore(btn,divider);
     }
@@ -4992,56 +4991,54 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<style id="v618-preview-acima-do-botao">
-/* V6.18 — próximas ocasiões aparecem ACIMA do botão Mostrar mais,
-   mantendo o mesmo ritmo visual/espaçamento dos cards reais. */
+<style id="v619-preview-um-card-ajustado">
+/* V6.19 — mostra apenas 1 próxima ocasião em sombra, acima do botão,
+   com espaçamento igual ao ritmo dos cards normais. */
 
-/* A prévia ocupa o lugar natural das próximas opções. */
 #indexMorePreview{
   grid-column:1/-1!important;
   position:relative!important;
   z-index:2!important;
   width:100%!important;
-  height:auto!important;
-  margin:0!important;
+  height:34px!important;              /* só uma faixa do próximo card */
+  margin:0 0 10px!important;          /* mesmo respiro vertical dos cards */
   padding:0!important;
-  overflow:visible!important;
+  overflow:hidden!important;
   pointer-events:none!important;
 }
 
-/* Cada clone mantém a mesma largura e espaçamento dos cards normais,
-   mudando apenas opacidade/contraste. */
+#indexMorePreview[hidden]{
+  display:none!important;
+}
+
+/* O clone ocupa a posição natural do próximo card;
+   a área é cortada para mostrar só uma parte dele. */
 #indexMorePreview .index-shadow-preview-card{
   position:relative!important;
   inset:auto!important;
   width:100%!important;
   min-height:0!important;
-  margin:0 0 10px!important;
+  margin:0!important;
   transform:none!important;
   pointer-events:none!important;
   user-select:none!important;
-  opacity:.26!important;
-  filter:saturate(.45)!important;
+  opacity:.22!important;
+  filter:saturate(.42)!important;
   box-shadow:none!important;
   background:var(--cream)!important;
   border-color:var(--line)!important;
 }
 
-/* Segunda e terceira ficam um pouco mais suaves, mas sem deslocamento. */
-#indexMorePreview .index-shadow-preview-card:nth-child(2){
-  opacity:.18!important;
-}
-#indexMorePreview .index-shadow-preview-card:nth-child(3){
-  opacity:.11!important;
+/* Remove qualquer segunda/terceira camada antiga. */
+#indexMorePreview .index-shadow-preview-card:nth-child(n+2){
+  display:none!important;
 }
 
-/* Remove fades antigos: queremos ver os cards na posição real. */
 #indexMorePreview::after{
   content:none!important;
   display:none!important;
 }
 
-/* O botão fica logo depois das prévias, como continuação natural da lista. */
 #indexMoreToggle{
   grid-column:1/-1!important;
   position:relative!important;
@@ -5086,7 +5083,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   transform:translateY(2px) rotate(225deg)!important;
 }
 
-/* Relações Sugestivas vêm logo após o botão, sem corte nem invasão. */
 #mhDivider{
   position:relative!important;
   z-index:6!important;
@@ -5099,7 +5095,8 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 
 @media(max-width:699px){
-  #indexMorePreview .index-shadow-preview-card{
+  #indexMorePreview{
+    height:30px!important;
     margin-bottom:8px!important;
   }
   #indexMoreToggle{
