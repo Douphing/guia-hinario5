@@ -4192,31 +4192,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  #hdStudyInfo .hd-study-main small{font-size:.60rem}
 }
 </style>
-
-<style id="v68-busca-filtros-estudos">
-/* V6.8 — busca parcial/sem acentos e filtros sempre visíveis no celular. */
-@media(max-width:600px){
-  #studyOverlay .study-filters{
-    display:grid!important;
-    grid-template-columns:repeat(6,minmax(0,1fr))!important;
-    gap:6px!important;
-    overflow:visible!important;
-    padding:9px 0 7px!important;
-  }
-  #studyOverlay .study-filter{
-    grid-column:span 2;
-    width:100%!important;
-    min-width:0!important;
-    padding:8px 5px!important;
-    font-size:clamp(.62rem,2.7vw,.72rem)!important;
-    white-space:nowrap!important;
-  }
-  #studyOverlay .study-filter:nth-child(4),
-  #studyOverlay .study-filter:nth-child(5){
-    grid-column:span 3;
-  }
-}
-</style>
 <script id="v31-estudos-script">
 (function(){
  const PHASES={"1":["22","64","75","102","116","144","153","158","162","182","201","211","213","221","228","256","258","266","271","288","323","332","385","388","389","399","402","410","411","412","414","416","428","Coro 5"],"2":["4","7","8","12","14","18","28","47","52","56","63","72","73","80","90","103","104","105","106","113","115","123","128","133","151","154","169","170","172","178","183","195","219","220","234","244","246","252","263","269","272","280","284","292","299","308","310","316","321","327","338","341","345","347","352","354","358","362","367","371","376","382","383","395","418","427","430"],"3":["5","9","10","11","13","19","21","30","34","35","40","42","44","46","55","58","59","66","70","76","77","79","87","92","93","97","108","112","114","117","126","134","137","139","141","146","147","148","152","155","157","166","175","176","179","181","184","186","196","207","210","214","215","216","222","227","230","239","240","249","250","251","254","255","261","260","295","296","301","303","304","317","319","320","325","328","330","336","340","353","355","361","369","378","379","390","391","401","405","406","408","413","423","424","426","Coro 2","Coro 3","Coro 6"],"4":["3","6","16","17","24","25","29","36","53","57","60","65","67","68","69","74","78","83","84","85","80","91","96","100","101","107","110","111","118","119","120","122","124","125","127","140","142","143","145","156","159","160","161","163","174","185","190","191","192","197","203","204","208","209","212","217","218","223","224","229","232","233","238","242","243","253","264","265","268","273","277","279","283","286","287","294","297","302","305","306","311","312","315","324","328","329","331","333","334","335","339","343","344","348","349","360","360","370","300","306","307","302","396","420","422","425","Coro 1","Coro 4"],"5":["26","31","33","37","41","43","45","50","51","54","71","82","86","88","94","95","99","129","130","136","138","149","167","168","171","173","177","180","187","188","198","200","202","205","225","228","231","236","237","241","245","257","259","267","270","275","281","282","285","289","291","298","300","307","309","313","318","322","337","342","356","359","364","366","368","372","377","381","384","394","398","403","404","407","409","415","417","419","429"]};
@@ -4231,7 +4206,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  let currentPhase=null,currentFilter='all',currentQuery='',currentDetailHymn=null;
  function esc2(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
  function uniq(arr){return [...new Set((arr||[]).map(String))];}
- function normSearch(v){return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim()}
  function hmap(){const m=new Map();try{Object.values(DATA).flat().forEach(h=>{if(!m.has(String(h.num)))m.set(String(h.num),h)})}catch(e){}return m}
  const HM=hmap();
  function read(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return {}}}
@@ -4254,16 +4228,16 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function renderPhase(n){
   currentPhase=n;
   const body=document.getElementById('studyBody');if(!body)return;
-  body.innerHTML=`<div class="study-toolbar phase-${n}"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase</div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número, título ou ocasião..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list phase-${n}" id="studyList"></div>`;
+  body.innerHTML=`<div class="study-toolbar phase-${n}"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase</div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número ou título..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list phase-${n}" id="studyList"></div>`;
   document.getElementById('studyBack').onclick=renderHome;
-  document.getElementById('studySearch').oninput=e=>{currentQuery=normSearch(e.target.value);renderRows()};
+  document.getElementById('studySearch').oninput=e=>{currentQuery=e.target.value.trim().toLowerCase();renderRows()};
   body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderRows()});
   renderRows();
  }
  function renderRows(){
   const box=document.getElementById('studyList');if(!box||!currentPhase)return;
   let items=phaseItems(currentPhase);
-  items=items.filter(k=>{const h=HM.get(k)||{num:k,titulo:k,ocasiao:'',apropriacao:''};const s=statusOf(k);const okFilter=currentFilter==='all'||s===currentFilter;const q=currentQuery;const searchable=normSearch([k,h.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));const okQ=!q||searchable.includes(q);return okFilter&&okQ});
+  items=items.filter(k=>{const h=HM.get(k)||{titulo:k};const s=statusOf(k);const okFilter=currentFilter==='all'||s===currentFilter;const q=currentQuery;const okQ=!q||k.toLowerCase()===q||String(h.titulo||'').toLowerCase().includes(q);return okFilter&&okQ});
   const total=phaseItems(currentPhase).length,st=statsFor(phaseItems(currentPhase));
   const cnt=document.getElementById('studyPhaseCount');if(cnt)cnt.textContent=st.done+'/'+total+' estudados';
   if(!items.length){box.innerHTML='<div class="study-empty">Nenhum hino encontrado neste filtro.</div>';return}
