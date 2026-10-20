@@ -4348,7 +4348,21 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function statusOf(num){return read()[String(num)]?.status||'none'}
  function setStatus(num,status){const d=read(),k=String(num);if(status==='none')delete d[k];else d[k]={status,at:new Date().toISOString()};write(d);try{registrarEventoGA('atualizar_estudo',{numero_hino:k,status_estudo:status,origem:'sequencia_estudo'})}catch(e){}}
  function phaseItems(n){return uniq(PHASES[String(n)]||PHASES[n]||[])}
- function statsFor(items){let done=0,study=0,review=0;items.forEach(k=>{const s=statusOf(k);if(s==='done')done++;else if(s==='study')study++;else if(s==='review')review++});const total=items.length,pct=total?Math.round(done*100/total):0;return {done,study,review,total,pct}}
+ function statsFor(items){
+  let done=0,study=0,review=0;
+  items.forEach(k=>{
+    const s=statusOf(k);
+    if(s==='done')done++;
+    else if(s==='study')study++;
+    else if(s==='review')review++;
+  });
+  const total=items.length;
+  const started=done+study+review;
+  const none=Math.max(0,total-started);
+  const pct=total?Math.round(done*100/total):0;
+  const startedPct=total?Math.round(started*100/total):0;
+  return {done,study,review,none,started,total,pct,startedPct};
+}
  function allItems(){return uniq(Object.keys(PHASES).flatMap(k=>phaseItems(k)))}
  function showOverlay(){document.getElementById('studyOverlay')?.classList.add('show');document.body.style.overflow='hidden'}
  function hideOverlay(){document.getElementById('studyOverlay')?.classList.remove('show');document.body.style.overflow=''}
@@ -4356,30 +4370,146 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   currentPhase=null;currentFilter='all';currentQuery='';
   const body=document.getElementById('studyBody');if(!body)return;
   const all=statsFor(allItems());
-  const phaseCards=[1,2,3,4,5].map(n=>{const st=statsFor(phaseItems(n)),pm=PHASE_META[n];return `<button type="button" class="study-phase-card phase-${n}" data-phase="${n}"><div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total}</b></div><span class="study-phase-name">${esc2(pm.label)}</span><small>${st.study} em estudo · ${st.review} para revisar</small><div class="study-mini-track"><span style="width:${st.pct}%"></span></div></button>`}).join('');
-  body.innerHTML=`<div class="study-note"><b>Sequência por dificuldade.</b> A classificação das 5 fases está separada do acompanhamento pessoal e dos pontos técnicos de cada hino.</div><div class="study-progress-card"><div class="study-progress-top"><strong>Meu progresso</strong><b>${all.pct}%</b></div><div class="study-progress-track"><span style="width:${all.pct}%"></span></div><div class="study-progress-meta"><span>✓ ${all.done} estudados</span><span>◐ ${all.study} em estudo</span><span>↻ ${all.review} revisar</span></div></div><div class="study-phase-grid">${phaseCards}</div><div class="study-source">Classificação por dificuldade conforme o material da Reunião de Aprimoramento Musical para Organistas, que referencia a tabela ao final do MOR Volume 3. Os pontos técnicos são exibidos separadamente e somente quando há referência cadastrada.</div>`;
+  const phaseCards=[1,2,3,4,5].map(n=>{
+    const st=statsFor(phaseItems(n)),pm=PHASE_META[n];
+    return `<button type="button" class="study-phase-card phase-${n}" data-phase="${n}">
+      <div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total} concluídos</b></div>
+      <span class="study-phase-name">${esc2(pm.label)}</span>
+      <small>${st.started}/${st.total} iniciados · ${st.study} em estudo · ${st.review} revisar</small>
+      <div class="study-mini-track" aria-label="${st.pct}% concluído"><span style="width:${st.pct}%"></span></div>
+    </button>`;
+  }).join('');
+  body.innerHTML=`
+    <div class="study-note study-sequence-note">
+      <b>Sequência sugerida: 1ª → 2ª → 3ª → 4ª → 5ª fase.</b>
+      Comece pelos hinos muito fáceis e avance conforme concluir cada fase. As fases não ficam bloqueadas: você pode consultar qualquer uma quando precisar.
+    </div>
+    <div class="study-progress-card">
+      <div class="study-progress-top"><strong>Meu progresso geral</strong><b>${all.pct}% concluído</b></div>
+      <div class="study-progress-track"><span style="width:${all.pct}%"></span></div>
+      <div class="study-progress-started">${all.started}/${all.total} hinos com acompanhamento iniciado</div>
+      <div class="study-progress-meta">
+        <span>✓ ${all.done} estudados</span>
+        <span>◐ ${all.study} em estudo</span>
+        <span>↻ ${all.review} revisar</span>
+        <span>○ ${all.none} não iniciados</span>
+      </div>
+    </div>
+    <div class="study-phase-flow" aria-label="Sequência das cinco fases">
+      ${[1,2,3,4,5].map(n=>`<button type="button" class="study-phase-step phase-${n}" data-phase="${n}"><b>${n}</b><span>${esc2(PHASE_META[n].label)}</span></button>`).join('<span class="study-phase-flow-arrow">›</span>')}
+    </div>
+    <div class="study-phase-grid">${phaseCards}</div>
+    <div class="study-source">A porcentagem considera como concluído somente o que estiver marcado como “Estudado”. Hinos “Em estudo” e “Revisar” aparecem como acompanhamento iniciado, sem aumentar a porcentagem de conclusão.</div>`;
   body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
  }
  function renderPhase(n){
   currentPhase=n;
   const body=document.getElementById('studyBody');if(!body)return;
   const pm=PHASE_META[n]||{label:''};
-  body.innerHTML=`<div class="study-toolbar phase-${n}"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase<span class="study-phase-level">${esc2(pm.label)}</span></div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número, título ou ocasião..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list phase-${n}" id="studyList"></div>`;
+  const steps=[1,2,3,4,5].map(x=>`<button type="button" class="study-phase-step compact phase-${x} ${x===n?'current':''}" data-go-phase="${x}" aria-label="${x}ª fase — ${esc2(PHASE_META[x]?.label||'')}"><b>${x}</b></button>`).join('<span class="study-phase-flow-arrow compact">›</span>');
+  body.innerHTML=`
+    <div class="study-phase-sequence"><span>Sequência</span><div>${steps}</div></div>
+    <div class="study-toolbar phase-${n}">
+      <button type="button" class="study-back" id="studyBack">← Fases</button>
+      <div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase<span class="study-phase-level">${esc2(pm.label)}</span></div>
+    </div>
+    <div class="study-phase-progress-card phase-${n}" id="studyPhaseProgress"></div>
+    <div class="study-phase-actions">
+      <button type="button" class="study-continue" id="studyContinue">Continuar estudo ›</button>
+      <span id="studyPhaseCount"></span>
+    </div>
+    <input id="studySearch" class="study-search" type="search" placeholder="Número, título ou ocasião..." autocomplete="off">
+    <div class="study-filters">
+      <button class="study-filter active" data-filter="all">Todos</button>
+      <button class="study-filter" data-filter="none">Não iniciados</button>
+      <button class="study-filter" data-filter="study">Em estudo</button>
+      <button class="study-filter" data-filter="done">Estudados</button>
+      <button class="study-filter" data-filter="review">Revisar</button>
+    </div>
+    <div class="study-status-help">Na lista, toque no status para avançar: ○ Não iniciado → ◐ Em estudo → ✓ Estudado → ↻ Revisar.</div>
+    <div class="study-list phase-${n}" id="studyList"></div>`;
   document.getElementById('studyBack').onclick=renderHome;
+  body.querySelectorAll('[data-go-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.goPhase));
   document.getElementById('studySearch').oninput=e=>{currentQuery=normSearch(e.target.value);renderRows()};
-  body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderRows()});
+  body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{
+    currentFilter=b.dataset.filter;
+    body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));
+    renderRows();
+  });
+  document.getElementById('studyContinue').onclick=()=>{
+    const keys=phaseItems(currentPhase);
+    let k=keys.find(x=>statusOf(x)==='study') || keys.find(x=>statusOf(x)==='none') || keys.find(x=>statusOf(x)==='review') || keys[0];
+    const h=HM.get(String(k));
+    if(!h)return;
+    hideOverlay();
+    try{window.__gaOrigemConsulta='continuar_estudo'}catch(e){}
+    renderStudyDetail(h,'sequence');
+  };
   renderRows();
  }
  function renderRows(){
   const box=document.getElementById('studyList');if(!box||!currentPhase)return;
-  let items=phaseItems(currentPhase);
-  items=items.filter(k=>{const h=HM.get(k)||{num:k,titulo:k,ocasiao:'',apropriacao:''};const s=statusOf(k);const okFilter=currentFilter==='all'||s===currentFilter;const q=currentQuery;const searchable=normSearch([k,h.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));const okQ=!q||searchable.includes(q);return okFilter&&okQ});
-  const total=phaseItems(currentPhase).length,st=statsFor(phaseItems(currentPhase));
-  const cnt=document.getElementById('studyPhaseCount');if(cnt)cnt.textContent=st.done+'/'+total+' estudados';
-  if(!items.length){box.innerHTML='<div class="study-empty">Nenhum hino encontrado neste filtro.</div>';return}
-  box.innerHTML=items.map(k=>{const h=HM.get(k)||{num:k,titulo:'Hino '+k,ocasiao:''},s=statusOf(k),m=STATUS[s];return `<div class="study-row phase-${currentPhase}"><button type="button" class="study-open" data-open="${esc2(k)}"><strong>${esc2(k)} — ${esc2(h.titulo||'')}</strong><small>${esc2(h.ocasiao||'')}</small></button><button type="button" class="study-status" data-status-btn="${esc2(k)}" data-status="${s}">${m.icon} ${m.label}</button></div>`}).join('');
-  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{const h=HM.get(String(b.dataset.open));if(!h)return;hideOverlay();try{window.__gaOrigemConsulta='sequencia_estudo'}catch(e){}renderStudyDetail(h,'sequence')});
-  box.querySelectorAll('[data-status-btn]').forEach(b=>b.onclick=()=>{const k=String(b.dataset.statusBtn),cur=statusOf(k),idx=STATUS_ORDER.indexOf(cur),next=STATUS_ORDER[(idx+1)%STATUS_ORDER.length];setStatus(k,next);renderRows();});
+  const allPhaseItems=phaseItems(currentPhase);
+  const st=statsFor(allPhaseItems);
+
+  const cnt=document.getElementById('studyPhaseCount');
+  if(cnt)cnt.textContent=`${st.started}/${st.total} iniciados · ${st.done} estudados`;
+
+  const progress=document.getElementById('studyPhaseProgress');
+  if(progress){
+    progress.innerHTML=`
+      <div class="study-phase-progress-top">
+        <div><strong>Andamento da ${currentPhase}ª fase</strong><small>${st.started}/${st.total} com acompanhamento iniciado</small></div>
+        <b>${st.pct}% concluída</b>
+      </div>
+      <div class="study-phase-progress-track"><span style="width:${st.pct}%"></span></div>
+      <div class="study-phase-progress-meta">
+        <span>✓ ${st.done} estudados</span>
+        <span>◐ ${st.study} em estudo</span>
+        <span>↻ ${st.review} revisar</span>
+        <span>○ ${st.none} não iniciados</span>
+      </div>`;
+  }
+
+  let items=allPhaseItems;
+  items=items.filter(k=>{
+    const h=HM.get(k)||{num:k,titulo:k,ocasiao:'',apropriacao:''};
+    const s=statusOf(k);
+    const okFilter=currentFilter==='all'||s===currentFilter;
+    const q=currentQuery;
+    const searchable=normSearch([k,h.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));
+    const okQ=!q||searchable.includes(q);
+    return okFilter&&okQ;
+  });
+
+  if(!items.length){
+    box.innerHTML='<div class="study-empty">Nenhum hino encontrado neste filtro.</div>';
+    return;
+  }
+
+  box.innerHTML=items.map(k=>{
+    const h=HM.get(k)||{num:k,titulo:'Hino '+k,ocasiao:''},s=statusOf(k),m=STATUS[s];
+    return `<div class="study-row phase-${currentPhase}">
+      <button type="button" class="study-open" data-open="${esc2(k)}">
+        <strong>${esc2(k)} — ${esc2(h.titulo||'')}</strong>
+        <small>${esc2(h.ocasiao||'')}</small>
+      </button>
+      <button type="button" class="study-status" data-status-btn="${esc2(k)}" data-status="${s}">${m.icon} ${m.label}</button>
+    </div>`;
+  }).join('');
+
+  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{
+    const h=HM.get(String(b.dataset.open));if(!h)return;
+    hideOverlay();
+    try{window.__gaOrigemConsulta='sequencia_estudo'}catch(e){}
+    renderStudyDetail(h,'sequence');
+  });
+
+  box.querySelectorAll('[data-status-btn]').forEach(b=>b.onclick=()=>{
+    const k=String(b.dataset.statusBtn),cur=statusOf(k),idx=STATUS_ORDER.indexOf(cur),next=STATUS_ORDER[(idx+1)%STATUS_ORDER.length];
+    setStatus(k,next);
+    renderRows();
+  });
  }
  function mountIndex(){
   const idx=document.getElementById('indice');if(!idx||document.getElementById('studyIndex'))return;
@@ -6093,6 +6223,200 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   margin-top:9px;
   padding-top:8px;
   border-top:1px solid #eee4d2;
+}
+</style>
+
+
+<style id="v634-fluxo-fases-progresso-style">
+.study-sequence-note{
+  line-height:1.45!important;
+}
+.study-progress-started{
+  margin-top:7px;
+  color:#5f6870;
+  font:800 .64rem/1.2 Arial,sans-serif;
+}
+.study-phase-flow{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:12px;
+  padding:8px;
+  border:1px solid #e0d5bf;
+  border-radius:13px;
+  background:#fffdf8;
+  overflow:auto;
+}
+.study-phase-step{
+  flex:1 1 0;
+  min-width:74px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:7px 6px;
+  border:1px solid var(--phase-border,#d8c9a8)!important;
+  border-radius:10px!important;
+  background:var(--phase-bg,#fff)!important;
+  color:#26394d!important;
+  cursor:pointer;
+}
+.study-phase-step b{
+  width:24px;
+  height:24px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:var(--phase-accent,#b8892c);
+  color:#fff;
+  font:800 .68rem/1 Arial,sans-serif;
+}
+.study-phase-step span{
+  text-align:center;
+  font:700 .54rem/1.1 Arial,sans-serif;
+}
+.study-phase-flow-arrow{
+  flex:0 0 auto;
+  color:#a08f73;
+  font:800 .85rem Arial,sans-serif;
+}
+.study-phase-sequence{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:9px;
+  color:#756b5c;
+  font:800 .59rem Arial,sans-serif;
+}
+.study-phase-sequence>div{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.study-phase-step.compact{
+  min-width:0;
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  padding:3px!important;
+  border-radius:999px!important;
+}
+.study-phase-step.compact b{
+  width:22px;
+  height:22px;
+}
+.study-phase-step.compact.current{
+  box-shadow:0 0 0 2px #26394d inset!important;
+}
+.study-phase-flow-arrow.compact{
+  font-size:.72rem;
+}
+.study-phase-progress-card{
+  margin:0 0 9px;
+  padding:11px 12px;
+  border:1px solid var(--phase-border,#d8c9a8);
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--phase-bg,#fff),#fffdf9);
+}
+.study-phase-progress-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.study-phase-progress-top>div{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.study-phase-progress-top strong{
+  color:#26394d;
+  font:800 .78rem/1.15 Arial,sans-serif;
+}
+.study-phase-progress-top small{
+  color:#71695f;
+  font:.59rem/1.2 Arial,sans-serif;
+}
+.study-phase-progress-top>b{
+  flex:0 0 auto;
+  color:var(--phase-accent,#9b742e);
+  font:800 .68rem/1 Arial,sans-serif;
+}
+.study-phase-progress-track{
+  height:7px;
+  margin-top:8px;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(0,0,0,.05);
+}
+.study-phase-progress-track span{
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:var(--phase-accent,#b8892c);
+}
+.study-phase-progress-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px 10px;
+  margin-top:8px;
+  color:#665f56;
+  font:700 .58rem/1.15 Arial,sans-serif;
+}
+.study-phase-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:9px;
+  margin-bottom:9px;
+}
+.study-continue{
+  padding:8px 11px!important;
+  border:1px solid #c79f54!important;
+  border-radius:999px!important;
+  background:#fff8e8!important;
+  color:#735619!important;
+  font:800 .64rem/1 Arial,sans-serif!important;
+  cursor:pointer;
+}
+#studyPhaseCount{
+  color:#807568;
+  font:800 .58rem/1.15 Arial,sans-serif;
+  text-align:right;
+}
+.study-status-help{
+  margin:-1px 1px 7px;
+  color:#8a8174;
+  font:.56rem/1.35 Arial,sans-serif;
+}
+
+@media(max-width:520px){
+  .study-phase-flow{
+    gap:4px;
+    padding:7px 6px;
+  }
+  .study-phase-step{
+    min-width:67px;
+  }
+  .study-phase-step span{
+    font-size:.50rem;
+  }
+  .study-phase-progress-top{
+    gap:8px;
+  }
+  .study-phase-progress-meta{
+    gap:6px 8px;
+  }
+  .study-phase-actions{
+    align-items:flex-start;
+  }
+  #studyPhaseCount{
+    max-width:120px;
+  }
 }
 </style>
 
