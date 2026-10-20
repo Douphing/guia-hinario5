@@ -4513,6 +4513,64 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
 </style>
 
+
+<style id="v610-index-more-shadow-preview">
+/* V6.10 — prévia visual das próximas faixas abaixo do botão Mostrar mais. */
+#indexMoreToggle{
+  position:relative!important;
+  z-index:3!important;
+  margin-bottom:28px!important;
+  overflow:visible!important;
+}
+
+/* Duas “faixas fantasma” atrás do botão, sugerindo que há mais itens. */
+#indexMoreToggle::before,
+#indexMoreToggle::after{
+  content:"";
+  position:absolute;
+  left:4%;
+  right:4%;
+  height:42px;
+  border:1px solid rgba(190,166,116,.45);
+  border-radius:13px;
+  background:rgba(255,250,240,.62);
+  box-shadow:0 4px 12px rgba(45,38,26,.08);
+  pointer-events:none;
+  z-index:-1;
+}
+
+#indexMoreToggle::before{
+  top:12px;
+  transform:translateY(18px) scaleX(.96);
+  opacity:.68;
+}
+
+#indexMoreToggle::after{
+  top:18px;
+  transform:translateY(28px) scaleX(.90);
+  opacity:.38;
+}
+
+/* Ao expandir, a sombra some: o conteúdo real já está visível. */
+#indexMoreToggle[aria-expanded="true"]{
+  margin-bottom:8px!important;
+}
+#indexMoreToggle[aria-expanded="true"]::before,
+#indexMoreToggle[aria-expanded="true"]::after{
+  display:none!important;
+}
+
+@media(max-width:699px){
+  #indexMoreToggle{
+    margin-bottom:26px!important;
+  }
+  #indexMoreToggle::before,
+  #indexMoreToggle::after{
+    height:40px;
+  }
+}
+</style>
+
 <script id="v69-index-show-more-script">
 (function(){
   let expanded=false;
