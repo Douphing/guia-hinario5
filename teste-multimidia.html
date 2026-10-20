@@ -4798,7 +4798,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   let resizeTimer=null;
 
   function visibleLimit(){
-    return window.matchMedia('(max-width:699px)').matches ? 5 : 8;
+    return window.matchMedia('(max-width:699px)').matches ? 4 : 8;
   }
 
   function setupIndexMore(){
@@ -5049,5 +5049,83 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 </style>
 
+
+
+<style id="v622-fade-progressivo-mobile">
+/* V6.22 — o último card continua normal no topo e esvanece só na base,
+   como se entrasse por baixo do botão Mostrar mais. */
+
+#indice > a.index-last-visible-faded{
+  opacity:1!important;
+  filter:none!important;
+  position:relative!important;
+  z-index:1!important;
+
+  /* Fade progressivo apenas na parte inferior do próprio card. */
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    rgba(0,0,0,.88) 70%,
+    rgba(0,0,0,.50) 84%,
+    rgba(0,0,0,.12) 96%,
+    transparent 100%
+  )!important;
+  mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    rgba(0,0,0,.88) 70%,
+    rgba(0,0,0,.50) 84%,
+    rgba(0,0,0,.12) 96%,
+    transparent 100%
+  )!important;
+}
+
+/* O botão se aproxima um pouco do card, reforçando a sensação de sobreposição. */
+#indexMoreToggle{
+  margin-top:-8px!important;
+  position:relative!important;
+  z-index:5!important;
+}
+
+/* Relações Sugestivas ficam logo após o botão. */
+#mhDivider{
+  margin-top:2px!important;
+}
+
+/* No celular mostramos uma ocasião a menos para que
+   os cards de Relações Sugestivas apareçam mais cedo na tela. */
+@media(max-width:699px){
+  #indexMoreToggle{
+    margin-top:-7px!important;
+    margin-bottom:5px!important;
+  }
+
+  #mhDivider{
+    margin-top:0!important;
+  }
+
+  /* Fade um pouco mais curto no celular para não "sumir" demais o card. */
+  #indice > a.index-last-visible-faded{
+    -webkit-mask-image:linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 64%,
+      rgba(0,0,0,.84) 76%,
+      rgba(0,0,0,.40) 89%,
+      transparent 100%
+    )!important;
+    mask-image:linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 64%,
+      rgba(0,0,0,.84) 76%,
+      rgba(0,0,0,.40) 89%,
+      transparent 100%
+    )!important;
+  }
+}
+</style>
 
 </body></html>
