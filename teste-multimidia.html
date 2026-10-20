@@ -4458,7 +4458,17 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const ov=document.getElementById('mhOverlay');if(!ov||document.getElementById('mhPrepToggle'))return false;
   const body=ov.querySelector('.v2Body');const notice=body?.querySelector('.mhNotice');if(!body||!notice)return false;
   const wrap=document.createElement('div');wrap.className='mhPrepWrap';wrap.innerHTML=`
-   <button type="button" class="mhPrepToggle" id="mhPrepToggle" aria-expanded="false"><span>🎹 Preparação para a Meia Hora</span><span>⌄</span></button>
+   <button type="button" class="mhPrepToggle mhPrepHero" id="mhPrepToggle" aria-expanded="false" aria-controls="mhPrepPanel">
+     <span class="mhPrepHeroIcon" aria-hidden="true">🎹</span>
+     <span class="mhPrepHeroText">
+       <strong>Preparação para a Meia Hora</strong>
+       <small>Orientações, vídeos e exemplos práticos</small>
+     </span>
+     <span class="mhPrepHeroAction">
+       <b class="mhPrepAction">Abrir</b>
+       <i class="mhPrepChevron" aria-hidden="true"></i>
+     </span>
+   </button>
    <div class="mhPrepPanel" id="mhPrepPanel">
     <div class="mhPrepGrid">
      <div class="mhPrepCard"><h4>Antes de tocar</h4><ul><li>Ritmo e contagem dos tempos</li><li>Manter a proporção dos valores</li><li>Volume suave</li><li>Andamento cantábile</li><li>Expressão e dinâmica</li></ul></div>
@@ -4506,7 +4516,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
    </div>`;
   notice.insertAdjacentElement('afterend',wrap);
   const btn=wrap.querySelector('#mhPrepToggle'),panel=wrap.querySelector('#mhPrepPanel');
-  btn.onclick=()=>{const open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',open?'false':'true');panel.classList.toggle('show',!open)};
+  btn.onclick=()=>{const open=btn.getAttribute('aria-expanded')==='true';const next=!open;btn.setAttribute('aria-expanded',next?'true':'false');panel.classList.toggle('show',next);const action=btn.querySelector('.mhPrepAction');if(action)action.textContent=next?'Fechar':'Abrir'};
   return true;
  }
  let tries=0;function boot(){if(mount())return;if(tries++<15)setTimeout(boot,80)}
@@ -5757,5 +5767,137 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   window.addEventListener('load', bindMhExamples);
 })();
 </script>
+
+
+<style id="v630-preparacao-card-clicavel-style">
+/* V6.30 — Preparação para a Meia Hora com aparência clara de card clicável. */
+.mhPrepToggle.mhPrepHero{
+  position:relative!important;
+  width:100%!important;
+  min-height:72px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:11px!important;
+  padding:11px 12px 11px 10px!important;
+  border:1px solid #c79f54!important;
+  border-left:5px solid #bd8927!important;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,#fffaf0 0%,#fff5dc 100%)!important;
+  color:#26394d!important;
+  text-align:left!important;
+  cursor:pointer!important;
+  box-shadow:0 3px 9px rgba(105,78,25,.10)!important;
+  transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background .14s ease!important;
+}
+
+.mhPrepToggle.mhPrepHero:hover,
+.mhPrepToggle.mhPrepHero:focus-visible{
+  transform:translateY(-1px)!important;
+  border-color:#b8841e!important;
+  background:linear-gradient(135deg,#fffdf7 0%,#ffefc8 100%)!important;
+  box-shadow:0 6px 15px rgba(105,78,25,.14)!important;
+  outline:none!important;
+}
+
+.mhPrepHeroIcon{
+  flex:0 0 auto!important;
+  width:42px!important;
+  height:42px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,#d2a441,#b98523)!important;
+  color:white!important;
+  font-size:1.18rem!important;
+  box-shadow:0 2px 5px rgba(116,83,17,.15)!important;
+}
+
+.mhPrepHeroText{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:3px!important;
+}
+
+.mhPrepHeroText strong{
+  color:#26394d!important;
+  font:800 .82rem/1.15 Arial,sans-serif!important;
+}
+
+.mhPrepHeroText small{
+  color:#776d5f!important;
+  font:.62rem/1.2 Arial,sans-serif!important;
+}
+
+.mhPrepHeroAction{
+  margin-left:auto!important;
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+
+.mhPrepAction{
+  padding:6px 9px!important;
+  border-radius:999px!important;
+  background:#bd8927!important;
+  color:#fffaf0!important;
+  font:800 .60rem/1 Arial,sans-serif!important;
+  font-style:normal!important;
+}
+
+.mhPrepChevron{
+  width:9px!important;
+  height:9px!important;
+  display:inline-block!important;
+  border-right:2px solid #8f681e!important;
+  border-bottom:2px solid #8f681e!important;
+  transform:translateY(-2px) rotate(45deg)!important;
+  transition:transform .16s ease!important;
+}
+
+.mhPrepToggle.mhPrepHero[aria-expanded="true"]{
+  border-color:#b8841e!important;
+  box-shadow:0 4px 12px rgba(105,78,25,.13)!important;
+}
+
+.mhPrepToggle.mhPrepHero[aria-expanded="true"] .mhPrepChevron{
+  transform:translateY(2px) rotate(225deg)!important;
+}
+
+/* Neutraliza a regra antiga que girava o último span inteiro. */
+.mhPrepToggle.mhPrepHero[aria-expanded="true"] span:last-child{
+  transform:none!important;
+}
+
+@media(max-width:520px){
+  .mhPrepToggle.mhPrepHero{
+    min-height:68px!important;
+    padding:10px!important;
+    gap:9px!important;
+  }
+  .mhPrepHeroIcon{
+    width:38px!important;
+    height:38px!important;
+    border-radius:11px!important;
+    font-size:1.05rem!important;
+  }
+  .mhPrepHeroText strong{
+    font-size:.76rem!important;
+  }
+  .mhPrepHeroText small{
+    font-size:.58rem!important;
+  }
+  .mhPrepHeroAction{
+    gap:7px!important;
+  }
+  .mhPrepAction{
+    padding:5px 8px!important;
+    font-size:.57rem!important;
+  }
+}
+</style>
 
 </body></html>
