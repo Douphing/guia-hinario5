@@ -4430,11 +4430,19 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       <div class="study-detail-phase"><span></span>${phaseText} · ${esc2(pm.label)}</div>
       <h2>${String(h.num).startsWith('Coro ')?esc2(h.num):'Hino '+esc2(h.num)} — ${esc2(h.titulo||'')}</h2>
       <p>Estudo por dificuldade · ${m.icon} ${m.label}</p>
+      <div class="study-tech-summary">
+        <span>${topics.length} ${topics.length===1?'ponto técnico':'pontos técnicos'}</span>
+        <span>${resources.length} ${resources.length===1?'recurso':'recursos'}</span>
+      </div>
       <button type="button" class="study-open-hymn" data-open-hymn>Abrir hino ›</button>
     </section>
-    <section class="study-detail-block">
-      <h3>Classificação da fase</h3>
-      <div class="study-phase-definition ${phaseTone(n)}"><span class="dot"></span><div><strong>${n}ª Fase — ${esc2(pm.label)}</strong><p>Classificação por dificuldade mantida separada dos pontos técnicos do hino.</p></div></div>
+    <section class="study-detail-block study-progress-block">
+      <div class="study-section-head">
+        <h3>Meu progresso</h3>
+        <span class="study-progress-hint">Acompanhamento pessoal</span>
+      </div>
+      <div class="study-detail-statuses">${detailStatusButtons(h)}</div>
+      <small class="study-detail-local">Salvo somente neste dispositivo.</small>
     </section>
     <section class="study-detail-block">
       <h3>Pontos de atenção</h3>
@@ -4442,20 +4450,27 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     </section>
     ${resourceHtml}
     ${mhHtml}
-    <section class="study-detail-block">
-      <h3>Meu progresso</h3>
-      <div class="study-detail-statuses">${detailStatusButtons(h)}</div>
-      <small class="study-detail-local">Seu progresso fica salvo somente neste dispositivo.</small>
-    </section>
     <section class="study-detail-block study-detail-source">
-      <h3>Fontes cadastradas</h3>
-      <ul class="study-source-list">${sources.map(x=>`<li>${esc2(x)}</li>`).join('')}</ul>
+      <button type="button" class="study-source-toggle" data-source-toggle aria-expanded="false">
+        <span><strong>Fontes e referências</strong><small>${sources.length} ${sources.length===1?'fonte cadastrada':'fontes cadastradas'}</small></span>
+        <span class="study-source-chevron">⌄</span>
+      </button>
+      <div class="study-source-panel" data-source-panel hidden>
+        <ul class="study-source-list">${sources.map(x=>`<li>${esc2(x)}</li>`).join('')}</ul>
+      </div>
     </section>`;
   const back=document.getElementById('studyDetailBack');if(back)back.textContent=currentDetailOrigin==='sequence'?'← Voltar aos estudos':'← Voltar ao hino';
   body.querySelectorAll('[data-detail-status]').forEach(btn=>btn.onclick=()=>{setStatus(h.num,btn.dataset.detailStatus);renderStudyDetail(h,currentDetailOrigin);injectHymnStudyInfo(h)});
   body.querySelector('[data-open-hymn]')?.addEventListener('click',()=>{
     hideStudyDetail(false);
     try{window.__gaOrigemConsulta='estudo_hino';openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}catch(e){}
+  });
+  const sourceToggle=body.querySelector('[data-source-toggle]');
+  const sourcePanel=body.querySelector('[data-source-panel]');
+  sourceToggle?.addEventListener('click',()=>{
+    const open=sourceToggle.getAttribute('aria-expanded')==='true';
+    sourceToggle.setAttribute('aria-expanded',open?'false':'true');
+    if(sourcePanel)sourcePanel.hidden=open;
   });
   body.querySelector('[data-open-mh]')?.addEventListener('click',()=>{
     hideStudyDetail(false);
@@ -6006,6 +6021,78 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     padding:5px 8px;
     font-size:.55rem;
   }
+}
+</style>
+
+
+<style id="v633-tela-estudo-refinada-style">
+.study-tech-summary{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+.study-tech-summary span{
+  padding:4px 7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.64);
+  color:#5f5b53;
+  font:800 .57rem/1 Arial,sans-serif;
+}
+.study-section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.study-section-head h3{
+  margin:0!important;
+}
+.study-progress-hint{
+  color:#8b806f;
+  font:700 .56rem/1 Arial,sans-serif;
+}
+.study-progress-block .study-detail-statuses{
+  margin-top:0!important;
+}
+.study-source-toggle{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#26394d;
+  text-align:left;
+  cursor:pointer;
+}
+.study-source-toggle > span:first-child{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.study-source-toggle strong{
+  font:800 .75rem/1.15 Arial,sans-serif;
+}
+.study-source-toggle small{
+  color:#8b806f;
+  font:.59rem/1.15 Arial,sans-serif;
+}
+.study-source-chevron{
+  color:#9a6f1d;
+  font-size:1rem;
+  transition:transform .15s ease;
+}
+.study-source-toggle[aria-expanded="true"] .study-source-chevron{
+  transform:rotate(180deg);
+}
+.study-source-panel{
+  margin-top:9px;
+  padding-top:8px;
+  border-top:1px solid #eee4d2;
 }
 </style>
 
