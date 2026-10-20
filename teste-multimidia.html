@@ -4792,7 +4792,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<script id="v619-index-show-more-ocasioes-script">
+<script id="v621-index-show-more-ocasioes-script">
 (function(){
   let expanded=false;
   let resizeTimer=null;
@@ -4810,6 +4810,10 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     const divider=document.getElementById('mhDivider');
     if(!mh || !study || !divider)return false;
 
+    /* A prévia antiga não é mais usada. */
+    const preview=document.getElementById('indexMorePreview');
+    if(preview)preview.hidden=true;
+
     let btn=document.getElementById('indexMoreToggle');
     if(!btn){
       btn=document.createElement('button');
@@ -4819,18 +4823,11 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       btn.innerHTML='<span class="index-more-chevron" aria-hidden="true"></span><span class="index-more-label">Mostrar mais</span>';
     }
 
-    let preview=document.getElementById('indexMorePreview');
-    if(!preview){
-      preview=document.createElement('div');
-      preview.id='indexMorePreview';
-      preview.setAttribute('aria-hidden','true');
-    }
-
-    idx.insertBefore(preview,divider);
+    /* O botão fica entre as ocasiões e Relações Sugestivas. */
     idx.insertBefore(btn,divider);
 
-    if(!btn.dataset.boundOccasionsV619){
-      btn.dataset.boundOccasionsV619='1';
+    if(!btn.dataset.boundOccasionsV621){
+      btn.dataset.boundOccasionsV621='1';
       btn.addEventListener('click',()=>{
         expanded=!expanded;
         applyState();
@@ -4858,36 +4855,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       );
     }
 
-    function makePreviewCard(source){
-      const clone=source.cloneNode(true);
-      clone.removeAttribute('id');
-      clone.removeAttribute('href');
-      clone.removeAttribute('onclick');
-      clone.removeAttribute('tabindex');
-      clone.setAttribute('aria-hidden','true');
-      clone.classList.remove('index-more-hidden','index-more-newly-visible');
-      clone.classList.add('index-shadow-preview-card');
-      return clone;
-    }
-
-    function refreshPreview(occasions,limit){
-      preview.innerHTML='';
-
-      if(expanded){
-        preview.hidden=true;
-        return;
-      }
-
-      /* Apenas a próxima ocasião imediata. */
-      const nextItem=occasions[limit];
-      if(nextItem){
-        preview.appendChild(makePreviewCard(nextItem));
-        preview.hidden=false;
-      }else{
-        preview.hidden=true;
-      }
-    }
-
     function applyState(){
       const occasions=occasionLinks();
       const limit=Math.min(visibleLimit(),occasions.length);
@@ -4896,8 +4863,15 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         const hidden=!expanded && i>=limit;
         el.classList.toggle('index-more-hidden',hidden);
         el.classList.toggle('index-more-newly-visible',expanded && i===limit);
+
+        /* Remove estados antigos e aplica fade somente ao último card visível. */
+        el.classList.remove('index-last-visible-faded');
+        if(!expanded && i===limit-1 && occasions.length>limit){
+          el.classList.add('index-last-visible-faded');
+        }
       });
 
+      /* Relações Sugestivas sempre visíveis. */
       divider.classList.remove('index-more-hidden');
       mh.classList.remove('index-more-hidden','index-more-newly-visible');
       study.classList.remove('index-more-hidden','index-more-newly-visible');
@@ -4913,9 +4887,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
           : `Mostrar mais ${hiddenCount} ${hiddenCount===1?'ocasião':'ocasiões'}`;
       }
 
-      refreshPreview(occasions,limit);
-
-      idx.insertBefore(preview,divider);
       idx.insertBefore(btn,divider);
     }
 
@@ -4991,54 +4962,28 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<style id="v619-preview-um-card-ajustado">
-/* V6.19 — mostra apenas 1 próxima ocasião em sombra, acima do botão,
-   com espaçamento igual ao ritmo dos cards normais. */
+<style id="v621-ultimo-card-esvanecido">
+/* V6.21 — sem card de prévia separado.
+   O último card visível da lista fica suavemente esvanecido,
+   indicando que ainda existem outras ocasiões abaixo. */
 
+/* A prévia antiga deixa de ocupar espaço. */
 #indexMorePreview{
-  grid-column:1/-1!important;
-  position:relative!important;
-  z-index:2!important;
-  width:100%!important;
-  height:34px!important;              /* só uma faixa do próximo card */
-  margin:0 0 10px!important;          /* mesmo respiro vertical dos cards */
-  padding:0!important;
-  overflow:hidden!important;
-  pointer-events:none!important;
-}
-
-#indexMorePreview[hidden]{
   display:none!important;
 }
 
-/* O clone ocupa a posição natural do próximo card;
-   a área é cortada para mostrar só uma parte dele. */
-#indexMorePreview .index-shadow-preview-card{
-  position:relative!important;
-  inset:auto!important;
-  width:100%!important;
-  min-height:0!important;
-  margin:0!important;
-  transform:none!important;
-  pointer-events:none!important;
-  user-select:none!important;
-  opacity:.22!important;
-  filter:saturate(.42)!important;
-  box-shadow:none!important;
-  background:var(--cream)!important;
-  border-color:var(--line)!important;
+/* Ritmo normal entre os cards da lista. */
+#indice > a:not(#mhIndex):not(#studyIndex){
+  transition:opacity .18s ease, filter .18s ease;
 }
 
-/* Remove qualquer segunda/terceira camada antiga. */
-#indexMorePreview .index-shadow-preview-card:nth-child(n+2){
-  display:none!important;
+/* Apenas o último card visível fica meio apagado quando recolhido. */
+#indice > a.index-last-visible-faded{
+  opacity:.48!important;
+  filter:saturate(.58)!important;
 }
 
-#indexMorePreview::after{
-  content:none!important;
-  display:none!important;
-}
-
+/* Botão vem logo após esse último card, sem buraco extra. */
 #indexMoreToggle{
   grid-column:1/-1!important;
   position:relative!important;
@@ -5046,7 +4991,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   width:100%!important;
   max-width:none!important;
   min-height:44px!important;
-  margin:0 0 6px!important;
+  margin:0 0 8px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
@@ -5083,6 +5028,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   transform:translateY(2px) rotate(225deg)!important;
 }
 
+/* Relações Sugestivas continuam sempre visíveis e próximas do botão. */
 #mhDivider{
   position:relative!important;
   z-index:6!important;
@@ -5095,41 +5041,13 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 }
 
 @media(max-width:699px){
-  #indexMorePreview{
-    height:30px!important;
-    margin-bottom:8px!important;
-  }
   #indexMoreToggle{
     min-height:46px!important;
     font-size:.84rem!important;
-    margin-bottom:5px!important;
-  }
-}
-</style>
-
-
-<style id="v620-preview-fino-ajustado">
-/* V6.20 — mostra só uma faixa mais discreta do próximo card,
-   aproximando o botão sem encobrir demais. */
-#indexMorePreview{
-  height:24px!important;          /* mostra apenas uma amostra do próximo card */
-  margin:0 0 8px!important;       /* aproxima o botão mantendo o ritmo da lista */
-}
-
-#indexMorePreview .index-shadow-preview-card{
-  opacity:.18!important;
-}
-
-#indexMoreToggle{
-  margin:0 0 6px!important;
-}
-
-@media(max-width:699px){
-  #indexMorePreview{
-    height:22px!important;
     margin-bottom:7px!important;
   }
 }
 </style>
+
 
 </body></html>
