@@ -4470,12 +4470,29 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     </div>
     <div class="mhPrepExamples">
       <h4>Exemplos práticos localizados na pasta da reunião</h4>
-      <div class="mhPrepExample">Hino de Meia Hora com proporção errada <span>pasta</span></div>
-      <div class="mhPrepExample">Hino de Meia Hora com intensidade e registração suave <span>pasta</span></div>
-      <div class="mhPrepExample">Hino 34 — andamento da Meia Hora <span>pasta</span></div>
-      <div class="mhPrepExample">Uso do pedal de expressão para Meia Hora <span>pasta</span></div>
-      <div class="mhPrepExample">Uso do metrônomo <span>pasta</span></div>
-      <small>Os arquivos foram identificados na pasta compartilhada, mas a disponibilidade pública dos links ainda não foi validada.</small>
+      <div class="study-resource-list mhPrepExampleCards">
+        <div class="study-resource is-local mhPrepExampleCard">
+          <span>Hino de Meia Hora com proporção errada<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
+          <span class="study-resource-lock">Pasta</span>
+        </div>
+        <div class="study-resource is-local mhPrepExampleCard">
+          <span>Hino de Meia Hora com intensidade e registração suave<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
+          <span class="study-resource-lock">Pasta</span>
+        </div>
+        <div class="study-resource is-local mhPrepExampleCard">
+          <span>Hino 34 — andamento da Meia Hora<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
+          <span class="study-resource-lock">Pasta</span>
+        </div>
+        <div class="study-resource is-local mhPrepExampleCard">
+          <span>Uso do pedal de expressão para Meia Hora<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
+          <span class="study-resource-lock">Pasta</span>
+        </div>
+        <div class="study-resource is-local mhPrepExampleCard">
+          <span>Uso do metrônomo<small>Arquivo identificado na pasta compartilhada; abertura pública ainda não validada.</small></span>
+          <span class="study-resource-lock">Pasta</span>
+        </div>
+      </div>
+      <small>Esses materiais aparecem como cards informativos porque a disponibilidade pública dos links da pasta ainda não foi validada.</small>
     </div>
     <div class="mhPrepSource">Referências citadas no material da Reunião de Aprimoramento Musical para Organistas: MOR Volume 2, p. 113; MOR Volume 1, p. 19; MOR Volume 2, p. 51.</div>
    </div>`;
@@ -5212,28 +5229,17 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   color:#26394d;
   font:800 .70rem Arial,sans-serif;
 }
-.mhPrepExample{
+.mhPrepExampleCards{
   display:flex;
-  align-items:center;
-  justify-content:space-between;
+  flex-direction:column;
   gap:8px;
-  padding:6px 0;
-  border-bottom:1px solid #ece4d6;
-  color:#655e54;
-  font:.66rem/1.3 Arial,sans-serif;
 }
-.mhPrepExample:last-of-type{border-bottom:0}
-.mhPrepExample span{
-  flex:0 0 auto;
-  padding:3px 6px;
-  border-radius:999px;
-  background:#eee7d8;
-  color:#7b6336;
-  font:800 .54rem Arial,sans-serif;
+.mhPrepExampleCard{
+  margin:0!important;
 }
 .mhPrepExamples > small{
   display:block;
-  margin-top:7px;
+  margin-top:8px;
   color:#877d6e;
   font:.58rem/1.35 Arial,sans-serif;
 }
