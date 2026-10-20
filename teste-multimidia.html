@@ -4948,4 +4948,44 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 <!-- V6.15: Mostrar mais controla somente ocasiões; Relações Sugestivas permanecem sempre visíveis.
      Mantidos: busca por número/título/ocasião, base técnica V6.14, preparação Meia Hora e hotfix do YouTube. -->
 
+
+<style id="v616-relacoes-sugestivas-spacing">
+/* V6.16 — aproxima Relações Sugestivas do bloco Mostrar mais,
+   sem perder a prévia em sombra das próximas ocasiões. */
+#indexMorePreview{
+  height:82px!important;
+  margin:-8px 0 -3px!important;
+}
+
+#indexMorePreview .index-shadow-preview-card:nth-child(1){
+  top:11px!important;
+}
+#indexMorePreview .index-shadow-preview-card:nth-child(2){
+  top:35px!important;
+}
+#indexMorePreview .index-shadow-preview-card:nth-child(3){
+  top:58px!important;
+}
+
+/* O título fica logo após a prévia, sem aquele vazio grande. */
+#mhDivider{
+  margin:0 2px 1px!important;
+}
+
+/* Quando a lista está aberta não existe prévia; mantém separação curta e natural. */
+#indexMorePreview[hidden] + #mhDivider{
+  margin-top:2px!important;
+}
+
+@media(max-width:699px){
+  #indexMorePreview{
+    height:76px!important;
+    margin:-8px 0 -3px!important;
+  }
+  #indexMorePreview .index-shadow-preview-card:nth-child(1){top:9px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(2){top:31px!important}
+  #indexMorePreview .index-shadow-preview-card:nth-child(3){top:52px!important}
+}
+</style>
+
 </body></html>
