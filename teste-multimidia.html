@@ -4097,4 +4097,133 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 #v2PersonalBar .v2-tool-label{display:block;line-height:1.2;white-space:nowrap}
 #v2PersonalBar .v2-badge{display:grid!important;place-items:center;margin:0!important;box-sizing:border-box;width:26px;min-width:26px;height:26px;padding:0!important;flex:0 0 26px;line-height:1}
 </style>
+
+<!-- TESTE V31 — Sequência para Estudo + Meu Progresso aninhado; sem nova aba no topo -->
+<style id="v31-estudos-aninhados">
+#studyIndex{grid-column:1/-1!important;border:1.5px solid #c7a15b!important;background:linear-gradient(135deg,#fffaf0,#edf3f5)!important;align-items:center!important}
+#studyIndex .study-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+#studyIndex .study-copy small{font:600 .69rem Arial,sans-serif;color:#746d63}
+#studyIndex .study-arrow{color:#9c742b;font:bold .82rem Arial,sans-serif;white-space:nowrap}
+#studyOverlay .v2Panel{width:min(620px,100%)}
+.study-note{padding:11px 12px;border-radius:11px;background:#f5efe2;border:1px solid #dfd2b7;color:#625b51;font:.78rem/1.38 Arial,sans-serif}
+.study-note b{color:#26394d}
+.study-progress-card{margin-top:12px;padding:14px;border:1px solid #dfd2b7;border-radius:14px;background:#fffdf8}
+.study-progress-top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.study-progress-top strong{color:#26394d;font:800 1rem Arial,sans-serif}
+.study-progress-top b{color:#a77827;font:800 1.08rem Arial,sans-serif}
+.study-progress-track{height:9px;margin-top:9px;border-radius:999px;background:#e1e4e6;overflow:hidden}
+.study-progress-track span{display:block;height:100%;border-radius:inherit;background:#b8892c;width:0}
+.study-progress-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:9px;color:#746d63;font:700 .69rem Arial,sans-serif}
+.study-phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+.study-phase-card{border:1px solid #ddcfb4;border-radius:14px;background:#fff;padding:12px;text-align:left;color:#26394d;box-shadow:none}
+.study-phase-card .row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.study-phase-card strong{font:800 .92rem Arial,sans-serif}
+.study-phase-card b{font:800 .78rem Arial,sans-serif;color:#9b742e}
+.study-phase-card small{display:block;margin-top:5px;color:#746d63;font:600 .68rem/1.25 Arial,sans-serif}
+.study-mini-track{height:5px;margin-top:8px;border-radius:99px;background:#e7e7e5;overflow:hidden}
+.study-mini-track span{display:block;height:100%;background:#b8892c}
+.study-phase-card:last-child:nth-child(odd){grid-column:1/-1}
+.study-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.study-back{border:1px solid #d8c9a8!important;background:#fffdf8!important;color:#26394d!important;padding:8px 10px!important;border-radius:10px!important;font-size:.78rem!important}
+.study-phase-title{min-width:0;flex:1;color:#26394d;font:800 1rem Arial,sans-serif}
+.study-phase-count{color:#887d6b;font:700 .68rem Arial,sans-serif;white-space:nowrap}
+.study-search{width:100%;padding:11px 12px!important;border:1px solid #d8c9a8!important;border-radius:11px!important;background:#fff!important;font:400 .88rem Arial,sans-serif!important}
+.study-filters{display:flex;gap:6px;overflow:auto;padding:9px 0 7px;scrollbar-width:none}
+.study-filters::-webkit-scrollbar{display:none}
+.study-filter{flex:0 0 auto;border:1px solid #d9ccb1!important;background:#fff!important;color:#56616a!important;border-radius:999px!important;padding:7px 10px!important;font:700 .68rem Arial,sans-serif!important}
+.study-filter.active{background:#2b3741!important;color:#fff!important;border-color:#2b3741!important}
+.study-list{display:grid;gap:7px;margin-top:5px;max-height:52dvh;overflow:auto;padding-right:1px}
+.study-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid #e0d5bf;border-radius:12px;background:#fff;padding:10px}
+.study-open{min-width:0;border:0!important;background:transparent!important;color:#26394d!important;padding:0!important;text-align:left!important;box-shadow:none!important}
+.study-open strong{display:block;font:800 .86rem/1.2 Arial,sans-serif}
+.study-open small{display:block;margin-top:3px;color:#7b7469;font:600 .67rem/1.25 Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.study-status{min-width:94px;border:1px solid #d8c9a8!important;border-radius:10px!important;background:#fffaf0!important;color:#775c2a!important;padding:8px 7px!important;font:800 .66rem/1.15 Arial,sans-serif!important}
+.study-status[data-status="study"]{background:#eef3f5!important;color:#345166!important;border-color:#c5d3db!important}
+.study-status[data-status="done"]{background:#e9f2e9!important;color:#39633f!important;border-color:#bfd2c0!important}
+.study-status[data-status="review"]{background:#f7eee5!important;color:#8a5c2e!important;border-color:#dfc8ae!important}
+.study-empty{padding:24px 12px;text-align:center;color:#80786c;font:.82rem Arial,sans-serif}
+.study-source{margin-top:12px;padding-top:10px;border-top:1px solid #e1d8c7;color:#8a8276;font:.65rem/1.3 Arial,sans-serif}
+#hdStudyInfo{margin:7px 0 2px;padding:8px 10px;border:1px solid #dfd2b7;border-radius:10px;background:#fffaf0;color:#5d554a;font:700 .72rem/1.3 Arial,sans-serif}
+#hdStudyInfo b{color:#8d6827}
+@media(max-width:430px){
+ .study-phase-grid{grid-template-columns:1fr 1fr;gap:7px}
+ .study-phase-card{padding:10px}
+ .study-phase-card strong{font-size:.82rem}
+ .study-status{min-width:82px;font-size:.61rem}
+ .study-list{max-height:55dvh}
+}
+</style>
+<script id="v31-estudos-script">
+(function(){
+ const PHASES={"1":["22","64","75","102","116","144","153","158","162","182","201","211","213","221","228","256","258","266","271","288","323","332","385","388","389","399","402","410","411","412","414","416","428","Coro 5"],"2":["4","7","8","12","14","18","28","47","52","56","63","72","73","80","90","103","104","105","106","113","115","123","128","133","151","154","169","170","172","178","183","195","219","220","234","244","246","252","263","269","272","280","284","292","299","308","310","316","321","327","338","341","345","347","352","354","358","362","367","371","376","382","383","395","418","427","430"],"3":["5","9","10","11","13","19","21","30","34","35","40","42","44","46","55","58","59","66","70","76","77","79","87","92","93","97","108","112","114","117","126","134","137","139","141","146","147","148","152","155","157","166","175","176","179","181","184","186","196","207","210","214","215","216","222","227","230","239","240","249","250","251","254","255","261","260","295","296","301","303","304","317","319","320","325","328","330","336","340","353","355","361","369","378","379","390","391","401","405","406","408","413","423","424","426","Coro 2","Coro 3","Coro 6"],"4":["3","6","16","17","24","25","29","36","53","57","60","65","67","68","69","74","78","83","84","85","80","91","96","100","101","107","110","111","118","119","120","122","124","125","127","140","142","143","145","156","159","160","161","163","174","185","190","191","192","197","203","204","208","209","212","217","218","223","224","229","232","233","238","242","243","253","264","265","268","273","277","279","283","286","287","294","297","302","305","306","311","312","315","324","328","329","331","333","334","335","339","343","344","348","349","360","360","370","300","306","307","302","396","420","422","425","Coro 1","Coro 4"],"5":["26","31","33","37","41","43","45","50","51","54","71","82","86","88","94","95","99","129","130","136","138","149","167","168","171","173","177","180","187","188","198","200","202","205","225","228","231","236","237","241","245","257","259","267","270","275","281","282","285","289","291","298","300","307","309","313","318","322","337","342","356","359","364","366","368","372","377","381","384","394","398","403","404","407","409","415","417","419","429"]};
+ const STORE_KEY='guia-h5-estudos-teste-v1';
+ const STATUS_ORDER=['none','study','done','review'];
+ const STATUS={
+  none:{icon:'○',label:'Não iniciado'},
+  study:{icon:'◐',label:'Em estudo'},
+  done:{icon:'✓',label:'Estudado'},
+  review:{icon:'↻',label:'Revisar'}
+ };
+ let currentPhase=null,currentFilter='all',currentQuery='';
+ function esc2(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+ function uniq(arr){return [...new Set((arr||[]).map(String))];}
+ function hmap(){const m=new Map();try{Object.values(DATA).flat().forEach(h=>{if(!m.has(String(h.num)))m.set(String(h.num),h)})}catch(e){}return m}
+ const HM=hmap();
+ function read(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return {}}}
+ function write(v){try{localStorage.setItem(STORE_KEY,JSON.stringify(v))}catch(e){}}
+ function statusOf(num){return read()[String(num)]?.status||'none'}
+ function setStatus(num,status){const d=read(),k=String(num);if(status==='none')delete d[k];else d[k]={status,at:new Date().toISOString()};write(d);try{registrarEventoGA('atualizar_estudo',{numero_hino:k,status_estudo:status,origem:'sequencia_estudo'})}catch(e){}}
+ function phaseItems(n){return uniq(PHASES[String(n)]||PHASES[n]||[])}
+ function statsFor(items){let done=0,study=0,review=0;items.forEach(k=>{const s=statusOf(k);if(s==='done')done++;else if(s==='study')study++;else if(s==='review')review++});const total=items.length,pct=total?Math.round(done*100/total):0;return {done,study,review,total,pct}}
+ function allItems(){return uniq(Object.keys(PHASES).flatMap(k=>phaseItems(k)))}
+ function showOverlay(){document.getElementById('studyOverlay')?.classList.add('show');document.body.style.overflow='hidden'}
+ function hideOverlay(){document.getElementById('studyOverlay')?.classList.remove('show');document.body.style.overflow=''}
+ function renderHome(){
+  currentPhase=null;currentFilter='all';currentQuery='';
+  const body=document.getElementById('studyBody');if(!body)return;
+  const all=statsFor(allItems());
+  const phaseCards=[1,2,3,4,5].map(n=>{const st=statsFor(phaseItems(n));return `<button type="button" class="study-phase-card" data-phase="${n}"><div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total}</b></div><small>${st.study} em estudo · ${st.review} para revisar</small><div class="study-mini-track"><span style="width:${st.pct}%"></span></div></button>`}).join('');
+  body.innerHTML=`<div class="study-note"><b>Sequência sugerida de estudo.</b> O acompanhamento abaixo é pessoal e fica salvo somente neste dispositivo.</div><div class="study-progress-card"><div class="study-progress-top"><strong>Meu progresso</strong><b>${all.pct}%</b></div><div class="study-progress-track"><span style="width:${all.pct}%"></span></div><div class="study-progress-meta"><span>✓ ${all.done} estudados</span><span>◐ ${all.study} em estudo</span><span>↻ ${all.review} revisar</span></div></div><div class="study-phase-grid">${phaseCards}</div><div class="study-source">Teste de interface baseado na tabela de sequência em 5 fases fornecida para o projeto. A classificação permanece em validação antes de eventual publicação.</div>`;
+  body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
+ }
+ function renderPhase(n){
+  currentPhase=n;
+  const body=document.getElementById('studyBody');if(!body)return;
+  body.innerHTML=`<div class="study-toolbar"><button type="button" class="study-back" id="studyBack">← Fases</button><div class="study-phase-title">${n}ª Fase</div><div class="study-phase-count" id="studyPhaseCount"></div></div><input id="studySearch" class="study-search" type="search" placeholder="Número ou título..." autocomplete="off"><div class="study-filters"><button class="study-filter active" data-filter="all">Todos</button><button class="study-filter" data-filter="none">Não iniciados</button><button class="study-filter" data-filter="study">Em estudo</button><button class="study-filter" data-filter="done">Estudados</button><button class="study-filter" data-filter="review">Revisar</button></div><div class="study-list" id="studyList"></div>`;
+  document.getElementById('studyBack').onclick=renderHome;
+  document.getElementById('studySearch').oninput=e=>{currentQuery=e.target.value.trim().toLowerCase();renderRows()};
+  body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderRows()});
+  renderRows();
+ }
+ function renderRows(){
+  const box=document.getElementById('studyList');if(!box||!currentPhase)return;
+  let items=phaseItems(currentPhase);
+  items=items.filter(k=>{const h=HM.get(k)||{titulo:k};const s=statusOf(k);const okFilter=currentFilter==='all'||s===currentFilter;const q=currentQuery;const okQ=!q||k.toLowerCase()===q||String(h.titulo||'').toLowerCase().includes(q);return okFilter&&okQ});
+  const total=phaseItems(currentPhase).length,st=statsFor(phaseItems(currentPhase));
+  const cnt=document.getElementById('studyPhaseCount');if(cnt)cnt.textContent=st.done+'/'+total+' estudados';
+  if(!items.length){box.innerHTML='<div class="study-empty">Nenhum hino encontrado neste filtro.</div>';return}
+  box.innerHTML=items.map(k=>{const h=HM.get(k)||{num:k,titulo:'Hino '+k,ocasiao:''},s=statusOf(k),m=STATUS[s];return `<div class="study-row"><button type="button" class="study-open" data-open="${esc2(k)}"><strong>${esc2(k)} — ${esc2(h.titulo||'')}</strong><small>${esc2(h.ocasiao||'')}</small></button><button type="button" class="study-status" data-status-btn="${esc2(k)}" data-status="${s}">${m.icon} ${m.label}</button></div>`}).join('');
+  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{const h=HM.get(String(b.dataset.open));if(!h)return;hideOverlay();try{window.__gaOrigemConsulta='sequencia_estudo';openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}catch(e){}});
+  box.querySelectorAll('[data-status-btn]').forEach(b=>b.onclick=()=>{const k=String(b.dataset.statusBtn),cur=statusOf(k),idx=STATUS_ORDER.indexOf(cur),next=STATUS_ORDER[(idx+1)%STATUS_ORDER.length];setStatus(k,next);renderRows();});
+ }
+ function mountIndex(){
+  const idx=document.getElementById('indice');if(!idx||document.getElementById('studyIndex'))return;
+  let divider=document.getElementById('mhDivider');
+  if(!divider){divider=document.createElement('div');divider.id='mhDivider';divider.textContent='RELAÇÕES SUGESTIVAS';idx.appendChild(divider)}
+  const a=document.createElement('a');a.id='studyIndex';a.href='#';a.innerHTML='<span class="study-copy"><b>📚 Sequência para Estudo</b><small>5 fases + acompanhamento pessoal</small></span><span class="study-arrow">Abrir ›</span>';
+  a.onclick=e=>{e.preventDefault();try{registrarEventoGA('abrir_sequencia_estudo')}catch(x){}renderHome();showOverlay()};
+  const mh=document.getElementById('mhIndex');if(mh)mh.insertAdjacentElement('afterend',a);else idx.appendChild(a);
+ }
+ function mountOverlay(){if(document.getElementById('studyOverlay'))return;document.body.insertAdjacentHTML('beforeend',`<div class="v2Overlay" id="studyOverlay" aria-hidden="true"><div class="v2Panel"><div class="v2Head"><h3>📚 Sequência para Estudo</h3><button class="v2Close" id="studyClose" aria-label="Fechar">×</button></div><div class="v2Body" id="studyBody"></div></div></div>`);document.getElementById('studyClose').onclick=hideOverlay;document.getElementById('studyOverlay').onclick=e=>{if(e.target.id==='studyOverlay')hideOverlay()};}
+ function phasesOf(num){const k=String(num),out=[];[1,2,3,4,5].forEach(n=>{if(phaseItems(n).includes(k))out.push(n)});return out}
+ function injectHymnStudyInfo(h){
+  const meta=document.getElementById('hdMeta');if(!meta||!h)return;document.getElementById('hdStudyInfo')?.remove();const ps=phasesOf(h.num);if(!ps.length)return;const s=statusOf(h.num),m=STATUS[s];const d=document.createElement('div');d.id='hdStudyInfo';d.innerHTML='📚 Sequência de estudo · <b>'+ps.map(n=>n+'ª Fase').join(' / ')+'</b> · '+m.icon+' '+m.label;meta.insertAdjacentElement('afterend',d);
+ }
+ function patchDetail(){try{const old=openHymnDetail;openHymnDetail=function(h,cat){old(h,cat);setTimeout(()=>injectHymnStudyInfo(h),0)}}catch(e){}}
+ function init(){mountOverlay();mountIndex();patchDetail();if(new URLSearchParams(location.search).get('estudos')==='1'){setTimeout(()=>{renderHome();showOverlay();const f=+new URLSearchParams(location.search).get('fase');if(f>=1&&f<=5)renderPhase(f)},160)}}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('studyOverlay')?.classList.contains('show'))hideOverlay()});
+})();
+</script>
+
 </body></html>
