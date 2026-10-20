@@ -4370,55 +4370,68 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   currentPhase=null;currentFilter='all';currentQuery='';
   const body=document.getElementById('studyBody');if(!body)return;
   const all=statsFor(allItems());
+
   const phaseCards=[1,2,3,4,5].map(n=>{
     const st=statsFor(phaseItems(n)),pm=PHASE_META[n];
+    const action=st.started>0?'Continuar ›':'Começar ›';
+    const metaParts=[
+      `${st.done} ${st.done===1?'estudado':'estudados'}`,
+      st.study?`${st.study} em estudo`:'',
+      st.review?`${st.review} revisar`:''
+    ].filter(Boolean).join(' · ');
     return `<button type="button" class="study-phase-card phase-${n}" data-phase="${n}">
-      <div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total} concluídos</b></div>
+      <div class="row"><strong>${n}ª Fase</strong><b>${st.done}/${st.total}</b></div>
       <span class="study-phase-name">${esc2(pm.label)}</span>
-      <small>${st.started}/${st.total} iniciados · ${st.study} em estudo · ${st.review} revisar</small>
+      <small>${metaParts || 'Nenhum estudo iniciado'}</small>
       <div class="study-mini-track" aria-label="${st.pct}% concluído"><span style="width:${st.pct}%"></span></div>
+      <span class="study-phase-action">${action}</span>
     </button>`;
   }).join('');
+
   body.innerHTML=`
     <div class="study-note study-sequence-note">
-      <b>Sequência sugerida: 1ª → 2ª → 3ª → 4ª → 5ª fase.</b>
-      Comece pelos hinos muito fáceis e avance conforme concluir cada fase. As fases não ficam bloqueadas: você pode consultar qualquer uma quando precisar.
+      <b>Sequência sugerida de estudo.</b> Comece pela 1ª fase e avance gradualmente até a 5ª. As fases ficam sempre disponíveis para consulta.
     </div>
+
     <div class="study-progress-card">
-      <div class="study-progress-top"><strong>Meu progresso geral</strong><b>${all.pct}% concluído</b></div>
+      <div class="study-progress-top"><strong>Meu progresso</strong><b>${all.pct}%</b></div>
       <div class="study-progress-track"><span style="width:${all.pct}%"></span></div>
-      <div class="study-progress-started">${all.started}/${all.total} hinos com acompanhamento iniciado</div>
+      <div class="study-progress-main">${all.done} de ${all.total} hinos estudados</div>
       <div class="study-progress-meta">
-        <span>✓ ${all.done} estudados</span>
-        <span>◐ ${all.study} em estudo</span>
-        <span>↻ ${all.review} revisar</span>
-        <span>○ ${all.none} não iniciados</span>
+        ${all.study?`<span>◐ ${all.study} em estudo</span>`:''}
+        ${all.review?`<span>↻ ${all.review} revisar</span>`:''}
       </div>
     </div>
-    <div class="study-phase-flow" aria-label="Sequência das cinco fases">
-      ${[1,2,3,4,5].map(n=>`<button type="button" class="study-phase-step phase-${n}" data-phase="${n}"><b>${n}</b><span>${esc2(PHASE_META[n].label)}</span></button>`).join('<span class="study-phase-flow-arrow">›</span>')}
-    </div>
-    <div class="study-phase-grid">${phaseCards}</div>
-    <div class="study-source">A porcentagem considera como concluído somente o que estiver marcado como “Estudado”. Hinos “Em estudo” e “Revisar” aparecem como acompanhamento iniciado, sem aumentar a porcentagem de conclusão.</div>`;
+
+    <div class="study-phase-grid study-phase-grid-simple">${phaseCards}</div>
+
+    <div class="study-source">O progresso considera como concluído somente o hino marcado como “Estudado”. “Em estudo” e “Revisar” continuam visíveis sem aumentar a porcentagem.</div>`;
+
   body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
  }
  function renderPhase(n){
   currentPhase=n;
   const body=document.getElementById('studyBody');if(!body)return;
   const pm=PHASE_META[n]||{label:''};
-  const steps=[1,2,3,4,5].map(x=>`<button type="button" class="study-phase-step compact phase-${x} ${x===n?'current':''}" data-go-phase="${x}" aria-label="${x}ª fase — ${esc2(PHASE_META[x]?.label||'')}"><b>${x}</b></button>`).join('<span class="study-phase-flow-arrow compact">›</span>');
+
   body.innerHTML=`
-    <div class="study-phase-sequence"><span>Sequência</span><div>${steps}</div></div>
     <div class="study-toolbar phase-${n}">
       <button type="button" class="study-back" id="studyBack">← Fases</button>
-      <div class="study-phase-title"><span class="study-phase-dot"></span>${n}ª Fase<span class="study-phase-level">${esc2(pm.label)}</span></div>
+      <div class="study-phase-title">
+        <span class="study-phase-dot"></span>${n}ª Fase
+        <span class="study-phase-level">${esc2(pm.label)}</span>
+      </div>
     </div>
+
     <div class="study-phase-progress-card phase-${n}" id="studyPhaseProgress"></div>
+
     <div class="study-phase-actions">
       <button type="button" class="study-continue" id="studyContinue">Continuar estudo ›</button>
       <span id="studyPhaseCount"></span>
     </div>
+
     <input id="studySearch" class="study-search" type="search" placeholder="Número, título ou ocasião..." autocomplete="off">
+
     <div class="study-filters">
       <button class="study-filter active" data-filter="all">Todos</button>
       <button class="study-filter" data-filter="none">Não iniciados</button>
@@ -4426,25 +4439,32 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       <button class="study-filter" data-filter="done">Estudados</button>
       <button class="study-filter" data-filter="review">Revisar</button>
     </div>
-    <div class="study-status-help">Na lista, toque no status para avançar: ○ Não iniciado → ◐ Em estudo → ✓ Estudado → ↻ Revisar.</div>
+
+    <div class="study-status-help">Toque no status do hino para atualizar seu acompanhamento.</div>
     <div class="study-list phase-${n}" id="studyList"></div>`;
+
   document.getElementById('studyBack').onclick=renderHome;
-  body.querySelectorAll('[data-go-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.goPhase));
   document.getElementById('studySearch').oninput=e=>{currentQuery=normSearch(e.target.value);renderRows()};
   body.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{
     currentFilter=b.dataset.filter;
     body.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));
     renderRows();
   });
+
   document.getElementById('studyContinue').onclick=()=>{
     const keys=phaseItems(currentPhase);
-    let k=keys.find(x=>statusOf(x)==='study') || keys.find(x=>statusOf(x)==='none') || keys.find(x=>statusOf(x)==='review') || keys[0];
+    let k=keys.find(x=>statusOf(x)==='study')
+      || keys.find(x=>statusOf(x)==='none')
+      || keys.find(x=>statusOf(x)==='review')
+      || keys[0];
+
     const h=HM.get(String(k));
     if(!h)return;
     hideOverlay();
     try{window.__gaOrigemConsulta='continuar_estudo'}catch(e){}
     renderStudyDetail(h,'sequence');
   };
+
   renderRows();
  }
  function renderRows(){
@@ -4453,20 +4473,22 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const st=statsFor(allPhaseItems);
 
   const cnt=document.getElementById('studyPhaseCount');
-  if(cnt)cnt.textContent=`${st.started}/${st.total} iniciados · ${st.done} estudados`;
+  if(cnt)cnt.textContent=st.study?`${st.study} em estudo`:`${st.done}/${st.total} estudados`;
 
   const progress=document.getElementById('studyPhaseProgress');
   if(progress){
     progress.innerHTML=`
       <div class="study-phase-progress-top">
-        <div><strong>Andamento da ${currentPhase}ª fase</strong><small>${st.started}/${st.total} com acompanhamento iniciado</small></div>
-        <b>${st.pct}% concluída</b>
+        <div>
+          <strong>${currentPhase}ª Fase — ${esc2(PHASE_META[currentPhase]?.label||'')}</strong>
+          <small>${st.done} de ${st.total} hinos estudados</small>
+        </div>
+        <b>${st.pct}%</b>
       </div>
       <div class="study-phase-progress-track"><span style="width:${st.pct}%"></span></div>
       <div class="study-phase-progress-meta">
-        <span>✓ ${st.done} estudados</span>
-        <span>◐ ${st.study} em estudo</span>
-        <span>↻ ${st.review} revisar</span>
+        ${st.study?`<span>◐ ${st.study} em estudo</span>`:''}
+        ${st.review?`<span>↻ ${st.review} revisar</span>`:''}
         <span>○ ${st.none} não iniciados</span>
       </div>`;
   }
@@ -6416,6 +6438,51 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
   #studyPhaseCount{
     max-width:120px;
+  }
+}
+</style>
+
+
+<style id="v635-progresso-simplificado-style">
+.study-progress-main{
+  margin-top:8px;
+  color:#26394d;
+  font:800 .72rem/1.2 Arial,sans-serif;
+}
+.study-phase-grid-simple{
+  margin-top:12px!important;
+}
+.study-phase-grid-simple .study-phase-card{
+  min-height:128px;
+  display:flex;
+  flex-direction:column;
+}
+.study-phase-grid-simple .study-phase-action{
+  margin-top:auto;
+  padding-top:8px;
+  color:var(--phase-accent,#9b742e);
+  font:800 .64rem/1 Arial,sans-serif;
+}
+.study-phase-grid-simple .study-phase-card small{
+  min-height:2.5em;
+}
+.study-phase-progress-card{
+  margin-top:2px!important;
+}
+.study-phase-progress-meta span:empty,
+.study-progress-meta span:empty{
+  display:none;
+}
+.study-status-help{
+  margin-top:0!important;
+  padding:0 2px 6px!important;
+}
+@media(max-width:520px){
+  .study-phase-grid-simple .study-phase-card{
+    min-height:120px;
+  }
+  .study-phase-grid-simple .study-phase-action{
+    font-size:.61rem;
   }
 }
 </style>
