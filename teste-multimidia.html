@@ -4514,64 +4514,93 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<style id="v610-index-more-shadow-preview">
-/* V6.10 — prévia visual das próximas faixas abaixo do botão Mostrar mais. */
+
+<style id="v611-index-more-real-preview">
+/* V6.11 — mostra, em sombra, as PRÓPRIAS próximas opções abaixo de "Mostrar mais". */
 #indexMoreToggle{
   position:relative!important;
-  z-index:3!important;
-  margin-bottom:28px!important;
-  overflow:visible!important;
+  z-index:4!important;
+  margin-bottom:6px!important;
 }
 
-/* Duas “faixas fantasma” atrás do botão, sugerindo que há mais itens. */
+/* Remove qualquer sombra decorativa antiga do botão. */
 #indexMoreToggle::before,
 #indexMoreToggle::after{
-  content:"";
-  position:absolute;
-  left:4%;
-  right:4%;
-  height:42px;
-  border:1px solid rgba(190,166,116,.45);
-  border-radius:13px;
-  background:rgba(255,250,240,.62);
-  box-shadow:0 4px 12px rgba(45,38,26,.08);
-  pointer-events:none;
-  z-index:-1;
-}
-
-#indexMoreToggle::before{
-  top:12px;
-  transform:translateY(18px) scaleX(.96);
-  opacity:.68;
-}
-
-#indexMoreToggle::after{
-  top:18px;
-  transform:translateY(28px) scaleX(.90);
-  opacity:.38;
-}
-
-/* Ao expandir, a sombra some: o conteúdo real já está visível. */
-#indexMoreToggle[aria-expanded="true"]{
-  margin-bottom:8px!important;
-}
-#indexMoreToggle[aria-expanded="true"]::before,
-#indexMoreToggle[aria-expanded="true"]::after{
+  content:none!important;
   display:none!important;
 }
 
+#indexMorePreview{
+  grid-column:1/-1!important;
+  position:relative!important;
+  width:min(520px,100%)!important;
+  height:72px!important;
+  margin:-2px auto 8px!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  z-index:1!important;
+}
+
+#indexMorePreview[hidden]{display:none!important}
+
+#indexMorePreview .index-shadow-preview-card{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  min-height:54px!important;
+  margin:0!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  filter:saturate(.70)!important;
+  box-shadow:0 5px 14px rgba(45,38,26,.08)!important;
+  transition:none!important;
+}
+
+/* A primeira próxima opção ainda pode ser lida. */
+#indexMorePreview .index-shadow-preview-card:nth-child(1){
+  top:0!important;
+  opacity:.42!important;
+  transform:scale(.985)!important;
+  z-index:2!important;
+}
+
+/* A opção seguinte aparece mais ao fundo, como continuação. */
+#indexMorePreview .index-shadow-preview-card:nth-child(2){
+  top:20px!important;
+  opacity:.20!important;
+  transform:scale(.94)!important;
+  z-index:1!important;
+}
+
+/* Suaviza a parte inferior para parecer conteúdo continuando. */
+#indexMorePreview::after{
+  content:"";
+  position:absolute;
+  left:-3px;right:-3px;bottom:-8px;
+  height:44px;
+  z-index:5;
+  pointer-events:none;
+  background:linear-gradient(to bottom,rgba(239,235,224,0),rgba(239,235,224,.88) 76%,rgba(239,235,224,1));
+}
+
+#indexMoreToggle[aria-expanded="true"]{
+  margin-bottom:8px!important;
+}
+
 @media(max-width:699px){
-  #indexMoreToggle{
-    margin-bottom:26px!important;
+  #indexMorePreview{
+    width:100%!important;
+    height:70px!important;
   }
-  #indexMoreToggle::before,
-  #indexMoreToggle::after{
-    height:40px;
+  #indexMorePreview .index-shadow-preview-card{
+    min-height:52px!important;
   }
 }
 </style>
 
-<script id="v69-index-show-more-script">
+
+<script id="v611-index-show-more-script">
 (function(){
   let expanded=false;
   let resizeTimer=null;
@@ -4584,7 +4613,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     const idx=document.getElementById('indice');
     if(!idx)return false;
 
-    /* Aguarda as duas relações sugestivas que são montadas pelos módulos existentes. */
     const mh=document.getElementById('mhIndex');
     const study=document.getElementById('studyIndex');
     const divider=document.getElementById('mhDivider');
@@ -4598,6 +4626,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       btn.setAttribute('aria-expanded','false');
       btn.innerHTML='<span class="index-more-chevron" aria-hidden="true">⌄</span><span class="index-more-label">Mostrar mais</span>';
       idx.appendChild(btn);
+
       btn.addEventListener('click',()=>{
         expanded=!expanded;
         applyState();
@@ -4607,12 +4636,49 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       });
     }
 
+    let preview=document.getElementById('indexMorePreview');
+    if(!preview){
+      preview=document.createElement('div');
+      preview.id='indexMorePreview';
+      preview.setAttribute('aria-hidden','true');
+      btn.insertAdjacentElement('afterend',preview);
+    }
+
     function occasionLinks(){
       return Array.from(idx.children).filter(el =>
         el.tagName==='A' &&
         el.id!=='mhIndex' &&
         el.id!=='studyIndex'
       );
+    }
+
+    function makePreviewCard(source){
+      const clone=source.cloneNode(true);
+      clone.removeAttribute('id');
+      clone.removeAttribute('href');
+      clone.removeAttribute('onclick');
+      clone.removeAttribute('tabindex');
+      clone.setAttribute('aria-hidden','true');
+      clone.classList.remove('index-more-hidden');
+      clone.classList.add('index-shadow-preview-card');
+      return clone;
+    }
+
+    function refreshPreview(occasions,limit){
+      preview.innerHTML='';
+      if(expanded){
+        preview.hidden=true;
+        return;
+      }
+
+      const nextItems=[
+        ...occasions.slice(limit),
+        mh,
+        study
+      ].filter(Boolean).slice(0,2);
+
+      nextItems.forEach(el=>preview.appendChild(makePreviewCard(el)));
+      preview.hidden=nextItems.length===0;
     }
 
     function applyState(){
@@ -4637,6 +4703,8 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
           ? 'Mostrar menos'
           : `Mostrar mais ${hiddenCount} ${hiddenCount===1?'opção':'opções'}`;
       }
+
+      refreshPreview(occasions,limit);
     }
 
     window.__applyIndexMoreState=applyState;
@@ -4664,5 +4732,6 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   },{passive:true});
 })();
 </script>
+
 
 </body></html>
