@@ -4261,28 +4261,64 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   5:{label:'Mais difíceis',source:'Tabela de dificuldades ao final do MOR Volume 3, conforme material da reunião de aprimoramento.'}
  };
  const STUDY_SOURCES={
-  phase_mor3:'MOR Volume 3 — tabela final de hinos por dificuldades (referenciada no material da Reunião de Aprimoramento Musical para Organistas, Regional Embu das Artes, 18/10/2026).',
-  mor4p9:'MOR Volume 4, p. 9 — conforme material da Reunião de Aprimoramento Musical para Organistas.',
-  mor4p14:'MOR Volume 4, p. 14 — conforme material da Reunião de Aprimoramento Musical para Organistas.',
-  mor4p20:'MOR Volume 4, p. 20 — conforme material da Reunião de Aprimoramento Musical para Organistas.',
-  reuniao_dedilhado:'Reunião de Aprimoramento Musical para Organistas — seção Recursos de Dedilhado (com referência ao MOR Volume 1).',
-  reuniao_intro:'Reunião de Aprimoramento Musical para Organistas — seção Introduções.',
-  reuniao_pedaleira:'Reunião de Aprimoramento Musical para Organistas — seção Técnica/Estudos de Pedaleira.',
-  mor1posicao:'MOR Volume 1 — posição natural/dedilhado, conforme material da reunião.'
+  phase_mor3:'MOR Volume 3 — tabela final de hinos por dificuldades, conforme apresentada no material da Reunião de Aprimoramento Musical para Organistas, Regional Embu das Artes, 18/10/2026.',
+  estudos_hinos:'PDF “Estudos de Hinos” — material da pasta Reunião Técnica para Organistas.',
+  reuniao_intro:'Reunião de Aprimoramento Musical para Organistas — seção Introduções; referência apresentada ao MOR Volume 2, p. 113.',
+  reuniao_dedilhado:'Reunião de Aprimoramento Musical para Organistas — seção Recursos de Dedilhado; referência apresentada ao MOR Volume 1, p. 47.',
+  reuniao_execucao:'Reunião de Aprimoramento Musical para Organistas — seção Execução dos Hinos / assuntos técnicos.',
+  mor1posicao:'MOR Volume 1 — posição natural/dedilhado, conforme material da reunião.',
+  pasta_video:'Vídeo de apoio localizado na pasta “Reunião Técnica para Organistas”; disponibilidade pública ainda não validada.'
  };
  const STUDY_TOPICS=[
-  {id:'pedal-mao-esquerda',title:'Mão esquerda e pedaleira',detail:'Neste hino há notas diferentes entre a mão esquerda e a pedaleira; esse ponto merece conferência específica durante o estudo.',source:'mor4p9',hinos:['3','9','12','14','31','44','45','46','65','84','94','111','122','133','207','213','215','230','236','260','274','282','288','297','319','322','344','350','355','357','361','390','404','451','453','458'],resources:['pedaleira_video']},
-  {id:'colcheias-pontuadas',title:'Colcheias pontuadas e não pontuadas',detail:'O material destaca a necessidade de diferenciar corretamente colcheias pontuadas e não pontuadas neste hino.',source:'mor4p14',hinos:['10','11','24','40','54','70','79','87','92','114','134','148','152','155','179','203','210','214','225','244','255','285','290','306','315','320','334','337','355','358','360','364','370','404','439','445','450','455','457','466','467','472']},
-  {id:'desencontro-vozes',title:'Desencontro entre as vozes',detail:'Há trechos em que as vozes não caminham juntas; o material recomenda atenção específica à execução independente das partes.',source:'mor4p20',hinos:['43','64','65','71','76','120','123','146','150','160','188','205','225','237','304','318','321','328','359','360','374','384','398','404','440']},
-  {id:'padrao-pedaleira-ternario',title:'Mudança de padrão rítmico na pedaleira',detail:'O hino aparece entre os casos de mudança de padrão rítmico na pedaleira em compassos ternários.',source:'reuniao_pedaleira',hinos:['9','12','18','59','68','90','111','157','211','228','250','302','363','390'],resources:['pedaleira_video']},
-  {id:'dedilhado-55',title:'Dedilhado 5–5 na mão esquerda',detail:'O material relaciona este hino entre os casos de repetição do 5º dedo na mão esquerda.',source:'mor4p14',hinos:['4','24','25','33','37','50','55','67','117','121','130','132','207','224','250','255','267','302','329','333','360','364','406','422','436']},
-  {id:'passagem-incomum',title:'Passagem incomum de dedos',detail:'Este hino aparece na relação de passagens incomuns de dedos apresentada na seção de recursos de dedilhado.',source:'reuniao_dedilhado',hinos:['2','13','16','24','33','41','53','64','69','78','82','85','113','116','136','138','171','198','205','211','230','245','270','271','275','422','435','436']},
-  {id:'asterisco-apos',title:'Introdução — notas após o asterisco',detail:'As notas de passagem da mão esquerda escritas após o asterisco não deverão ser executadas.',source:'reuniao_intro',hinos:['1','11','33','36','50','82','103','130','136','167','171','173','177','200','205','237','241','245','259','267','281','286','294','38','322','330']},
-  {id:'asterisco-antes',title:'Introdução — notas antes do asterisco',detail:'As notas de passagem da mão esquerda escritas antes do asterisco deverão ser executadas.',source:'reuniao_intro',hinos:['19','24','54','57','76','88','105','122','140','142','143','174','232','233','240','243','319','350','372']},
-  {id:'posicao-natural',title:'Posição natural dos cinco dedos',detail:'O Hino 278 é apresentado como exemplo de execução em posição natural dos cinco dedos.',source:'mor1posicao',hinos:['278']}
+  {id:'asterisco-apos',group:'Introdução',title:'Notas de passagem após o asterisco',detail:'As notas de passagem da mão esquerda escritas após o asterisco não deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['1','11','33','36','50','82','103','130','136','167','171','173','177','200','205','237','241','245','259','267','281','286','294','38','322','330']},
+  {id:'asterisco-antes',group:'Introdução',title:'Notas de passagem antes do asterisco',detail:'As notas de passagem da mão esquerda escritas antes do asterisco deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['19','24','54','57','76','88','105','122','140','142','143','174','232','233','240','243','319','350','372']},
+
+  {id:'padrao-pedaleira-ternario',group:'Pedaleira',title:'Mudança de padrão rítmico na pedaleira',detail:'O material relaciona este hino aos casos de mudança de padrão rítmico na pedaleira em compassos ternários.',source:'estudos_hinos',hinos:['12','18','228']},
+
+  {id:'acentuacao-metrica',group:'Ritmo',title:'Acentuação métrica',detail:'O hino aparece na relação de estudo para atenção à acentuação métrica.',source:'estudos_hinos',hinos:['66','70','148','172','227','232','274','283','349','357','362','378','391','471','476'],resources:['drive_h148_acentuacao']},
+
+  {id:'pedal-mao-esquerda',group:'Pedaleira',title:'Notas diferentes entre mão esquerda e pedaleira',detail:'O material destaca hinos em que a mão esquerda e a pedaleira apresentam notas diferentes, exigindo conferência e independência entre as partes.',source:'estudos_hinos',hinos:['3','9','12','14','24','26','31','41','44','45','46','50','65','79','84','94','111','115','117','122','133','146','157','159','196','202','207','213','215','230','236','260','270','274','282','284','288','297','319','322','325','330','343','344','350','355','357','361','364','384','390','398','401','404','451','453','458','478']},
+
+  {id:'colcheia-frase',group:'Ritmo',title:'Valor exato da colcheia — início de frase ou semifrase',detail:'Atenção ao valor exato da colcheia no início de frases ou semifrases.',source:'estudos_hinos',hinos:['29','190','273','275','289','337','407']},
+  {id:'colcheia-melodia',group:'Ritmo',title:'Valor exato da colcheia — decorrer da melodia',detail:'Atenção ao valor exato da colcheia no decorrer da melodia.',source:'estudos_hinos',hinos:['6','9','43','59','110','148','197','225','295','328','359','404','462'],resources:['drive_h59_colcheia','drive_h197_colcheia']},
+  {id:'colcheia-antes-tercina',group:'Ritmo',title:'Valor exato da colcheia — antes de tercinas',detail:'O material destaca o valor exato da colcheia imediatamente antes de tercinas.',source:'estudos_hinos',hinos:['182','211'],resources:['drive_h182_colcheia']},
+  {id:'ligadura-tercina',group:'Ritmo',title:'Ligadura de valor com figuras em tercinas',detail:'Atenção à ligadura de valor quando há figuras em tercinas.',source:'estudos_hinos',hinos:['157','359'],resources:['drive_h359_tercina']},
+
+  {id:'dedilhado-55',group:'Dedilhado',title:'Dedilhado 5–5 na mão esquerda',detail:'O material relaciona este hino entre os casos que exigem atenção ao dedilhado 5–5 na mão esquerda.',source:'estudos_hinos',hinos:['4','17','24','25','33','37','50','55','67','117','121','130','132','207','223','224','250','255','267','302','329','333','360','364','406','422','436','451'],resources:['public_posicao_dedos']},
+  {id:'atencao-dedilhado',group:'Dedilhado',title:'Atenção ao dedilhado',detail:'O hino aparece na relação específica de atenção ao dedilhado.',source:'estudos_hinos',hinos:['2','24','33','84','198','240','250','275','318','350','356','384','394'],resources:['public_posicao_dedos','public_articulacao']},
+  {id:'passagem-incomum',group:'Dedilhado',title:'Passagem incomum de dedos',detail:'Este hino aparece na relação de passagens incomuns de dedos apresentada na seção de recursos de dedilhado.',source:'reuniao_dedilhado',hinos:['2','13','16','24','33','41','53','64','69','78','82','85','113','116','136','138','171','198','205','211','230','245','270','271','275','422','435','436'],resources:['public_posicao_dedos','public_articulacao']},
+  {id:'posicao-natural',group:'Dedilhado',title:'Posição natural dos cinco dedos',detail:'O Hino 278 é apresentado como exemplo de execução em posição natural dos cinco dedos.',source:'mor1posicao',hinos:['278'],resources:['public_posicao_dedos']},
+
+  {id:'intro-dificeis',group:'Introdução',title:'Introdução entre as de maior dificuldade',detail:'O hino aparece na relação de introduções mais difíceis apresentada no material da reunião.',source:'reuniao_intro',hinos:['6','16','24','25','26','29','33','37','41','43','45','54','67','71','74','76','84','88','89','94','95','99','110','111','119','138','140','142','149','168','171','173','177','178','179','180','181','182','185','197','198','200','202','205','206','215','217','225','226','229','241','259','275','279','282','286','287','300','309','312','318','320','334','337','342','350','355','356','359','364','366','377','384','398','404','407','409','415','417','419','436','440','446','451','452','465','469','470','475','478','480']},
+
+  /* Itens abaixo são cadastrados somente quando há um vídeo específico identificado na pasta. */
+  {id:'respiracao-exemplo',group:'Respiração',title:'Respiração — exemplo prático localizado',detail:'Há um vídeo específico na pasta da reunião demonstrando execução incorreta e correta de respiração neste hino.',source:'pasta_video',hinos:['48','253','432'],resources:['drive_h48_respiracao','drive_h253_respiracao','drive_h432_respiracao']},
+  {id:'nota-apoio-exemplo',group:'Notas de apoio',title:'Nota de apoio — exemplo prático localizado',detail:'Há um vídeo específico na pasta da reunião demonstrando nota de apoio neste hino.',source:'pasta_video',hinos:['135'],resources:['drive_h135_nota_apoio']},
+  {id:'colcheias-320',group:'Ritmo',title:'Colcheias pontuadas e não pontuadas',detail:'Para o Hino 320 há um vídeo específico na pasta da reunião sobre colcheias pontuadas e não pontuadas no mesmo hino.',source:'pasta_video',hinos:['320'],resources:['drive_h320_colcheias']},
+  {id:'desencontro-225',group:'Vozes',title:'Desencontro entre as vozes',detail:'Para o Hino 225 há um vídeo específico na pasta da reunião demonstrando execução incorreta e correta do desencontro entre vozes.',source:'pasta_video',hinos:['225'],resources:['drive_h225_vozes']},
+  {id:'intro-video-especifico',group:'Introdução',title:'Vídeo específico de introdução disponível',detail:'Há um vídeo específico na pasta da reunião comparando formas correta/incorreta ou demonstrando a introdução deste hino.',source:'pasta_video',hinos:['54','62','103','105','143','241'],resources:['drive_h54_intro','drive_h62_intro','drive_h103_intro','drive_h105_intro','drive_h143_intro','drive_h241_intro']}
  ];
  const STUDY_RESOURCES={
-  pedaleira_video:{title:'Técnica de pedaleira',note:'Vídeo explicativo citado no material da reunião',url:'https://youtu.be/GXQ9BPc_lMM'}
+  public_posicao_dedos:{type:'public',title:'Posição dos dedos',note:'Vídeo público citado no material da reunião · MOR Volume 1, p. 9',url:'https://youtu.be/QY5NtfR6DuI'},
+  public_articulacao:{type:'public',title:'Articulação de dedos',note:'Vídeo público citado no material da reunião · MOR Volume 1, p. 12',url:'https://youtu.be/pohcdfx27oc'},
+
+  drive_h48_respiracao:{type:'drive',title:'Hino 48 — Respiração incorreta e correta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h54_intro:{type:'drive',title:'Hino 54 — Introdução correta e incorreta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h59_colcheia:{type:'drive',title:'Hino 59 — Valor exato da colcheia',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h62_intro:{type:'drive',title:'Hino 62 — Introdução com/sem contralto e pedaleira',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h103_intro:{type:'drive',title:'Hino 103 — Introdução correta e incorreta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h105_intro:{type:'drive',title:'Hino 105 — Introdução incorreta e correta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h135_nota_apoio:{type:'drive',title:'Hino 135 — Nota de apoio',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h143_intro:{type:'drive',title:'Hino 143 — Introdução incorreta e correta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h148_acentuacao:{type:'drive',title:'Hino 148 — Acentuação métrica',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h182_colcheia:{type:'drive',title:'Hino 182 — Colcheia antes de tercina',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h197_colcheia:{type:'drive',title:'Hino 197 — Valor exato da colcheia',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h225_vozes:{type:'drive',title:'Hino 225 — Desencontro entre vozes',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h241_intro:{type:'drive',title:'Hino 241 — Introdução correta e incorreta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h253_respiracao:{type:'drive',title:'Hino 253 — Respiração incorreta e correta',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h320_colcheias:{type:'drive',title:'Hino 320 — Colcheias pontuadas e não pontuadas',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h359_tercina:{type:'drive',title:'Hino 359 — Valor da colcheia na tercina',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'},
+  drive_h432_respiracao:{type:'drive',title:'Hino 432 — Respiração e entrada para o Coro',note:'Material localizado na pasta da reunião; acesso público ainda não validado.'}
  };
 
  let currentPhase=null,currentFilter='all',currentQuery='',currentDetailHymn=null;
@@ -4355,10 +4391,12 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const phaseText=ps.length?ps.map(x=>x+'ª Fase').join(' / '):'Fase não cadastrada';
   const topics=topicsFor(h.num),resources=resourcesFor(topics),sources=sourceLabels(topics),mh=meiaHoraFor(h.num);
   const topicHtml=topics.length
-   ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">${esc2(STUDY_SOURCES[t.source]||'Fonte cadastrada no material de estudo.')}</span></div>`).join('')}</div>`
+   ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">${esc2(STUDY_SOURCES[t.source]||'Fonte cadastrada no material de estudo.')}</span></div>`).join('')}</div>`
    : `<div class="study-analysis-pending"><b>Em levantamento.</b> Ainda não há um ponto técnico específico cadastrado para este hino na base piloto.</div>`;
   const resourceHtml=resources.length
-   ? `<section class="study-detail-block"><h3>Recursos de apoio</h3><div class="study-resource-list">${resources.map(r=>`<a class="study-resource" href="${esc2(r.url)}" target="_blank" rel="noopener"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="arrow">↗</span></a>`).join('')}</div></section>`
+   ? `<section class="study-detail-block"><h3>Recursos de apoio</h3><div class="study-resource-list">${resources.map(r=>r.type==='public'
+      ? `<a class="study-resource" href="${esc2(r.url)}" target="_blank" rel="noopener"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="arrow">↗</span></a>`
+      : `<div class="study-resource is-local"><span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span><span class="study-resource-lock">Pasta</span></div>`).join('')}</div></section>`
    : '';
   const mhHtml=mh
    ? `<section class="study-detail-block"><h3>Preparação complementar</h3><div class="study-mh-bridge"><div><strong>Também está na base de Meia Hora</strong><small>Faixa sugerida cadastrada: ♩ ${mh.min}–${mh.max} BPM. A preparação inclui andamento, proporção dos valores, dinâmica e expressão.</small></div><button type="button" class="study-mh-open" data-open-mh>Preparação da Meia Hora ›</button></div></section>`
@@ -4427,8 +4465,17 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
      <div class="mhPrepCard"><h4>Interpretação</h4><ul><li>Relacionar dinâmica, fraseado e poesia</li><li>Manter início e final das frases audíveis</li><li>Não ultrapassar a intensidade meio-forte</li><li>Evitar crescer ou decrescer bruscamente</li></ul></div>
     </div>
     <div class="mhPrepResources">
-     <a href="https://youtu.be/Uhl8fmA2Ii8" target="_blank" rel="noopener"><span>Vídeo — uso do metrônomo no estudo da Meia Hora</span><span>↗</span></a>
-     <a href="https://youtu.be/fOm5co-O0Hs" target="_blank" rel="noopener"><span>Vídeo — expressão e dinâmica</span><span>↗</span></a>
+     <a href="https://youtu.be/Uhl8fmA2Ii8" target="_blank" rel="noopener"><span>Vídeo público — andamento / uso do metrônomo</span><span>↗</span></a>
+     <a href="https://youtu.be/fOm5co-O0Hs" target="_blank" rel="noopener"><span>Vídeo público — expressão e dinâmica</span><span>↗</span></a>
+    </div>
+    <div class="mhPrepExamples">
+      <h4>Exemplos práticos localizados na pasta da reunião</h4>
+      <div class="mhPrepExample">Hino de Meia Hora com proporção errada <span>pasta</span></div>
+      <div class="mhPrepExample">Hino de Meia Hora com intensidade e registração suave <span>pasta</span></div>
+      <div class="mhPrepExample">Hino 34 — andamento da Meia Hora <span>pasta</span></div>
+      <div class="mhPrepExample">Uso do pedal de expressão para Meia Hora <span>pasta</span></div>
+      <div class="mhPrepExample">Uso do metrônomo <span>pasta</span></div>
+      <small>Os arquivos foram identificados na pasta compartilhada, mas a disponibilidade pública dos links ainda não foi validada.</small>
     </div>
     <div class="mhPrepSource">Referências citadas no material da Reunião de Aprimoramento Musical para Organistas: MOR Volume 2, p. 113; MOR Volume 1, p. 19; MOR Volume 2, p. 51.</div>
    </div>`;
@@ -5125,6 +5172,70 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       transparent 100%
     )!important;
   }
+}
+</style>
+
+
+<style id="v623-base-tecnica-ampliada-style">
+.study-tech-group{
+  display:inline-block;
+  margin:0 0 5px;
+  padding:3px 6px;
+  border-radius:999px;
+  background:#eee7d8;
+  color:#765a25;
+  font:800 .56rem/1 Arial,sans-serif;
+  letter-spacing:.02em;
+}
+.study-resource.is-local{
+  cursor:default;
+  background:#f7f4ed;
+  border-style:dashed;
+}
+.study-resource-lock{
+  flex:0 0 auto;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#e7e1d4;
+  color:#756d61;
+  font:800 .56rem Arial,sans-serif;
+}
+.mhPrepExamples{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:1px dashed #d8c8a5;
+  background:#fbf8f0;
+}
+.mhPrepExamples h4{
+  margin:0 0 7px;
+  color:#26394d;
+  font:800 .70rem Arial,sans-serif;
+}
+.mhPrepExample{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px solid #ece4d6;
+  color:#655e54;
+  font:.66rem/1.3 Arial,sans-serif;
+}
+.mhPrepExample:last-of-type{border-bottom:0}
+.mhPrepExample span{
+  flex:0 0 auto;
+  padding:3px 6px;
+  border-radius:999px;
+  background:#eee7d8;
+  color:#7b6336;
+  font:800 .54rem Arial,sans-serif;
+}
+.mhPrepExamples > small{
+  display:block;
+  margin-top:7px;
+  color:#877d6e;
+  font:.58rem/1.35 Arial,sans-serif;
 }
 </style>
 
