@@ -3859,7 +3859,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<!-- V33: compartilhamento limpo do hino + registro individual compartilhável -->
+<!-- V36 — reconstruída sobre a base atual do teste-multimidia do Git; preserva telas/referências e corrige compartilhamento/recebimento -->
 <style id="share-hymn-pilot-style">
 #hymnDetail .hd-share-hymn{
   width:min(360px,100%);margin:7px auto 9px;padding:11px 16px;
@@ -3904,7 +3904,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   <div class="sh-explain" id="rsDate"></div>
   <label class="sh-option" id="rsNoteWrap"><input type="checkbox" id="rsIncludeNote"><span>Incluir a anotação deste registro<small id="rsNoteInfo"></small></span></label>
   <div class="sh-preview-label">Prévia</div><div class="sh-preview" id="rsPreview"></div>
-  <div class="sh-explain">Somente este registro será compartilhado. Se a anotação estiver marcada, ela fará parte do link recebido.</div>
+  <div class="sh-explain">Somente este registro será compartilhado. A anotação só entra no link se a opção acima estiver marcada. A prévia do WhatsApp continua usando a capa do Guia.</div>
   <div class="sh-channel-label">Compartilhar por</div>
   <div class="sh-channels"><button type="button" class="sh-wa" id="rsWhatsApp">◉ WhatsApp</button><button type="button" class="sh-tg" id="rsTelegram">➤ Telegram</button><button type="button" class="sh-copy" id="rsCopy">⧉ Copiar mensagem</button><button type="button" class="sh-more" id="rsShare">↗ Mais opções</button></div>
   <button type="button" class="sh-link-only" id="rsCopyLink">🔗 Copiar somente o link deste registro</button>
@@ -3924,20 +3924,21 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  </div>
 </div>
 
-<!-- V34 — Compartilhar registro substitui temporariamente o Histórico e o restaura ao fechar -->
-<script id="share-hymn-v33-script">
+<!-- V35 — Compartilhamento compacto: fragmento #r=, mensagem sem emojis 4-byte e compatibilidade com links antigos -->
+<script id="share-hymn-v36-script">
 (function(){
  const $=id=>document.getElementById(id), clean=v=>String(v==null?'':v).trim();
  const hymnDlg=$('shareHymnDialog'), recordDlg=$('recordShareDialog'), receivedDlg=$('sharedRecordDialog');
  let currentHymn=null,currentRecord=null,receivedRecord=null,receivedSaved=false;
  let recordShareReturn=null;
- function baseUrl(){if(location.protocol==='http:'||location.protocol==='https:')return location.origin+location.pathname;return 'https://douphing.github.io/guia-hinario5/';}
+ function baseUrl(){if(location.protocol==='http:'||location.protocol==='https:')return location.origin+location.pathname;return 'https://douphing.github.io/guia-hinario5/teste-multimidia.html';}
  function hymnUrl(h){return baseUrl()+'?hino='+encodeURIComponent(String(h.num));}
  function bytesToB64url(str){const bytes=new TextEncoder().encode(str);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
  function b64urlToText(v){let s=String(v||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes);}
- function recordPayload(item,includeNote){return {v:1,num:String(item.num),titulo:String(item.titulo||findHymn(item.num)?.titulo||''),at:String(item.at||''),note:includeNote?clean(item.note):''};}
- function recordUrl(item,includeNote){return baseUrl()+'?registro='+encodeURIComponent(bytesToB64url(JSON.stringify(recordPayload(item,includeNote))));}
- function decodeRecord(raw){try{const o=JSON.parse(b64urlToText(decodeURIComponent(raw)));if(!o||String(o.v)!=='1'||!clean(o.num)||!clean(o.at))return null;return {v:1,num:String(o.num),titulo:clean(o.titulo),at:String(o.at),note:clean(o.note).slice(0,CALL_NOTE_MAX)};}catch(e){return null}}
+ function recordPayload(item,includeNote){const h=(typeof findHymn==='function'?findHymn(item.num):null)||{};return {v:2,num:String(item.num),titulo:String(item.titulo||h.titulo||''),at:String(item.at||''),note:includeNote?clean(item.note):''};}
+ function compactRecordPayload(item,includeNote){const p=recordPayload(item,includeNote),ms=new Date(p.at).getTime(),stamp=Number.isFinite(ms)?ms.toString(36):p.at,a=[2,p.num,stamp];if(p.note)a.push(p.note);return a;}
+ function recordUrl(item,includeNote){return baseUrl()+'#r='+bytesToB64url(JSON.stringify(compactRecordPayload(item,includeNote)));}
+ function decodeRecord(raw){try{const o=JSON.parse(b64urlToText(decodeURIComponent(raw)));if(Array.isArray(o)&&Number(o[0])===2){const num=clean(o[1]),stamp=clean(o[2]);if(!num||!stamp)return null;let at=stamp;if(/^[0-9a-z]+$/i.test(stamp)){const ms=parseInt(stamp,36);if(Number.isFinite(ms)){const d=new Date(ms);if(!Number.isNaN(d.getTime()))at=d.toISOString();}}const h=(typeof findHymn==='function'?findHymn(num):null)||{};return {v:2,num,titulo:String(h.titulo||''),at:String(at),note:clean(o[3]).slice(0,CALL_NOTE_MAX)};}if(o&&String(o.v)==='1'&&clean(o.num)&&clean(o.at)){return {v:1,num:String(o.num),titulo:clean(o.titulo),at:String(o.at),note:clean(o.note).slice(0,CALL_NOTE_MAX)};}return null;}catch(e){return null}}
  function show(dlg){if(!dlg)return;dlg.classList.add('show');dlg.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
  function hide(dlg){if(!dlg)return;dlg.classList.remove('show');dlg.setAttribute('aria-hidden','true');if(!document.querySelector('#hymnDetail.open,#studyHymnScreen.show,#studyOverlay.show,#shareHymnDialog.show,#recordShareDialog.show,#sharedRecordDialog.show'))document.body.style.overflow=''}
  function copyText(txt,out){if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(out)out.textContent='✓ Copiado.'}).catch(()=>window.prompt('Copie:',txt));}else window.prompt('Copie:',txt)}
@@ -3950,7 +3951,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  $('shShare').onclick=async()=>{if(!currentHymn)return;const u=hymnUrl(currentHymn),title=(String(currentHymn.num).startsWith('Coro ')?String(currentHymn.num):'Hino '+currentHymn.num)+' — '+currentHymn.titulo;try{if(navigator.share)await navigator.share({title,url:u});else copyText(u,$('shResult'))}catch(e){if(e?.name!=='AbortError')copyText(u,$('shResult'))}};
  const hymnShareBtn=$('hdShareHymn');if(hymnShareBtn)hymnShareBtn.addEventListener('click',()=>openHymnShare(window.__gaCurrentHymn));
 
- function recordMessage(){if(!currentRecord)return '';const include=$('rsIncludeNote').checked,p=recordPayload(currentRecord,include),u=recordUrl(currentRecord,include);const lines=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at)];if(p.note)lines.push('📝 '+p.note);lines.push('🔗 Abrir registro compartilhado:',u);return lines.join('\n')}
+ function recordMessage(){if(!currentRecord)return '';const include=$('rsIncludeNote').checked,p=recordPayload(currentRecord,include),u=recordUrl(currentRecord,include);const lines=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at)];if(p.note)lines.push('📝 '+p.note);lines.push('','🔗 Abrir registro compartilhado:',u);return lines.join('\n')}
  function refreshRecordPreview(){if(!currentRecord)return;$('rsPreview').textContent=recordMessage()}
  function rememberPersonalBeforeRecordShare(){
    const personal=$('personalModal'),content=$('personalContent');
@@ -3976,10 +3977,10 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  window.openRecordShareDialog=openRecordShare;
  $('rsIncludeNote').onchange=refreshRecordPreview;$('rsClose').onclick=closeRecordShare;recordDlg.onclick=e=>{if(e.target===recordDlg)closeRecordShare()};
  $('rsWhatsApp').onclick=()=>{if(currentRecord)window.open('https://wa.me/?text='+encodeURIComponent(recordMessage()),'_blank','noopener')};
- $('rsTelegram').onclick=()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include);const text=['✓ Hino chamado · '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent(text),'_blank','noopener')};
+ $('rsTelegram').onclick=()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include);const text=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent(text),'_blank','noopener')};
  $('rsCopy').onclick=()=>{if(currentRecord)copyText(recordMessage(),$('rsResult'))};
  $('rsCopyLink').onclick=()=>{if(!currentRecord)return;copyText(recordUrl(currentRecord,$('rsIncludeNote').checked),$('rsResult'))};
- $('rsShare').onclick=async()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include),text=['✓ Hino chamado · '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');try{if(navigator.share)await navigator.share({title:'Hino '+p.num+' — '+p.titulo,text,url:u});else copyText(recordMessage(),$('rsResult'))}catch(e){if(e?.name!=='AbortError')copyText(recordMessage(),$('rsResult'))}};
+ $('rsShare').onclick=async()=>{if(!currentRecord)return;const include=$('rsIncludeNote').checked,u=recordUrl(currentRecord,include),p=recordPayload(currentRecord,include),text=['🎵 Hino '+p.num+' — '+p.titulo,'✓ Hino chamado','🗓 '+fmtDate(p.at),p.note?'📝 '+p.note:''].filter(Boolean).join('\n');try{if(navigator.share)await navigator.share({title:'Hino '+p.num+' — '+p.titulo,text,url:u});else copyText(recordMessage(),$('rsResult'))}catch(e){if(e?.name!=='AbortError')copyText(recordMessage(),$('rsResult'))}};
 
  function closeReceived(){hide(receivedDlg)}
  function renderReceived(p){receivedRecord=p;receivedSaved=false;const h=findHymn(p.num)||{num:p.num,titulo:p.titulo||''};$('srNumber').textContent='Hino '+h.num;$('srHymnTitle').textContent=h.titulo||p.titulo;$('srDate').textContent=fmtDate(p.at);$('srStatus').textContent='';$('srSave').disabled=false;$('srSave').textContent='＋ Adicionar aos meus registros';const hasNote=!!clean(p.note);$('srNoteWrap').hidden=!hasNote;$('srNote').textContent=p.note||'';$('srNote').classList.remove('show');$('srNoteToggle').textContent='▤ Mostrar anotação';show(receivedDlg)}
@@ -3988,8 +3989,10 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  $('srSave').onclick=()=>{if(!receivedRecord||receivedSaved)return;const saved=HYMN_STORE.importCall(receivedRecord);if(!saved){$('srStatus').textContent='Não foi possível salvar este registro.';return}receivedSaved=true;$('srSave').disabled=true;$('srSave').textContent='✓ Adicionado aos meus registros';$('srStatus').textContent='Cópia salva. Seus registros anteriores foram preservados.';try{refreshPersonalUI();const h=findHymn(saved.num);if(h&&typeof updateHymnActionButtons==='function')updateHymnActionButtons(h)}catch(e){}};
  $('srClose').onclick=closeReceived;$('srTopClose').onclick=closeReceived;receivedDlg.onclick=e=>{if(e.target===receivedDlg)closeReceived()};
 
- window.GUIDE_SHARE_V33={recordPayload,recordUrl,decodeRecord,openRecordShare,openHymnShare};
- window.addEventListener('load',()=>{try{const qs=new URLSearchParams(location.search),raw=qs.get('registro');if(raw){const p=decodeRecord(raw);if(p){document.body.classList.remove('welcome-mode');setTimeout(()=>renderReceived(p),120);return}}const key=qs.get('hino');if(!key)return;const h=findHymn(key);if(!h)return;document.body.classList.remove('welcome-mode');window.__gaOrigemConsulta='link_compartilhado';setTimeout(()=>openHymnDetail(h,h.ocasiao?.split('/')[0]||''),120)}catch(e){}});
+ window.GUIDE_SHARE_V36={recordPayload,compactRecordPayload,recordUrl,decodeRecord,openRecordShare,openHymnShare};
+ window.GUIDE_SHARE_V35=window.GUIDE_SHARE_V36;
+ window.GUIDE_SHARE_V33=window.GUIDE_SHARE_V36;
+ window.addEventListener('load',()=>{try{const hash=String(location.hash||''),compactRaw=hash.startsWith('#r=')?hash.slice(3):'';if(compactRaw){const p=decodeRecord(compactRaw);if(p){document.body.classList.remove('welcome-mode');setTimeout(()=>renderReceived(p),120);return}}const qs=new URLSearchParams(location.search),legacyRaw=qs.get('registro');if(legacyRaw){const p=decodeRecord(legacyRaw);if(p){document.body.classList.remove('welcome-mode');setTimeout(()=>renderReceived(p),120);return}}const key=qs.get('hino');if(!key)return;const h=findHymn(key);if(!h)return;document.body.classList.remove('welcome-mode');window.__gaOrigemConsulta='link_compartilhado';setTimeout(()=>openHymnDetail(h,h.ocasiao?.split('/')[0]||''),120)}catch(e){}});
  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(recordDlg?.classList.contains('show')){closeRecordShare();return}if(hymnDlg?.classList.contains('show')){hide(hymnDlg);return}if(receivedDlg?.classList.contains('show'))closeReceived()});
 })();
 </script>
