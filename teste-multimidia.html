@@ -1,4 +1,6 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.63: regra visual de letras corrigida — coro escrito uma única vez conforme a disposição/retornela da partitura. -->
+<!-- V6.62: Spotify corrigido nos Hinos 2-5; embed quando ID direto, busca exata Orquestra Sacra como fallback seguro. -->
 <!-- V6.61: Hinos 2-5; letras final.pdf; estrutura musical repetível; áudio externo em pasta. -->
 <!-- V6.60: Hino 1 com transição natural do próprio MP3, sem atraso artificial entre estrofes; 61 BPM mantidos. -->
 <!-- V6.59: Hino 1 com pausa de 1 segundo entre estrofes, mantendo 61 BPM. -->
@@ -504,6 +506,7 @@ const MULTIMIDIA={
  },
  "2":{
   audio:"audio/hino-2.mp3",
+  spotifySearch:"https://open.spotify.com/search/2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   youtube:"z9VZN-ytxjM",
   youtubeMusic:"z9VZN-ytxjM",
   bpmBase:60,
@@ -511,6 +514,7 @@ const MULTIMIDIA={
  },
  "3":{
   audio:"audio/hino-3.mp3",
+  spotifySearch:"https://open.spotify.com/search/3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
   bpmBase:60,
   bpmAlvo:68
  },
@@ -522,6 +526,7 @@ const MULTIMIDIA={
  },
  "5":{
   audio:"audio/hino-5.mp3",
+  spotifySearch:"https://open.spotify.com/search/5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
   youtube:"sPMjkzS1AXU",
   youtubeMusic:"sPMjkzS1AXU",
   bpmBase:112,
@@ -635,7 +640,7 @@ const LETRAS={
  "3":{
   tipo:"hino",
   titulo:"Faz-nos ouvir Tua voz",
-  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
   estrofes:[
    [
     "Faz-nos ouvir Tua voz gloriosa,",
@@ -665,7 +670,7 @@ const LETRAS={
  "4":{
   tipo:"hino",
   titulo:"Ouve a nossa oração",
-  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
   estrofes:[
    [
     "Nossos olhos para os céus, ó Deus, nós levantamos;",
@@ -690,7 +695,7 @@ const LETRAS={
  "5":{
   tipo:"hino",
   titulo:"A Rocha celestial",
-  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
   estrofes:[
    [
     "Sábio e prudente será o varão",
@@ -1188,7 +1193,7 @@ function openHymnDetail(h,cat){
  if(media){
    const mediaBtns=[];
    if(media.audio) mediaBtns.push('<button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>'+ (media.audioTeste?'Testar reprodução':'Ouvir instrumental') +'</span><b>›</b></button>');
-   if(media.spotify) mediaBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
+   if(media.spotify||media.spotifySearch) mediaBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
    if(media.youtube||media.youtubeSearch) mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
    if(media.youtubeMusic||media.youtubeMusicSearch) mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
    area.innerHTML='<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div><div class="hd-media">'+mediaBtns.join('')+'</div><div class="hd-slot" id="hdAudio"></div><div class="hd-slot" id="hdSpotify"></div><div class="hd-slot" id="hdYoutube"></div><div class="hd-links" id="hdLinks"></div>';
@@ -1278,11 +1283,17 @@ function loadHymnMedia(kind,media,button){
      }
    });
  }else if(kind==='spotify'){
-   const f=document.createElement('iframe');
-   f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
-   f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-   f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
-   links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
+   if(media.spotify){
+     const f=document.createElement('iframe');
+     f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
+     f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+     f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
+     links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
+   }else if(media.spotifySearch){
+     sp.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>Spotify · Orquestra Sacra</strong><br>A faixa está confirmada no catálogo. O ID direto ainda não foi consolidado neste piloto; abriremos a busca exata no Spotify.</div>';
+     links.innerHTML='<a href="'+media.spotifySearch+'" target="_blank" rel="noopener">Abrir faixa no Spotify ↗</a>';
+     try{window.open(media.spotifySearch,'_blank','noopener')}catch(e){}
+   }
  }else{
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
    const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
