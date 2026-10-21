@@ -1670,6 +1670,17 @@ function downloadCallsCsv(){
   {id:'mor3-audios',title:'Áudios dos estudos',note:'Material de apoio do MOR Volume 3',url:'https://www.youtube.com/playlist?list=PLiWowsZD_EnFIq_8Z4b6FV1ZMrqJyRXYR'},
   {id:'mor3-videoaulas',title:'Videoaulas',note:'Material de apoio do MOR Volume 3',url:'https://www.youtube.com/playlist?list=PL-FsRzg4fBXmaFDv7zLLz4R8EZnT86_-j'}
  ];
+ const MOR_V4_STUDY_RESOURCES=[
+  {id:'mor4-videos',title:'Vídeos explicativos',note:'Material de apoio do MOR Volume 4',url:'https://www.youtube.com/playlist?list=PLiWowsZD_EnHqmbxMNi_QUmD579gE0PTD'},
+  {id:'mor4-audios',title:'Áudios dos estudos',note:'Material de apoio do MOR Volume 4',url:'https://www.youtube.com/playlist?list=PLiWowsZD_EnGnKZNM3m01Xo8aYvrzE2qI'},
+  {id:'mor4-videoaulas',title:'Videoaulas',note:'Material de apoio do MOR Volume 4',url:'https://www.youtube.com/playlist?list=PL-FsRzg4fBXmESllXLbvjdCh9ab9NBapI'}
+ ];
+ const MOR_V4_EXEC_REF={
+  id:'mor-v4-execucao',
+  title:'MOR Volume 4 — Execução dos hinos',
+  detail:'Referência complementar indicada no material de aprimoramento: execução dos hinos, MOR Volume 4, p. 14.',
+  kind:'complementar'
+ };
  const MOR_OFFICIAL_URL='https://congregacaocristanobrasil.org.br/musica/mor';
  const MOR_TOPIC_REFS={
   'asterisco-apos':[
@@ -1987,6 +1998,10 @@ function downloadCallsCsv(){
   (topics||[]).forEach(t=>{
     (MOR_TOPIC_REFS[t.id]||[]).forEach(r=>{if(r&&r.id&&!map.has(r.id))map.set(r.id,r)});
   });
+  if((topics||[]).some(t=>t&&(['reuniao_execucao','execucao_consolidada'].includes(t.source)))){
+    const r=MOR_V4_EXEC_REF;
+    if(r&&r.id&&!map.has(r.id))map.set(r.id,r);
+  }
   (MOR_HYMN_REFS[String(hymnNum)]||[]).forEach(r=>{
     if(r&&r.id&&!map.has(r.id))map.set(r.id,r);
   });
@@ -2080,6 +2095,28 @@ function downloadCallsCsv(){
       </div>
     </div>
 
+    <div class="study-mor4-support">
+      <button type="button" class="study-mor4-toggle" id="studyMor4Toggle" aria-expanded="false" aria-controls="studyMor4Panel">
+        <span class="study-mor4-icon">📗</span>
+        <span class="study-mor4-copy">
+          <strong>Materiais do MOR Volume 4</strong>
+          <small>Vídeos, áudios e videoaulas de apoio complementar</small>
+        </span>
+        <span class="study-mor4-action">Abrir</span>
+      </button>
+      <div class="study-mor4-panel" id="studyMor4Panel" hidden>
+        <div class="study-mor4-links">
+          ${MOR_V4_STUDY_RESOURCES.map(r=>`<a href="${esc2(r.url)}" target="_blank" rel="noopener">
+            <span><strong>${esc2(r.title)}</strong><small>${esc2(r.note)}</small></span>
+            <b>YouTube ↗</b>
+          </a>`).join('')}
+        </div>
+        <div class="study-mor4-note">
+          <b>Sobre esta etapa:</b> o Manual Digital apresenta também Planos de Aula, Atividades Interativas e Atividades Avaliativas para o Volume 4. Nos links consultados, porém, esses três materiais aparecem como “Em desenvolvimento”; por isso não foram usados para criar observações específicas por hino.
+        </div>
+      </div>
+    </div>
+
     <div class="study-source">O progresso considera como concluído somente o hino marcado como “Estudado”. “Em estudo” e “Revisar” continuam visíveis sem aumentar a porcentagem.</div>`;
 
   body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
@@ -2089,6 +2126,14 @@ function downloadCallsCsv(){
     mor3Btn.setAttribute('aria-expanded',next?'true':'false');
     mor3Panel.hidden=!next;
     const action=mor3Btn.querySelector('.study-mor3-action');
+    if(action)action.textContent=next?'Fechar':'Abrir';
+  };
+  const mor4Btn=body.querySelector('#studyMor4Toggle'),mor4Panel=body.querySelector('#studyMor4Panel');
+  if(mor4Btn&&mor4Panel)mor4Btn.onclick=()=>{
+    const open=mor4Btn.getAttribute('aria-expanded')==='true',next=!open;
+    mor4Btn.setAttribute('aria-expanded',next?'true':'false');
+    mor4Panel.hidden=!next;
+    const action=mor4Btn.querySelector('.study-mor4-action');
     if(action)action.textContent=next?'Fechar':'Abrir';
   };
  }
@@ -2854,6 +2899,80 @@ function downloadCallsCsv(){
 @media(max-width:520px){
   .study-mor3-toggle{padding:11px}
   .study-mor3-links a{align-items:flex-start}
+}
+</style>
+
+
+<style id="v648-mor-v4-style">
+.study-mor4-support{
+  margin:10px 0;
+  border:1px solid #d3d8c5;
+  border-radius:14px;
+  background:#fbfdf8;
+  overflow:hidden;
+}
+.study-mor4-toggle{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:12px 13px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  color:inherit;
+  cursor:pointer;
+}
+.study-mor4-icon{
+  width:34px;height:34px;
+  border-radius:10px;
+  display:grid;place-items:center;
+  background:#e8eedc;
+  flex:0 0 auto;
+}
+.study-mor4-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.study-mor4-copy strong{font-size:.86rem}
+.study-mor4-copy small{font-size:.68rem;color:#697060}
+.study-mor4-action{
+  flex:0 0 auto;
+  font-size:.68rem;
+  font-weight:800;
+  color:#536238;
+  background:#eaf0df;
+  border-radius:999px;
+  padding:5px 8px;
+}
+.study-mor4-panel{border-top:1px solid #e1e6d7;padding:10px 11px 11px}
+.study-mor4-links{display:grid;gap:7px}
+.study-mor4-links a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:space-between;
+  text-decoration:none;
+  color:inherit;
+  padding:9px 10px;
+  border:1px solid #e1e7d8;
+  border-radius:11px;
+  background:#fff;
+}
+.study-mor4-links a span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.study-mor4-links a strong{font-size:.76rem}
+.study-mor4-links a small{font-size:.61rem;color:#6d7465}
+.study-mor4-links a b{font-size:.62rem;white-space:nowrap;color:#55633c}
+.study-mor4-note{
+  margin-top:9px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#f4f7ef;
+  color:#676d60;
+  font-size:.65rem;
+  line-height:1.45;
+}
+.study-mor4-note b{color:#484e42}
+@media(max-width:520px){
+  .study-mor4-toggle{padding:11px}
+  .study-mor4-links a{align-items:flex-start}
 }
 </style>
 
