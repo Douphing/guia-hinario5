@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.57: piloto completo Hino 1 — MuseScore local + Orquestra Sacra + letra do final.pdf. -->
 <!-- V6.54: deep-link da Meia-Hora é consumido após a primeira abertura; F5 volta ao estado inicial. -->
 <!-- V6.53: normalização de busca reforçada com fallback explícito de acentos na pesquisa geral e Meia-Hora. -->
 <!-- V6.52: busca da Meia-Hora normalizada; mensagem específica quando não há coros na relação sugestiva. -->
@@ -489,6 +490,12 @@ window.addEventListener('appinstalled', function () {
 
 <script>
 const MULTIMIDIA={
+ "1":{
+  audio:"audio/hino-1.mp3",
+  spotify:"5b4OXiSiJUN9ZEHwyNg01G",
+  youtube:"xCEJYpIE_Pc",
+  youtubeMusic:"xCEJYpIE_Pc"
+ },
  "45":{
   audio:"audio/hino-45.mp3",
   spotify:"0834t6lumVQ5FKetjMgREw",
@@ -534,6 +541,41 @@ const MULTIMIDIA={
 };
 
 const LETRAS={
+ "1":{
+  tipo:"hino",
+  titulo:"Cristo, meu Mestre...",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","estrofe-4"],
+  estrofes:[
+   [
+    "Cristo, meu Mestre e meu Senhor,",
+    "Eu Te adoro, por fé, com fervor;",
+    "Rogo que guardes meu coração;",
+    "Vem protegê-lo com Tua unção",
+    "E defendê-lo, ó meu Guardião."
+   ],
+   [
+    "Mestre divino, sempre senti",
+    "Meu coração dependente de Ti;",
+    "Bom fundamento dá-lhe, Senhor,",
+    "Dá-lhe firmeza, virtude, valor",
+    "E fortaleza, ó meu Protetor."
+   ],
+   [
+    "Vale profundo, cheio de mal,",
+    "É este mundo, ó Rei divinal.",
+    "Só Tua força pode manter",
+    "Santo e puro, na graça, meu ser,",
+    "Sempre seguro, com fé e poder."
+   ],
+   [
+    "Mestre piedoso, com Tua mão,",
+    "Faze perfeito o meu coração,",
+    "Santo, ardoroso em Te servir,",
+    "Sempre voltado aos bens do porvir;",
+    "Mestre amado, desejo Te ouvir."
+   ]
+  ]
+ },
  "45":{
   titulo:"Oh! Quanto nos amaste!",
   estrofes:[
@@ -1029,7 +1071,7 @@ function loadHymnMedia(kind,media,button){
  const au=document.getElementById('hdAudio'),sp=document.getElementById('hdSpotify'),yt=document.getElementById('hdYoutube'),links=document.getElementById('hdLinks');
  registrarEventoGA('abrir_midia', gaHinoParams(window.__gaCurrentHymn,{
    tipo_midia:String(kind),
-   piloto_multimidia:(String(window.__gaCurrentHymn?.num)==='45'||/^Coro [1-6]$/.test(String(window.__gaCurrentHymn?.num)))?'sim':'nao'
+   piloto_multimidia:MULTIMIDIA[String(window.__gaCurrentHymn?.num||'')]?'sim':'nao'
  }));
  au.innerHTML='';sp.innerHTML='';yt.innerHTML='';links.innerHTML='';
  document.querySelectorAll('#hymnDetail .hd-play').forEach(b=>b.classList.remove('active'));button.classList.add('active');
