@@ -4544,6 +4544,19 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  function mountOverlay(){if(document.getElementById('studyOverlay'))return;document.body.insertAdjacentHTML('beforeend',`<div class="v2Overlay" id="studyOverlay" aria-hidden="true"><div class="v2Panel"><div class="v2Head"><h3>📚 Estudos para Organistas</h3><button class="v2Close" id="studyClose" aria-label="Fechar">×</button></div><div class="v2Body" id="studyBody"></div></div></div>`);document.getElementById('studyClose').onclick=hideOverlay;document.getElementById('studyOverlay').onclick=e=>{if(e.target.id==='studyOverlay')hideOverlay()};}
  function phasesOf(num){const k=String(num),out=[];[1,2,3,4,5].forEach(n=>{if(phaseItems(n).includes(k))out.push(n)});return out}
  function phaseTone(n){return 'phase-'+String(n)}
+ function phasePosition(num,phase){
+  const items=phaseItems(phase),idx=items.indexOf(String(num));
+  return {items,idx,total:items.length,pos:idx>=0?idx+1:0};
+ }
+ function nextHymnInPhase(num,phase){
+  const p=phasePosition(num,phase);
+  if(p.idx<0)return null;
+  for(let i=p.idx+1;i<p.items.length;i++){
+    const h=HM.get(String(p.items[i]));
+    if(h)return h;
+  }
+  return null;
+ }
  function detailStatusButtons(h){
   const cur=statusOf(h.num);
   return STATUS_ORDER.map(k=>`<button type="button" class="study-detail-status ${cur===k?'active':''}" data-detail-status="${k}"><span>${STATUS[k].icon}</span>${STATUS[k].label}</button>`).join('');
@@ -4553,6 +4566,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const screen=document.getElementById('studyHymnScreen'), body=document.getElementById('studyHymnBody');if(!screen||!body)return;
   const ps=phasesOf(h.num),n=ps[0]||1,s=statusOf(h.num),m=STATUS[s],pm=PHASE_META[n]||{label:''};
   const phaseText=ps.length?ps.map(x=>x+'ª Fase').join(' / '):'Fase não cadastrada';
+  const phasePos=phasePosition(h.num,n),nextHymn=nextHymnInPhase(h.num,n);
   const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceLabels(topics),mh=meiaHoraFor(h.num);
   const topicHtml=topics.length
    ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">${esc2(STUDY_SOURCES[t.source]||'Fonte cadastrada no material de estudo.')}</span></div>`).join('')}</div>`
@@ -4583,6 +4597,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       <h2>${String(h.num).startsWith('Coro ')?esc2(h.num):'Hino '+esc2(h.num)} — ${esc2(h.titulo||'')}</h2>
       <p>Estudo por dificuldade · ${m.icon} ${m.label}</p>
       <div class="study-tech-summary">
+        ${phasePos.pos?`<span>${phasePos.pos} de ${phasePos.total} na fase</span>`:''}
         <span>${topics.length} ${topics.length===1?'ponto técnico':'pontos técnicos'}</span>
         <span>${resources.length} ${resources.length===1?'recurso':'recursos'}</span>
       </div>
@@ -4610,12 +4625,35 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       <div class="study-source-panel" data-source-panel hidden>
         <ul class="study-source-list">${sources.map(x=>`<li>${esc2(x)}</li>`).join('')}</ul>
       </div>
-    </section>`;
-  const back=document.getElementById('studyDetailBack');if(back)back.textContent=currentDetailOrigin==='sequence'?'← Voltar aos estudos':'← Voltar ao hino';
+    </section>
+    ${currentDetailOrigin==='sequence'
+      ? `<section class="study-detail-block study-sequence-next">
+           <div>
+             <strong>Continuar a sequência</strong>
+             <small>${nextHymn
+               ? `Próximo: ${String(nextHymn.num).startsWith('Coro ')?esc2(nextHymn.num):'Hino '+esc2(nextHymn.num)} — ${esc2(nextHymn.titulo||'')}`
+               : `Você chegou ao último hino cadastrado desta fase.`}</small>
+           </div>
+           ${nextHymn
+             ? `<button type="button" class="study-next-hymn" data-next-hymn>Próximo hino ›</button>`
+             : `<button type="button" class="study-back-phase" data-back-phase>Voltar à fase</button>`}
+         </section>`
+      : ''}`;
+  const back=document.getElementById('studyDetailBack');if(back)back.textContent=currentDetailOrigin==='sequence'?`← Voltar à ${n}ª fase`:'← Voltar ao hino';
   body.querySelectorAll('[data-detail-status]').forEach(btn=>btn.onclick=()=>{setStatus(h.num,btn.dataset.detailStatus);renderStudyDetail(h,currentDetailOrigin);injectHymnStudyInfo(h)});
   body.querySelector('[data-open-hymn]')?.addEventListener('click',()=>{
     hideStudyDetail(false);
     try{window.__gaOrigemConsulta='estudo_hino';openHymnDetail(h,h.ocasiao?.split('/')[0]||'')}catch(e){}
+  });
+  body.querySelector('[data-next-hymn]')?.addEventListener('click',()=>{
+    if(!nextHymn)return;
+    currentPhase=n;
+    renderStudyDetail(nextHymn,'sequence');
+  });
+  body.querySelector('[data-back-phase]')?.addEventListener('click',()=>{
+    hideStudyDetail(false);
+    renderPhase(n);
+    showOverlay();
   });
   const sourceToggle=body.querySelector('[data-source-toggle]');
   const sourcePanel=body.querySelector('[data-source-panel]');
@@ -4631,7 +4669,18 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   screen.classList.add('show');screen.setAttribute('aria-hidden','false');
   try{registrarEventoGA('abrir_estudo_hino',{numero_hino:String(h.num),fase_estudo:phaseText,pontos_tecnicos:topics.length})}catch(e){}
  }
- function hideStudyDetail(restore=true){const screen=document.getElementById('studyHymnScreen');if(!screen)return;screen.classList.remove('show');screen.setAttribute('aria-hidden','true');if(restore&&currentDetailOrigin==='sequence'){showOverlay()}else if(currentDetailHymn){injectHymnStudyInfo(currentDetailHymn)}}
+ function hideStudyDetail(restore=true){
+  const screen=document.getElementById('studyHymnScreen');if(!screen)return;
+  screen.classList.remove('show');screen.setAttribute('aria-hidden','true');
+  if(restore&&currentDetailOrigin==='sequence'){
+    const ps=currentDetailHymn?phasesOf(currentDetailHymn.num):[];
+    const phase=ps[0]||currentPhase||1;
+    renderPhase(phase);
+    showOverlay();
+  }else if(currentDetailHymn){
+    injectHymnStudyInfo(currentDetailHymn);
+  }
+}
  function mountStudyDetail(){
   if(document.getElementById('studyHymnScreen'))return;
   document.body.insertAdjacentHTML('beforeend',`<div id="studyHymnScreen" aria-hidden="true"><div class="study-detail-shell"><div class="study-detail-head"><button type="button" id="studyDetailBack">← Voltar ao hino</button><strong>📚 Estudos para Organistas</strong></div><div id="studyHymnBody" class="study-detail-body"></div></div></div>`);
@@ -6483,6 +6532,59 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
   .study-phase-grid-simple .study-phase-action{
     font-size:.61rem;
+  }
+}
+</style>
+
+
+<style id="v636-continuar-sequencia-style">
+.study-sequence-next{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.study-sequence-next>div{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.study-sequence-next strong{
+  color:#26394d;
+  font:800 .76rem/1.15 Arial,sans-serif;
+}
+.study-sequence-next small{
+  color:#7a7267;
+  font:.61rem/1.3 Arial,sans-serif;
+}
+.study-next-hymn,
+.study-back-phase{
+  flex:0 0 auto;
+  padding:8px 10px!important;
+  border:1px solid #c79f54!important;
+  border-radius:999px!important;
+  background:#fff8e8!important;
+  color:#735619!important;
+  font:800 .61rem/1 Arial,sans-serif!important;
+  cursor:pointer!important;
+}
+.study-next-hymn:hover,
+.study-next-hymn:focus-visible,
+.study-back-phase:hover,
+.study-back-phase:focus-visible{
+  background:#fff1cc!important;
+  border-color:#b8841e!important;
+  outline:none!important;
+}
+@media(max-width:520px){
+  .study-sequence-next{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .study-next-hymn,
+  .study-back-phase{
+    width:100%!important;
   }
 }
 </style>
