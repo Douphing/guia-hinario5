@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.67: pacote de mídia obrigatório por hino = MP3 local + Spotify + YouTube + YouTube Music; fallback por busca exata quando ID direto não está validado. -->
 <!-- V6.66: audio definitivo em MP3 unico por hino, linearizado conforme a partitura. Hinos 1-5 e 45 tocam uma unica vez; navegador nao repete estrofes. -->
 <!-- V6.65:
 REGRA CONSOLIDADA:
@@ -517,20 +518,24 @@ const MULTIMIDIA={
  "2":{
   audio:"audio/hino-2.mp3",
   spotifySearch:"https://open.spotify.com/search/2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
-  youtube:"z9VZN-ytxjM",
-  youtubeMusic:"z9VZN-ytxjM",
+  youtube:"YkACjuqc1tE",
+  youtubeMusic:"YkACjuqc1tE",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "3":{
   audio:"audio/hino-3.mp3",
   spotifySearch:"https://open.spotify.com/search/3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "4":{
   audio:"audio/hino-4.mp3",
   spotify:"77u8hNME1vkIGiviNc5M15",
+  youtubeSearch:"https://www.youtube.com/results?search_query=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1308,22 +1313,9 @@ function loadHymnMedia(kind,media,button){
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
    const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
    if(!directId && searchUrl){
-     /* V10: nunca abre busca externa automaticamente. Mantém o usuário dentro do Guia. */
-     yt.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>Orquestra Sacra</strong><br>Esta gravação profissional está confirmada para este Coro. O vídeo direto desta plataforma ainda está em validação e, por isso, nenhuma página externa será aberta.</div>';
-     links.innerHTML='';
-     if(media.spotify){
-       const pf=document.createElement('iframe');
-       pf.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
-       pf.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-       pf.loading='lazy';
-       pf.title='Orquestra Sacra - reprodução profissional';
-       pf.setAttribute('scrolling','no');
-       sp.appendChild(pf);
-       const note=document.createElement('div');
-       note.className='hd-internal-source-note';
-       note.innerHTML='<strong>Ouvir no próprio Guia</strong><span>Enquanto validamos o vídeo direto, a faixa profissional da Orquestra Sacra permanece disponível acima.</span>';
-       links.appendChild(note);
-     }
+     const nomePlataforma=kind==='youtube'?'YouTube':'YouTube Music';
+     yt.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>'+nomePlataforma+' · Orquestra Sacra</strong><br>O botão foi mantido no Guia. Como o ID direto ainda não foi validado, use a busca exata da faixa na plataforma.</div>';
+     links.innerHTML='<a href="'+searchUrl+'" target="_blank" rel="noopener">Buscar na '+nomePlataforma+' ↗</a>';
      return;
    }
    const id=directId;
