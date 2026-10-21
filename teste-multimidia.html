@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
 <!-- V6.67: pacote de mídia obrigatório por hino = MP3 local + Spotify + YouTube + YouTube Music; fallback por busca exata quando ID direto não está validado. -->
 <!-- V6.66: audio definitivo em MP3 unico por hino, linearizado conforme a partitura. Hinos 1-5 e 45 tocam uma unica vez; navegador nao repete estrofes. -->
 <!-- V6.65:
@@ -512,14 +513,17 @@ const MULTIMIDIA={
   spotify:"5b4OXiSiJUN9ZEHwyNg01G",
   youtube:"xCEJYpIE_Pc",
   youtubeMusic:"xCEJYpIE_Pc",
+  spotifySearch:"https://open.spotify.com/search/1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "2":{
   audio:"audio/hino-2.mp3",
   spotifySearch:"https://open.spotify.com/search/2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
-  youtube:"YkACjuqc1tE",
-  youtubeMusic:"YkACjuqc1tE",
+  youtubeSearch:"https://www.youtube.com/results?search_query=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -534,6 +538,7 @@ const MULTIMIDIA={
  "4":{
   audio:"audio/hino-4.mp3",
   spotify:"77u8hNME1vkIGiviNc5M15",
+  spotifySearch:"https://open.spotify.com/search/4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
   youtubeSearch:"https://www.youtube.com/results?search_query=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
   youtubeMusicSearch:"https://music.youtube.com/search?q=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
   repeticoes:1,
@@ -544,6 +549,54 @@ const MULTIMIDIA={
   spotifySearch:"https://open.spotify.com/search/5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
   youtube:"sPMjkzS1AXU",
   youtubeMusic:"sPMjkzS1AXU",
+  youtubeSearch:"https://www.youtube.com/results?search_query=5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "6":{
+  audio:"audio/hino-6.mp3",
+  spotifySearch:"https://open.spotify.com/search/6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "7":{
+  audio:"audio/hino-7.mp3",
+  spotifySearch:"https://open.spotify.com/search/7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "8":{
+  audio:"audio/hino-8.mp3",
+  spotifySearch:"https://open.spotify.com/search/8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
+  youtube:"sJDCk2HccGg",
+  youtubeMusic:"sJDCk2HccGg",
+  youtubeSearch:"https://www.youtube.com/results?search_query=8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "9":{
+  audio:"audio/hino-9.mp3",
+  spotifySearch:"https://open.spotify.com/search/9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
+  youtube:"ydUV1W7FwJk",
+  youtubeMusic:"ydUV1W7FwJk",
+  youtubeSearch:"https://www.youtube.com/results?search_query=9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "10":{
+  audio:"audio/hino-10.mp3",
+  spotifySearch:"https://open.spotify.com/search/10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
+  youtube:"P9WftadkxaU",
+  youtubeMusic:"P9WftadkxaU",
+  youtubeSearch:"https://www.youtube.com/results?search_query=10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -739,6 +792,56 @@ const LETRAS={
    "O Fundamento eternal",
    "De quem busca o reino dos céus."
   ]
+ },
+ "6":{
+  tipo:"hino",
+  titulo:"Glória ao Justo, fiel Cordeiro!",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Ao Cordeiro imaculado, Jesus Cristo, exaltemos;","Do Seu Nome falaremos, pois, com infinito amor,","Veio à terra, glorioso, com poder e esplendor."],
+   ["Seguiremos a Jesus Cristo com inteira confiança;","Temos viva esperança de chegar ao lar de amor,","Dirigidos, amparados pelo sábio Condutor."],
+   ["Só a Cristo daremos glória e louvores em eterno,","Pois livrou-nos do inferno, do pecado e do mal,","Para dar-nos a herança no Seu lar celestial.","Glória ao Justo, fiel Cordeiro, Puro, Santo, Verdadeiro!","Pela morte no madeiro, Nos reconciliou com Deus."]
+  ]
+ },
+ "7":{
+  tipo:"hino",titulo:"Granjeai, granjeai os talentos",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Os talentos Jesus nos tem dado, Dons celestes de grande valor;","Nós devemos, com todo o cuidado, Granjeá-los, servindo ao Senhor."],
+   ["Se em tudo nós formos prudentes, Se fiéis o Senhor nos achar,","Herdaremos Seus bens permanentes No repouso da glória sem par."],
+   ["Diligentes obreiros sejamos, Pois os frutos Jesus vai pedir;","Os talentos, jamais escondamos, Se quisermos a glória fruir."]
+  ],
+  coro:["Granjeai, granjeai os talentos; Sobre o muito o Senhor vos porá;","Vigiai e estai sempre atentos, Eis que Ele à porta está."]
+ },
+ "8":{
+  tipo:"hino",titulo:"Oh! Vem, sim, vem",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Nesta terrena vida, ó justo Redentor,","São grandes os combates aos Teus fiéis, Senhor."],
+   ["No mundo há vaidade, muita tristeza e dor,","Mas Teus remidos sentem a Tua paz e amor."],
+   ["Do céu Te esperamos, glorioso, eterno Rei;","Tu és veraz Pastor e nós somos Tua grei."]
+  ],
+  coro:["Oh! Vem, sim, vem nos alegrar, Senhor;","És nossa Esperança e nosso Defensor."]
+ },
+ "9":{
+  tipo:"hino",titulo:"Luminosa é a senda",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Luminosa é a senda Que conduz, por fé, a Deus;","Não há nada que me prenda Nem detenha os passos meus."],
+   ["Jubiloso, eu prossigo Para a glória eternal;","Sei que Cristo está comigo, Protegendo-me do mal."],
+   ["Jesus Cristo me consola Quando estou em aflição;","Seu Espírito controla Minha mente e coração."]
+  ],
+  coro:["Que prazer é viver com o meu bom Jesus!","Na tristeza e na alegria sinto em mim a Sua luz."]
+ },
+ "10":{
+  tipo:"hino",titulo:"Prossegui vitoriosos em Cristo",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Prossegui vitoriosos em Cristo, Ele em breve, dos céus vai voltar;","Mandará recolher Seus remidos Para, à glória eterna, levar."],
+   ["Prossegui, rejeitando o pecado, Pois ireis encontrar o Senhor;","Para vós, Ele tem preparado Um lugar no Seu reino de amor."],
+   ["Prossegui nesta fé gloriosa, O inimigo de vós fugirá;","Vigiai na oração, no cuidado, E convosco Jesus estará."]
+  ],
+  coro:["Certamente exaltado será Quem o Nome de Cristo não negar;","Exaltado com glória celestial, Herdará a riqueza eternal."]
  },
  "45":{
   titulo:"Oh! Quanto nos amaste!",
