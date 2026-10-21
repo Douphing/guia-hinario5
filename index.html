@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.51: pesquisa principal normalizada para ignorar acentos e maiúsculas/minúsculas; inclui título, ocasião e apropriação. -->
 <!-- V6.49: auditoria final concluída; tabela das 5 fases conferida integralmente com a fonte visual; duplicidades da fonte preservadas; base funcional preservada. --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
       content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título, incluindo a relação sugestiva de Hinos para Meia-Hora com andamento. Guia independente e não oficial."><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><link rel="canonical"
       href="https://douphing.github.io/guia-hinario5/"><meta name="application-name" content="Guia Hinário 5"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Guia Hinário 5"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png"><link rel="apple-touch-icon" href="assets/icon-192.png"><meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Guia Hinário 5"><meta property="og:title"
@@ -134,7 +135,15 @@ const openBtn=document.querySelector("#openSearch"), closeBtn=document.querySele
 function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>q.focus(),120);renderResults();}
 function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");q.value="";results.innerHTML="";q.blur();}
 function renderResults(){
- const term=q.value.trim().toLowerCase();
+ const normalizeSearch=v=>String(v??'')
+   .normalize('NFD')
+   .replace(/[\u0300-\u036f]/g,'')
+   .toLowerCase()
+   .replace(/\s+/g,' ')
+   .trim();
+
+ const rawTerm=q.value.trim();
+ const term=normalizeSearch(rawTerm);
  results.innerHTML="";
  if(!term){results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Os resultados aparecem automaticamente enquanto você digita.</div>';return;}
 
@@ -142,9 +151,14 @@ function renderResults(){
  const found=[];
 
  ORDER.forEach(cat=>DATA[cat].forEach(h=>{
-   const num=String(h.num).replace(/\*/g,"").trim().toLowerCase();
-   const title=String(h.titulo).toLowerCase();
-   const match=isNumber ? (num===term) : title.includes(term);
+   const num=normalizeSearch(String(h.num).replace(/\*/g,""));
+   const searchable=normalizeSearch([
+     h.titulo,
+     h.ocasiao,
+     h.apropriacao,
+     cat
+   ].filter(Boolean).join(' '));
+   const match=isNumber ? (num===term) : searchable.includes(term);
    if(match){
      const key=h.num+"|"+h.titulo;
      let item=found.find(x=>x.key===key);
