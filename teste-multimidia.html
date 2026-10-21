@@ -1646,6 +1646,7 @@ function downloadCallsCsv(){
   reuniao_respiracao:'Reunião de Aprimoramento Musical para Organistas — seção Respirações: frases e semifrases, vírgulas maior/menor e articulação semiligada.',
   reuniao_notas_apoio:'Reunião de Aprimoramento Musical para Organistas — seção Notas de apoio; referência ao MOR Volume 2 e ao Estudo 24 do MOR Volume 1.',
   mor1posicao:'MOR Volume 1 — posição natural/dedilhado, conforme material da reunião.',
+  mor_v1_planos:'MOR Volume 1 — Planos de Aula baseados no método Estudos para Órgão Eletrônico Aplicados ao Hinário; material de apoio de uso interno.',
   pasta_video:'Vídeo de apoio localizado na pasta “Reunião Técnica para Organistas”; disponibilidade pública ainda não validada.'
  };
  const STUDY_SOURCE_META={
@@ -1659,6 +1660,7 @@ function downloadCallsCsv(){
   reuniao_respiracao:{short:'Aprimoramento Musical — Respirações',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
   reuniao_notas_apoio:{short:'Aprimoramento Musical — Notas de apoio',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
   mor1posicao:{short:'MOR Volume 1 — posição/dedilhado'},
+  mor_v1_planos:{short:'MOR Volume 1 — Planos de Aula'},
   pasta_video:{short:'Vídeo de apoio',url:'https://drive.google.com/drive/folders/18N_ccopTrM79e5KujubVRe4r6V5FOM6h'}
  };
  const MOR_OFFICIAL_URL='https://congregacaocristanobrasil.org.br/musica/mor';
@@ -1731,13 +1733,39 @@ function downloadCallsCsv(){
     {id:'mor-v1-u26-hinos',title:'MOR Volume 1 — Unidade 26',detail:'Unidade identificada no material como “Hinos 158, 131 e 468”.',kind:'direta'}
   ],
   '158':[
-    {id:'mor-v1-u26-hinos',title:'MOR Volume 1 — Unidade 26',detail:'Unidade identificada no material como “Hinos 158, 131 e 468”.',kind:'direta'}
+    {id:'mor-v1-u26-hinos',title:'MOR Volume 1 — Unidade 26',detail:'Unidade identificada no material como “Hinos 158, 131 e 468”.',kind:'direta'},
+    {id:'mor-v1-u25-h158',title:'MOR Volume 1 — Unidade 25',detail:'O Hino 158 também é citado na unidade de Pedaleira, Sistema e Estudos 37 ao 40.',kind:'complementar'}
   ],
   '468':[
     {id:'mor-v1-u26-hinos',title:'MOR Volume 1 — Unidade 26',detail:'Unidade identificada no material como “Hinos 158, 131 e 468”.',kind:'direta'}
+  ],
+  '221':[
+    {id:'mor-v1-u12-h221',title:'MOR Volume 1 — Unidade 12',detail:'O Hino 221 é apresentado como exemplo de compasso simples quaternário.',kind:'direta'}
+  ],
+  '385':[
+    {id:'mor-v1-u12-h385',title:'MOR Volume 1 — Unidade 12',detail:'O Hino 385 é apresentado como exemplo de compasso simples ternário.',kind:'direta'}
+  ],
+  '28':[
+    {id:'mor-v1-u17-h28',title:'MOR Volume 1 — Unidade 17',detail:'O Hino 28 é usado nos exemplos dos recursos de dedilhado contração e passagem.',kind:'direta'}
+  ],
+  '388':[
+    {id:'mor-v1-u17-h388',title:'MOR Volume 1 — Unidade 17',detail:'O Hino 388 é usado nos exemplos dos recursos de dedilhado mudança e passagem.',kind:'direta'}
+  ],
+  '175':[
+    {id:'mor-v1-u17-h175',title:'MOR Volume 1 — Unidade 17',detail:'O Hino 175 é usado como exemplo do recurso de dedilhado alargamento ou abertura.',kind:'direta'}
+  ],
+  '96':[
+    {id:'mor-v1-u23-h96',title:'MOR Volume 1 — Unidade 23',detail:'O Hino 96 é apresentado como exemplo de hino em Sol Maior.',kind:'direta'}
   ]
  };
  const STUDY_TOPICS=[
+  {id:'mor-v1-h158-respiracao-dedilhado',group:'Estudo do hino',title:'Respirações e recursos de dedilhado',detail:'Na Unidade 26, o estudo do Hino 158 orienta identificar todas as respirações e os recursos de dedilhado presentes na partitura, seguindo o estudo por partes.',source:'mor_v1_planos',hinos:['158']},
+  {id:'mor-v1-h221-compasso',group:'Ritmo',title:'Compasso simples quaternário',detail:'A Unidade 12 utiliza o Hino 221 como exemplo de compasso simples quaternário, trabalhando a percepção da acentuação dos tempos.',source:'mor_v1_planos',hinos:['221']},
+  {id:'mor-v1-h385-compasso',group:'Ritmo',title:'Compasso simples ternário',detail:'A Unidade 12 utiliza o Hino 385 como exemplo de compasso simples ternário, trabalhando a percepção da acentuação dos tempos.',source:'mor_v1_planos',hinos:['385']},
+  {id:'mor-v1-h28-dedilhado',group:'Dedilhado',title:'Contração e passagem',detail:'A Unidade 17 utiliza trechos do Hino 28 para exemplificar os recursos de dedilhado contração e passagem.',source:'mor_v1_planos',hinos:['28'],resources:['public_posicao_dedos','public_articulacao']},
+  {id:'mor-v1-h388-dedilhado',group:'Dedilhado',title:'Mudança e passagem',detail:'A Unidade 17 utiliza trechos do Hino 388 para exemplificar os recursos de dedilhado mudança e passagem.',source:'mor_v1_planos',hinos:['388'],resources:['public_posicao_dedos','public_articulacao']},
+  {id:'mor-v1-h175-dedilhado',group:'Dedilhado',title:'Alargamento ou abertura',detail:'A Unidade 17 utiliza um trecho do Hino 175 como exemplo do recurso de dedilhado alargamento ou abertura.',source:'mor_v1_planos',hinos:['175'],resources:['public_posicao_dedos']},
+  {id:'mor-v1-h96-sol-maior',group:'Tonalidade',title:'Exemplo em Sol Maior',detail:'A Unidade 23 apresenta o Hino 96 como exemplo de hino em Sol Maior, com fá sustenido na armadura de clave.',source:'mor_v1_planos',hinos:['96']},
   {id:'asterisco-apos',group:'Introdução',title:'Notas de passagem após o asterisco',detail:'As notas de passagem da mão esquerda escritas após o asterisco não deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['1','11','33','36','50','82','103','130','136','167','171','173','177','200','205','237','241','245','259','267','281','286','294','38','322','330']},
   {id:'asterisco-antes',group:'Introdução',title:'Notas de passagem antes do asterisco',detail:'As notas de passagem da mão esquerda escritas antes do asterisco deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['19','24','54','57','76','88','105','122','140','142','143','174','232','233','240','243','319','350','372']},
 
@@ -2064,7 +2092,7 @@ function downloadCallsCsv(){
   const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceEntries(topics),morRefs=morRefsFor(topics,h.num),mh=meiaHoraFor(h.num);
   const topicHtml=topics.length
    ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">Fonte: ${esc2(sourceShort(t.source))}</span></div>`).join('')}</div>`
-   : `<div class="study-analysis-pending"><b>Em levantamento.</b> Ainda não há um ponto técnico específico cadastrado para este hino na base piloto.</div>`;
+   : `<div class="study-analysis-pending"><b>Sem observação técnica específica confirmada.</b> Até o momento, as fontes cadastradas não destacam um ponto técnico próprio para este hino. Isso não significa ausência de estudo; apenas evita acrescentar informação por suposição.</div>`;
   const resourceHtml=resources.length
    ? `<section class="study-detail-block study-resources-block">
         <div class="study-resource-head">
