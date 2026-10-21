@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.65:
+REGRA CONSOLIDADA:
+1) "estrutura" controla somente a apresentação visual da letra.
+2) O coro é escrito uma única vez no modal, na posição lógica indicada pela partitura.
+3) A reprodução do áudio deve obedecer separadamente barras de repetição, retornelas, voltas e finais da partitura.
+4) Hinos 3, 4, 5 e 45: visual 1-CORO-2-3.
+5) Casos como Hino 61 exigem reprodução especial conforme a partitura, não simples repetição do MP3 inteiro.
+-->
+<!-- V6.64: Hinos 3 e 4 seguem 1-CORO-2-3; Hino 5 mantém 1-2-3-CORO conforme retornela. -->
 <!-- V6.63: regra visual de letras corrigida — coro escrito uma única vez conforme a disposição/retornela da partitura. -->
 <!-- V6.62: Spotify corrigido nos Hinos 2-5; embed quando ID direto, busca exata Orquestra Sacra como fallback seguro. -->
 <!-- V6.61: Hinos 2-5; letras final.pdf; estrutura musical repetível; áudio externo em pasta. -->
@@ -640,7 +649,7 @@ const LETRAS={
  "3":{
   tipo:"hino",
   titulo:"Faz-nos ouvir Tua voz",
-  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
   estrofes:[
    [
     "Faz-nos ouvir Tua voz gloriosa,",
@@ -670,7 +679,7 @@ const LETRAS={
  "4":{
   tipo:"hino",
   titulo:"Ouve a nossa oração",
-  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
   estrofes:[
    [
     "Nossos olhos para os céus, ó Deus, nós levantamos;",
@@ -695,7 +704,7 @@ const LETRAS={
  "5":{
   tipo:"hino",
   titulo:"A Rocha celestial",
-  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
   estrofes:[
    [
     "Sábio e prudente será o varão",
