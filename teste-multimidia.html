@@ -4286,6 +4286,64 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   mor1posicao:{short:'MOR Volume 1 — posição/dedilhado'},
   pasta_video:{short:'Vídeo de apoio',url:'https://drive.google.com/drive/folders/18N_ccopTrM79e5KujubVRe4r6V5FOM6h'}
  };
+ const MOR_OFFICIAL_URL='https://congregacaocristanobrasil.org.br/musica/mor';
+ const MOR_TOPIC_REFS={
+  'asterisco-apos':[
+    {id:'mor-v2-introducoes',title:'MOR Volume 2 — Introduções',detail:'Referência indicada no material técnico: seção de Introduções, MOR Volume 2, p. 113.'}
+  ],
+  'asterisco-antes':[
+    {id:'mor-v2-introducoes',title:'MOR Volume 2 — Introduções',detail:'Referência indicada no material técnico: seção de Introduções, MOR Volume 2, p. 113.'}
+  ],
+  'intro-dificeis':[
+    {id:'mor-v2-introducoes',title:'MOR Volume 2 — Introduções',detail:'Referência indicada no material técnico: seção de Introduções, MOR Volume 2, p. 113.'}
+  ],
+  'intro-video-especifico':[
+    {id:'mor-v2-introducoes',title:'MOR Volume 2 — Introduções',detail:'Referência indicada no material técnico: seção de Introduções, MOR Volume 2, p. 113.'}
+  ],
+
+  'colcheia-frase':[
+    {id:'mor-v1-u16',title:'MOR Volume 1 — Unidade 16',detail:'A figura da colcheia e exercícios 2 ao 5.'}
+  ],
+  'colcheia-melodia':[
+    {id:'mor-v1-u16',title:'MOR Volume 1 — Unidade 16',detail:'A figura da colcheia e exercícios 2 ao 5.'}
+  ],
+  'colcheia-antes-tercina':[
+    {id:'mor-v1-u16',title:'MOR Volume 1 — Unidade 16',detail:'A figura da colcheia e exercícios 2 ao 5.'}
+  ],
+  'ligadura-tercina':[
+    {id:'mor-v1-u16',title:'MOR Volume 1 — Unidade 16',detail:'A figura da colcheia e exercícios 2 ao 5.'}
+  ],
+  'colcheias-pontuadas-lista':[
+    {id:'mor-v1-u16',title:'MOR Volume 1 — Unidade 16',detail:'Base de leitura rítmica: a figura da colcheia e exercícios 2 ao 5.'}
+  ],
+
+  'dedilhado-55':[
+    {id:'mor-v1-u17',title:'MOR Volume 1 — Unidade 17',detail:'Recursos de dedilhado e exercícios 6 ao 10.'}
+  ],
+  'atencao-dedilhado':[
+    {id:'mor-v1-u17',title:'MOR Volume 1 — Unidade 17',detail:'Recursos de dedilhado e exercícios 6 ao 10.'}
+  ],
+  'passagem-incomum':[
+    {id:'mor-v1-u17',title:'MOR Volume 1 — Unidade 17',detail:'Recursos de dedilhado e exercícios 6 ao 10.'}
+  ],
+  'posicao-natural':[
+    {id:'mor-v1-posicao',title:'MOR Volume 1 — posição natural dos dedos',detail:'Referência apresentada no material técnico: MOR Volume 1, p. 9.'}
+  ],
+
+  'respiracao-exemplo':[
+    {id:'mor-v1-u18',title:'MOR Volume 1 — Unidade 18',detail:'Sinais de respiração, estudos 23 e 24 e exercícios de articulação de dedos.'}
+  ],
+  'nota-apoio-repetidas-24':[
+    {id:'mor-v1-u18',title:'MOR Volume 1 — Unidade 18',detail:'Inclui os estudos 23 e 24; o Estudo 24 é usado como referência para nota de apoio em notas repetidas.'}
+  ],
+
+  'padrao-pedaleira-ternario':[
+    {id:'mor-v1-u25',title:'MOR Volume 1 — Unidade 25',detail:'Pedaleira, sistema e estudos 37 ao 40.'}
+  ],
+  'pedal-mao-esquerda':[
+    {id:'mor-v1-u25',title:'MOR Volume 1 — Unidade 25',detail:'Referência complementar de estudo da pedaleira: sistema e estudos 37 ao 40.'}
+  ]
+ };
  const STUDY_TOPICS=[
   {id:'asterisco-apos',group:'Introdução',title:'Notas de passagem após o asterisco',detail:'As notas de passagem da mão esquerda escritas após o asterisco não deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['1','11','33','36','50','82','103','130','136','167','171','173','177','200','205','237','241','245','259','267','281','286','294','38','322','330']},
   {id:'asterisco-antes',group:'Introdução',title:'Notas de passagem antes do asterisco',detail:'As notas de passagem da mão esquerda escritas antes do asterisco deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['19','24','54','57','76','88','105','122','140','142','143','174','232','233','240','243','319','350','372']},
@@ -4371,6 +4429,13 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
     const meta=STUDY_SOURCE_META[id]||{};
     return {id,label,short:meta.short||label,url:meta.url||''};
   }).filter(Boolean);
+}
+ function morRefsFor(topics){
+  const map=new Map();
+  (topics||[]).forEach(t=>{
+    (MOR_TOPIC_REFS[t.id]||[]).forEach(r=>{if(r&&r.id&&!map.has(r.id))map.set(r.id,r)});
+  });
+  return [...map.values()];
 }
  function meiaHoraFor(num){try{return (window.__MEIA_HORA_BASE||[]).find(x=>String(x.num)===String(num))||null}catch(e){return null}}
  function uniq(arr){return [...new Set((arr||[]).map(String))];}
@@ -4600,7 +4665,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const ps=phasesOf(h.num),n=ps[0]||1,s=statusOf(h.num),m=STATUS[s],pm=PHASE_META[n]||{label:''};
   const phaseText=ps.length?ps.map(x=>x+'ª Fase').join(' / '):'Fase não cadastrada';
   const phasePos=phasePosition(h.num,n),nextHymn=nextHymnInPhase(h.num,n);
-  const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceEntries(topics),mh=meiaHoraFor(h.num);
+  const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceEntries(topics),morRefs=morRefsFor(topics),mh=meiaHoraFor(h.num);
   const topicHtml=topics.length
    ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">Fonte: ${esc2(sourceShort(t.source))}</span></div>`).join('')}</div>`
    : `<div class="study-analysis-pending"><b>Em levantamento.</b> Ainda não há um ponto técnico específico cadastrado para este hino na base piloto.</div>`;
@@ -4619,6 +4684,24 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
                <span>${esc2(r.title)}<small>${esc2(r.note||'')}</small></span>
                <span class="study-resource-lock">Material</span>
              </div>`).join('')}</div>
+      </section>`
+   : '';
+  const morHtml=morRefs.length
+   ? `<section class="study-detail-block study-mor-block">
+        <div class="study-mor-head">
+          <div>
+            <h3>MOR relacionado</h3>
+            <small>Referências de estudo ligadas aos pontos técnicos deste hino.</small>
+          </div>
+          <a href="${MOR_OFFICIAL_URL}" target="_blank" rel="noopener">Site oficial ↗</a>
+        </div>
+        <div class="study-mor-list">
+          ${morRefs.map(r=>`<div class="study-mor-item">
+            <strong>${esc2(r.title)}</strong>
+            <span>${esc2(r.detail)}</span>
+          </div>`).join('')}
+        </div>
+        <div class="study-mor-note">Os materiais internos/restritos do método são usados somente como referência de conferência e não são publicados pelo Guia.</div>
       </section>`
    : '';
   const mhHtml=mh
@@ -4662,6 +4745,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       ${topicHtml}
     </section>
     ${resourceHtml}
+    ${morHtml}
     ${mhHtml}
     <section class="study-detail-block study-detail-source">
       <button type="button" class="study-source-toggle" data-source-toggle aria-expanded="false">
@@ -6699,6 +6783,64 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   .study-source-entry a{
     align-self:flex-start;
   }
+}
+</style>
+
+
+<style id="v641-mor-contextual-style">
+.study-mor-block{padding-top:12px!important}
+.study-mor-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:9px;
+}
+.study-mor-head h3{margin:0!important}
+.study-mor-head small{
+  display:block;
+  margin-top:3px;
+  color:#71695f;
+  font:.61rem/1.3 Arial,sans-serif;
+}
+.study-mor-head>a{
+  flex:0 0 auto;
+  padding:7px 9px;
+  border:1px solid #c9aa67;
+  border-radius:999px;
+  background:#fff8e8;
+  color:#76561b;
+  text-decoration:none;
+  font:800 .58rem/1 Arial,sans-serif;
+  white-space:nowrap;
+}
+.study-mor-list{display:grid;gap:7px}
+.study-mor-item{
+  padding:9px 10px;
+  border:1px solid #e4dac6;
+  border-radius:10px;
+  background:#fcfaf5;
+}
+.study-mor-item strong{
+  display:block;
+  color:#26394d;
+  font:800 .69rem/1.25 Arial,sans-serif;
+}
+.study-mor-item span{
+  display:block;
+  margin-top:3px;
+  color:#71695f;
+  font:.62rem/1.4 Arial,sans-serif;
+}
+.study-mor-note{
+  margin-top:8px;
+  padding-top:7px;
+  border-top:1px dashed #e0d4bb;
+  color:#82786c;
+  font:.57rem/1.35 Arial,sans-serif;
+}
+@media(max-width:520px){
+  .study-mor-head{align-items:flex-start}
 }
 </style>
 
