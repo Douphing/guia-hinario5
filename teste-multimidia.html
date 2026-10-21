@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
 <!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
 <!-- V6.67: pacote de mídia obrigatório por hino = MP3 local + Spotify + YouTube + YouTube Music; fallback por busca exata quando ID direto não está validado. -->
@@ -126,6 +127,11 @@ REGRA CONSOLIDADA:
 @media(max-width:380px){
   #hymnDetail .hd-media-platforms{grid-template-columns:1fr!important;}
 }
+</style>
+
+
+<style id="v672-remove-media-validation-strip">
+#hymnDetail .hd-source-validation{display:none!important}
 </style>
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
@@ -1477,16 +1483,24 @@ function loadHymnMedia(kind,media,button){
      f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
      links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
    }else if(media.spotifySearch){
-     sp.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>Spotify · Orquestra Sacra</strong><br>A faixa está confirmada no catálogo. O ID direto ainda não foi consolidado neste piloto; abriremos a busca exata no Spotify.</div>';
-     links.innerHTML='<a href="'+media.spotifySearch+'" target="_blank" rel="noopener">Buscar no Spotify ↗</a>';
+     document.getElementById('hymnDetail').classList.remove('media-open');
+     button.classList.remove('active');
+     try{
+       const w=window.open(media.spotifySearch,'_blank','noopener');
+       if(w) w.opener=null;
+     }catch(e){}
+     return;
    }
  }else{
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
    const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
    if(!directId && searchUrl){
-     const nomePlataforma=kind==='youtube'?'YouTube':'YouTube Music';
-     yt.innerHTML='<div class="hd-unavailable hd-source-validation" style="margin-top:10px"><strong>'+nomePlataforma+' · Orquestra Sacra</strong><br>O botão foi mantido no Guia. Como o ID direto ainda não foi validado, use a busca exata da faixa na plataforma.</div>';
-     links.innerHTML='<a href="'+searchUrl+'" target="_blank" rel="noopener">Buscar na '+nomePlataforma+' ↗</a>';
+     document.getElementById('hymnDetail').classList.remove('media-open');
+     button.classList.remove('active');
+     try{
+       const w=window.open(searchUrl,'_blank','noopener');
+       if(w) w.opener=null;
+     }catch(e){}
      return;
    }
    const id=directId;
