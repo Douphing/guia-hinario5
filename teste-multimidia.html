@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "em validação". -->
 <!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
 <!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
@@ -132,6 +133,22 @@ REGRA CONSOLIDADA:
 
 <style id="v672-remove-media-validation-strip">
 #hymnDetail .hd-source-validation{display:none!important}
+</style>
+
+
+<style id="v673-media-pending-style">
+#hymnDetail .hd-media-platforms .hd-media-pending{
+  opacity:.62!important;
+  cursor:default!important;
+  filter:saturate(.7)!important;
+}
+#hymnDetail .hd-media-platforms .hd-media-pending b{
+  visibility:hidden!important;
+}
+#hymnDetail .hd-media-platforms .hd-media-pending span{
+  font-size:12px!important;
+  line-height:1.15!important;
+}
 </style>
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
@@ -1379,9 +1396,18 @@ function openHymnDetail(h,cat){
      : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
 
    const platformBtns=[];
-   if(media.spotify||media.spotifySearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
-   if(media.youtube||media.youtubeSearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
-   if(media.youtubeMusic||media.youtubeMusicSearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
+   if(media.spotify||media.spotifySearch){
+     const pending=!media.spotify && !!media.spotifySearch;
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+   }
+   if(media.youtube||media.youtubeSearch){
+     const pending=!media.youtube && !!media.youtubeSearch;
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+   }
+   if(media.youtubeMusic||media.youtubeMusicSearch){
+     const pending=!media.youtubeMusic && !!media.youtubeMusicSearch;
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+   }
 
    area.innerHTML=
      '<div class="hd-media-title"><span class="hd-note">♫</span> Mídias do '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
@@ -1392,7 +1418,7 @@ function openHymnDetail(h,cat){
      '<div class="hd-slot" id="hdYoutube"></div>'+
      '<div class="hd-links" id="hdLinks"></div>';
 
-   area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   area.querySelectorAll('.hd-play:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
    area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
  }
@@ -1485,10 +1511,6 @@ function loadHymnMedia(kind,media,button){
    }else if(media.spotifySearch){
      document.getElementById('hymnDetail').classList.remove('media-open');
      button.classList.remove('active');
-     try{
-       const w=window.open(media.spotifySearch,'_blank','noopener');
-       if(w) w.opener=null;
-     }catch(e){}
      return;
    }
  }else{
@@ -1497,10 +1519,6 @@ function loadHymnMedia(kind,media,button){
    if(!directId && searchUrl){
      document.getElementById('hymnDetail').classList.remove('media-open');
      button.classList.remove('active');
-     try{
-       const w=window.open(searchUrl,'_blank','noopener');
-       if(w) w.opener=null;
-     }catch(e){}
      return;
    }
    const id=directId;
