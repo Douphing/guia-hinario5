@@ -1,4 +1,6 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.53: normalização de busca reforçada com fallback explícito de acentos na pesquisa geral e Meia-Hora. -->
+<!-- V6.52: busca da Meia-Hora normalizada; mensagem específica quando não há coros na relação sugestiva. -->
 <!-- V6.51: pesquisa principal normalizada para ignorar acentos e maiúsculas/minúsculas; inclui título, ocasião e apropriação. -->
 <!-- V6.49: auditoria final concluída; tabela das 5 fases conferida integralmente com a fonte visual; duplicidades da fonte preservadas; base funcional preservada. --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
       content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título, incluindo a relação sugestiva de Hinos para Meia-Hora com andamento. Guia independente e não oficial."><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><link rel="canonical"
@@ -135,12 +137,21 @@ const openBtn=document.querySelector("#openSearch"), closeBtn=document.querySele
 function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>q.focus(),120);renderResults();}
 function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");q.value="";results.innerHTML="";q.blur();}
 function renderResults(){
- const normalizeSearch=v=>String(v??'')
-   .normalize('NFD')
-   .replace(/[\u0300-\u036f]/g,'')
-   .toLowerCase()
-   .replace(/\s+/g,' ')
-   .trim();
+ const normalizeSearch=v=>{
+   let s=String(v??'').toLowerCase();
+   try{s=s.normalize('NFD')}catch(e){}
+   return s
+     .replace(/[\u0300-\u036f]/g,'')
+     .replace(/[áàâãäå]/g,'a')
+     .replace(/[éèêë]/g,'e')
+     .replace(/[íìîï]/g,'i')
+     .replace(/[óòôõö]/g,'o')
+     .replace(/[úùûü]/g,'u')
+     .replace(/ç/g,'c')
+     .replace(/ñ/g,'n')
+     .replace(/\s+/g,' ')
+     .trim();
+ };
 
  const rawTerm=q.value.trim();
  const term=normalizeSearch(rawTerm);
@@ -1553,7 +1564,22 @@ function downloadCallsCsv(){
  function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
  function show(id){document.getElementById(id).classList.add('show')} function hide(id){document.getElementById(id).classList.remove('show');if(id==='mhMetro')stop()}
  function mountIndex(){const idx=document.getElementById('indice');if(!idx||document.getElementById('mhIndex'))return;const d=document.createElement('div');d.id='mhDivider';d.textContent='RELAÇÕES SUGESTIVAS';idx.appendChild(d);const a=document.createElement('a');a.id='mhIndex';a.href='#';a.innerHTML='<span class="mhCopy"><b>🎼 Hinos para Meia-Hora</b><small>Consulta sugestiva de hinos e andamento</small></span><span class="mhArrow">Abrir ›</span>';a.onclick=e=>{e.preventDefault();registrarEventoGA('abrir_meia_hora');render('');show('mhOverlay');setTimeout(()=>document.getElementById('mhSearch').focus(),80)};idx.appendChild(a)}
- function render(q){q=(q||'').trim().toLowerCase();const rows=MH.filter(x=>{const h=HM.get(x.num)||{};return !q||x.num===q||String(h.titulo||'').toLowerCase().includes(q)});document.getElementById('mhMeta').textContent=rows.length+' sugestões exibidas • base em validação';document.getElementById('mhList').innerHTML=rows.map(x=>{const h=HM.get(x.num)||{titulo:'Hino '+x.num,ocasiao:''};return `<div class="mhItem"><div><strong>${esc(x.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></div><span class="mhBpm">♩ ${x.min}–${x.max} <button data-n="${x.num}" title="Metrônomo">▶</button></span></div>`}).join('');document.querySelectorAll('.mhBpm button').forEach(b=>b.onclick=()=>openMeter(MH.find(x=>x.num===b.dataset.n)))}
+ function normMhSearch(v){
+  let s=String(v??'').toLowerCase();
+  try{s=s.normalize('NFD')}catch(e){}
+  return s
+   .replace(/[\u0300-\u036f]/g,'')
+   .replace(/[áàâãäå]/g,'a')
+   .replace(/[éèêë]/g,'e')
+   .replace(/[íìîï]/g,'i')
+   .replace(/[óòôõö]/g,'o')
+   .replace(/[úùûü]/g,'u')
+   .replace(/ç/g,'c')
+   .replace(/ñ/g,'n')
+   .replace(/\s+/g,' ')
+   .trim();
+ }
+ function render(q){q=normMhSearch(q||'');const rows=MH.filter(x=>{const h=HM.get(x.num)||{};const searchable=normMhSearch([x.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));return !q||searchable.includes(q)});document.getElementById('mhMeta').textContent=rows.length+' sugestões exibidas • base em validação';const list=document.getElementById('mhList');if(!rows.length&&q){const isCoro=q==='coro'||q.startsWith('coro ');list.innerHTML=`<div class="mhEmpty">${isCoro?'Nenhum coro consta nesta relação sugestiva de Hinos para Meia-Hora.':'Nenhuma sugestão encontrada para esta pesquisa.'}</div>`;return}list.innerHTML=rows.map(x=>{const h=HM.get(x.num)||{titulo:'Hino '+x.num,ocasiao:''};return `<div class="mhItem"><div><strong>${esc(x.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></div><span class="mhBpm">♩ ${x.min}–${x.max} <button data-n="${x.num}" title="Metrônomo">▶</button></span></div>`}).join('');document.querySelectorAll('.mhBpm button').forEach(b=>b.onclick=()=>openMeter(MH.find(x=>x.num===b.dataset.n)))}
  function beep(){try{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=950;g.gain.setValueAtTime(.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.045);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.05)}catch(e){}}
  function stop(){if(timer)clearInterval(timer);timer=null;const b=document.getElementById('mhPlay');if(b)b.textContent='▶'} function start(){stop();const bpm=+document.getElementById('mhSlider').value;const h=current?HM.get(current.num)||{}:{};registrarEventoGA('iniciar_metronomo',{numero_hino:String(current?.num||''),titulo_hino:String(h.titulo||''),bpm_atual:bpm,bpm_min:current?.min||0,bpm_max:current?.max||0});beep();timer=setInterval(beep,60000/bpm);document.getElementById('mhPlay').textContent='■'}
  function sync(){document.getElementById('mhNow').textContent=document.getElementById('mhSlider').value;if(timer)start()}
@@ -3008,4 +3034,5 @@ function downloadCallsCsv(){
 }
 </style>
 
+<style id="v652-mh-search-style">.mhEmpty{margin-top:8px;padding:16px 14px;border:1px dashed #d8ccb5;border-radius:12px;background:#f8f5ee;color:#746c62;font:600 .78rem/1.45 Arial,sans-serif;text-align:center}</style>
 </body></html>
