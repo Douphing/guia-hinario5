@@ -4611,6 +4611,19 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       <div class="study-detail-statuses">${detailStatusButtons(h)}</div>
       <small class="study-detail-local">Salvo somente neste dispositivo.</small>
     </section>
+    ${currentDetailOrigin==='sequence'
+      ? `<div class="study-sequence-inline">
+           <div class="study-sequence-inline-copy">
+             <span>Sequência da ${n}ª fase</span>
+             <strong>${nextHymn
+               ? `Próximo: ${String(nextHymn.num).startsWith('Coro ')?esc2(nextHymn.num):'Hino '+esc2(nextHymn.num)} — ${esc2(nextHymn.titulo||'')}`
+               : `Último hino desta fase`}</strong>
+           </div>
+           ${nextHymn
+             ? `<button type="button" class="study-next-hymn compact" data-next-hymn>Próximo ›</button>`
+             : `<button type="button" class="study-back-phase compact" data-back-phase>Voltar à fase</button>`}
+         </div>`
+      : ''}
     <section class="study-detail-block">
       <h3>Pontos de atenção</h3>
       ${topicHtml}
@@ -4626,19 +4639,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         <ul class="study-source-list">${sources.map(x=>`<li>${esc2(x)}</li>`).join('')}</ul>
       </div>
     </section>
-    ${currentDetailOrigin==='sequence'
-      ? `<section class="study-detail-block study-sequence-next">
-           <div>
-             <strong>Continuar a sequência</strong>
-             <small>${nextHymn
-               ? `Próximo: ${String(nextHymn.num).startsWith('Coro ')?esc2(nextHymn.num):'Hino '+esc2(nextHymn.num)} — ${esc2(nextHymn.titulo||'')}`
-               : `Você chegou ao último hino cadastrado desta fase.`}</small>
-           </div>
-           ${nextHymn
-             ? `<button type="button" class="study-next-hymn" data-next-hymn>Próximo hino ›</button>`
-             : `<button type="button" class="study-back-phase" data-back-phase>Voltar à fase</button>`}
-         </section>`
-      : ''}`;
+    `;
   const back=document.getElementById('studyDetailBack');if(back)back.textContent=currentDetailOrigin==='sequence'?`← Voltar à ${n}ª fase`:'← Voltar ao hino';
   body.querySelectorAll('[data-detail-status]').forEach(btn=>btn.onclick=()=>{setStatus(h.num,btn.dataset.detailStatus);renderStudyDetail(h,currentDetailOrigin);injectHymnStudyInfo(h)});
   body.querySelector('[data-open-hymn]')?.addEventListener('click',()=>{
@@ -6537,54 +6538,64 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
 </style>
 
 
-<style id="v636-continuar-sequencia-style">
-.study-sequence-next{
+<style id="v637-sequencia-reposicionada-style">
+.study-sequence-inline{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
+  margin:-2px 0 14px;
+  padding:10px 12px;
+  border:1px solid #dfd2b7;
+  border-radius:12px;
+  background:#fffaf0;
 }
-.study-sequence-next>div{
+.study-sequence-inline-copy{
   min-width:0;
   display:flex;
   flex-direction:column;
-  gap:4px;
+  gap:3px;
 }
-.study-sequence-next strong{
+.study-sequence-inline-copy span{
+  color:#987226;
+  font:800 .56rem/1 Arial,sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.study-sequence-inline-copy strong{
   color:#26394d;
-  font:800 .76rem/1.15 Arial,sans-serif;
+  font:800 .66rem/1.25 Arial,sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.study-sequence-next small{
-  color:#7a7267;
-  font:.61rem/1.3 Arial,sans-serif;
-}
-.study-next-hymn,
-.study-back-phase{
+.study-next-hymn.compact,
+.study-back-phase.compact{
   flex:0 0 auto;
-  padding:8px 10px!important;
+  width:auto!important;
+  padding:7px 10px!important;
   border:1px solid #c79f54!important;
   border-radius:999px!important;
   background:#fff8e8!important;
   color:#735619!important;
-  font:800 .61rem/1 Arial,sans-serif!important;
+  font:800 .58rem/1 Arial,sans-serif!important;
   cursor:pointer!important;
 }
-.study-next-hymn:hover,
-.study-next-hymn:focus-visible,
-.study-back-phase:hover,
-.study-back-phase:focus-visible{
+.study-next-hymn.compact:hover,
+.study-next-hymn.compact:focus-visible,
+.study-back-phase.compact:hover,
+.study-back-phase.compact:focus-visible{
   background:#fff1cc!important;
   border-color:#b8841e!important;
   outline:none!important;
 }
 @media(max-width:520px){
-  .study-sequence-next{
-    align-items:flex-start;
-    flex-direction:column;
+  .study-sequence-inline{
+    padding:9px 10px;
+    margin-bottom:12px;
   }
-  .study-next-hymn,
-  .study-back-phase{
-    width:100%!important;
+  .study-sequence-inline-copy strong{
+    max-width:210px;
   }
 }
 </style>
