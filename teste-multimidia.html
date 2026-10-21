@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.61: Hinos 2-5; letras final.pdf; estrutura musical repetível; áudio externo em pasta. -->
 <!-- V6.60: Hino 1 com transição natural do próprio MP3, sem atraso artificial entre estrofes; 61 BPM mantidos. -->
 <!-- V6.59: Hino 1 com pausa de 1 segundo entre estrofes, mantendo 61 BPM. -->
 <!-- V6.58: Hino 1 a 61 BPM (dentro de 56-66), preload auto e sem atraso artificial entre estrofes. -->
@@ -501,6 +502,31 @@ const MULTIMIDIA={
   bpmBase:56,
   bpmAlvo:61
  },
+ "2":{
+  audio:"audio/hino-2.mp3",
+  youtube:"z9VZN-ytxjM",
+  youtubeMusic:"z9VZN-ytxjM",
+  bpmBase:60,
+  bpmAlvo:70
+ },
+ "3":{
+  audio:"audio/hino-3.mp3",
+  bpmBase:60,
+  bpmAlvo:68
+ },
+ "4":{
+  audio:"audio/hino-4.mp3",
+  spotify:"77u8hNME1vkIGiviNc5M15",
+  bpmBase:112,
+  bpmAlvo:125
+ },
+ "5":{
+  audio:"audio/hino-5.mp3",
+  youtube:"sPMjkzS1AXU",
+  youtubeMusic:"sPMjkzS1AXU",
+  bpmBase:112,
+  bpmAlvo:128
+ },
  "45":{
   audio:"audio/hino-45.mp3",
   spotify:"0834t6lumVQ5FKetjMgREw",
@@ -579,6 +605,117 @@ const LETRAS={
     "Sempre voltado aos bens do porvir;",
     "Mestre amado, desejo Te ouvir."
    ]
+  ]
+ },
+ "2":{
+  tipo:"hino",
+  titulo:"De Deus tu és eleita",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   [
+    "De Deus tu és eleita, igreja de Jesus,",
+    "O teu divino Mestre à glória te conduz;",
+    "Prepara-te, pois Ele mui breve voltará;",
+    "A glória que te espera já preparada está."
+   ],
+   [
+    "Com celestiais adornos espera o teu Senhor,",
+    "Vestida de justiça e do divino amor;",
+    "Dileta és de Cristo, que vida te doou;",
+    "A fim de resgatar-te, Seu sangue derramou."
+   ],
+   [
+    "É grande tua glória, igreja de Jesus;",
+    "Consagra-te a Ele, andando em Sua luz;",
+    "Em breve, no Seu reino, gloriosa entrarás,",
+    "A face do Esposo, no céu, contemplarás."
+   ]
+  ]
+ },
+ "3":{
+  tipo:"hino",
+  titulo:"Faz-nos ouvir Tua voz",
+  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrofes:[
+   [
+    "Faz-nos ouvir Tua voz gloriosa,",
+    "Ó nosso Mestre, fiel Redentor;",
+    "A Tua igreja, dileta esposa,",
+    "Sente por Ti inefável amor."
+   ],
+   [
+    "Ó Jesus Cristo, celeste Esposo,",
+    "Vem conduzir-nos, por Teu grande amor;",
+    "Já antevemos, ó Rei majestoso,",
+    "A glória eterna do Teu esplendor."
+   ],
+   [
+    "A Tua igreja está se adornando",
+    "Para encontrar-se Contigo, ó Jesus;",
+    "Com santas vestes, está aguardando",
+    "Ver Tua face no reino de luz."
+   ]
+  ],
+  coro:[
+   "Ó caro Salvador; a Tua voz de amor",
+   "Nos guia para o céu, glorioso lar;",
+   "Pela Palavra vem nos consolar."
+  ]
+ },
+ "4":{
+  tipo:"hino",
+  titulo:"Ouve a nossa oração",
+  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrofes:[
+   [
+    "Nossos olhos para os céus, ó Deus, nós levantamos;",
+    "Confiando em Teu amor, a nossa voz alçamos."
+   ],
+   [
+    "Refrigério celestial e bálsamo precioso",
+    "É sentir-Te em nosso ser, Pai santo, glorioso."
+   ],
+   [
+    "No Teu trono, ó Senhor, recebe nesta hora",
+    "A humilde oração do povo que Te adora."
+   ]
+  ],
+  coro:[
+   "Ouve a nossa oração",
+   "Desde a Tua habitação;",
+   "Tua bênção, Teu perdão,",
+   "Manda, ó Deus piedoso."
+  ]
+ },
+ "5":{
+  tipo:"hino",
+  titulo:"A Rocha celestial",
+  estrutura:["estrofe-1","coro","estrofe-2","coro","estrofe-3","coro"],
+  estrofes:[
+   [
+    "Sábio e prudente será o varão",
+    "Que a casa na rocha erguer;",
+    "Sempre terá eficaz proteção,",
+    "Pois nada a pode abater."
+   ],
+   [
+    "Quem sobre a areia quiser construir,",
+    "Em vão trabalhado terá;",
+    "Pois sua casa virá a cair,",
+    "Em falso alicerce estará."
+   ],
+   [
+    "As tempestades e os ventos virão",
+    "A todos, com grande furor;",
+    "Mas os que sobre a Rocha estão,",
+    "Firmeza terão no Senhor."
+   ]
+  ],
+  coro:[
+   "A Rocha celestial",
+   "É Cristo, o Filho de Deus,",
+   "O Fundamento eternal",
+   "De quem busca o reino dos céus."
   ]
  },
  "45":{
@@ -1533,13 +1670,23 @@ function downloadCallsCsv(){
         const coro=temCoro
           ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
           : '';
-        const estrofes=(letra.estrofes||[]).map((estrofe,i)=>{
+        const renderEstrofe=(i)=>{
+          const estrofe=(letra.estrofes||[])[i]||[];
           const linhas=estrofe.map((l,j)=>
             '<div class="v2VerseLine">'+(j===0?'<span class="v2StanzaNum">'+(i+1)+'.</span>':'')+esc(l)+'</div>'
           ).join('');
-          return '<div class="v2Stanza">'+linhas+'</div>'+(i===0 ? coro : '');
-        }).join('');
-        box.innerHTML=estrofes;
+          return '<div class="v2Stanza">'+linhas+'</div>';
+        };
+        if(Array.isArray(letra.estrutura)&&letra.estrutura.length){
+          box.innerHTML=letra.estrutura.map(item=>{
+            if(item==='coro') return coro;
+            const m=String(item).match(/^estrofe-(\d+)$/);
+            return m?renderEstrofe(Math.max(0,Number(m[1])-1)):'';
+          }).join('');
+        }else{
+          const estrofes=(letra.estrofes||[]).map((_,i)=>renderEstrofe(i)+(i===0?coro:'')).join('');
+          box.innerHTML=estrofes;
+        }
       }
     }else{
       box.innerHTML='<p class="v2Empty">Letra ainda não cadastrada neste protótipo.</p>';
