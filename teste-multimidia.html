@@ -4263,6 +4263,7 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
  const STUDY_SOURCES={
   phase_mor3:'MOR Volume 3 — tabela final de hinos por dificuldades, conforme apresentada no material da Reunião de Aprimoramento Musical para Organistas, Regional Embu das Artes, 18/10/2026.',
   estudos_hinos:'PDF “Estudos de Hinos” — material da pasta Reunião Técnica para Organistas.',
+  estudos_hinos_colcheias:'PDF “Estudos de Hinos” — relação de colcheias pontuadas e não pontuadas; foram cadastrados somente os números claramente legíveis antes do trecho final truncado.',
   reuniao_intro:'Reunião de Aprimoramento Musical para Organistas — seção Introduções; referência apresentada ao MOR Volume 2, p. 113.',
   reuniao_dedilhado:'Reunião de Aprimoramento Musical para Organistas — seção Recursos de Dedilhado; referência apresentada ao MOR Volume 1, p. 47.',
   reuniao_execucao:'Reunião de Aprimoramento Musical para Organistas — seção Execução dos Hinos / assuntos técnicos.',
@@ -4284,6 +4285,12 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   {id:'colcheia-antes-tercina',group:'Ritmo',title:'Valor exato da colcheia — antes de tercinas',detail:'O material destaca o valor exato da colcheia imediatamente antes de tercinas.',source:'estudos_hinos',hinos:['182','211'],resources:['drive_h182_colcheia']},
   {id:'ligadura-tercina',group:'Ritmo',title:'Ligadura de valor com figuras em tercinas',detail:'Atenção à ligadura de valor quando há figuras em tercinas.',source:'estudos_hinos',hinos:['157','359'],resources:['drive_h359_tercina']},
 
+  {id:'colcheias-pontuadas-lista',group:'Ritmo',title:'Colcheias pontuadas e não pontuadas',detail:'O hino aparece na relação de estudo para atenção à execução de colcheias pontuadas e não pontuadas.',source:'estudos_hinos_colcheias',hinos:['10','24','70','79','155','179','203','315','320','334','360'],resources:['drive_h320_colcheias']},
+
+  {id:'desencontro-vozes-lista',group:'Vozes',title:'Desencontro entre as vozes',detail:'O PDF “Estudos de Hinos” inclui este hino na relação de atenção ao desencontro entre as vozes.',source:'estudos_hinos',hinos:['43','71','146','188','205','225','237','304','28','398','404'],resources:['drive_h225_vozes']},
+
+  {id:'nota-apoio-repetidas-24',group:'Notas de apoio',title:'Nota de apoio em notas repetidas',detail:'Há um material audiovisual específico para estudo de nota de apoio em notas repetidas no Hino 24.',source:'pasta_video',hinos:['24'],resources:['drive_h24_nota_apoio']},
+
   {id:'dedilhado-55',group:'Dedilhado',title:'Dedilhado 5–5 na mão esquerda',detail:'O material relaciona este hino entre os casos que exigem atenção ao dedilhado 5–5 na mão esquerda.',source:'estudos_hinos',hinos:['4','17','24','25','33','37','50','55','67','117','121','130','132','207','223','224','250','255','267','302','329','333','360','364','406','422','436','451'],resources:['public_posicao_dedos']},
   {id:'atencao-dedilhado',group:'Dedilhado',title:'Atenção ao dedilhado',detail:'O hino aparece na relação específica de atenção ao dedilhado.',source:'estudos_hinos',hinos:['2','24','33','84','198','240','250','275','318','350','356','384','394'],resources:['public_posicao_dedos','public_articulacao']},
   {id:'passagem-incomum',group:'Dedilhado',title:'Passagem incomum de dedos',detail:'Este hino aparece na relação de passagens incomuns de dedos apresentada na seção de recursos de dedilhado.',source:'reuniao_dedilhado',hinos:['2','13','16','24','33','41','53','64','69','78','82','85','113','116','136','138','171','198','205','211','230','245','270','271','275','422','435','436'],resources:['public_posicao_dedos','public_articulacao']},
@@ -4294,14 +4301,13 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   /* Itens abaixo são cadastrados somente quando há um vídeo específico identificado na pasta. */
   {id:'respiracao-exemplo',group:'Respiração',title:'Respiração — exemplo prático localizado',detail:'Há um vídeo específico na pasta da reunião demonstrando execução incorreta e correta de respiração neste hino.',source:'pasta_video',hinos:['48','253','432'],resources:['drive_h48_respiracao','drive_h253_respiracao','drive_h432_respiracao']},
   {id:'nota-apoio-exemplo',group:'Notas de apoio',title:'Nota de apoio — exemplo prático localizado',detail:'Há um vídeo específico na pasta da reunião demonstrando nota de apoio neste hino.',source:'pasta_video',hinos:['135'],resources:['drive_h135_nota_apoio']},
-  {id:'colcheias-320',group:'Ritmo',title:'Colcheias pontuadas e não pontuadas',detail:'Para o Hino 320 há um vídeo específico na pasta da reunião sobre colcheias pontuadas e não pontuadas no mesmo hino.',source:'pasta_video',hinos:['320'],resources:['drive_h320_colcheias']},
-  {id:'desencontro-225',group:'Vozes',title:'Desencontro entre as vozes',detail:'Para o Hino 225 há um vídeo específico na pasta da reunião demonstrando execução incorreta e correta do desencontro entre vozes.',source:'pasta_video',hinos:['225'],resources:['drive_h225_vozes']},
   {id:'intro-video-especifico',group:'Introdução',title:'Vídeo específico de introdução disponível',detail:'Há um vídeo específico na pasta da reunião comparando formas correta/incorreta ou demonstrando a introdução deste hino.',source:'pasta_video',hinos:['54','62','103','105','143','241'],resources:['drive_h54_intro','drive_h62_intro','drive_h103_intro','drive_h105_intro','drive_h143_intro','drive_h241_intro']}
  ];
  const STUDY_RESOURCES={
   public_posicao_dedos:{type:'public',title:'Posição dos dedos',note:'Vídeo público citado no material da reunião · MOR Volume 1, p. 9',url:'https://youtu.be/QY5NtfR6DuI'},
   public_articulacao:{type:'public',title:'Articulação de dedos',note:'Vídeo público citado no material da reunião · MOR Volume 1, p. 12',url:'https://youtu.be/pohcdfx27oc'},
 
+  drive_h24_nota_apoio:{type:'drive',title:'Hino 24 — Nota de apoio em notas repetidas',note:'Material de apoio em vídeo.',hinos:['24'],url:'https://drive.google.com/file/d/1xXzmSzFVTCbvy8KxcZuvsbVgVLpgLIRS/view'},
   drive_h48_respiracao:{type:'drive',title:'Hino 48 — Respiração incorreta e correta',note:'Material de apoio em vídeo.',hinos:['48'],url:'https://drive.google.com/file/d/1XhgOhW_25_aLK6jHz98jZogg6IgtzoAQ/view'},
   drive_h54_intro:{type:'drive',title:'Hino 54 — Introdução correta e incorreta',note:'Material de apoio em vídeo.',hinos:['54'],url:'https://drive.google.com/file/d/1lGclSmKKJdZ7Jiwze559JSghgEdRJjE6/view'},
   drive_h59_colcheia:{type:'drive',title:'Hino 59 — Valor exato da colcheia',note:'Material de apoio em vídeo.',hinos:['59'],url:'https://drive.google.com/file/d/1T_j49Sdpb0ddQUEpStA2YhHhA7zLqRpF/view'},
