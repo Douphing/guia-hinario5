@@ -1665,6 +1665,11 @@ function downloadCallsCsv(){
   mor_v2_planos:{short:'MOR Volume 2 — Planos de Aula'},
   pasta_video:{short:'Vídeo de apoio',url:'https://drive.google.com/drive/folders/18N_ccopTrM79e5KujubVRe4r6V5FOM6h'}
  };
+ const MOR_V3_STUDY_RESOURCES=[
+  {id:'mor3-videos',title:'Vídeos explicativos',note:'Material de apoio do MOR Volume 3',url:'https://www.youtube.com/playlist?list=PLiWowsZD_EnFiKiuZ2ZLbglIeke0mGPkQ'},
+  {id:'mor3-audios',title:'Áudios dos estudos',note:'Material de apoio do MOR Volume 3',url:'https://www.youtube.com/playlist?list=PLiWowsZD_EnFIq_8Z4b6FV1ZMrqJyRXYR'},
+  {id:'mor3-videoaulas',title:'Videoaulas',note:'Material de apoio do MOR Volume 3',url:'https://www.youtube.com/playlist?list=PL-FsRzg4fBXmaFDv7zLLz4R8EZnT86_-j'}
+ ];
  const MOR_OFFICIAL_URL='https://congregacaocristanobrasil.org.br/musica/mor';
  const MOR_TOPIC_REFS={
   'asterisco-apos':[
@@ -2053,9 +2058,39 @@ function downloadCallsCsv(){
 
     <div class="study-phase-grid study-phase-grid-simple">${phaseCards}</div>
 
+    <div class="study-mor3-support">
+      <button type="button" class="study-mor3-toggle" id="studyMor3Toggle" aria-expanded="false" aria-controls="studyMor3Panel">
+        <span class="study-mor3-icon">📘</span>
+        <span class="study-mor3-copy">
+          <strong>Materiais do MOR Volume 3</strong>
+          <small>Vídeos, áudios e videoaulas de apoio às 5 fases</small>
+        </span>
+        <span class="study-mor3-action">Abrir</span>
+      </button>
+      <div class="study-mor3-panel" id="studyMor3Panel" hidden>
+        <div class="study-mor3-links">
+          ${MOR_V3_STUDY_RESOURCES.map(r=>`<a href="${esc2(r.url)}" target="_blank" rel="noopener">
+            <span><strong>${esc2(r.title)}</strong><small>${esc2(r.note)}</small></span>
+            <b>YouTube ↗</b>
+          </a>`).join('')}
+        </div>
+        <div class="study-mor3-note">
+          <b>Sobre esta etapa:</b> a classificação das cinco fases permanece baseada na tabela de dificuldades do MOR Volume 3. Nos links do Manual Digital consultados, Planos de Aula, Atividades Interativas e Atividades Avaliativas do Volume 3 aparecem como materiais em desenvolvimento; por isso não foram criadas novas observações por hino sem uma fonte textual específica.
+        </div>
+      </div>
+    </div>
+
     <div class="study-source">O progresso considera como concluído somente o hino marcado como “Estudado”. “Em estudo” e “Revisar” continuam visíveis sem aumentar a porcentagem.</div>`;
 
   body.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>renderPhase(+b.dataset.phase));
+  const mor3Btn=body.querySelector('#studyMor3Toggle'),mor3Panel=body.querySelector('#studyMor3Panel');
+  if(mor3Btn&&mor3Panel)mor3Btn.onclick=()=>{
+    const open=mor3Btn.getAttribute('aria-expanded')==='true',next=!open;
+    mor3Btn.setAttribute('aria-expanded',next?'true':'false');
+    mor3Panel.hidden=!next;
+    const action=mor3Btn.querySelector('.study-mor3-action');
+    if(action)action.textContent=next?'Fechar':'Abrir';
+  };
  }
  function renderPhase(n){
   currentPhase=n;
@@ -2745,6 +2780,80 @@ function downloadCallsCsv(){
 }
 .study-detail-hero.study-general .study-detail-phase span{
   background:#b99345!important;
+}
+</style>
+
+
+<style id="v647-mor-v3-style">
+.study-mor3-support{
+  margin:14px 0 10px;
+  border:1px solid #d8ceb9;
+  border-radius:14px;
+  background:#fffdf8;
+  overflow:hidden;
+}
+.study-mor3-toggle{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:12px 13px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  color:inherit;
+  cursor:pointer;
+}
+.study-mor3-icon{
+  width:34px;height:34px;
+  border-radius:10px;
+  display:grid;place-items:center;
+  background:#f1e7cf;
+  flex:0 0 auto;
+}
+.study-mor3-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.study-mor3-copy strong{font-size:.86rem}
+.study-mor3-copy small{font-size:.68rem;color:#746b5d}
+.study-mor3-action{
+  flex:0 0 auto;
+  font-size:.68rem;
+  font-weight:800;
+  color:#755e2b;
+  background:#f4ead2;
+  border-radius:999px;
+  padding:5px 8px;
+}
+.study-mor3-panel{border-top:1px solid #ece4d4;padding:10px 11px 11px}
+.study-mor3-links{display:grid;gap:7px}
+.study-mor3-links a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:space-between;
+  text-decoration:none;
+  color:inherit;
+  padding:9px 10px;
+  border:1px solid #e7dfd0;
+  border-radius:11px;
+  background:#fff;
+}
+.study-mor3-links a span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.study-mor3-links a strong{font-size:.76rem}
+.study-mor3-links a small{font-size:.61rem;color:#766e62}
+.study-mor3-links a b{font-size:.62rem;white-space:nowrap;color:#745d29}
+.study-mor3-note{
+  margin-top:9px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#f8f5ee;
+  color:#6d665c;
+  font-size:.65rem;
+  line-height:1.45;
+}
+.study-mor3-note b{color:#4e493f}
+@media(max-width:520px){
+  .study-mor3-toggle{padding:11px}
+  .study-mor3-links a{align-items:flex-start}
 }
 </style>
 
