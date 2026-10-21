@@ -4273,6 +4273,19 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   mor1posicao:'MOR Volume 1 — posição natural/dedilhado, conforme material da reunião.',
   pasta_video:'Vídeo de apoio localizado na pasta “Reunião Técnica para Organistas”; disponibilidade pública ainda não validada.'
  };
+ const STUDY_SOURCE_META={
+  phase_mor3:{short:'MOR Volume 3 — classificação por dificuldade'},
+  estudos_hinos:{short:'Estudos de Hinos',url:'https://drive.google.com/file/d/1S6bH5KUXIQp0tKCMSHiqrVpmM58yY2H8/view'},
+  estudos_hinos_colcheias:{short:'Estudos de Hinos',url:'https://drive.google.com/file/d/1S6bH5KUXIQp0tKCMSHiqrVpmM58yY2H8/view'},
+  reuniao_intro:{short:'Aprimoramento Musical — Introduções',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
+  reuniao_dedilhado:{short:'Aprimoramento Musical — Dedilhado',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
+  reuniao_execucao:{short:'Aprimoramento Musical — Execução dos hinos',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
+  execucao_consolidada:{short:'Estudos de Hinos + Aprimoramento Musical',url:'https://drive.google.com/file/d/1S6bH5KUXIQp0tKCMSHiqrVpmM58yY2H8/view'},
+  reuniao_respiracao:{short:'Aprimoramento Musical — Respirações',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
+  reuniao_notas_apoio:{short:'Aprimoramento Musical — Notas de apoio',url:'https://drive.google.com/file/d/12Ipk__M2vQMxaBCpZqcZrNZZsfYg3hjQ/view'},
+  mor1posicao:{short:'MOR Volume 1 — posição/dedilhado'},
+  pasta_video:{short:'Vídeo de apoio',url:'https://drive.google.com/drive/folders/18N_ccopTrM79e5KujubVRe4r6V5FOM6h'}
+ };
  const STUDY_TOPICS=[
   {id:'asterisco-apos',group:'Introdução',title:'Notas de passagem após o asterisco',detail:'As notas de passagem da mão esquerda escritas após o asterisco não deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['1','11','33','36','50','82','103','130','136','167','171','173','177','200','205','237','241','245','259','267','281','286','294','38','322','330']},
   {id:'asterisco-antes',group:'Introdução',title:'Notas de passagem antes do asterisco',detail:'As notas de passagem da mão esquerda escritas antes do asterisco deverão ser executadas na introdução.',source:'estudos_hinos',hinos:['19','24','54','57','76','88','105','122','140','142','143','174','232','233','240','243','319','350','372']},
@@ -4347,7 +4360,18 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
       return !Array.isArray(r.hinos) || r.hinos.some(h=>String(h).trim()===k);
     });
 }
- function sourceLabels(topics){const ids=['phase_mor3',...topics.map(t=>t.source)].filter(Boolean);return [...new Set(ids)].map(id=>STUDY_SOURCES[id]).filter(Boolean)}
+ function sourceShort(id){
+  return STUDY_SOURCE_META[id]?.short || 'Fonte cadastrada';
+}
+ function sourceEntries(topics){
+  const ids=['phase_mor3',...topics.map(t=>t.source)].filter(Boolean);
+  return [...new Set(ids)].map(id=>{
+    const label=STUDY_SOURCES[id];
+    if(!label)return null;
+    const meta=STUDY_SOURCE_META[id]||{};
+    return {id,label,short:meta.short||label,url:meta.url||''};
+  }).filter(Boolean);
+}
  function meiaHoraFor(num){try{return (window.__MEIA_HORA_BASE||[]).find(x=>String(x.num)===String(num))||null}catch(e){return null}}
  function uniq(arr){return [...new Set((arr||[]).map(String))];}
  function hmap(){const m=new Map();try{Object.values(DATA).flat().forEach(h=>{if(!m.has(String(h.num)))m.set(String(h.num),h)})}catch(e){}return m}
@@ -4576,9 +4600,9 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   const ps=phasesOf(h.num),n=ps[0]||1,s=statusOf(h.num),m=STATUS[s],pm=PHASE_META[n]||{label:''};
   const phaseText=ps.length?ps.map(x=>x+'ª Fase').join(' / '):'Fase não cadastrada';
   const phasePos=phasePosition(h.num,n),nextHymn=nextHymnInPhase(h.num,n);
-  const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceLabels(topics),mh=meiaHoraFor(h.num);
+  const topics=topicsFor(h.num),resources=resourcesFor(topics,h.num),sources=sourceEntries(topics),mh=meiaHoraFor(h.num);
   const topicHtml=topics.length
-   ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">${esc2(STUDY_SOURCES[t.source]||'Fonte cadastrada no material de estudo.')}</span></div>`).join('')}</div>`
+   ? `<div class="study-tech-list">${topics.map(t=>`<div class="study-tech-item"><span class="study-tech-group">${esc2(t.group||'Estudo técnico')}</span><strong>${esc2(t.title)}</strong><p>${esc2(t.detail)}</p><span class="study-tech-source">Fonte: ${esc2(sourceShort(t.source))}</span></div>`).join('')}</div>`
    : `<div class="study-analysis-pending"><b>Em levantamento.</b> Ainda não há um ponto técnico específico cadastrado para este hino na base piloto.</div>`;
   const resourceHtml=resources.length
    ? `<section class="study-detail-block study-resources-block">
@@ -4645,7 +4669,10 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
         <span class="study-source-chevron">⌄</span>
       </button>
       <div class="study-source-panel" data-source-panel hidden>
-        <ul class="study-source-list">${sources.map(x=>`<li>${esc2(x)}</li>`).join('')}</ul>
+        <ul class="study-source-list">${sources.map(x=>`<li class="study-source-entry">
+          <div><strong>${esc2(x.short)}</strong><span>${esc2(x.label)}</span></div>
+          ${x.url?`<a href="${esc2(x.url)}" target="_blank" rel="noopener">Abrir documento ↗</a>`:''}
+        </li>`).join('')}</ul>
       </div>
     </section>
     `;
@@ -6605,6 +6632,72 @@ body:not(.index-mode) #content section{scroll-margin-top:calc(var(--v2-toolbar-h
   }
   .study-sequence-inline-copy strong{
     max-width:210px;
+  }
+}
+</style>
+
+
+<style id="v640-fontes-organizadas-style">
+.study-tech-source{
+  display:block!important;
+  margin-top:7px!important;
+  color:#8a7040!important;
+  font:700 .58rem/1.25 Arial,sans-serif!important;
+}
+.study-source-list{
+  gap:8px!important;
+}
+.study-source-list .study-source-entry{
+  padding:9px 10px!important;
+  border:1px solid #eadfc9;
+  border-radius:10px;
+  background:#fffdf8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.study-source-list .study-source-entry::before{
+  display:none!important;
+}
+.study-source-entry>div{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.study-source-entry strong{
+  color:#26394d;
+  font:800 .66rem/1.2 Arial,sans-serif;
+}
+.study-source-entry span{
+  color:#756d62;
+  font:.58rem/1.3 Arial,sans-serif;
+}
+.study-source-entry a{
+  flex:0 0 auto;
+  padding:6px 8px;
+  border:1px solid #c9aa67;
+  border-radius:999px;
+  background:#fff8e8;
+  color:#76561b;
+  text-decoration:none;
+  font:800 .56rem/1 Arial,sans-serif;
+  white-space:nowrap;
+}
+.study-source-entry a:hover,
+.study-source-entry a:focus-visible{
+  background:#fff1cc;
+  border-color:#b8841e;
+  outline:none;
+}
+@media(max-width:520px){
+  .study-source-list .study-source-entry{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .study-source-entry a{
+    align-self:flex-start;
   }
 }
 </style>
