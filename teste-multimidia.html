@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.58: Hino 1 a 61 BPM (dentro de 56-66), preload auto e sem atraso artificial entre estrofes. -->
 <!-- V6.57: piloto completo Hino 1 — MuseScore local + Orquestra Sacra + letra do final.pdf. -->
 <!-- V6.54: deep-link da Meia-Hora é consumido após a primeira abertura; F5 volta ao estado inicial. -->
 <!-- V6.53: normalização de busca reforçada com fallback explícito de acentos na pesquisa geral e Meia-Hora. -->
@@ -494,7 +495,9 @@ const MULTIMIDIA={
   audio:"audio/hino-1.mp3",
   spotify:"5b4OXiSiJUN9ZEHwyNg01G",
   youtube:"xCEJYpIE_Pc",
-  youtubeMusic:"xCEJYpIE_Pc"
+  youtubeMusic:"xCEJYpIE_Pc",
+  bpmBase:56,
+  bpmAlvo:61
  },
  "45":{
   audio:"audio/hino-45.mp3",
@@ -1088,14 +1091,21 @@ function loadHymnMedia(kind,media,button){
      if(String(h.num).startsWith('Coro ')){
        status.innerHTML='<span>Coro</span><strong>'+(done?'Execução concluída':'Execução única')+'</strong>';
      }else{
-       status.innerHTML='<span>Reprodução conforme as estrofes</span><strong>'+(done?('Concluído · '+total+' de '+total):('Estrofe '+ciclo+' de '+total))+'</strong>';
+       const bpmInfo=(Number(media.bpmAlvo)>0?' · '+media.bpmAlvo+' BPM':'');
+       status.innerHTML='<span>Reprodução conforme as estrofes'+bpmInfo+'</span><strong>'+(done?('Concluído · '+total+' de '+total):('Estrofe '+ciclo+' de '+total))+'</strong>';
      }
      status.classList.toggle('is-done',done);
    };
    atualizarStatus(false);
 
    const a=document.createElement('audio');
-   a.controls=true;a.preload='metadata';a.src=media.audio;a.setAttribute('playsinline','');
+   a.controls=true;a.preload='auto';a.src=media.audio;a.setAttribute('playsinline','');
+   if(Number(media.bpmBase)>0 && Number(media.bpmAlvo)>0){
+     const rate=Number(media.bpmAlvo)/Number(media.bpmBase);
+     a.defaultPlaybackRate=rate;
+     a.playbackRate=rate;
+     try{a.preservesPitch=true}catch(e){}
+   }
    au.appendChild(a);
    au.appendChild(status);
    a.addEventListener('error',()=>{
@@ -1115,10 +1125,8 @@ function loadHymnMedia(kind,media,button){
        ciclo++;
        atualizarStatus(false);
        a.currentTime=0;
-       setTimeout(()=>{
-         const p=a.play();
-         if(p&&typeof p.catch==='function')p.catch(()=>{});
-       },450);
+       const p=a.play();
+       if(p&&typeof p.catch==='function')p.catch(()=>{});
      }else{
        atualizarStatus(true);
      }
