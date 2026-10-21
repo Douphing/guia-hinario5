@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.54: deep-link da Meia-Hora é consumido após a primeira abertura; F5 volta ao estado inicial. -->
 <!-- V6.53: normalização de busca reforçada com fallback explícito de acentos na pesquisa geral e Meia-Hora. -->
 <!-- V6.52: busca da Meia-Hora normalizada; mensagem específica quando não há coros na relação sugestiva. -->
 <!-- V6.51: pesquisa principal normalizada para ignorar acentos e maiúsculas/minúsculas; inclui título, ocasião e apropriação. -->
@@ -1584,7 +1585,30 @@ function downloadCallsCsv(){
  function stop(){if(timer)clearInterval(timer);timer=null;const b=document.getElementById('mhPlay');if(b)b.textContent='▶'} function start(){stop();const bpm=+document.getElementById('mhSlider').value;const h=current?HM.get(current.num)||{}:{};registrarEventoGA('iniciar_metronomo',{numero_hino:String(current?.num||''),titulo_hino:String(h.titulo||''),bpm_atual:bpm,bpm_min:current?.min||0,bpm_max:current?.max||0});beep();timer=setInterval(beep,60000/bpm);document.getElementById('mhPlay').textContent='■'}
  function sync(){document.getElementById('mhNow').textContent=document.getElementById('mhSlider').value;if(timer)start()}
  function openMeter(x){current=x;stop();const h=HM.get(x.num)||{titulo:''},s=document.getElementById('mhSlider');registrarEventoGA('abrir_metronomo',{numero_hino:String(x.num),titulo_hino:String(h.titulo||''),bpm_min:x.min,bpm_max:x.max});document.getElementById('mhMeterHymn').textContent='Hino '+x.num;document.getElementById('mhMeterTitle').textContent=h.titulo||'';document.getElementById('mhRange').textContent='♩ '+x.min+' – '+x.max+' BPM';s.min=x.min;s.max=x.max;s.value=Math.round((x.min+x.max)/2);sync();show('mhMetro')}
- function init(){mountIndex();render('');if(new URLSearchParams(location.search).get('meia-hora')==='1'){setTimeout(()=>{render('');show('mhOverlay')},120)}document.getElementById('mhSearch').oninput=e=>render(e.target.value);document.getElementById('mhClose').onclick=()=>hide('mhOverlay');document.getElementById('mhMetroClose').onclick=()=>hide('mhMetro');document.getElementById('mhSlider').oninput=sync;document.getElementById('mhMinus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.max(+s.min,+s.value-1);sync()};document.getElementById('mhPlus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.min(+s.max,+s.value+1);sync()};document.getElementById('mhPlay').onclick=()=>timer?stop():start();document.getElementById('mhOverlay').onclick=e=>{if(e.target.id==='mhOverlay')hide('mhOverlay')};document.getElementById('mhMetro').onclick=e=>{if(e.target.id==='mhMetro')hide('mhMetro')}}
+ function init(){
+  mountIndex();
+  render('');
+  const urlParams=new URLSearchParams(location.search);
+  if(urlParams.get('meia-hora')==='1'){
+    setTimeout(()=>{render('');show('mhOverlay')},120);
+    /* Consome o deep-link depois da primeira abertura.
+       Assim, F5/recarregar volta ao estado inicial em vez de reabrir o modal. */
+    try{
+      urlParams.delete('meia-hora');
+      const cleanUrl=location.pathname+(urlParams.toString()?'?'+urlParams.toString():'')+(location.hash||'');
+      history.replaceState(history.state,'',cleanUrl);
+    }catch(e){}
+  }
+  document.getElementById('mhSearch').oninput=e=>render(e.target.value);
+  document.getElementById('mhClose').onclick=()=>hide('mhOverlay');
+  document.getElementById('mhMetroClose').onclick=()=>hide('mhMetro');
+  document.getElementById('mhSlider').oninput=sync;
+  document.getElementById('mhMinus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.max(+s.min,+s.value-1);sync()};
+  document.getElementById('mhPlus').onclick=()=>{const s=document.getElementById('mhSlider');s.value=Math.min(+s.max,+s.value+1);sync()};
+  document.getElementById('mhPlay').onclick=()=>timer?stop():start();
+  document.getElementById('mhOverlay').onclick=e=>{if(e.target.id==='mhOverlay')hide('mhOverlay')};
+  document.getElementById('mhMetro').onclick=e=>{if(e.target.id==='mhMetro')hide('mhMetro')};
+ }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
