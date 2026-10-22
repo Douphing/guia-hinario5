@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.78: Hino 6 com bloco de CORO explicitamente identificado na letra (1-2-3-CORO). -->
 <!-- V6.76: letra do Hino 6 corrigida para seguir a partitura: 1ª estrofe → 2ª estrofe → 3ª estrofe → Coro. -->
 <!-- V6.75: Hinos 11–20 adicionados à base Git atual com IDs diretos para players dentro do modal; somente “Abrir na origem” sai do Guia. -->
 
@@ -165,6 +166,11 @@ REGRA CONSOLIDADA:
 #hymnDetail .hd-media-pending b{visibility:visible!important}
 </style>
 
+
+<style id="v678-hino6-chorus-label">
+#v2LetterText .v2Chorus{position:relative;text-align:center!important;}
+#v2LetterText .v2ChorusTitle{display:table!important;margin:0 auto 10px!important;padding:4px 16px!important;border-radius:999px!important;background:#f1e4c9!important;color:#9b7228!important;font:700 .72rem Arial,sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;}
+</style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -1057,6 +1063,7 @@ const LETRAS={
  "6":{
   tipo:"hino",
   titulo:"Glória ao Justo, fiel Cordeiro!",
+  rotuloCoro:"CORO",
   estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
   estrofes:[
    ["Ao Cordeiro imaculado, Jesus Cristo, exaltemos;","Do Seu Nome falaremos, pois, com infinito amor,","Veio à terra, glorioso, com poder e esplendor."],
@@ -2175,7 +2182,7 @@ function downloadCallsCsv(){
       }else{
         const temCoro=letra.coro&&letra.coro.length;
         const coro=temCoro
-          ? '<div class="v2Chorus"><span class="v2ChorusTitle">Coro</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
+          ? '<div class="v2Chorus"><span class="v2ChorusTitle">'+esc(letra.rotuloCoro||'CORO')+'</span>'+letra.coro.map(l=>'<div class="v2VerseLine">'+esc(l)+'</div>').join('')+'</div>'
           : '';
         const renderEstrofe=(i)=>{
           const estrofe=(letra.estrofes||[])[i]||[];
