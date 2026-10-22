@@ -1,5 +1,6 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V6.74: restaura padrão do piloto Hino 45. Todas as mídias ficam ativas; player ou cartão interno abre no modal, com Abrir na origem. -->
+<!-- V6.74: restaurado padrão piloto Hino 45: player incorporado dentro do modal + link Abrir na origem. Catálogo/validação não aparece na interface. -->
+<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "em validação". -->
 <!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
 <!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
@@ -136,59 +137,42 @@ REGRA CONSOLIDADA:
 </style>
 
 
-<style id="v673-media-pending-style">
-#hymnDetail .hd-media-platforms .hd-media-pending{
-  opacity:.62!important;
-  cursor:default!important;
-  filter:saturate(.7)!important;
-}
-#hymnDetail .hd-media-platforms .hd-media-pending b{
-  visibility:hidden!important;
-}
-#hymnDetail .hd-media-platforms .hd-media-pending span{
-  font-size:12px!important;
-  line-height:1.15!important;
-}
-</style>
 
-
-<style id="v674-pilot45-media-behavior">
-#hymnDetail .hd-media-platforms .hd-platform{
-  opacity:1!important;
-  cursor:pointer!important;
-  filter:none!important;
+<style id="v674-pilot-media-window">
+#hymnDetail.media-open #hdSpotify,
+#hymnDetail.media-open #hdYoutube,
+#hymnDetail.media-open #hdAudio{
+  display:flex!important;
+  width:100%!important;
+  justify-content:center!important;
+  align-items:center!important;
 }
-#hymnDetail .hd-media-platforms .hd-platform b{
-  visibility:visible!important;
+#hymnDetail.media-open #hdSpotify iframe{
+  width:100%!important;
+  min-height:92px!important;
+  border-radius:12px!important;
 }
-#hymnDetail .hd-source-card{
-  margin-top:10px;
-  padding:12px 13px;
-  border:1px solid rgba(173,124,34,.35);
-  border-radius:14px;
-  background:linear-gradient(180deg,#fffdf7,#faf5e9);
-  display:grid;
-  gap:6px;
-  box-shadow:0 6px 18px rgba(0,0,0,.05);
+#hymnDetail.media-open #hdYoutube iframe{
+  width:min(100%,420px)!important;
+  aspect-ratio:16/9!important;
+  height:auto!important;
+  border-radius:12px!important;
+  box-shadow:0 5px 18px rgba(0,0,0,.12)!important;
 }
-#hymnDetail .hd-source-card strong{
-  color:#65420a;
-  font-family:Georgia,serif;
-  font-size:15px;
+#hymnDetail.media-open #hdLinks{
+  display:block!important;
+  min-height:22px!important;
+  margin-top:5px!important;
+  text-align:center!important;
 }
-#hymnDetail .hd-source-card span{
-  color:#5d5d5d;
-  font-size:12.5px;
-  line-height:1.4;
+#hymnDetail.media-open #hdLinks a{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  color:#59636b!important;
 }
-#hymnDetail .hd-source-card a{
-  justify-self:start;
-  margin-top:2px;
-  color:#8b5d0b;
-  font-weight:800;
-  text-decoration:none;
-}
-#hymnDetail .hd-source-card a:hover{text-decoration:underline}
 </style>
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
@@ -640,8 +624,8 @@ const MULTIMIDIA={
  "2":{
   audio:"audio/hino-2.mp3",
   spotifySearch:"https://open.spotify.com/search/2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
-  youtube:"z9VZN-ytxjM",
-  youtubeMusic:"z9VZN-ytxjM",
+  youtube:"YkACjuqc1tE",
+  youtubeMusic:"YkACjuqc1tE",
   youtubeSearch:"https://www.youtube.com/results?search_query=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   youtubeMusicSearch:"https://music.youtube.com/search?q=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   repeticoes:1,
@@ -652,6 +636,7 @@ const MULTIMIDIA={
   spotifySearch:"https://open.spotify.com/search/3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
   youtubeSearch:"https://www.youtube.com/results?search_query=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
   youtubeMusicSearch:"https://music.youtube.com/search?q=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
+  spotify:"0V7AYCAgKpG8dkx0nLyoLp",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1436,13 +1421,13 @@ function openHymnDetail(h,cat){
      : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
 
    const platformBtns=[];
-   if(media.spotify||media.spotifySearch){
+   if(media.spotify){
      platformBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
    }
-   if(media.youtube||media.youtubeSearch){
+   if(media.youtube){
      platformBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
    }
-   if(media.youtubeMusic||media.youtubeMusicSearch){
+   if(media.youtubeMusic){
      platformBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
    }
 
@@ -1544,22 +1529,12 @@ function loadHymnMedia(kind,media,button){
      f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
      f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
      f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
-     links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
-   }else if(media.spotifySearch){
-     sp.innerHTML='<div class="hd-source-card"><strong>Spotify · Orquestra Sacra</strong><span>Faixa localizada no catálogo confiável. O player direto será incorporado quando o ID da faixa estiver consolidado.</span><a href="'+media.spotifySearch+'" target="_blank" rel="noopener">Abrir na origem ↗</a></div>';
-     links.innerHTML='';
-     return;
+     links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
    }
  }else{
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
-   const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
-   if(!directId && searchUrl){
-     const nomePlataforma=kind==='youtube'?'YouTube':'YouTube Music';
-     yt.innerHTML='<div class="hd-source-card"><strong>'+nomePlataforma+' · Orquestra Sacra</strong><span>Faixa localizada no catálogo confiável. O player direto será incorporado quando o ID estiver consolidado.</span><a href="'+searchUrl+'" target="_blank" rel="noopener">Abrir na origem ↗</a></div>';
-     links.innerHTML='';
-     return;
-   }
    const id=directId;
+   if(!id) return;
    const source=kind==='youtube'?'https://youtu.be/'+id:'https://music.youtube.com/watch?v='+id;
    const f=document.createElement('iframe');
    f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
