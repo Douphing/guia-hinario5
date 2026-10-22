@@ -1,5 +1,6 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V6.74: Hinos 1-10 com mídias diretas; players internos no modal no padrão do Hino 45. -->
+<!-- V6.75: Hinos 11–20 adicionados preservando Hinos 1–10, piloto Hino 45 e Coros 1–6. MP3 local completo + Spotify/YouTube/YouTube Music por busca exata até validação de IDs diretos. -->
+<!-- V6.74: Hinos 1–10 com links diretos fornecidos pelo usuário. Players abrem dentro do modal, com "Abrir na origem ↗", seguindo o piloto do Hino 45. -->
 <!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "em validação". -->
 <!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
@@ -127,7 +128,7 @@ REGRA CONSOLIDADA:
   opacity:1!important;
 }
 @media(max-width:380px){
-  #hymnDetail .hd-media-platforms{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  #hymnDetail .hd-media-platforms{grid-template-columns:1fr!important;}
 }
 </style>
 
@@ -136,31 +137,6 @@ REGRA CONSOLIDADA:
 #hymnDetail .hd-source-validation{display:none!important}
 </style>
 
-
-<style id="v673-media-pending-style">
-#hymnDetail .hd-media-platforms .hd-media-pending{
-  opacity:.62!important;
-  cursor:default!important;
-  filter:saturate(.7)!important;
-}
-#hymnDetail .hd-media-platforms .hd-media-pending b{
-  visibility:hidden!important;
-}
-#hymnDetail .hd-media-platforms .hd-media-pending span{
-  font-size:12px!important;
-  line-height:1.15!important;
-}
-</style>
-
-
-<style id="v674-media-direct-fix">
-#hymnDetail .hd-media-pending{
-  opacity:1!important;
-  filter:none!important;
-  cursor:pointer!important;
-}
-#hymnDetail .hd-media-pending b{visibility:visible!important}
-</style>
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
@@ -601,11 +577,11 @@ const MULTIMIDIA={
   audio:"audio/hino-1.mp3",
   spotify:"5b4OXiSiJUN9ZEHwyNg01G",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/5b4OXiSiJUN9ZEHwyNg01G",
+  spotifyUrl:"https://open.spotify.com/intl-pt/track/5b4OXiSiJUN9ZEHwyNg01G",
   youtube:"xCEJYpIE_Pc",
-  youtubeOrigin:"https://www.youtube.com/watch?v=xCEJYpIE_Pc",
+  youtubeUrl:"https://www.youtube.com/watch?v=xCEJYpIE_Pc",
   youtubeMusic:"xCEJYpIE_Pc",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=xCEJYpIE_Pc",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=xCEJYpIE_Pc&si=XawUeOgn9qRTJscu",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -614,37 +590,37 @@ const MULTIMIDIA={
   audio:"audio/hino-2.mp3",
   spotify:"6jyLirHINq4MjvIvkdFmsN",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/6jyLirHINq4MjvIvkdFmsN",
+  spotifyUrl:"https://open.spotify.com/intl-pt/track/6jyLirHINq4MjvIvkdFmsN",
   youtube:"d-E3Br3qmlU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=d-E3Br3qmlU",
+  youtubeUrl:"https://www.youtube.com/watch?v=d-E3Br3qmlU",
   youtubeMusic:"d-E3Br3qmlU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=d-E3Br3qmlU",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=d-E3Br3qmlU&si=4rK5cS-T7Khf8TzU",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "3":{
   audio:"audio/hino-3.mp3",
-  spotify:"0V7AYCAgKpG8dkx0nLyoLp",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/track/0V7AYCAgKpG8dkx0nLyoLp",
+  spotify:"4glZ6e4y3uPPb6FHTYODeJ",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/4glZ6e4y3uPPb6FHTYODeJ",
   youtube:"tvTAj8WrecU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=tvTAj8WrecU",
+  youtubeUrl:"https://www.youtube.com/watch?v=tvTAj8WrecU",
   youtubeMusic:"tvTAj8WrecU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=tvTAj8WrecU",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=tvTAj8WrecU&si=iDbB3C3gVN-7GHH6",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "4":{
   audio:"audio/hino-4.mp3",
-  spotify:"77u8hNME1vkIGiviNc5M15",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/track/77u8hNME1vkIGiviNc5M15",
+  spotify:"78kBUBlPGBXNpLw5Yi615Z",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/78kBUBlPGBXNpLw5Yi615Z",
   youtube:"FGJWa36Kf2Y",
-  youtubeOrigin:"https://www.youtube.com/watch?v=FGJWa36Kf2Y",
+  youtubeUrl:"https://www.youtube.com/watch?v=FGJWa36Kf2Y",
   youtubeMusic:"FGJWa36Kf2Y",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=FGJWa36Kf2Y",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=FGJWa36Kf2Y&si=oTEzkvSHEc6uGcSm",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -653,24 +629,24 @@ const MULTIMIDIA={
   audio:"audio/hino-5.mp3",
   spotify:"1r6WwYj0UF276zdC5UCUxB",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/1r6WwYj0UF276zdC5UCUxB",
+  spotifyUrl:"https://open.spotify.com/intl-pt/track/1r6WwYj0UF276zdC5UCUxB",
   youtube:"sPMjkzS1AXU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=sPMjkzS1AXU",
+  youtubeUrl:"https://www.youtube.com/watch?v=sPMjkzS1AXU",
   youtubeMusic:"sPMjkzS1AXU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=sPMjkzS1AXU",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=sPMjkzS1AXU&si=LxZ62uW6hTOjbGbA",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "6":{
   audio:"audio/hino-6.mp3",
-  spotify:"2kOxNALfA3JrYVAHgH5uhx",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2kOxNALfA3JrYVAHgH5uhx",
+  spotify:"3QhfMXQHM38TTHLvU5g1F0",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/3QhfMXQHM38TTHLvU5g1F0",
   youtube:"Fw32Zn1AeKU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=Fw32Zn1AeKU",
+  youtubeUrl:"https://www.youtube.com/watch?v=Fw32Zn1AeKU",
   youtubeMusic:"Fw32Zn1AeKU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Fw32Zn1AeKU",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=Fw32Zn1AeKU&si=kqROUr_03iAlZ7MD",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -679,50 +655,140 @@ const MULTIMIDIA={
   audio:"audio/hino-7.mp3",
   spotify:"6k7a7TRmSsZDiW3RfkkqDD",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/6k7a7TRmSsZDiW3RfkkqDD",
+  spotifyUrl:"https://open.spotify.com/intl-pt/track/6k7a7TRmSsZDiW3RfkkqDD",
   youtube:"_5kVxVAnSTg",
-  youtubeOrigin:"https://www.youtube.com/watch?v=_5kVxVAnSTg",
+  youtubeUrl:"https://www.youtube.com/watch?v=_5kVxVAnSTg",
   youtubeMusic:"_5kVxVAnSTg",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=_5kVxVAnSTg",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=_5kVxVAnSTg&si=5JQr3_GRdD3B7l56",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "8":{
   audio:"audio/hino-8.mp3",
-  spotify:"0gXg5oy8HIVffupKCNsDWM",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/0gXg5oy8HIVffupKCNsDWM",
+  spotify:"51GCI8i1HKzVRCKGaGKqJ2",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/51GCI8i1HKzVRCKGaGKqJ2",
   youtube:"sJDCk2HccGg",
-  youtubeOrigin:"https://www.youtube.com/watch?v=sJDCk2HccGg",
+  youtubeUrl:"https://www.youtube.com/watch?v=sJDCk2HccGg",
   youtubeMusic:"sJDCk2HccGg",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=sJDCk2HccGg",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=sJDCk2HccGg&si=1YXQ6honP5ngq4r1",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "9":{
   audio:"audio/hino-9.mp3",
-  spotify:"3mdkSeCWD6us6sRnp2ehGB",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/3mdkSeCWD6us6sRnp2ehGB",
+  spotify:"7vWz5WN9IeLRF4vw6GPuyH",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/7vWz5WN9IeLRF4vw6GPuyH",
   youtube:"ydUV1W7FwJk",
-  youtubeOrigin:"https://www.youtube.com/watch?v=ydUV1W7FwJk",
+  youtubeUrl:"https://www.youtube.com/watch?v=ydUV1W7FwJk",
   youtubeMusic:"ydUV1W7FwJk",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=ydUV1W7FwJk",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=ydUV1W7FwJk&si=rBrXr8z_gjs1QmCh",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "10":{
   audio:"audio/hino-10.mp3",
-  spotify:"4O06owYB2SthbMpF6iLxxm",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/4O06owYB2SthbMpF6iLxxm",
+  spotify:"0o87KLTOit7MbL6frMdF2A",
+  spotifyType:"album",
+  spotifyUrl:"https://open.spotify.com/intl-pt/album/0o87KLTOit7MbL6frMdF2A",
   youtube:"P9WftadkxaU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=P9WftadkxaU",
+  youtubeUrl:"https://www.youtube.com/watch?v=P9WftadkxaU",
   youtubeMusic:"P9WftadkxaU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=P9WftadkxaU",
+  youtubeMusicUrl:"https://music.youtube.com/watch?v=P9WftadkxaU&si=gRsQqPaimlIElvOz",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "11":{
+  audio:"audio/hino-11.mp3",
+  spotifySearch:"https://open.spotify.com/search/11%20-%20%C3%93%20igreja%20de%20Deus%2C%20resplandece%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=11%20-%20%C3%93%20igreja%20de%20Deus%2C%20resplandece%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=11%20-%20%C3%93%20igreja%20de%20Deus%2C%20resplandece%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "12":{
+  audio:"audio/hino-12.mp3",
+  spotifySearch:"https://open.spotify.com/search/12%20-%20Sempre%20em%20Jesus%20confiarei%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=12%20-%20Sempre%20em%20Jesus%20confiarei%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=12%20-%20Sempre%20em%20Jesus%20confiarei%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "13":{
+  audio:"audio/hino-13.mp3",
+  spotifySearch:"https://open.spotify.com/search/13%20-%20Confiemos%20em%20Deus%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=13%20-%20Confiemos%20em%20Deus%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=13%20-%20Confiemos%20em%20Deus%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "14":{
+  audio:"audio/hino-14.mp3",
+  spotifySearch:"https://open.spotify.com/search/14%20-%20Manda%20os%20Teus%20dons%20celestes%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=14%20-%20Manda%20os%20Teus%20dons%20celestes%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=14%20-%20Manda%20os%20Teus%20dons%20celestes%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "15":{
+  audio:"audio/hino-15.mp3",
+  spotifySearch:"https://open.spotify.com/search/15%20-%20%C3%93%20alma%20que%20choras%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=15%20-%20%C3%93%20alma%20que%20choras%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=15%20-%20%C3%93%20alma%20que%20choras%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "16":{
+  audio:"audio/hino-16.mp3",
+  spotifySearch:"https://open.spotify.com/search/16%20-%20Promessa%20excelente%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=16%20-%20Promessa%20excelente%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=16%20-%20Promessa%20excelente%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "17":{
+  audio:"audio/hino-17.mp3",
+  spotifySearch:"https://open.spotify.com/search/17%20-%20%C3%93%20Senhor%2C%20vem%20visitar-me%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=17%20-%20%C3%93%20Senhor%2C%20vem%20visitar-me%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=17%20-%20%C3%93%20Senhor%2C%20vem%20visitar-me%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "18":{
+  audio:"audio/hino-18.mp3",
+  spotifySearch:"https://open.spotify.com/search/18%20-%20%C3%89%20Jesus%20meu%20Ref%C3%BAgio%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=18%20-%20%C3%89%20Jesus%20meu%20Ref%C3%BAgio%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=18%20-%20%C3%89%20Jesus%20meu%20Ref%C3%BAgio%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "19":{
+  audio:"audio/hino-19.mp3",
+  spotifySearch:"https://open.spotify.com/search/19%20-%20Manda-nos%20Teu%20Poder%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=19%20-%20Manda-nos%20Teu%20Poder%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=19%20-%20Manda-nos%20Teu%20Poder%20Orquestra%20Sacra",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "20":{
+  audio:"audio/hino-20.mp3",
+  spotifySearch:"https://open.spotify.com/search/20%20-%20Teu%20Esp%C3%ADrito%20derrama%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=20%20-%20Teu%20Esp%C3%ADrito%20derrama%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=20%20-%20Teu%20Esp%C3%ADrito%20derrama%20Orquestra%20Sacra",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -969,6 +1035,104 @@ const LETRAS={
    ["Prossegui nesta fé gloriosa, O inimigo de vós fugirá;","Vigiai na oração, no cuidado, E convosco Jesus estará."]
   ],
   coro:["Certamente exaltado será Quem o Nome de Cristo não negar;","Exaltado com glória celestial, Herdará a riqueza eternal."]
+ },
+ "11":{
+  tipo:"hino",titulo:"Ó igreja de Deus, resplandece",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Ó igreja de Deus, resplandece","E alegra-te, de coração,","Espalhando a semente celeste,","Anunciando a veraz salvação."],
+   ["És igreja formosa e amada","Por Cristo, o teu Salvador,","Que te quer sempre mais adornada","De justiça e sublime amor."],
+   ["A gloriosa e celeste cidade","Irás, com Jesus, Salvador;","Lá há paz, grande amor, santidade;","Lá verás o Fiel Criador."]
+  ],
+  coro:["Tu és a igreja de Jesus Cristo, o Cordeiro,","Que tem o Seu trono nos céus;","Ele, o Justo, Fiel, Verdadeiro,","Te dará as promessas de Deus."]
+ },
+ "12":{
+  tipo:"hino",titulo:"Sempre em Jesus confiarei",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Sempre em Jesus confiarei,","Sua Palavra honrarei;","Por Sua morte atroz na cruz,","Me concedeu eterna luz."],
+   ["Os bons conselhos de Jesus","São, para mim, divina luz;","Eles me trazem retidão","E divinal consolação."],
+   ["Eu vou avante, com valor;","Sigo por fé o meu Senhor.","No céu, um dia, O verei","E igual a Ele então serei."]
+  ],
+  coro:["Cristo me guia com poder,","Cristo me guia com saber;","Ele é o Amigo mui fiel,","Cristo Jesus, o Emanuel."]
+ },
+ "13":{
+  tipo:"hino",titulo:"Confiemos em Deus",
+  estrutura:["estrofe-1","coro","estrofe-2"],
+  estrofes:[
+   ["Ó amados, venceremos","Este mundo enganador;","Pela fé nós lutaremos,","Confiando no Senhor."],
+   ["Do Seu trono glorioso","Nos contempla o Senhor;","Deus, o Todo-Poderoso,","Nos conserva em amor."]
+  ],
+  coro:["Confiemos em Deus,","Ele é o nosso Pai;","Ele ouve os Seus","E, ao céu, levá-los vai.","Pelo Seu imenso amor","Nos protege o Senhor;","Oh! Oremos, com fervor,","Ao grande Deus, Formador."]
+ },
+ "14":{
+  tipo:"hino",titulo:"Manda os Teus dons celestes",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Os Teus fiéis, reunidos ante a Tua presença,","O santo Consolador esperam, ó Senhor.","Todos, contritos, clamamos com fé e com reverência;","Cumpre em nós a promessa de Deus, o Criador."],
+   ["Os Teus fiéis, reunidos, buscam os Teus dons celestes;","Clamam com todo fervor: atende, ó Senhor!","Esperançosos, aguardam, crendo no que prometeste;","Faze que todos sintamos o Teu Consolador."],
+   ["Os Teus fiéis, reunidos, constantemente clamando,","Sentem, ó bom Redentor, celestial fervor;","Pacientemente esperamos, sempre, com fé, implorando:","Vem, ó Senhor, confirmar-nos com o Consolador!"]
+  ],
+  coro:["Manda os Teus dons celestes","Pelo Espírito Santo;","Cobre os fiéis com o manto","Do Teu Consolador."]
+ },
+ "15":{
+  tipo:"hino",titulo:"Ó alma que choras",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Ó alma que choras com grande amargor,","Se queres alívio, recorre ao Senhor;","A Ele implorando, conforto acharás;","Graça, e virtude, e vida terás."],
+   ["Amigo sincero é Cristo Jesus,","Que salva o perdido, ao céu o conduz.","Tua voz levanta ao bom Redentor,","Clama por socorro, clama ao teu Senhor."],
+   ["Ó alma cansada, recorre ao Senhor,","Ele te sustenta e te dá vigor;","Auxílio do alto não falta jamais,","Em Cristo confia e não chores mais."]
+  ]
+ },
+ "16":{
+  tipo:"hino",titulo:"Promessa excelente",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Promessa excelente fizeste, ó Deus,","Fiel cumprimento a Palavra terá;","Sentir Teu Espírito queremos os Teus;","Teu povo clamando está."],
+   ["Oh! Vem despertar-nos, amado Senhor;","O Espírito Santo envia dos céus;","Com fé aguardamos o Consolador,","Que faz virtuosos os Teus."],
+   ["O Teu Santo Espírito nos guiará","Em toda verdade, justiça e amor;","Por Ele Teu povo ensinado será;","Teu Dom aguardamos, Senhor."]
+  ],
+  coro:["Envia, ó Deus, por amor,","Teus dons pelo Consolador.","Vem nos revestir de poder divinal;","Visita-nos, Pai eternal."]
+ },
+ "17":{
+  tipo:"hino",titulo:"Ó Senhor, vem visitar-me",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Ó Senhor, vem visitar-me","E alentar a minha fé;","Eu desejo consagrar-me","E alcançar, de Ti, mercê."],
+   ["Ó Jesus, és minha Sorte,","És a minha Salvação;","Faz-me firme, faz-me forte","Pela Tua santa unção."],
+   ["E ao fim serei ditoso,","Pois Contigo estarei;","No Teu reino glorioso,","Face a face Te verei."]
+  ],
+  coro:["Com o Espírito divino","Vem, Jesus, me batizar;","Aos Teus pés eu me inclino","E Te rogo sem cessar:","Oh! Vem, Senhor, com Teu Dom me consolar."]
+ },
+ "18":{
+  tipo:"hino",titulo:"É Jesus meu Refúgio",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Grande é a tormenta e a tribulação,","Muitos são os combates, grande, a tentação;","Mas Jesus, meu Rochedo e fiel Guardião,","É a Fortaleza que dá proteção."],
+   ["Ao Senhor, mais unido eu almejo viver","E cumprir, neste mundo, Seu glorioso querer;","Os Seus passos seguindo, eu irei receber","Mais força e coragem, a fim de vencer."],
+   ["Vou, com fé no meu Mestre, a tormenta enfrentar,","Mesmo que fortemente ela se levantar,","Com Jesus, a vitória eu irei alcançar,","Pois Suas promessas não podem falhar."]
+  ],
+  coro:["Jesus meu Refúgio, meu fiel Protetor,","E n'Ele abrigado terei Seu vigor;","Cada dia que passa, sinto mais Seu amor","A vida celeste do meu Salvador."]
+ },
+ "19":{
+  tipo:"hino",titulo:"Manda-nos Teu Poder",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Manda, ó Senhor, do céu, fogo santo ao povo Teu;","Manda-nos Teu Poder;","Fogo que destrói o mal, fogo santo, celestial;","Manda-nos Teu Poder."],
+   ["Vem as bênçãos derramar e, os que dormem, despertar;","Manda-nos Teu Poder,","E das nossas vidas faz testemunho eficaz;","Manda-nos Teu Poder."],
+   ["Vem nos dar as orações, visitando os corações;","Manda-nos Teu Poder,","Em constante comunhão, esperamos Tua unção;","Manda-nos Teu Poder."]
+  ],
+  coro:["Manda-nos o Teu Poder,","O Poder renovador, pelo Teu imenso amor;","Vem, Senhor, selar Teu povo","Com o bom Consolador."]
+ },
+ "20":{
+  tipo:"hino",titulo:"Teu Espírito derrama",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Teu Espírito derrama","Sobre Teus fiéis, Senhor,","Que, humildes e contritos,","Buscam o Consolador."],
+   ["Teu Espírito derrama,","A promessa cumpre, ó Deus,","Enviando aos Teus filhos","As virtudes lá dos céus."],
+   ["Teu Espírito derrama,","Revestindo-nos de amor;","Dos Teus dons maravilhosos,","Enriquece-nos, Senhor."]
+  ],
+  coro:["Vem com Teu Poder, Senhor,","Teu povo fortificar;","Com o bom Consolador,","Vem, oh! vem batizar."]
  },
  "45":{
   titulo:"Oh! Quanto nos amaste!",
@@ -1443,18 +1607,9 @@ function openHymnDetail(h,cat){
      : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
 
    const platformBtns=[];
-   if(media.spotify||media.spotifySearch){
-     const pending=!media.spotify && !!media.spotifySearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · em validação':'')+'</span><b>›</b></button>');
-   }
-   if(media.youtube||media.youtubeSearch){
-     const pending=!media.youtube && !!media.youtubeSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · em validação':'')+'</span><b>›</b></button>');
-   }
-   if(media.youtubeMusic||media.youtubeMusicSearch){
-     const pending=!media.youtubeMusic && !!media.youtubeMusicSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · em validação':'')+'</span><b>›</b></button>');
-   }
+   if(media.spotify||media.spotifySearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
+   if(media.youtube||media.youtubeSearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
+   if(media.youtubeMusic||media.youtube||media.youtubeMusicSearch||media.youtubeSearch) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
 
    area.innerHTML=
      '<div class="hd-media-title"><span class="hd-note">♫</span> Mídias do '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
@@ -1465,7 +1620,7 @@ function openHymnDetail(h,cat){
      '<div class="hd-slot" id="hdYoutube"></div>'+
      '<div class="hd-links" id="hdLinks"></div>';
 
-   area.querySelectorAll('.hd-play:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
    area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
  }
@@ -1550,33 +1705,33 @@ function loadHymnMedia(kind,media,button){
    });
  }else if(kind==='spotify'){
    if(media.spotify){
-     const spotifyType=media.spotifyType||'track';
-     const origin=media.spotifyOrigin||('https://open.spotify.com/'+spotifyType+'/'+media.spotify);
+     const spotifyType=media.spotifyType==='album'?'album':'track';
      const f=document.createElement('iframe');
      f.src='https://open.spotify.com/embed/'+spotifyType+'/'+media.spotify+'?utm_source=generator&theme=0';
      f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-     f.loading='lazy';
-     f.title='Spotify · '+(media.fonteExterna||'Orquestra Sacra');
-     f.setAttribute('scrolling','no');
-     sp.appendChild(f);
-     links.innerHTML='<a href="'+origin+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
-   }else{
-     document.getElementById('hymnDetail').classList.remove('media-open');
-     button.classList.remove('active');
-     return;
+     f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
+     const source=media.spotifyUrl||('https://open.spotify.com/'+spotifyType+'/'+media.spotify);
+     links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+   }else if(media.spotifySearch){
+     window.open(media.spotifySearch,'_blank','noopener');
+     links.innerHTML='<a href="'+media.spotifySearch+'" target="_blank" rel="noopener">Abrir busca exata ↗</a>';
    }
  }else{
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
-   const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
-   if(!directId && searchUrl){
-     document.getElementById('hymnDetail').classList.remove('media-open');
-     button.classList.remove('active');
+   const id=directId;
+   if(!id){
+     const search=kind==='youtube'
+       ?(media.youtubeSearch||media.youtubeMusicSearch)
+       :(media.youtubeMusicSearch||media.youtubeSearch);
+     if(search){
+       window.open(search,'_blank','noopener');
+       links.innerHTML='<a href="'+search+'" target="_blank" rel="noopener">Abrir busca exata ↗</a>';
+     }
      return;
    }
-   const id=directId;
    const source=kind==='youtube'
-     ? (media.youtubeOrigin||('https://www.youtube.com/watch?v='+id))
-     : (media.youtubeMusicOrigin||('https://music.youtube.com/watch?v='+id));
+     ?(media.youtubeUrl||('https://youtu.be/'+id))
+     :(media.youtubeMusicUrl||('https://music.youtube.com/watch?v='+id));
    const f=document.createElement('iframe');
    f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
@@ -3528,28 +3683,4 @@ function downloadCallsCsv(){
 </style>
 
 <style id="v652-mh-search-style">.mhEmpty{margin-top:8px;padding:16px 14px;border:1px dashed #d8ccb5;border-radius:12px;background:#f8f5ee;color:#746c62;font:600 .78rem/1.45 Arial,sans-serif;text-align:center}</style>
-
-<style id="media-platforms-horizontal">
-#hymnDetail #hdMediaArea .hd-media-platforms {
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:5px!important;
-}
-#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform {
-  min-width:0!important;
-  justify-content:center!important;
-  padding:5px 4px!important;
-  gap:4px!important;
-  order:0!important;
-}
-#hymnDetail #hdMediaArea .hd-platform span {
-  min-width:0!important;
-  flex:0 1 auto!important;
-  white-space:normal!important;
-  overflow:visible!important;
-  text-align:center!important;
-  line-height:1.15!important;
-}
-#hymnDetail #hdMediaArea .hd-platform b {display:none!important;}
-</style>
 </body></html>
