@@ -1,6 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V6.74: Hinos 1–10 com links diretos fornecidos pelo usuário. Players abrem dentro do modal, com "Abrir na origem ↗", seguindo o piloto do Hino 45. -->
-<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "em validação". -->
+<!-- V6.74: retorno ao padrão visual do piloto Hino 45; títulos de busca sincronizados com o modal; plataformas lado a lado no celular. -->
 <!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
 <!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
@@ -77,65 +76,76 @@ REGRA CONSOLIDADA:
 }
 </style>
 
-
-<style id="v671-media-modal-fix">
+<style id="v674-pilot-media-layout">
 #hymnDetail #hdMediaArea{
   display:block!important;
   visibility:visible!important;
   opacity:1!important;
   width:100%!important;
-  min-height:110px!important;
 }
-#hymnDetail #hdMediaArea .hd-media-title{
-  display:flex!important;
-  visibility:visible!important;
-}
-#hymnDetail .hd-media-instrumental{
-  display:block!important;
-  width:100%!important;
-  margin:0 0 7px!important;
-}
-#hymnDetail .hd-media-instrumental .hd-instrumental-main{
-  display:grid!important;
-  grid-template-columns:28px minmax(0,1fr) 18px!important;
-  align-items:center!important;
-  width:100%!important;
-  min-height:44px!important;
-  padding:7px 12px!important;
-  border-radius:15px!important;
-  background:linear-gradient(180deg,#c9942f,#9b650d)!important;
-  color:#fff!important;
-  border:1px solid #8b5908!important;
-  font-family:Georgia,serif!important;
-  font-size:15px!important;
-  font-weight:800!important;
-}
-#hymnDetail .hd-media-instrumental .hd-instrumental-main span:nth-child(2){
-  text-align:center!important;
-  white-space:normal!important;
-  overflow:visible!important;
-}
-#hymnDetail .hd-media-platforms{
+#hymnDetail .hd-media{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   gap:6px!important;
   width:100%!important;
 }
-#hymnDetail .hd-media-platforms .hd-platform{
-  display:flex!important;
-  visibility:visible!important;
-  opacity:1!important;
+#hymnDetail .hd-play{
+  min-width:0!important;
+  width:100%!important;
 }
-@media(max-width:380px){
-  #hymnDetail .hd-media-platforms{grid-template-columns:1fr!important;}
+#hymnDetail .hd-play[data-kind="instrumental"]{
+  grid-column:1/-1!important;
+}
+#hymnDetail .hd-platform{
+  min-height:42px!important;
+  padding:7px 5px!important;
+  font-size:11.5px!important;
+}
+#hymnDetail .hd-platform span{
+  white-space:normal!important;
+  line-height:1.05!important;
+}
+#hymnDetail .hd-origin-preview{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  width:100%;
+  padding:11px 12px;
+  border:1px solid #e0d1b2;
+  border-radius:12px;
+  background:#fffaf0;
+  color:#263746;
+  text-align:center;
+  font:700 12px/1.25 Arial,sans-serif;
+}
+#hymnDetail .hd-origin-preview strong{
+  font-family:Georgia,serif;
+  font-size:15px;
+  color:#0f2941;
+}
+#hymnDetail .hd-origin-preview span{
+  color:#8b681f;
+  font-size:11px;
+}
+@media(max-width:430px){
+  #hymnDetail .hd-media{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  #hymnDetail .hd-platform{
+    min-height:40px!important;
+    padding:6px 3px!important;
+    font-size:10.5px!important;
+  }
+  #hymnDetail .hd-platform .brand{
+    width:19px!important;
+    height:19px!important;
+    flex:0 0 19px!important;
+  }
 }
 </style>
-
-
-<style id="v672-remove-media-validation-strip">
-#hymnDetail .hd-source-validation{display:none!important}
-</style>
-
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
@@ -575,130 +585,94 @@ const MULTIMIDIA={
  "1":{
   audio:"audio/hino-1.mp3",
   spotify:"5b4OXiSiJUN9ZEHwyNg01G",
-  spotifyType:"track",
-  spotifyUrl:"https://open.spotify.com/intl-pt/track/5b4OXiSiJUN9ZEHwyNg01G",
   youtube:"xCEJYpIE_Pc",
-  youtubeUrl:"https://www.youtube.com/watch?v=xCEJYpIE_Pc",
   youtubeMusic:"xCEJYpIE_Pc",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=xCEJYpIE_Pc&si=XawUeOgn9qRTJscu",
-  fonteExterna:"Orquestra Sacra",
+  spotifySearch:"https://open.spotify.com/search/1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=1%20-%20Cristo%2C%20meu%20Mestre%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "2":{
   audio:"audio/hino-2.mp3",
-  spotify:"6jyLirHINq4MjvIvkdFmsN",
-  spotifyType:"track",
-  spotifyUrl:"https://open.spotify.com/intl-pt/track/6jyLirHINq4MjvIvkdFmsN",
+  spotifySearch:"https://open.spotify.com/search/2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   youtube:"d-E3Br3qmlU",
-  youtubeUrl:"https://www.youtube.com/watch?v=d-E3Br3qmlU",
   youtubeMusic:"d-E3Br3qmlU",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=d-E3Br3qmlU&si=4rK5cS-T7Khf8TzU",
-  fonteExterna:"Orquestra Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=2%20-%20De%20Deus%20tu%20%C3%A9s%20eleita%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "3":{
   audio:"audio/hino-3.mp3",
-  spotify:"4glZ6e4y3uPPb6FHTYODeJ",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/4glZ6e4y3uPPb6FHTYODeJ",
-  youtube:"tvTAj8WrecU",
-  youtubeUrl:"https://www.youtube.com/watch?v=tvTAj8WrecU",
-  youtubeMusic:"tvTAj8WrecU",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=tvTAj8WrecU&si=iDbB3C3gVN-7GHH6",
-  fonteExterna:"Orquestra Sacra",
+  spotifySearch:"https://open.spotify.com/search/3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=3%20-%20Faz-nos%20ouvir%20Tua%20Voz%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "4":{
   audio:"audio/hino-4.mp3",
-  spotify:"78kBUBlPGBXNpLw5Yi615Z",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/78kBUBlPGBXNpLw5Yi615Z",
-  youtube:"FGJWa36Kf2Y",
-  youtubeUrl:"https://www.youtube.com/watch?v=FGJWa36Kf2Y",
-  youtubeMusic:"FGJWa36Kf2Y",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=FGJWa36Kf2Y&si=oTEzkvSHEc6uGcSm",
-  fonteExterna:"Orquestra Sacra",
+  spotify:"77u8hNME1vkIGiviNc5M15",
+  spotifySearch:"https://open.spotify.com/search/4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=4%20-%20Ouve%20a%20nossa%20ora%C3%A7%C3%A3o%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "5":{
   audio:"audio/hino-5.mp3",
-  spotify:"1r6WwYj0UF276zdC5UCUxB",
-  spotifyType:"track",
-  spotifyUrl:"https://open.spotify.com/intl-pt/track/1r6WwYj0UF276zdC5UCUxB",
+  spotifySearch:"https://open.spotify.com/search/5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
   youtube:"sPMjkzS1AXU",
-  youtubeUrl:"https://www.youtube.com/watch?v=sPMjkzS1AXU",
   youtubeMusic:"sPMjkzS1AXU",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=sPMjkzS1AXU&si=LxZ62uW6hTOjbGbA",
-  fonteExterna:"Orquestra Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=5%20-%20A%20Rocha%20celestial%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "6":{
   audio:"audio/hino-6.mp3",
-  spotify:"3QhfMXQHM38TTHLvU5g1F0",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/3QhfMXQHM38TTHLvU5g1F0",
-  youtube:"Fw32Zn1AeKU",
-  youtubeUrl:"https://www.youtube.com/watch?v=Fw32Zn1AeKU",
-  youtubeMusic:"Fw32Zn1AeKU",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=Fw32Zn1AeKU&si=kqROUr_03iAlZ7MD",
-  fonteExterna:"Orquestra Sacra",
+  spotifySearch:"https://open.spotify.com/search/6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=6%20-%20Gl%C3%B3ria%20ao%20Justo%2C%20fiel%20Cordeiro%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "7":{
   audio:"audio/hino-7.mp3",
-  spotify:"6k7a7TRmSsZDiW3RfkkqDD",
-  spotifyType:"track",
-  spotifyUrl:"https://open.spotify.com/intl-pt/track/6k7a7TRmSsZDiW3RfkkqDD",
-  youtube:"_5kVxVAnSTg",
-  youtubeUrl:"https://www.youtube.com/watch?v=_5kVxVAnSTg",
-  youtubeMusic:"_5kVxVAnSTg",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=_5kVxVAnSTg&si=5JQr3_GRdD3B7l56",
-  fonteExterna:"Orquestra Sacra",
+  spotifySearch:"https://open.spotify.com/search/7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=7%20-%20Ganjeai%2C%20granjeai%20os%20talentos%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "8":{
   audio:"audio/hino-8.mp3",
-  spotify:"51GCI8i1HKzVRCKGaGKqJ2",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/51GCI8i1HKzVRCKGaGKqJ2",
+  spotifySearch:"https://open.spotify.com/search/8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
   youtube:"sJDCk2HccGg",
-  youtubeUrl:"https://www.youtube.com/watch?v=sJDCk2HccGg",
   youtubeMusic:"sJDCk2HccGg",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=sJDCk2HccGg&si=1YXQ6honP5ngq4r1",
-  fonteExterna:"Orquestra Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=8%20-%20Vem%2C%20sim%2C%20vem%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "9":{
   audio:"audio/hino-9.mp3",
-  spotify:"7vWz5WN9IeLRF4vw6GPuyH",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/7vWz5WN9IeLRF4vw6GPuyH",
+  spotifySearch:"https://open.spotify.com/search/9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
   youtube:"ydUV1W7FwJk",
-  youtubeUrl:"https://www.youtube.com/watch?v=ydUV1W7FwJk",
   youtubeMusic:"ydUV1W7FwJk",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=ydUV1W7FwJk&si=rBrXr8z_gjs1QmCh",
-  fonteExterna:"Orquestra Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=9%20-%20Luminosa%20%C3%A9%20a%20senda%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "10":{
   audio:"audio/hino-10.mp3",
-  spotify:"0o87KLTOit7MbL6frMdF2A",
-  spotifyType:"album",
-  spotifyUrl:"https://open.spotify.com/intl-pt/album/0o87KLTOit7MbL6frMdF2A",
+  spotifySearch:"https://open.spotify.com/search/10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
   youtube:"P9WftadkxaU",
-  youtubeUrl:"https://www.youtube.com/watch?v=P9WftadkxaU",
   youtubeMusic:"P9WftadkxaU",
-  youtubeMusicUrl:"https://music.youtube.com/watch?v=P9WftadkxaU&si=gRsQqPaimlIElvOz",
-  fonteExterna:"Orquestra Sacra",
+  youtubeSearch:"https://www.youtube.com/results?search_query=10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
+  youtubeMusicSearch:"https://music.youtube.com/search?q=10%20-%20Prossegui%20vitoriosos%20em%20Cristo%20Orquestra%20Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -747,6 +721,19 @@ const MULTIMIDIA={
   youtubeMusic:"3GcHi_xmdbI"
  }
 };
+
+
+function sincronizarBuscasMidiaComTitulo(media,h){
+ if(!media || !h) return media;
+ const numero=String(h.num||'').trim();
+ const titulo=String(h.titulo||'').trim();
+ const termo=(numero+' - '+titulo+' Orquestra Sacra').trim();
+ media.tituloReferencia=titulo;
+ media.spotifySearch='https://open.spotify.com/search/'+encodeURIComponent(termo);
+ media.youtubeSearch='https://www.youtube.com/results?search_query='+encodeURIComponent(termo);
+ media.youtubeMusicSearch='https://music.youtube.com/search?q='+encodeURIComponent(termo);
+ return media;
+}
 
 const LETRAS={
  "1":{
@@ -1411,29 +1398,31 @@ function openHymnDetail(h,cat){
  updateHymnActionButtons(h);
 
  const area=document.getElementById('hdMediaArea');
- const media=MULTIMIDIA[String(h.num)];
+ const media=sincronizarBuscasMidiaComTitulo(MULTIMIDIA[String(h.num)],h);
  if(media){
-   const instrumentalBtn = media.audio
-     ? '<button class="hd-play hd-instrumental-main" data-kind="instrumental"><span class="hd-score">𝄞</span><span>'+ (media.audioTeste?'Testar reprodução':'Ouvir instrumental completo') +'</span><b>›</b></button>'
-     : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
-
-   const platformBtns=[];
-   if(media.spotify) platformBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
-   if(media.youtube) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
-   if(media.youtubeMusic) platformBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
-
+   const mediaBtns=[];
+   if(media.audio){
+     mediaBtns.push('<button class="hd-play" data-kind="instrumental"><span class="hd-score">𝄞</span><span>'+(media.audioTeste?'Testar reprodução':'Ouvir instrumental completo')+'</span><b>›</b></button>');
+   }
+   if(media.spotify||media.spotifySearch){
+     mediaBtns.push('<button class="hd-play hd-platform" data-kind="spotify"><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify</span><b>›</b></button>');
+   }
+   if(media.youtube||media.youtubeSearch){
+     mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtube"><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube</span><b>›</b></button>');
+   }
+   if(media.youtubeMusic||media.youtubeMusicSearch){
+     mediaBtns.push('<button class="hd-play hd-platform" data-kind="youtubeMusic"><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music</span><b>›</b></button>');
+   }
    area.innerHTML=
-     '<div class="hd-media-title"><span class="hd-note">♫</span> Mídias do '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
-     '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
-     '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
+     '<div class="hd-media-title"><span class="hd-note">♫</span> Ouvir '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
+     '<div class="hd-media">'+mediaBtns.join('')+'</div>'+
      '<div class="hd-slot" id="hdAudio"></div>'+
      '<div class="hd-slot" id="hdSpotify"></div>'+
      '<div class="hd-slot" id="hdYoutube"></div>'+
      '<div class="hd-links" id="hdLinks"></div>';
-
    area.querySelectorAll('.hd-play').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
  }else{
-   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
+   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada.</div>';
  }
  modal.classList.remove('media-open');
  modal.classList.add('open');
@@ -1516,20 +1505,29 @@ function loadHymnMedia(kind,media,button){
    });
  }else if(kind==='spotify'){
    if(media.spotify){
-     const spotifyType=media.spotifyType==='album'?'album':'track';
      const f=document.createElement('iframe');
-     f.src='https://open.spotify.com/embed/'+spotifyType+'/'+media.spotify+'?utm_source=generator&theme=0';
+     f.src='https://open.spotify.com/embed/track/'+media.spotify+'?utm_source=generator&theme=0';
      f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
      f.loading='lazy';f.title='Spotify Embed';f.setAttribute('scrolling','no');sp.appendChild(f);
-     const source=media.spotifyUrl||('https://open.spotify.com/'+spotifyType+'/'+media.spotify);
-     links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+     links.innerHTML='<a href="https://open.spotify.com/track/'+media.spotify+'" target="_blank" rel="noopener">Abrir no Spotify ↗</a>';
+   }else if(media.spotifySearch){
+     const h=window.__gaCurrentHymn||{};
+     sp.innerHTML='<div class="hd-origin-preview"><strong>'+esc(h.num)+' - '+esc(h.titulo)+'</strong><span>Orquestra Sacra · Spotify</span></div>';
+     links.innerHTML='<a href="'+media.spotifySearch+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+     return;
    }
  }else{
    const directId=kind==='youtube'?media.youtube:media.youtubeMusic;
+   const searchUrl=kind==='youtube'?media.youtubeSearch:media.youtubeMusicSearch;
+   if(!directId && searchUrl){
+     const h=window.__gaCurrentHymn||{};
+     const nomePlataforma=kind==='youtube'?'YouTube':'YouTube Music';
+     yt.innerHTML='<div class="hd-origin-preview"><strong>'+esc(h.num)+' - '+esc(h.titulo)+'</strong><span>Orquestra Sacra · '+nomePlataforma+'</span></div>';
+     links.innerHTML='<a href="'+searchUrl+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+     return;
+   }
    const id=directId;
-   const source=kind==='youtube'
-     ?(media.youtubeUrl||('https://youtu.be/'+id))
-     :(media.youtubeMusicUrl||('https://music.youtube.com/watch?v='+id));
+   const source=kind==='youtube'?'https://youtu.be/'+id:'https://music.youtube.com/watch?v='+id;
    const f=document.createElement('iframe');
    f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
