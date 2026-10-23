@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.86: busca por trecho da letra + revisão YouTube Hinos 31–40.
+- Pesquisa passa a considerar número, título, ocasião, apropriação, categoria e letras já cadastradas.
+- Índice de busca é criado uma única vez e reutilizado, evitando normalizar todas as letras a cada tecla.
+- Resultado encontrado somente pela letra mostra o trecho correspondente.
+- YouTube/YouTube Music diretos adicionados após validação: Hinos 31, 32 e 40.
+- Hinos 33, 34, 36 e 39 permanecem em validação para YouTube/YouTube Music.
+- Base funcional e recursos pessoais/compartilhamento preservados.
+-->
 <!-- V6.85: consolidação multimídia dos Hinos 31 a 40.
 - MP3 local referenciado para os Hinos 31–40.
 - Spotify direto da Orquestra Sacra validado para todos os Hinos 31–40.
@@ -109,6 +117,21 @@ REGRA CONSOLIDADA:
 }
 </style>
 
+<style id="v686-search-lyrics">
+#searchResults .result .lyric-hit{
+  display:block!important;
+  margin-top:7px!important;
+  padding:7px 9px!important;
+  border-left:3px solid var(--gold)!important;
+  border-radius:7px!important;
+  background:#fbf5e8!important;
+  color:#655b4d!important;
+  font:400 .78rem/1.35 Arial,sans-serif!important;
+}
+#searchResults .result .lyric-hit strong{
+  color:#8a6728!important;
+}
+</style>
 
 <style id="v671-media-modal-fix">
 #hymnDetail #hdMediaArea{
@@ -210,7 +233,7 @@ REGRA CONSOLIDADA:
       Para instalar, abra o menu ⋮ do navegador e escolha
       <strong>Instalar app</strong> ou
       <strong>Adicionar à tela inicial</strong>.
-    </div></div></div><div id="welcome" class="welcome-screen"><div class="welcome-card"><div class="welcome-brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><div class="welcome-rule"></div><div class="welcome-note">♪ &nbsp; ♫ &nbsp; ♬</div><h1>Hinário nº 5</h1><h2>Guia Visual de Hinos<br>por Ocasião</h2><p>Consulta rápida por ocasião, número ou título.</p><button id="enterGuide" type="button">ABRIR GUIA</button><small>480 hinos + 6 coros</small><a href="#" class="about-cover-link" onclick="event.preventDefault(); abrirSobre();">ⓘ Sobre o Guia · v2.0</a></div></div><header><div class="brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><h1>Hinário nº 5</h1><p>Guia Visual de Hinos por Ocasião</p></header><div class="toolbar"><div class="wrap quickbar"><button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino"> 🔎 Pesquisar hinos </button><button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button><button class="navbtn" id="goIndex" type="button">Índice</button></div></div><div class="personal-tools wrap" aria-label="Minha biblioteca"><button type="button" id="openFavorites"><span class="personal-tool-title">★ <span>Favoritos</span></span><b id="favTotal">0</b></button><button type="button" id="openCalledHistory"><span class="personal-tool-title">✓ <span>Hinos chamados</span></span><b id="callTotal">0</b></button></div><div id="searchModal" class="modal" aria-hidden="true"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle"><div class="modal-head"><div><strong id="searchTitle">Pesquisar hino</strong><small>Os resultados aparecem automaticamente enquanto você digita</small></div><button id="closeSearch" class="close" type="button" aria-label="Fechar">×</button></div><input id="search" type="search" inputmode="search" autocomplete="off" placeholder="Ex.: 81 ou A vida deu por ti"><div class="modal-actions"><button id="clear" type="button">Limpar</button></div><div id="searchResults" class="search-results"></div><a id="modalIndex" class="modal-index" href="#indice">← Voltar ao índice</a></div></div><div id="aboutModal" class="modal" aria-hidden="true"><div class="modal-backdrop" id="aboutBackdrop"></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle"><div class="modal-head"><div><strong id="aboutTitle">ⓘ Sobre o Guia</strong><small>Guia Visual de Hinos por Ocasião — Hinário nº 5</small></div><button id="closeAbout" class="close" type="button" aria-label="Fechar">×</button></div><div class="about-content"><p>
+    </div></div></div><div id="welcome" class="welcome-screen"><div class="welcome-card"><div class="welcome-brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><div class="welcome-rule"></div><div class="welcome-note">♪ &nbsp; ♫ &nbsp; ♬</div><h1>Hinário nº 5</h1><h2>Guia Visual de Hinos<br>por Ocasião</h2><p>Consulta rápida por ocasião, número ou título.</p><button id="enterGuide" type="button">ABRIR GUIA</button><small>480 hinos + 6 coros</small><a href="#" class="about-cover-link" onclick="event.preventDefault(); abrirSobre();">ⓘ Sobre o Guia · v2.0</a></div></div><header><div class="brand">CONGREGAÇÃO CRISTÃ NO BRASIL</div><h1>Hinário nº 5</h1><p>Guia Visual de Hinos por Ocasião</p></header><div class="toolbar"><div class="wrap quickbar"><button id="openSearch" class="search-open" type="button" aria-label="Pesquisar hino"> 🔎 Pesquisar hinos </button><button class="navbtn" id="shareGuide" type="button" title="Compartilhar Guia" aria-label="Compartilhar Guia">↗ Compartilhar</button><button class="navbtn" id="goIndex" type="button">Índice</button></div></div><div class="personal-tools wrap" aria-label="Minha biblioteca"><button type="button" id="openFavorites"><span class="personal-tool-title">★ <span>Favoritos</span></span><b id="favTotal">0</b></button><button type="button" id="openCalledHistory"><span class="personal-tool-title">✓ <span>Hinos chamados</span></span><b id="callTotal">0</b></button></div><div id="searchModal" class="modal" aria-hidden="true"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle"><div class="modal-head"><div><strong id="searchTitle">Pesquisar hino</strong><small>Pesquise por número, título, ocasião ou trecho da letra</small></div><button id="closeSearch" class="close" type="button" aria-label="Fechar">×</button></div><input id="search" type="search" inputmode="search" autocomplete="off" placeholder="Ex.: 81, A vida deu por ti ou trecho da letra"><div class="modal-actions"><button id="clear" type="button">Limpar</button></div><div id="searchResults" class="search-results"></div><a id="modalIndex" class="modal-index" href="#indice">← Voltar ao índice</a></div></div><div id="aboutModal" class="modal" aria-hidden="true"><div class="modal-backdrop" id="aboutBackdrop"></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle"><div class="modal-head"><div><strong id="aboutTitle">ⓘ Sobre o Guia</strong><small>Guia Visual de Hinos por Ocasião — Hinário nº 5</small></div><button id="closeAbout" class="close" type="button" aria-label="Fechar">×</button></div><div class="about-content"><p>
         Este guia foi desenvolvido com a finalidade de
         <strong>facilitar a consulta dos hinos de acordo com suas respectivas ocasiões</strong>.
       </p><p>
@@ -282,71 +305,163 @@ const modal=document.querySelector("#searchModal"), results=document.querySelect
 const openBtn=document.querySelector("#openSearch"), closeBtn=document.querySelector("#closeSearch");
 function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>q.focus(),120);renderResults();}
 function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");q.value="";results.innerHTML="";q.blur();}
-function renderResults(){
- const normalizeSearch=v=>{
-   let s=String(v??'').toLowerCase();
-   try{s=s.normalize('NFD')}catch(e){}
-   return s
-     .replace(/[\u0300-\u036f]/g,'')
-     .replace(/[áàâãäå]/g,'a')
-     .replace(/[éèêë]/g,'e')
-     .replace(/[íìîï]/g,'i')
-     .replace(/[óòôõö]/g,'o')
-     .replace(/[úùûü]/g,'u')
-     .replace(/ç/g,'c')
-     .replace(/ñ/g,'n')
-     .replace(/\s+/g,' ')
-     .trim();
- };
-
- const rawTerm=q.value.trim();
- const term=normalizeSearch(rawTerm);
- results.innerHTML="";
- if(!term){results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Os resultados aparecem automaticamente enquanto você digita.</div>';return;}
-
- const isNumber=/^\d+$/.test(term);
- const found=[];
-
- ORDER.forEach(cat=>DATA[cat].forEach(h=>{
-   const num=normalizeSearch(String(h.num).replace(/\*/g,""));
-   const searchable=normalizeSearch([
-     h.titulo,
-     h.ocasiao,
-     h.apropriacao,
-     cat
-   ].filter(Boolean).join(' '));
-   const match=isNumber ? (num===term) : searchable.includes(term);
-   if(match){
-     const key=h.num+"|"+h.titulo;
-     let item=found.find(x=>x.key===key);
-     if(!item){item={key,num:h.num,titulo:h.titulo,apropriacao:h.apropriacao,ocasiao:h.ocasiao,cats:[]};found.push(item);}
-     if(!item.cats.includes(cat)) item.cats.push(cat);
-   }
- }));
-
- if(!found.length){
-   results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Nenhum hino encontrado. Para pesquisar por número, digite o número completo.</div>';
-   return;
- }
-
- found.slice(0,60).forEach(h=>{
-   const a=document.createElement("a");a.className="result";a.href="#"+slug(h.cats[0]);
-   const grupos=h.cats.join(" • "); const groupLabel=h.cats.includes("Coros") ? "Grupo" : "Ocasião";
-   const aprop=(h.apropriacao && h.apropriacao!=="Culto Oficial") ? `<small>Apropriação: ${esc(h.apropriacao)}</small>` : "";
-   a.innerHTML=`<b>${esc(h.num)}</b>${esc(h.titulo)}<div class="grp">${groupLabel}: ${esc(grupos)}</div>${aprop}`;
-   a.onclick=(e)=>{
-     e.preventDefault();
-
-     const gaBusca = gaHinoParams(h, {origem_consulta:'pesquisa'});
-     registrarEventoGA('consultar_hino', gaBusca);
-     registrarEventoGA('pesquisar_hino', gaBusca);
-
-     closeModal();
-     openCategory(h.cats[0], h.num);
-   };
-   results.appendChild(a);
- });
+function normalizeSearchValue(v){
+  let s=String(v??'').toLowerCase();
+  try{s=s.normalize('NFD')}catch(e){}
+  return s
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[áàâãäå]/g,'a')
+    .replace(/[éèêë]/g,'e')
+    .replace(/[íìîï]/g,'i')
+    .replace(/[óòôõö]/g,'o')
+    .replace(/[úùûü]/g,'u')
+    .replace(/ç/g,'c')
+    .replace(/ñ/g,'n')
+    .replace(/\s+/g,' ')
+    .trim();
 }
+
+let SEARCH_INDEX_CACHE=null;
+
+function lyricLinesForSearch(num){
+  const letra=LETRAS[String(num)];
+  if(!letra) return [];
+
+  const linhas=[];
+  const add=v=>{
+    if(Array.isArray(v)){
+      v.forEach(item=>{
+        if(Array.isArray(item)) item.forEach(add);
+        else add(item);
+      });
+    }else if(v!==null && v!==undefined && String(v).trim()){
+      linhas.push(String(v).trim());
+    }
+  };
+
+  add(letra.estrofes);
+  add(letra.coro);
+  add(letra.final);
+  add(letra.linhas);
+  return linhas;
+}
+
+function getSearchIndex(){
+  if(SEARCH_INDEX_CACHE) return SEARCH_INDEX_CACHE;
+
+  const mapa=new Map();
+
+  ORDER.forEach(cat=>DATA[cat].forEach(h=>{
+    const key=h.num+"|"+h.titulo;
+    let item=mapa.get(key);
+    if(!item){
+      item={
+        key,
+        num:h.num,
+        titulo:h.titulo,
+        apropriacao:h.apropriacao,
+        ocasiao:h.ocasiao,
+        cats:[]
+      };
+      mapa.set(key,item);
+    }
+    if(!item.cats.includes(cat)) item.cats.push(cat);
+  }));
+
+  SEARCH_INDEX_CACHE=[...mapa.values()].map(item=>{
+    const lyricLines=lyricLinesForSearch(item.num);
+    return Object.assign(item,{
+      numSearch:normalizeSearchValue(String(item.num).replace(/\*/g,"")),
+      metaSearch:normalizeSearchValue([
+        item.num,
+        item.titulo,
+        item.ocasiao,
+        item.apropriacao,
+        ...item.cats
+      ].filter(Boolean).join(' ')),
+      lyricLines,
+      lyricSearch:normalizeSearchValue(lyricLines.join(' '))
+    });
+  });
+
+  return SEARCH_INDEX_CACHE;
+}
+
+function findLyricSnippet(lines,term){
+  if(!Array.isArray(lines)||!lines.length||!term) return "";
+  const line=lines.find(l=>normalizeSearchValue(l).includes(term));
+  if(line) return line;
+
+  const joined=lines.join(' ');
+  return normalizeSearchValue(joined).includes(term)
+    ? joined.slice(0,150)+(joined.length>150?'…':'')
+    : "";
+}
+
+function renderResults(){
+  const rawTerm=q.value.trim();
+  const term=normalizeSearchValue(rawTerm);
+  results.innerHTML="";
+
+  if(!term){
+    results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Os resultados aparecem automaticamente enquanto você digita.</div>';
+    return;
+  }
+
+  const isNumber=/^\d+$/.test(term);
+  const found=[];
+
+  getSearchIndex().forEach(item=>{
+    const metaHit=!isNumber && item.metaSearch.includes(term);
+    const lyricHit=!isNumber && !metaHit && item.lyricSearch.includes(term);
+    const numberHit=isNumber && item.numSearch===term;
+
+    if(numberHit||metaHit||lyricHit){
+      found.push(Object.assign({},item,{
+        lyricHit,
+        lyricSnippet:lyricHit ? findLyricSnippet(item.lyricLines,term) : ""
+      }));
+    }
+  });
+
+  if(!found.length){
+    results.innerHTML='<div style="color:var(--muted);padding:10px 2px">Nenhum hino encontrado. Você pode pesquisar por número, título, ocasião ou trecho da letra.</div>';
+    return;
+  }
+
+  found.slice(0,60).forEach(h=>{
+    const a=document.createElement("a");
+    a.className="result";
+    a.href="#"+slug(h.cats[0]);
+
+    const grupos=h.cats.join(" • ");
+    const groupLabel=h.cats.includes("Coros") ? "Grupo" : "Ocasião";
+    const aprop=(h.apropriacao && h.apropriacao!=="Culto Oficial")
+      ? `<small>Apropriação: ${esc(h.apropriacao)}</small>`
+      : "";
+    const lyricInfo=(h.lyricHit && h.lyricSnippet)
+      ? `<small class="lyric-hit"><strong>Encontrado na letra:</strong> “${esc(h.lyricSnippet)}”</small>`
+      : "";
+
+    a.innerHTML=`<b>${esc(h.num)}</b>${esc(h.titulo)}<div class="grp">${groupLabel}: ${esc(grupos)}</div>${aprop}${lyricInfo}`;
+
+    a.onclick=(e)=>{
+      e.preventDefault();
+
+      const gaBusca = gaHinoParams(h, {
+        origem_consulta:'pesquisa',
+        tipo_correspondencia:h.lyricHit?'letra':'metadados'
+      });
+      registrarEventoGA('consultar_hino', gaBusca);
+      registrarEventoGA('pesquisar_hino', gaBusca);
+
+      closeModal();
+      openCategory(h.cats[0], h.num);
+    };
+    results.appendChild(a);
+  });
+}
+
 openBtn.onclick=openModal;closeBtn.onclick=closeModal;
 document.querySelector("#modalBackdrop").onclick=closeModal;
 q.addEventListener("input",renderResults);
@@ -1031,8 +1146,10 @@ const MULTIMIDIA={
   spotify:"1IWZEcwzQxCbQLDAXvnKb6",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1IWZEcwzQxCbQLDAXvnKb6",
-  youtubeSearch:"Orquestra Sacra Hino 31 Forte Rocha",
-  youtubeMusicSearch:"Orquestra Sacra Hino 31 Forte Rocha",
+  youtube:"wUYneoB2Mk4",
+  youtubeOrigin:"https://youtu.be/wUYneoB2Mk4",
+  youtubeMusic:"wUYneoB2Mk4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=wUYneoB2Mk4",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1042,8 +1159,10 @@ const MULTIMIDIA={
   spotify:"6DhNJpEIaBIibNhkEaAD1Q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6DhNJpEIaBIibNhkEaAD1Q",
-  youtubeSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
-  youtubeMusicSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
+  youtube:"JKV226ucfIQ",
+  youtubeOrigin:"https://youtu.be/JKV226ucfIQ",
+  youtubeMusic:"JKV226ucfIQ",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=JKV226ucfIQ",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1136,10 +1255,10 @@ const MULTIMIDIA={
   spotify:"7yr53i4tTt9NELSx3ghe6P",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7yr53i4tTt9NELSx3ghe6P",
-  youtubeSearch:"Orquestra Sacra Hino 40 Quanto em mim Tu operaste",
-  youtube:"XTkUWiW2WclwpL3g",
-  youtubeOrigin:"https://youtu.be/M8ZyCnW4drk?si=XTkUWiW2WclwpL3g",
-  youtubeMusicSearch:"Orquestra Sacra Hino 40 Quanto em mim Tu operaste",
+  youtube:"LJ3fd1hHdcU",
+  youtubeOrigin:"https://youtu.be/LJ3fd1hHdcU",
+  youtubeMusic:"LJ3fd1hHdcU",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=LJ3fd1hHdcU",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
