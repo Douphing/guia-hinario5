@@ -1,4 +1,18 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.85: consolidação multimídia dos Hinos 31 a 40.
+- MP3 local referenciado para os Hinos 31–40.
+- Spotify direto da Orquestra Sacra validado para todos os Hinos 31–40.
+- YouTube + YouTube Music diretos mantidos somente onde validados: 35, 37 e 38.
+- Demais YouTube/YouTube Music permanecem em validação, sem IDs aproximados.
+- Base funcional V6.84 preservada.
+-->
+<!-- V6.84: lote de teste Hinos 31 a 40 sobre a base oficial de produção V6.83.
+- Letras conferidas a partir da partitura/PDF do projeto.
+- Estrutura visual: coro na posição musical indicada pela partitura.
+- MP3 local previsto como arquivo único linearizado; navegador não repete estrofes.
+- Mídias externas: somente IDs diretos validados; demais permanecem em validação.
+- Todas as funções existentes (favoritos, chamados, observações e compartilhamentos) preservadas.
+-->
 <!-- V6.83: mídias diretas concluídas para Hinos 22, 26 e 30.
 - IDs de YouTube e YouTube Music fornecidos pelo usuário.
 - Removidos fallbacks youtubeSearch/youtubeMusicSearch nesses três hinos.
@@ -1012,6 +1026,122 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
 
+ "31":{
+  audio:"audio/hino-31.mp3",
+  spotify:"1IWZEcwzQxCbQLDAXvnKb6",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1IWZEcwzQxCbQLDAXvnKb6",
+  youtubeSearch:"Orquestra Sacra Hino 31 Forte Rocha",
+  youtubeMusicSearch:"Orquestra Sacra Hino 31 Forte Rocha",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "32":{
+  audio:"audio/hino-32.mp3",
+  spotify:"6DhNJpEIaBIibNhkEaAD1Q",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6DhNJpEIaBIibNhkEaAD1Q",
+  youtubeSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
+  youtubeMusicSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "33":{
+  audio:"audio/hino-33.mp3",
+  spotify:"5tdiX3rQGhQyzldiY5uLNe",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/5tdiX3rQGhQyzldiY5uLNe",
+  youtubeSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
+  youtubeMusicSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "34":{
+  audio:"audio/hino-34.mp3",
+  spotify:"0ETiV2o8Gr98zrpj7EurRP",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0ETiV2o8Gr98zrpj7EurRP",
+  youtubeSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
+  youtubeMusicSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "35":{
+  audio:"audio/hino-35.mp3",
+  spotify:"6lFbSM0SdLMG5Fn1AfOYx6",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6lFbSM0SdLMG5Fn1AfOYx6",
+  youtube:"OOE2rOxZsH8",
+  youtubeOrigin:"https://www.youtube.com/watch?v=OOE2rOxZsH8",
+  youtubeMusic:"OOE2rOxZsH8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=OOE2rOxZsH8",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "36":{
+  audio:"audio/hino-36.mp3",
+  spotify:"52pJZi8IVmBxiAD5KTTMdZ",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/52pJZi8IVmBxiAD5KTTMdZ",
+  youtubeSearch:"Orquestra Sacra Hino 36 A fiel proteção",
+  youtubeMusicSearch:"Orquestra Sacra Hino 36 A fiel proteção",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "37":{
+  audio:"audio/hino-37.mp3",
+  spotify:"1Tt1Q6Khadtb2Kt5KWC1Xo",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1Tt1Q6Khadtb2Kt5KWC1Xo",
+  youtube:"WkivzV39qpU",
+  youtubeOrigin:"https://www.youtube.com/watch?v=WkivzV39qpU",
+  youtubeMusic:"WkivzV39qpU",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=WkivzV39qpU",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "38":{
+  audio:"audio/hino-38.mp3",
+  spotify:"24HkBIjlLmCKYvhuqQdAJi",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/24HkBIjlLmCKYvhuqQdAJi",
+  youtube:"E2bMruRsmxw",
+  youtubeOrigin:"https://www.youtube.com/watch?v=E2bMruRsmxw",
+  youtubeMusic:"E2bMruRsmxw",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=E2bMruRsmxw",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "39":{
+  audio:"audio/hino-39.mp3",
+  spotify:"7MBkK6PA0DZpSzEap3550h",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/7MBkK6PA0DZpSzEap3550h",
+  youtubeSearch:"Orquestra Sacra Hino 39 Eu desejo, Senhor",
+  youtubeMusicSearch:"Orquestra Sacra Hino 39 Eu desejo, Senhor",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+ "40":{
+  audio:"audio/hino-40.mp3",
+  spotify:"7yr53i4tTt9NELSx3ghe6P",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/7yr53i4tTt9NELSx3ghe6P",
+  youtubeSearch:"Orquestra Sacra Hino 40 Quanto em mim Tu operaste",
+  youtubeMusicSearch:"Orquestra Sacra Hino 40 Quanto em mim Tu operaste",
+  fonteExterna:"Orquestra Sacra",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
  "45":{
   audio:"audio/hino-45.mp3",
   spotify:"0834t6lumVQ5FKetjMgREw",
@@ -1492,6 +1622,111 @@ const LETRAS={
    ["Nas minhas provas, confiarei em Cristo, Libertador;","N'Ele eu tenho firmeza, pois é fiel Protetor."]
   ],
   coro:["Cristo é bom e clemente, bálsamo a toda dor;","Paz divinal e excelente vem do Senhor."]
+ },
+ "31":{
+  tipo:"hino",
+  titulo:"Forte Rocha",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Forte Rocha é Deus Sempiterno;","Nossa fé só n'Ele se funda;","Seu amor celestial e paterno,","Na tribulação nos circunda.","Do astuto tentador nos livra o Criador e nos protege;","Nada nós temeremos,","Pois o Invencível nós temos."],
+   ["Estará para sempre perdido","Quem em si somente confia,","Mas será lá do céu socorrido,","Crendo em Jesus, nosso Guia.","O Filho do bom Deus é Defensor dos Seus, é Rei da glória,","E em virtude temos,","E vitória alcançaremos."],
+   ["A palavra, que é nossa Vida,","Deve ser por nós exaltada;","É, também, nossa firme Guarida","Que não pode ser abalada.","O mal virá tentar a fim de despojar os resgatados,","Mas teremos vitória,","Pois é nosso reino e a glória."]
+  ]
+ },
+ "32":{
+  tipo:"hino",
+  titulo:"Eu me escondo em Ti, Senhor",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Eu me escondo em Ti, Senhor eterno,","Em Ti me abrigo, ó meu Salvador;","Sinto em mim o Teu amor superno;","Vivo seguro; és meu Defensor."],
+   ["Busco de Ti a proteção celeste","Quando estou cercado pelo mal,","Pois Tu, Jesus, és meu amado Mestre,","Cuidas de mim com zelo divinal."],
+   ["Quando aqui estou atribulado,","Quando está sem paz meu coração,","Clamo a Ti, meu Redentor amado;","De Ti espero a libertação."]
+  ]
+ },
+ "33":{
+  tipo:"hino",
+  titulo:"Jesus é o nosso Guia",
+  estrutura:["estrofe-1","coro","estrofe-2"],
+  estrofes:[
+   ["Quem pode consolar-nos neste peregrinar?","Quem pode conduzir-nos ao nosso eterno lar?","Quem pode dar-nos mais forças? Quem pode nos socorrer?","Aquele que, por piedade, foi na cruz, por nós, morrer;","Jesus que, sobre tudo, recebeu de Deus poder."],
+   ["Por um caminho plano nos guiará Jesus,","Ele nos ilumina com Sua eterna luz;","É Ele Quem nos envia virtude, graça e poder,","E, neste mundo de trevas, nos fará resplandecer;","Findando a jornada, Sua face iremos ver."]
+  ],
+  coro:["Jesus é o nosso Guia, Perfeito e fiel;","Esperemos noite e dia","Só em Cristo, o Emanuel."]
+ },
+ "34":{
+  tipo:"hino",
+  titulo:"O Mestre que desceu dos ceús",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","estrofe-4"],
+  estrofes:[
+   ["O Mestre que desceu dos céus, Jesus, o Redentor,","Deixou exemplo aos santos Seus, Exemplo de amor:"],
+   ["Curvado, lhes lavou os pés assim Se humilhou;","Com essa obra que Ele fez, O amor nos ensinou."],
+   ["Amai-vos, disse o Redentor Que teve morte atroz;","Jesus, por Seu divino amor, Salvou a todos nós."],
+   ["Busquemos o sublime amor Que Deus quer conceder;","Por nós, Jesus, o Salvador, Irá interceder."]
+  ]
+ },
+ "35":{
+  tipo:"hino",
+  titulo:"Eis que multidão mui grande",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Eis que multidão mui grande, de todas nações e tribos,","Foi vista nos céus e dava louvor perante o Salvador.","Trajavam vestidos brancos, lavados por Jesus Cristo;","Nas mãos levavam palmas, louvando ao Criador."],
+   ["Diziam, perante o trono de Deus e de Seu Cordeiro,","Que Deus, o Senhor, fiel Criador, pertence a salvação.","Prostrados, com reverência, honravam ao Verdadeiro;","Ações de graças davam, em santa adoração."],
+   ["Com anjos, na eterna glória, alegres, cantavam hinos;","Mostraram valor com Cristo, o Senhor, na grande tribulação.","Às fontes das águas vivas, Jesus guia os seus destinos;","Com grande regozijo, no céu resplandecerão."]
+  ]
+ },
+ "36":{
+  tipo:"hino",
+  titulo:"A fiel proteção",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["A fiel proteção do Teu manto de amor","Segurança me traz, bom Jesus;","Abrigado estou, tenho força e valor;","Trilharei Tua senda de luz."],
+   ["Meu destino de luz vejo ao longe, Senhor,","E jamais olharei para trás;","Minha crença em Ti guardarei, Redentor;","Teu poder virtuoso me faz."],
+   ["Teu intento, Senhor, vem em mim revelar;","Preciosos são os planos Teus;","De valor em valor quero aqui terminar","A carreira proposta por Deus."]
+  ],
+  coro:["O Teu manto de amor sinto estar sobre mim;","Minha vida Te entrego, Senhor;","Viverei pela fé, protegido assim,","Na presença de Deus, Criador."]
+ },
+ "37":{
+  tipo:"hino",
+  titulo:"Se a nossa vida entregarmos a Jesus",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Se a nossa vida entregarmos a Jesus,","Mal nenhum devemos nós temer;","Nunca pereceu quem a Jesus se entregou","De sincero coração;","Celestial amor provou","Quem sentiu, de Deus, perdão;","Juntos caminhemos, firmes e constantes,","Rumo à celestial Sião."],
+   ["Se a nossa vida entregarmos a Jesus,","Tudo poderemos suportar;","N'Ele confiemos e esperemos pela fé,","Pois bem perto Ele está;","Pelo Seu imenso amor,","Ao fiel ajudará.","Se, nas nossas provas, nós O invocarmos,","A vitória nos dará."],
+   ["Nossa vida já pertence ao Senhor Jesus,","Proclamemos todos: d'Ele sou!","Ó irmãos, devemos caminhar em Seu temor,","Pois Seu sangue nos lavou;","Glória ao nosso Redentor,","Que do mal nos libertou,","Sobre a cruz foi morto, mas voltou à vida;","Do sepulcro triunfou!"]
+  ]
+ },
+ "38":{
+  tipo:"hino",
+  titulo:"Ó Senhor, és minha vida",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","estrofe-4"],
+  estrofes:[
+   ["Ó Senhor, és minha Vida, com prazer Te vou louvar;","És Ajuda mui querida, que na luz me faz andar."],
+   ["Só a Ti, ó Deus, adoro, e louvores Te darei;","Com os santos, num só coro, pois Tu és excelso Rei."],
+   ["Meu Senhor, a Tua glória faz resplandecer em mim;","Sobre o mal terei vitória, por servir-Te até o fim."],
+   ["Fome e sede de justiça minha alma tem, Senhor;","Vem falar-lhe das delícias do Teu reino de esplendor."]
+  ]
+ },
+ "39":{
+  tipo:"hino",
+  titulo:"Eu desejo, Senhor",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Eu desejo, Senhor, só em Ti descansar","E aqui caminhar em amor;","Se por tribulação eu tiver que passar,","Me protege, ó bom Criador."],
+   ["Eu desejo, Senhor, com fervor sempre estar","Aos Teus pés, em constante oração;","Guarda meu coração para nunca pecar;","Faz-me andar sempre na retidão."],
+   ["Eu desejo, Senhor, por Ti sempre viver","E cingir a coroa nos céus;","Seja em lutas ou paz, quero sempre dizer:","Meu Descanso és Tu, ó meu Deus."]
+  ],
+  coro:["Quero, ó Deus, consagrar-Te meu ser;","Minha alma deseja em Teu reino viver."]
+ },
+ "40":{
+  tipo:"hino",
+  titulo:"Quanto em mim Tu operaste",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Quanto em mim Tu operaste","Pelo Teu imenso amor!","Graça, força enviaste","A minh'alma, ó Senhor."],
+   ["O Espírito da graça,","Que provém de Ti, Senhor,","Sempre mais fiel me faça,","Ó Jesus, meu Redentor."],
+   ["Da eterna e sã verdade","Faz-me sempre seguidor,","Quero andar em santidade,","Imitando a Ti, Senhor."]
+  ],
+  coro:["Vem, Senhor Jesus, com virtude e fé,","E com graça, fortificar","O meu coração, que Teu templo é;","Quero sempre Te exaltar."]
  },
  "45":{
   titulo:"Oh! Quanto nos amaste!",
