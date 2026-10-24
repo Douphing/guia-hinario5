@@ -1,4 +1,11 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.88: correção de política de fontes externas.
+- YouTube/YouTube Music diretos só permanecem quando a fonte validada é Orquestra Sacra/Hyamms.
+- Removidas mídias de Orquestra Filarmônica dos Amigos, CouTinho TuBa CCB, JHON CCB, Santo Compasso e Congregar Oficial.
+- Hino 45 preservado como piloto multimídia previamente aprovado.
+- Hinos sem fonte Orquestra Sacra/Hyamms validada retornam para “em validação”.
+- Busca pela letra, MP3 locais, favoritos, registros e compartilhamentos preservados.
+-->
 <!-- V6.87: continuidade Hinos 41 a 50 + correção de mídias 32, 33, 34 e 36.
 - YouTube/YouTube Music corrigidos com links diretos confirmados para 32, 33, 34 e 36.
 - Letras adicionadas: Hinos 41–44 e 46–50.
@@ -1168,11 +1175,9 @@ const MULTIMIDIA={
   spotify:"6DhNJpEIaBIibNhkEaAD1Q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6DhNJpEIaBIibNhkEaAD1Q",
-  youtube:"gAZGokU3Iv8",
-  youtubeOrigin:"https://www.youtube.com/watch?v=gAZGokU3Iv8",
-  youtubeMusic:"gAZGokU3Iv8",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=gAZGokU3Iv8",
-  fonteExterna:"Orquestra Filarmônica dos Amigos",
+  youtubeSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
+  youtubeMusicSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1181,11 +1186,9 @@ const MULTIMIDIA={
   spotify:"5tdiX3rQGhQyzldiY5uLNe",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5tdiX3rQGhQyzldiY5uLNe",
-  youtube:"6ryXQHMd4p4",
-  youtubeOrigin:"https://www.youtube.com/watch?v=6ryXQHMd4p4",
-  youtubeMusic:"6ryXQHMd4p4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=6ryXQHMd4p4",
-  fonteExterna:"CouTinho TuBa CCB",
+  youtubeSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
+  youtubeMusicSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1194,11 +1197,9 @@ const MULTIMIDIA={
   spotify:"0ETiV2o8Gr98zrpj7EurRP",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0ETiV2o8Gr98zrpj7EurRP",
-  youtube:"myEb1dU2rB0",
-  youtubeOrigin:"https://www.youtube.com/watch?v=myEb1dU2rB0",
-  youtubeMusic:"myEb1dU2rB0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=myEb1dU2rB0",
-  fonteExterna:"Orquestra Filarmônica dos Amigos",
+  youtubeSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
+  youtubeMusicSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1220,11 +1221,9 @@ const MULTIMIDIA={
   spotify:"52pJZi8IVmBxiAD5KTTMdZ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/52pJZi8IVmBxiAD5KTTMdZ",
-  youtube:"e_2Pv3SIllw",
-  youtubeOrigin:"https://www.youtube.com/watch?v=e_2Pv3SIllw",
-  youtubeMusic:"e_2Pv3SIllw",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=e_2Pv3SIllw",
-  fonteExterna:"SEVERINO JOAQUIM DA SILVA - Oficial",
+  youtubeSearch:"Orquestra Sacra Hino 36 A fiel proteção",
+  youtubeMusicSearch:"Orquestra Sacra Hino 36 A fiel proteção",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1281,44 +1280,36 @@ const MULTIMIDIA={
  "41":{
   audio:"audio/hino-41.mp3",
   spotifySearch:"Hino 41 O teu coração vem a Cristo entregar",
-  youtube:"iQeCSqy6KnE",
-  youtubeOrigin:"https://www.youtube.com/watch?v=iQeCSqy6KnE",
-  youtubeMusic:"iQeCSqy6KnE",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iQeCSqy6KnE",
-  fonteExterna:"Hinário Cantado",
+  youtubeSearch:"Orquestra Sacra Hino 41 O teu coração vem a Cristo entregar",
+  youtubeMusicSearch:"Orquestra Sacra Hino 41 O teu coração vem a Cristo entregar",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "42":{
   audio:"audio/hino-42.mp3",
   spotifySearch:"Hino 42 Ó minha alma, por que te abates?",
-  youtube:"Qbd2rdpJiok",
-  youtubeOrigin:"https://www.youtube.com/watch?v=Qbd2rdpJiok",
-  youtubeMusic:"Qbd2rdpJiok",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Qbd2rdpJiok",
-  fonteExterna:"JHON CCB",
+  youtubeSearch:"Orquestra Sacra Hino 42 Ó minha alma, por que te abates?",
+  youtubeMusicSearch:"Orquestra Sacra Hino 42 Ó minha alma, por que te abates?",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "43":{
   audio:"audio/hino-43.mp3",
   spotifySearch:"Hino 43 Trema o céu, a terra, o mar",
-  youtube:"Nz1P95z7dUs",
-  youtubeOrigin:"https://www.youtube.com/watch?v=Nz1P95z7dUs",
-  youtubeMusic:"Nz1P95z7dUs",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Nz1P95z7dUs",
-  fonteExterna:"Santo Compasso",
+  youtubeSearch:"Orquestra Sacra Hino 43 Trema o céu, a terra, o mar",
+  youtubeMusicSearch:"Orquestra Sacra Hino 43 Trema o céu, a terra, o mar",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "44":{
   audio:"audio/hino-44.mp3",
   spotifySearch:"Hino 44 Sol da justiça",
-  youtube:"stb54jftoVs",
-  youtubeOrigin:"https://www.youtube.com/watch?v=stb54jftoVs",
-  youtubeMusic:"stb54jftoVs",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=stb54jftoVs",
-  fonteExterna:"JHON CCB",
+  youtubeSearch:"Orquestra Sacra Hino 44 Sol da justiça",
+  youtubeMusicSearch:"Orquestra Sacra Hino 44 Sol da justiça",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1352,22 +1343,18 @@ const MULTIMIDIA={
  "49":{
   audio:"audio/hino-49.mp3",
   spotifySearch:"Hino 49 Venho adorar-Te, santo Criador",
-  youtube:"Xfc4m9Lh378",
-  youtubeOrigin:"https://www.youtube.com/watch?v=Xfc4m9Lh378",
-  youtubeMusic:"Xfc4m9Lh378",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Xfc4m9Lh378",
-  fonteExterna:"JHON CCB",
+  youtubeSearch:"Orquestra Sacra Hino 49 Venho adorar-Te, santo Criador",
+  youtubeMusicSearch:"Orquestra Sacra Hino 49 Venho adorar-Te, santo Criador",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "50":{
   audio:"audio/hino-50.mp3",
   spotifySearch:"Hino 50 Glória a Jesus! Aleluia!",
-  youtube:"Z22rFTChCnw",
-  youtubeOrigin:"https://www.youtube.com/watch?v=Z22rFTChCnw",
-  youtubeMusic:"Z22rFTChCnw",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Z22rFTChCnw",
-  fonteExterna:"Congregar Oficial",
+  youtubeSearch:"Orquestra Sacra Hino 50 Glória a Jesus! Aleluia!",
+  youtubeMusicSearch:"Orquestra Sacra Hino 50 Glória a Jesus! Aleluia!",
+  fonteExterna:"Em validação",
   repeticoes:1,
   modoReproducao:"partitura"
  },
