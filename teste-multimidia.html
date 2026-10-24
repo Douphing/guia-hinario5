@@ -1,4 +1,11 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.90: ajuste de linguagem da interface de mídias.
+- "em validação" foi substituído por "ainda não disponível" para o usuário final.
+- A lógica interna continua igual: somente a mídia sem ID direto fica indisponível.
+- Mídias já validadas permanecem ativas.
+- Hino 45 e demais pilotos/mídias aprovadas preservados.
+- Busca por letra, favoritos, registros e compartilhamentos preservados.
+-->
 <!-- V6.89: revisão real das mídias externas Hinos 32–50.
 - Status passa a ser efetivamente por serviço: Spotify, YouTube e YouTube Music.
 - Mantida exclusivamente a fonte Orquestra Sacra/Hyamms para novas mídias externas.
@@ -66,7 +73,7 @@
 <!-- V6.75: Hinos 11–20 adicionados à base Git atual com IDs diretos para players dentro do modal; somente “Abrir na origem” sai do Guia. -->
 
 <!-- V6.74: Hinos 1-10 com mídias diretas; players internos no modal no padrão do Hino 45. -->
-<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "em validação". -->
+<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "ainda não disponível". -->
 <!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
 <!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
 <!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
@@ -2555,15 +2562,15 @@ function openHymnDetail(h,cat){
    const platformBtns=[];
    if(media.spotify||media.spotifySearch){
      const pending=!media.spotify && !!media.spotifySearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
    if(media.youtube||media.youtubeSearch){
      const pending=!media.youtube && !!media.youtubeSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
    if(media.youtubeMusic||media.youtubeMusicSearch){
      const pending=!media.youtubeMusic && !!media.youtubeMusicSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
 
    area.innerHTML=
@@ -3164,7 +3171,7 @@ function downloadCallsCsv(){
    .replace(/\s+/g,' ')
    .trim();
  }
- function render(q){q=normMhSearch(q||'');const rows=MH.filter(x=>{const h=HM.get(x.num)||{};const searchable=normMhSearch([x.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));return !q||searchable.includes(q)});document.getElementById('mhMeta').textContent=rows.length+' sugestões exibidas • base em validação';const list=document.getElementById('mhList');if(!rows.length&&q){const isCoro=q==='coro'||q.startsWith('coro ');list.innerHTML=`<div class="mhEmpty">${isCoro?'Nenhum coro consta nesta relação sugestiva de Hinos para Meia-Hora.':'Nenhuma sugestão encontrada para esta pesquisa.'}</div>`;return}list.innerHTML=rows.map(x=>{const h=HM.get(x.num)||{titulo:'Hino '+x.num,ocasiao:''};return `<div class="mhItem"><div><strong>${esc(x.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></div><span class="mhBpm">♩ ${x.min}–${x.max} <button data-n="${x.num}" title="Metrônomo">▶</button></span></div>`}).join('');document.querySelectorAll('.mhBpm button').forEach(b=>b.onclick=()=>openMeter(MH.find(x=>x.num===b.dataset.n)))}
+ function render(q){q=normMhSearch(q||'');const rows=MH.filter(x=>{const h=HM.get(x.num)||{};const searchable=normMhSearch([x.num,h.titulo,h.ocasiao,h.apropriacao].filter(Boolean).join(' '));return !q||searchable.includes(q)});document.getElementById('mhMeta').textContent=rows.length+' sugestões exibidas • base em revisão';const list=document.getElementById('mhList');if(!rows.length&&q){const isCoro=q==='coro'||q.startsWith('coro ');list.innerHTML=`<div class="mhEmpty">${isCoro?'Nenhum coro consta nesta relação sugestiva de Hinos para Meia-Hora.':'Nenhuma sugestão encontrada para esta pesquisa.'}</div>`;return}list.innerHTML=rows.map(x=>{const h=HM.get(x.num)||{titulo:'Hino '+x.num,ocasiao:''};return `<div class="mhItem"><div><strong>${esc(x.num)} — ${esc(h.titulo)}</strong><small>${esc(h.ocasiao||'')}</small></div><span class="mhBpm">♩ ${x.min}–${x.max} <button data-n="${x.num}" title="Metrônomo">▶</button></span></div>`}).join('');document.querySelectorAll('.mhBpm button').forEach(b=>b.onclick=()=>openMeter(MH.find(x=>x.num===b.dataset.n)))}
  function beep(){try{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=950;g.gain.setValueAtTime(.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.045);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.05)}catch(e){}}
  function stop(){if(timer)clearInterval(timer);timer=null;const b=document.getElementById('mhPlay');if(b)b.textContent='▶'} function start(){stop();const bpm=+document.getElementById('mhSlider').value;const h=current?HM.get(current.num)||{}:{};registrarEventoGA('iniciar_metronomo',{numero_hino:String(current?.num||''),titulo_hino:String(h.titulo||''),bpm_atual:bpm,bpm_min:current?.min||0,bpm_max:current?.max||0});beep();timer=setInterval(beep,60000/bpm);document.getElementById('mhPlay').textContent='■'}
  function sync(){document.getElementById('mhNow').textContent=document.getElementById('mhSlider').value;if(timer)start()}
