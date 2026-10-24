@@ -1,4 +1,14 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.89: revisão real das mídias externas Hinos 32–50.
+- Status passa a ser efetivamente por serviço: Spotify, YouTube e YouTube Music.
+- Mantida exclusivamente a fonte Orquestra Sacra/Hyamms para novas mídias externas.
+- Hinos 32–40 preservam Spotify direto da Orquestra Sacra.
+- Hinos 41–50 passam a ter Spotify direto da Orquestra Sacra onde validado.
+- YouTube/YT Music diretos adicionados somente quando o vídeo da Orquestra Sacra foi confirmado.
+- Serviços ainda sem ID direto permanecem individualmente “em validação”.
+- Hino 45 preservado como piloto aprovado.
+- Busca por letra, MP3 local, favoritos, registros e compartilhamentos preservados.
+-->
 <!-- V6.88: correção de política de fontes externas.
 - YouTube/YouTube Music diretos só permanecem quando a fonte validada é Orquestra Sacra/Hyamms.
 - Removidas mídias de Orquestra Filarmônica dos Amigos, CouTinho TuBa CCB, JHON CCB, Santo Compasso e Congregar Oficial.
@@ -1175,9 +1185,11 @@ const MULTIMIDIA={
   spotify:"6DhNJpEIaBIibNhkEaAD1Q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6DhNJpEIaBIibNhkEaAD1Q",
-  youtubeSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
-  youtubeMusicSearch:"Orquestra Sacra Hino 32 Eu me escondo em Ti, Senhor",
-  fonteExterna:"Em validação",
+  youtube:"DXHyHlnHAfM",
+  youtubeOrigin:"https://www.youtube.com/watch?v=DXHyHlnHAfM",
+  youtubeMusic:"DXHyHlnHAfM",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=DXHyHlnHAfM",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1188,7 +1200,7 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/5tdiX3rQGhQyzldiY5uLNe",
   youtubeSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
   youtubeMusicSearch:"Orquestra Sacra Hino 33 Jesus é o nosso Guia",
-  fonteExterna:"Em validação",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1199,7 +1211,7 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/0ETiV2o8Gr98zrpj7EurRP",
   youtubeSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
   youtubeMusicSearch:"Orquestra Sacra Hino 34 O Mestre que desceu dos céus",
-  fonteExterna:"Em validação",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1223,7 +1235,7 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/52pJZi8IVmBxiAD5KTTMdZ",
   youtubeSearch:"Orquestra Sacra Hino 36 A fiel proteção",
   youtubeMusicSearch:"Orquestra Sacra Hino 36 A fiel proteção",
-  fonteExterna:"Em validação",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -1270,7 +1282,7 @@ const MULTIMIDIA={
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7yr53i4tTt9NELSx3ghe6P",
   youtube:"LJ3fd1hHdcU",
-  youtubeOrigin:"https://youtu.be/LJ3fd1hHdcU",
+  youtubeOrigin:"https://www.youtube.com/watch?v=LJ3fd1hHdcU",
   youtubeMusic:"LJ3fd1hHdcU",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=LJ3fd1hHdcU",
   fonteExterna:"Orquestra Sacra",
@@ -1279,82 +1291,108 @@ const MULTIMIDIA={
  },
  "41":{
   audio:"audio/hino-41.mp3",
-  spotifySearch:"Hino 41 O teu coração vem a Cristo entregar",
+  spotify:"09w0fA9AuslBgZKzjnwWHo",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/09w0fA9AuslBgZKzjnwWHo",
   youtubeSearch:"Orquestra Sacra Hino 41 O teu coração vem a Cristo entregar",
   youtubeMusicSearch:"Orquestra Sacra Hino 41 O teu coração vem a Cristo entregar",
-  fonteExterna:"Em validação",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "42":{
   audio:"audio/hino-42.mp3",
-  spotifySearch:"Hino 42 Ó minha alma, por que te abates?",
-  youtubeSearch:"Orquestra Sacra Hino 42 Ó minha alma, por que te abates?",
-  youtubeMusicSearch:"Orquestra Sacra Hino 42 Ó minha alma, por que te abates?",
-  fonteExterna:"Em validação",
+  spotify:"0ehXNJPz60LU8yGMeFDlnt",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0ehXNJPz60LU8yGMeFDlnt",
+  youtube:"lR-DTp1lOXk",
+  youtubeOrigin:"https://www.youtube.com/watch?v=lR-DTp1lOXk",
+  youtubeMusic:"lR-DTp1lOXk",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=lR-DTp1lOXk",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "43":{
   audio:"audio/hino-43.mp3",
-  spotifySearch:"Hino 43 Trema o céu, a terra, o mar",
+  spotify:"0951vh7ZV1zkDRXOQHLiQI",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0951vh7ZV1zkDRXOQHLiQI",
   youtubeSearch:"Orquestra Sacra Hino 43 Trema o céu, a terra, o mar",
   youtubeMusicSearch:"Orquestra Sacra Hino 43 Trema o céu, a terra, o mar",
-  fonteExterna:"Em validação",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "44":{
   audio:"audio/hino-44.mp3",
-  spotifySearch:"Hino 44 Sol da justiça",
-  youtubeSearch:"Orquestra Sacra Hino 44 Sol da justiça",
-  youtubeMusicSearch:"Orquestra Sacra Hino 44 Sol da justiça",
-  fonteExterna:"Em validação",
+  spotify:"7Ac7ajKZYl9lcVudrcVudb",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/7Ac7ajKZYl9lcVudrcVudb",
+  youtube:"AH0HlMzCrx8",
+  youtubeOrigin:"https://www.youtube.com/watch?v=AH0HlMzCrx8",
+  youtubeMusic:"AH0HlMzCrx8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=AH0HlMzCrx8",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "46":{
   audio:"audio/hino-46.mp3",
-  spotifySearch:"Hino 46 Grandioso é o nosso Deus",
-  youtubeSearch:"Hino 46 Grandioso é o nosso Deus CCB",
-  youtubeMusicSearch:"Hino 46 Grandioso é o nosso Deus CCB",
-  fonteExterna:"Em validação",
+  spotify:"6Y4vOzgCnzdmSd7LKOeQHm",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6Y4vOzgCnzdmSd7LKOeQHm",
+  youtubeSearch:"Orquestra Sacra Hino 46 Grandioso é o nosso Deus",
+  youtubeMusicSearch:"Orquestra Sacra Hino 46 Grandioso é o nosso Deus",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "47":{
   audio:"audio/hino-47.mp3",
-  spotifySearch:"Hino 47 Sublime é o perdão!",
-  youtubeSearch:"Hino 47 Sublime é o perdão! CCB",
-  youtubeMusicSearch:"Hino 47 Sublime é o perdão! CCB",
-  fonteExterna:"Em validação",
+  spotify:"482RuNttcW1oGleDA9TzNf",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/482RuNttcW1oGleDA9TzNf",
+  youtubeSearch:"Orquestra Sacra Hino 47 Sublime é o perdão!",
+  youtubeMusicSearch:"Orquestra Sacra Hino 47 Sublime é o perdão!",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "48":{
   audio:"audio/hino-48.mp3",
-  spotifySearch:"Hino 48 Creio no Senhor",
-  youtubeSearch:"Hino 48 Creio no Senhor CCB",
-  youtubeMusicSearch:"Hino 48 Creio no Senhor CCB",
-  fonteExterna:"Em validação",
+  spotify:"6XhKXfQaAhrxeOzhgv40xT",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6XhKXfQaAhrxeOzhgv40xT",
+  youtubeSearch:"Orquestra Sacra Hino 48 Creio no Senhor",
+  youtubeMusicSearch:"Orquestra Sacra Hino 48 Creio no Senhor",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "49":{
   audio:"audio/hino-49.mp3",
-  spotifySearch:"Hino 49 Venho adorar-Te, santo Criador",
-  youtubeSearch:"Orquestra Sacra Hino 49 Venho adorar-Te, santo Criador",
-  youtubeMusicSearch:"Orquestra Sacra Hino 49 Venho adorar-Te, santo Criador",
-  fonteExterna:"Em validação",
+  spotify:"1lMCHzc9TY9EiNaFOxq0Kb",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1lMCHzc9TY9EiNaFOxq0Kb",
+  youtube:"qhtLxx3c0Z8",
+  youtubeOrigin:"https://www.youtube.com/watch?v=qhtLxx3c0Z8",
+  youtubeMusic:"qhtLxx3c0Z8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=qhtLxx3c0Z8",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "50":{
   audio:"audio/hino-50.mp3",
-  spotifySearch:"Hino 50 Glória a Jesus! Aleluia!",
-  youtubeSearch:"Orquestra Sacra Hino 50 Glória a Jesus! Aleluia!",
-  youtubeMusicSearch:"Orquestra Sacra Hino 50 Glória a Jesus! Aleluia!",
-  fonteExterna:"Em validação",
+  spotify:"6vN2F6nkBJRSGGoyruN12E",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6vN2F6nkBJRSGGoyruN12E",
+  youtube:"GTrL1hjX0r8",
+  youtubeOrigin:"https://www.youtube.com/watch?v=GTrL1hjX0r8",
+  youtubeMusic:"GTrL1hjX0r8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=GTrL1hjX0r8",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2517,15 +2555,15 @@ function openHymnDetail(h,cat){
    const platformBtns=[];
    if(media.spotify||media.spotifySearch){
      const pending=!media.spotify && !!media.spotifySearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · em validação':'')+'</span><b>›</b></button>');
    }
    if(media.youtube||media.youtubeSearch){
      const pending=!media.youtube && !!media.youtubeSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · em validação':'')+'</span><b>›</b></button>');
    }
    if(media.youtubeMusic||media.youtubeMusicSearch){
      const pending=!media.youtubeMusic && !!media.youtubeMusicSearch;
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Link direto da Orquestra Sacra em validação"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · em validação':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Somente esta mídia ainda está em validação"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · em validação':'')+'</span><b>›</b></button>');
    }
 
    area.innerHTML=
