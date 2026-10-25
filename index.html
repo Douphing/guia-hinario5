@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.95: restauração do comportamento original dos cabeçalhos fixos.
+- Removida a estratégia V6.94 com position:fixed, placeholder e espaço artificial.
+- Menu de navegação volta a usar position:sticky no fluxo normal da página.
+- Cabeçalho da ocasião volta a usar position:sticky logo abaixo do menu.
+- A altura do menu é recalculada ao entrar/sair de ocasião, redimensionar, rotacionar ou retornar ao Guia.
+- Evita o grande espaço em branco/atropelamento ao retornar para a lista.
+- Correção do Analytics da V6.93 preservada.
+-->
+
 <!-- V6.93: correção do Google Analytics para consultas de hinos.
 - O evento consultar_hino passa a ser enviado sempre que o detalhe de um hino/coro é realmente aberto.
 - Consultas pela lista, favoritos, histórico, links compartilhados, registros e estudo passam a alimentar “Hinos mais consultados”.
@@ -4927,4 +4936,91 @@ function downloadCallsCsv(){
 }
 #hymnDetail #hdMediaArea .hd-platform b {display:none!important;}
 </style>
+
+<style id="v695-sticky-return-fix">
+/* V6.95 — comportamento antigo: sticky permanece no fluxo, sem placeholders. */
+:root{--v2-toolbar-h:62px}
+.toolbar{
+  position:sticky!important;
+  top:0!important;
+  left:auto!important;
+  right:auto!important;
+  width:auto!important;
+  z-index:300!important;
+}
+.toolbar-placeholder{display:none!important;height:0!important}
+body:not(.index-mode):not(.welcome-mode) #content section:not(.hidden-by-nav){
+  padding-top:0!important;
+}
+body:not(.index-mode):not(.welcome-mode) #content section:not(.hidden-by-nav) .section-head{
+  position:sticky!important;
+  top:var(--v2-toolbar-h)!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  width:auto!important;
+  z-index:250!important;
+  margin-top:0!important;
+  background:#fdfbf7!important;
+  box-shadow:0 4px 10px rgba(42,35,25,.05)!important;
+}
+body:not(.index-mode):not(.welcome-mode){
+  scroll-padding-top:calc(var(--v2-toolbar-h) + 12px)!important;
+}
+</style>
+<script id="v695-sticky-return-fix-js">
+(function(){
+  const root=document.documentElement;
+  let bar=null;
+  let ro=null;
+
+  function syncSticky(){
+    bar=bar||document.querySelector('.toolbar');
+    if(!bar) return;
+    const h=Math.max(1,Math.ceil(bar.getBoundingClientRect().height||62));
+    root.style.setProperty('--v2-toolbar-h',h+'px');
+  }
+  window.syncGuiaSticky=syncSticky;
+
+  function resync(){
+    requestAnimationFrame(()=>{
+      syncSticky();
+      requestAnimationFrame(syncSticky);
+    });
+    setTimeout(syncSticky,80);
+    setTimeout(syncSticky,220);
+  }
+
+  function init(){
+    bar=document.querySelector('.toolbar');
+    if(!bar) return;
+    syncSticky();
+
+    window.addEventListener('resize',resync,{passive:true});
+    window.addEventListener('orientationchange',resync,{passive:true});
+    window.addEventListener('pageshow',resync,{passive:true});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)resync();});
+
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',resync,{passive:true});
+    }
+    if('ResizeObserver' in window){
+      ro=new ResizeObserver(resync);
+      ro.observe(bar);
+    }
+    const mo=new MutationObserver(resync);
+    mo.observe(document.body,{attributes:true,attributeFilter:['class']});
+
+    document.addEventListener('click',(e)=>{
+      if(e.target.closest('#v2BackIndex,#goIndex,#indice a,#indice button,#searchResults .result')){
+        setTimeout(resync,0);
+      }
+    },true);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
+
 </body></html>
