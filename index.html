@@ -1,4 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.96: correção do retorno do modal do hino.
+- O modal do hino passa a usar o mesmo bloqueio de rolagem do modal de Pesquisa (body.modal-open).
+- Removido o bloqueio direto em document.documentElement, que fazia o Chrome móvel recalcular o sticky ao fechar o hino.
+- Menu e cabeçalho da ocasião preservam a posição ao retornar do modal.
+- Base V6.95 e correção de Analytics preservadas.
+-->
 <!-- V6.95: restauração do comportamento original dos cabeçalhos fixos.
 - Removida a estratégia V6.94 com position:fixed, placeholder e espaço artificial.
 - Menu de navegação volta a usar position:sticky no fluxo normal da página.
@@ -2850,7 +2856,8 @@ function openHymnDetail(h,cat){
  }
  modal.classList.remove('media-open');
  modal.classList.add('open');
- document.documentElement.style.overflow='hidden';
+ modal.setAttribute('aria-hidden','false');
+ document.body.classList.add('modal-open');
 }
 
 function calcularRepeticoesAudio(h,media){
@@ -2967,7 +2974,11 @@ function loadHymnMedia(kind,media,button){
 
 (function(){
  const modal=document.getElementById('hymnDetail');
- const close=()=>{modal.classList.remove('open','media-open');document.documentElement.style.overflow=''};
+ const close=()=>{
+   modal.classList.remove('open','media-open');
+   modal.setAttribute('aria-hidden','true');
+   document.body.classList.remove('modal-open');
+ };
  document.getElementById('hdClose').addEventListener('click',close);
  modal.addEventListener('click',e=>{if(e.target===modal)close()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
