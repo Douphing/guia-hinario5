@@ -1,4 +1,31 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.97: correção do piloto Hino 45 no celular.
+- Restaura configuração completa do Hino 45 com URLs diretas e cache-busting do MP3.
+- Ao abrir uma mídia, o modal leva o player ativo para a área visível em vez de voltar ao topo.
+- No celular, o modal de mídia volta a permitir rolagem interna quando necessária, evitando player oculto.
+- Mantidos os IDs aprovados: Spotify 0834t6lumVQ5FKetjMgREw, YouTube aFtzMzwvMfo e YouTube Music DF966OAKcUQ.
+-->
+<!-- V6.96: correção do retorno do modal do hino.
+- O modal do hino passa a usar o mesmo bloqueio de rolagem do modal de Pesquisa (body.modal-open).
+- Removido o bloqueio direto em document.documentElement, que fazia o Chrome móvel recalcular o sticky ao fechar o hino.
+- Menu e cabeçalho da ocasião preservam a posição ao retornar do modal.
+- Base V6.95 e correção de Analytics preservadas.
+-->
+<!-- V6.95: restauração do comportamento original dos cabeçalhos fixos.
+- Removida a estratégia V6.94 com position:fixed, placeholder e espaço artificial.
+- Menu de navegação volta a usar position:sticky no fluxo normal da página.
+- Cabeçalho da ocasião volta a usar position:sticky logo abaixo do menu.
+- A altura do menu é recalculada ao entrar/sair de ocasião, redimensionar, rotacionar ou retornar ao Guia.
+- Evita o grande espaço em branco/atropelamento ao retornar para a lista.
+- Correção do Analytics da V6.93 preservada.
+-->
+
+<!-- V6.93: correção do Google Analytics para consultas de hinos.
+- O evento consultar_hino passa a ser enviado sempre que o detalhe de um hino/coro é realmente aberto.
+- Consultas pela lista, favoritos, histórico, links compartilhados, registros e estudo passam a alimentar “Hinos mais consultados”.
+- O clique em resultado de pesquisa mantém o evento pesquisar_hino, evitando contagem dupla de consultar_hino.
+- Mídias, letras, favoritos, registros e compartilhamentos da V6.92 preservados.
+-->
 <!-- V6.92: integração completa dos Hinos 51–60.
 - Letras dos Hinos 51–60 adicionadas ao objeto LETRAS, conforme a partitura final(2).pdf.
 - Estruturas musicais preservadas: estrofes, coros e Final.
@@ -500,7 +527,6 @@ function renderResults(){
         origem_consulta:'pesquisa',
         tipo_correspondencia:h.lyricHit?'letra':'metadados'
       });
-      registrarEventoGA('consultar_hino', gaBusca);
       registrarEventoGA('pesquisar_hino', gaBusca);
 
       closeModal();
@@ -1298,8 +1324,10 @@ const MULTIMIDIA={
   spotify:"7MBkK6PA0DZpSzEap3550h",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7MBkK6PA0DZpSzEap3550h",
-  youtubeSearch:"Orquestra Sacra Hino 39 Eu desejo, Senhor",
-  youtubeMusicSearch:"Orquestra Sacra Hino 39 Eu desejo, Senhor",
+  youtubeOrigin:"https://www.youtube.com/watch?v=2Q3HzlfJbJU",
+  youtube:"2Q3HzlfJbJU",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-xImSpPBAMc",
+  youtubeMusic:"-xImSpPBAMc",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1309,10 +1337,10 @@ const MULTIMIDIA={
   spotify:"7yr53i4tTt9NELSx3ghe6P",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7yr53i4tTt9NELSx3ghe6P",
-  youtube:"LJ3fd1hHdcU",
-  youtubeOrigin:"https://www.youtube.com/watch?v=LJ3fd1hHdcU",
-  youtubeMusic:"LJ3fd1hHdcU",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=LJ3fd1hHdcU",
+  youtube:"M8ZyCnW4drk",
+  youtubeOrigin:"https://www.youtube.com/watch?v=M8ZyCnW4drk",
+  youtubeMusic:"qm7n5EGdKl8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=qm7n5EGdKl8",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1535,10 +1563,15 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "45":{
-  audio:"audio/hino-45.mp3",
+  audio:"audio/hino-45.mp3?v=697",
   spotify:"0834t6lumVQ5FKetjMgREw",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0834t6lumVQ5FKetjMgREw",
   youtube:"aFtzMzwvMfo",
+  youtubeOrigin:"https://www.youtube.com/watch?v=aFtzMzwvMfo",
   youtubeMusic:"DF966OAKcUQ",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=DF966OAKcUQ",
+  fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2779,10 +2812,12 @@ function openHymnDetail(h,cat){
  window.__gaCurrentHymn=h;
  const gaOrigem=window.__gaOrigemConsulta||'lista';
  window.__gaOrigemConsulta='';
- registrarEventoGA('abrir_detalhe_hino', gaHinoParams(h,{
+ const gaDetalhe = gaHinoParams(h,{
    origem_consulta:gaOrigem,
    piloto_multimidia:(String(h.num)==='45'||/^Coro [1-6]$/.test(String(h.num)))?'sim':'nao'
- }));
+ });
+ registrarEventoGA('consultar_hino', gaDetalhe);
+ registrarEventoGA('abrir_detalhe_hino', gaDetalhe);
  document.getElementById('hdNum').innerHTML='<span>Hino</span><span class="hd-number">'+esc(h.num)+'</span>';
  document.getElementById('hdTitle').textContent=h.titulo;
  const occ=String(h.ocasiao||cat).split('/').map(x=>x.trim()).filter(Boolean).join(' • ');
@@ -2836,7 +2871,8 @@ function openHymnDetail(h,cat){
  }
  modal.classList.remove('media-open');
  modal.classList.add('open');
- document.documentElement.style.overflow='hidden';
+ modal.setAttribute('aria-hidden','false');
+ document.body.classList.add('modal-open');
 }
 
 function calcularRepeticoesAudio(h,media){
@@ -2953,7 +2989,11 @@ function loadHymnMedia(kind,media,button){
 
 (function(){
  const modal=document.getElementById('hymnDetail');
- const close=()=>{modal.classList.remove('open','media-open');document.documentElement.style.overflow=''};
+ const close=()=>{
+   modal.classList.remove('open','media-open');
+   modal.setAttribute('aria-hidden','true');
+   document.body.classList.remove('modal-open');
+ };
  document.getElementById('hdClose').addEventListener('click',close);
  modal.addEventListener('click',e=>{if(e.target===modal)close()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
@@ -4456,20 +4496,44 @@ function downloadCallsCsv(){
 </script>
 
 <style>#hymnDetail.media-open{align-items:center!important;justify-content:center!important;padding:6px!important}#hymnDetail.media-open .hd-card{width:min(760px,calc(100vw - 12px))!important;max-width:760px!important;max-height:calc(100dvh - 12px)!important;overflow:hidden!important;margin:auto!important;padding:8px 12px 10px!important}#hymnDetail.media-open .hd-hero{min-height:92px!important;padding:10px 48px 4px 50px!important}#hymnDetail.media-open .hd-staff{height:39px!important}#hymnDetail.media-open .hd-clef{font-size:54px!important;top:-5px!important}#hymnDetail.media-open .hd-num{gap:6px!important}#hymnDetail.media-open .hd-num>span:first-child{font-size:13px!important}#hymnDetail.media-open .hd-num .hd-number{font-size:39px!important}#hymnDetail.media-open h2{font-size:22px!important;line-height:1!important;margin-top:1px!important}#hymnDetail.media-open .hd-swoosh{display:none!important}#hymnDetail.media-open .hd-meta{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;margin:5px 0!important}#hymnDetail.media-open .hd-meta-row{grid-template-columns:54px minmax(0,1fr)!important;min-height:52px!important;border-radius:12px!important}#hymnDetail.media-open .hd-meta-icon{min-height:52px!important;border-radius:12px 0 0 12px!important}#hymnDetail.media-open .hd-meta-icon svg{width:36px!important;height:36px!important}#hymnDetail.media-open .hd-meta-copy{padding:4px 6px 4px 16px!important}#hymnDetail.media-open .hd-meta-copy:before{left:7px!important;top:8px!important;bottom:8px!important}#hymnDetail.media-open .hd-meta-label{font-size:8px!important}#hymnDetail.media-open .hd-meta-value{font-size:14px!important;line-height:1.02!important}#hymnDetail.media-open #hdStudyInfo{min-height:36px!important;margin:4px 0 3px!important;padding:4px 8px 4px 10px!important}#hymnDetail.media-open #hdStudyInfo .hd-study-main strong{font-size:.68rem!important}#hymnDetail.media-open #hdStudyInfo .hd-study-main small{font-size:.58rem!important}#hymnDetail.media-open .hd-actions{margin:4px 0!important;gap:6px!important}#hymnDetail.media-open .hd-actions button{min-height:32px!important;padding:4px 5px!important;font-size:10px!important}#hymnDetail.media-open .hd-history-link{padding:1px 4px 3px!important;font-size:.68rem!important;min-height:20px!important}#hymnDetail.media-open .hd-secondary-actions{margin:2px auto 4px!important;gap:6px!important}#hymnDetail.media-open .hd-secondary-actions #v2LetterBtn,#hymnDetail.media-open .hd-secondary-actions .hd-share-hymn{height:30px!important;min-height:30px!important;font-size:.70rem!important}#hymnDetail.media-open .hd-divider{display:none!important}#hymnDetail.media-open .hd-media-title{font-size:19px!important;margin:2px 0 4px!important}#hymnDetail.media-open .hd-note{font-size:21px!important}#hymnDetail.media-open .hd-slot{margin-top:5px!important}#hymnDetail.media-open .hd-links{min-height:16px!important;margin-top:2px!important;padding:1px 3px 0!important;line-height:1!important}#hymnDetail.media-open .hd-links a{font-size:10px!important}#hymnDetail.media-open #hdYoutube{display:flex!important;justify-content:center!important;align-items:center!important;overflow:hidden!important}#hymnDetail.media-open #hdYoutube iframe{width:min(100%,330px)!important;max-width:100%!important;height:auto!important;aspect-ratio:16/9!important;max-height:185px!important;margin:0 auto!important}#hymnDetail.media-open #hdSpotify iframe{height:92px!important}@media(max-width:520px){#hymnDetail.media-open{padding:4px!important}#hymnDetail.media-open .hd-card{width:calc(100vw - 8px)!important;max-height:calc(100dvh - 8px)!important;padding:6px 8px 8px!important;border-radius:17px!important}#hymnDetail.media-open .hd-hero{min-height:78px!important;padding:7px 38px 3px 40px!important}#hymnDetail.media-open .hd-close{width:31px!important;height:31px!important;font-size:18px!important}#hymnDetail.media-open .hd-staff{height:31px!important}#hymnDetail.media-open .hd-clef{font-size:45px!important;left:5px!important;top:-4px!important}#hymnDetail.media-open .hd-num>span:first-child{font-size:11px!important}#hymnDetail.media-open .hd-num .hd-number{font-size:34px!important}#hymnDetail.media-open h2{font-size:18px!important;margin-top:1px!important}#hymnDetail.media-open .hd-meta{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px!important;margin:4px 0!important}#hymnDetail.media-open .hd-meta-row{grid-template-columns:42px minmax(0,1fr)!important;min-height:46px!important;border-radius:10px!important}#hymnDetail.media-open .hd-meta-icon{min-height:46px!important;border-radius:10px 0 0 10px!important}#hymnDetail.media-open .hd-meta-icon svg{width:30px!important;height:30px!important}#hymnDetail.media-open .hd-meta-copy{padding:3px 4px 3px 12px!important}#hymnDetail.media-open .hd-meta-copy:before{left:5px!important;top:7px!important;bottom:7px!important}#hymnDetail.media-open .hd-meta-label{font-size:7px!important}#hymnDetail.media-open .hd-meta-value{font-size:11.5px!important;line-height:1.05!important}#hymnDetail.media-open #hdStudyInfo{min-height:34px!important;margin:3px 0 2px!important;padding:3px 7px 3px 9px!important}#hymnDetail.media-open #hdStudyInfo .hd-study-book{font-size:14px!important}#hymnDetail.media-open #hdStudyInfo .hd-study-main strong{font-size:.64rem!important}#hymnDetail.media-open #hdStudyInfo .hd-study-main small{font-size:.54rem!important}#hymnDetail.media-open .hd-actions{margin:3px 0!important;gap:5px!important}#hymnDetail.media-open .hd-actions button{min-height:30px!important;padding:3px 3px!important;font-size:9.5px!important}#hymnDetail.media-open .hd-history-link{font-size:.63rem!important;min-height:18px!important;padding:0 3px 2px!important}#hymnDetail.media-open .hd-secondary-actions{margin:1px auto 3px!important}#hymnDetail.media-open .hd-secondary-actions #v2LetterBtn,#hymnDetail.media-open .hd-secondary-actions .hd-share-hymn{height:28px!important;min-height:28px!important;font-size:.66rem!important}#hymnDetail.media-open .hd-media-title{font-size:17px!important;margin:1px 0 3px!important}#hymnDetail.media-open .hd-note{font-size:19px!important}#hymnDetail.media-open #hdYoutube iframe{width:min(100%,300px)!important;max-height:169px!important}#hymnDetail.media-open #hdSpotify iframe{height:82px!important}#hymnDetail.media-open .hd-links a{font-size:9.5px!important}}@media(max-height:610px){#hymnDetail.media-open .hd-card{overflow-y:auto!important;overscroll-behavior:contain!important}}</style>
-<script id="v66-media-scroll-reset">
+<script id="v697-media-mobile-focus">
 (function(){
   const modal=document.getElementById('hymnDetail');
   if(!modal)return;
+
   modal.addEventListener('click',function(e){
     const btn=e.target.closest('.hd-play');
-    if(!btn)return;
+    if(!btn || btn.disabled)return;
+
+    const kind=btn.dataset.kind;
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      const card=modal.querySelector('.hd-card');
-      if(card)card.scrollTop=0;
+      const target = kind==='instrumental'
+        ? document.getElementById('hdAudio')
+        : kind==='spotify'
+          ? document.getElementById('hdSpotify')
+          : document.getElementById('hdYoutube');
+
+      if(target && target.children.length){
+        target.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+      }
     }));
   });
 })();
 </script>
+<style id="v697-media-mobile-scroll-fix">
+@media(max-width:520px){
+  #hymnDetail.media-open .hd-card{
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  #hymnDetail.media-open .hd-slot{
+    scroll-margin-top:8px!important;
+    scroll-margin-bottom:8px!important;
+  }
+}
+</style>
 
 <style id="v69-index-show-more-style">#indice .index-more-hidden{display:none!important}#indexMoreToggle{grid-column:1/-1!important;width:min(520px,100%)!important;margin:4px auto 8px!important;min-height:44px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;border:1px solid #d6c49d!important;border-radius:14px!important;background:#fffaf0!important;color:#6f5524!important;box-shadow:none!important;font:800 .86rem/1 Arial,sans-serif!important;letter-spacing:.01em!important}#indexMoreToggle:hover,#indexMoreToggle:focus-visible{background:#f7eedc!important;border-color:#bd9954!important;outline:none!important}#indexMoreToggle .index-more-chevron{font-size:1.05rem;line-height:1;transition:transform .16s ease}#indexMoreToggle[aria-expanded="true"] .index-more-chevron{transform:rotate(180deg)}@media(max-width:699px){#indexMoreToggle{width:100%!important;margin-top:2px!important;min-height:46px!important;font-size:.84rem!important}}#indexMoreToggle{grid-column:1/-1!important;position:relative!important;z-index:6!important;width:100%!important;max-width:none!important;min-height:44px!important;margin:4px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;border:1px solid #d6c49d!important;border-radius:14px!important;background:#fffaf0!important;color:#6f5524!important;box-shadow:none!important;font:800 .86rem/1 Arial,sans-serif!important}#indexMoreToggle:hover,#indexMoreToggle:focus-visible{background:#f7eedc!important;border-color:#bd9954!important;outline:none!important}#indexMoreToggle .index-more-chevron{width:9px!important;height:9px!important;display:inline-block!important;flex:0 0 9px!important;border-right:2px solid currentColor!important;border-bottom:2px solid currentColor!important;transform:translateY(-2px) rotate(45deg)!important;font-size:0!important;line-height:0!important;transition:transform .16s ease!important}#indexMoreToggle[aria-expanded="true"] .index-more-chevron{transform:translateY(2px) rotate(225deg)!important}#indexMorePreview{grid-column:1/-1!important;position:relative!important;width:100%!important;height:112px!important;margin:0 0 8px!important;overflow:hidden!important;pointer-events:none!important;z-index:1!important}#indexMorePreview[hidden]{display:none!important}#indexMorePreview .index-shadow-preview-card{position:absolute!important;left:1.3%!important;right:1.3%!important;width:97.4%!important;min-height:64px!important;margin:0!important;pointer-events:none!important;user-select:none!important;color:#5c554b!important;background:#fbf8f0!important;border-color:#d8cfbf!important;box-shadow:0 7px 16px rgba(45,38,26,.10)!important;filter:saturate(.50)!important;transition:none!important}#indexMorePreview .index-shadow-preview-card:nth-child(1){top:13px!important;opacity:.38!important;transform:scale(.988)!important;z-index:3!important}#indexMorePreview .index-shadow-preview-card:nth-child(2){top:43px!important;opacity:.22!important;transform:scale(.955)!important;z-index:2!important}#indexMorePreview .index-shadow-preview-card:nth-child(3){top:72px!important;opacity:.11!important;transform:scale(.92)!important;z-index:1!important}#indexMorePreview::after{content:"";position:absolute!important;inset:auto 0 0 0!important;height:32px!important;z-index:5!important;pointer-events:none!important;background:linear-gradient( to bottom,rgba(239,235,224,0),rgba(239,235,224,.72) 70%,rgba(239,235,224,1) )!important}#indexMoreToggle[aria-expanded="true"]{margin-bottom:8px!important}@media(max-width:699px){#indexMoreToggle{min-height:46px!important;font-size:.84rem!important}#indexMorePreview{height:104px!important}#indexMorePreview .index-shadow-preview-card{left:1.6%!important;right:1.6%!important;width:96.8%!important;min-height:60px!important}#indexMorePreview .index-shadow-preview-card:nth-child(1){top:11px!important}#indexMorePreview .index-shadow-preview-card:nth-child(2){top:39px!important}#indexMorePreview .index-shadow-preview-card:nth-child(3){top:67px!important}}</style>
 
@@ -4922,4 +4986,91 @@ function downloadCallsCsv(){
 }
 #hymnDetail #hdMediaArea .hd-platform b {display:none!important;}
 </style>
+
+<style id="v695-sticky-return-fix">
+/* V6.95 — comportamento antigo: sticky permanece no fluxo, sem placeholders. */
+:root{--v2-toolbar-h:62px}
+.toolbar{
+  position:sticky!important;
+  top:0!important;
+  left:auto!important;
+  right:auto!important;
+  width:auto!important;
+  z-index:300!important;
+}
+.toolbar-placeholder{display:none!important;height:0!important}
+body:not(.index-mode):not(.welcome-mode) #content section:not(.hidden-by-nav){
+  padding-top:0!important;
+}
+body:not(.index-mode):not(.welcome-mode) #content section:not(.hidden-by-nav) .section-head{
+  position:sticky!important;
+  top:var(--v2-toolbar-h)!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  width:auto!important;
+  z-index:250!important;
+  margin-top:0!important;
+  background:#fdfbf7!important;
+  box-shadow:0 4px 10px rgba(42,35,25,.05)!important;
+}
+body:not(.index-mode):not(.welcome-mode){
+  scroll-padding-top:calc(var(--v2-toolbar-h) + 12px)!important;
+}
+</style>
+<script id="v695-sticky-return-fix-js">
+(function(){
+  const root=document.documentElement;
+  let bar=null;
+  let ro=null;
+
+  function syncSticky(){
+    bar=bar||document.querySelector('.toolbar');
+    if(!bar) return;
+    const h=Math.max(1,Math.ceil(bar.getBoundingClientRect().height||62));
+    root.style.setProperty('--v2-toolbar-h',h+'px');
+  }
+  window.syncGuiaSticky=syncSticky;
+
+  function resync(){
+    requestAnimationFrame(()=>{
+      syncSticky();
+      requestAnimationFrame(syncSticky);
+    });
+    setTimeout(syncSticky,80);
+    setTimeout(syncSticky,220);
+  }
+
+  function init(){
+    bar=document.querySelector('.toolbar');
+    if(!bar) return;
+    syncSticky();
+
+    window.addEventListener('resize',resync,{passive:true});
+    window.addEventListener('orientationchange',resync,{passive:true});
+    window.addEventListener('pageshow',resync,{passive:true});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)resync();});
+
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',resync,{passive:true});
+    }
+    if('ResizeObserver' in window){
+      ro=new ResizeObserver(resync);
+      ro.observe(bar);
+    }
+    const mo=new MutationObserver(resync);
+    mo.observe(document.body,{attributes:true,attributeFilter:['class']});
+
+    document.addEventListener('click',(e)=>{
+      if(e.target.closest('#v2BackIndex,#goIndex,#indice a,#indice button,#searchResults .result')){
+        setTimeout(resync,0);
+      }
+    },true);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
+
 </body></html>
