@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V6.98: integração dos Hinos 61–70 sobre a base V6.97 atual.
+- Base V6.97 preservada integralmente, incluindo correção mobile do piloto Hino 45, Analytics, favoritos, registros e compartilhamento.
+- Letras e estruturas dos Hinos 61–70 incorporadas a partir da transcrição já conferida com a partitura final(2).pdf.
+- MP3 local referenciado como audio/hino-61.mp3 até audio/hino-70.mp3.
+- Spotify e YouTube mantêm a política Orquestra Sacra / Orquestra Hymns; somente IDs diretos já validados são ativados.
+- YouTube Music passa a usar CCB - Vozes do Campo, com a coletânea 61–70 e início/fim exatos de cada hino dentro do player.
+- Hino 61 preserva tratamento especial de execução conforme voltas/final da partitura.
+-->
 <!-- V6.97: correção do piloto Hino 45 no celular.
 - Restaura configuração completa do Hino 45 com URLs diretas e cache-busting do MP3.
 - Ao abrir uma mídia, o modal leva o player ativo para a área visível em vez de voltar ao topo.
@@ -1464,20 +1472,24 @@ const MULTIMIDIA={
  },
  "51":{
   audio:"audio/hino-51.mp3",
-  spotifySearch:"Orquestra Sacra Hino 51 A Palavra do Senhor é Pão celestial",
-  youtubeSearch:"Orquestra Sacra Hino 51 A Palavra do Senhor é Pão celestial",
-  youtubeMusicSearch:"Orquestra Sacra Hino 51 A Palavra do Senhor é Pão celestial",
+  spotify:"0HswhobToUaufM8UAh8ivo",
+  spotifyOrigin:"https://open.spotify.com/0HswhobToUaufM8UAh8ivo",
+  youtubeOrigin:"https://www.youtube.com/watch?v=_1pDkkxUlBE",
+  youtube:"_1pDkkxUlBE",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=krVkS1v2PEA",
+  youtubeMusic: "krVkS1v2PEA",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "52":{
   audio:"audio/hino-52.mp3",
-  spotifySearch:"Orquestra Sacra Hino 52 Luz eternal é Jesus",
+  spotify:"5Xpnzq37PHm8ERCmmn8rL4",
+  spotifyOrigin:"https://open.spotify.com/5Xpnzq37PHm8ERCmmn8rL4",
   youtube:"0xtyQPyaqBA",
   youtubeOrigin:"https://www.youtube.com/watch?v=0xtyQPyaqBA",
-  youtubeMusic:"0xtyQPyaqBA",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=0xtyQPyaqBA",
+  youtubeMusic:"IZyOJGmv_1c",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=IZyOJGmv_1c",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1487,55 +1499,70 @@ const MULTIMIDIA={
   spotify:"2hR9TIRkQD6FBu3WXJBSvD",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2hR9TIRkQD6FBu3WXJBSvD",
-  youtubeSearch:"Orquestra Sacra Hino 53 Nós somos luz do mundo",
-  youtubeMusicSearch:"Orquestra Sacra Hino 53 Nós somos luz do mundo",
+  youtubeOrigin:"https://www.youtube.com/watch?v=foABhJJGX3k",
+  youtube:"foABhJJGX3k",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HF2W6r1r3mY",
+  youtubeMusic:"HF2W6r1r3mY",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "54":{
   audio:"audio/hino-54.mp3",
-  spotifySearch:"Orquestra Sacra Hino 54 Um tesouro glorioso achei",
-  youtubeSearch:"Orquestra Sacra Hino 54 Um tesouro glorioso achei",
-  youtubeMusicSearch:"Orquestra Sacra Hino 54 Um tesouro glorioso achei",
+  spotify:"33By6XdFF5pQbCDoDqXcsT",
+  spotifyOrigin:"https://open.spotify.com/track/33By6XdFF5pQbCDoDqXcsT",
+  youtube:"x2LnzbjdKLI",
+  youtubeOrigin:"https://www.youtube.com/watch?v=x2LnzbjdKLI",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=nQLL0n41uCs",
+  youtubeMusic:"nQLL0n41uCs",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "55":{
   audio:"audio/hino-55.mp3",
-  spotifySearch:"Orquestra Sacra Hino 55 Paz seja em vós",
-  youtubeSearch:"Orquestra Sacra Hino 55 Paz seja em vós",
-  youtubeMusicSearch:"Orquestra Sacra Hino 55 Paz seja em vós",
+  spotify:"5Eoj2kDvlZ5fj9L9MhC6Lg",
+  spotifyOrigin:"https://open.spotify.com/5Eoj2kDvlZ5fj9L9MhC6Lg",
+  youtube:"Ai__5dK_CoY",
+  youtubeOrigin:"https://www.youtube.com/watch?v=Ai__5dK_CoY",
+  youtubeMusic:"BQBsOZcE4kU",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=BQBsOZcE4kU",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "56":{
   audio:"audio/hino-56.mp3",
-  spotifySearch:"Orquestra Sacra Hino 56 Põe em Deus a confiança",
-  youtubeSearch:"Orquestra Sacra Hino 56 Põe em Deus a confiança",
-  youtubeMusicSearch:"Orquestra Sacra Hino 56 Põe em Deus a confiança",
+  spotify:"5oybqZiWJD628h4lFbSILY",
+  spotifyOrigin:"https://open.spotify.com/5oybqZiWJD628h4lFbSILY",
+  youtube:"GJPI7uQPx_E",
+  youtubeOrigin:"https://www.youtube.com/watch?v=GJPI7uQPx_E",
+  youtubeMusic:"upg61a_jly8",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=upg61a_jly8",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "57":{
   audio:"audio/hino-57.mp3",
-  spotifySearch:"Orquestra Sacra Hino 57 É estreita a porta para a salvação",
+  spotify:"6bZDNV0sAxm6oP2IDPNgBV",
+  spotifyOrigin:"https://open.spotify.com/6bZDNV0sAxm6oP2IDPNgBV",
   youtube:"Mes6PkFCHtc",
   youtubeOrigin:"https://www.youtube.com/watch?v=Mes6PkFCHtc",
-  youtubeMusic:"Mes6PkFCHtc",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Mes6PkFCHtc",
+  youtubeMusic:"Z4N_gKDmuNg",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Z4N_gKDmuNg",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "58":{
   audio:"audio/hino-58.mp3",
-  spotifySearch:"Orquestra Sacra Hino 58 Sou crente em Jesus",
-  youtubeSearch:"Orquestra Sacra Hino 58 Sou crente em Jesus",
-  youtubeMusicSearch:"Orquestra Sacra Hino 58 Sou crente em Jesus",
+  spotify:"0a5PwEE9GMlm0V3qxkRTsM",
+  spotifyOrigin:"https://open.spotify.com/0a5PwEE9GMlm0V3qxkRTsM",
+  youtube:"cOaF8kPDthE",
+  youtubeOrigin:"https://www.youtube.com/watch?v=cOaF8kPDthE",
+  youtubeMusic:"Ovhpnj4GOYU",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Ovhpnj4GOYU",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1555,13 +1582,159 @@ const MULTIMIDIA={
  },
  "60":{
   audio:"audio/hino-60.mp3",
-  spotifySearch:"Orquestra Sacra Hino 60 Oh! Vem a Jesus",
-  youtubeSearch:"Orquestra Sacra Hino 60 Oh! Vem a Jesus",
-  youtubeMusicSearch:"Orquestra Sacra Hino 60 Oh! Vem a Jesus",
+  spotify:"2JEGHvYEwegSBledcRxQmK",
+  spotifyOrigin:"https://open.spotify.com/2JEGHvYEwegSBledcRxQmK",
+  youtube:"8jv_H272rKw",
+  youtubeOrigin:"https://www.youtube.com/watch?v=8jv_H272rKw",
+  youtubeMusic:"-R-tC-VKWI4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-R-tC-VKWI4",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
  },
+"61":{
+  audio:"audio/hino-61.mp3",
+  spotify:"6S480IyEKM0c4wOs58zcXY",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6S480IyEKM0c4wOs58zcXY",
+  youtube:"WXLfF1lWpjw",
+  youtubeOrigin:"https://www.youtube.com/watch?v=WXLfF1lWpjw",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:162,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=0s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura",
+  formaEspecial:"voltas-1-2-e-final-na-3"
+ },
+"62":{
+  audio:"audio/hino-62.mp3",
+  spotify:"6HAG0Efd6zgJdwEIUKAFV3",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/6HAG0Efd6zgJdwEIUKAFV3",
+  youtube:"ByHLgQSGeXs",
+  youtubeOrigin:"https://www.youtube.com/watch?v=ByHLgQSGeXs",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:162,
+  youtubeMusicEnd:331,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=162s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"63":{
+  audio:"audio/hino-63.mp3",
+  spotify:"0DmrUF3KEVMu8WfHJmG7YT",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0DmrUF3KEVMu8WfHJmG7YT",
+  youtube:"ywo6GvQxGtI",
+  youtubeOrigin:"https://www.youtube.com/watch?v=ywo6GvQxGtI",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:331,
+  youtubeMusicEnd:547,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=331s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"64":{
+  audio:"audio/hino-64.mp3",
+  spotify:"5cV2LArAdCuDg5Lz7K9jV2",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/5cV2LArAdCuDg5Lz7K9jV2",
+  youtubeSearch:"Orquestra Sacra Hino 64 Tu, que vives sem destino",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:547,
+  youtubeMusicEnd:747,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=547s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"65":{
+  audio:"audio/hino-65.mp3",
+  spotify:"1EDBOmWuQJiAYy0j0urmkY",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1EDBOmWuQJiAYy0j0urmkY",
+  youtubeSearch:"Orquestra Sacra Hino 65 Igual ao Mestre",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:747,
+  youtubeMusicEnd:1017,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=747s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"66":{
+  audio:"audio/hino-66.mp3",
+  spotify:"65zDTch4Pp3Z5zINs3nwYF",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/65zDTch4Pp3Z5zINs3nwYF",
+  youtubeSearch:"Orquestra Sacra Hino 66 Cansado estás Vem a Jesus",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:1017,
+  youtubeMusicEnd:1203,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=1017s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"67":{
+  audio:"audio/hino-67.mp3",
+  spotify:"19SOhGijCWZMoqcOAm7lhY",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/19SOhGijCWZMoqcOAm7lhY",
+  youtube:"AlBMQp8WttE",
+  youtubeOrigin:"https://www.youtube.com/watch?v=AlBMQp8WttE",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:1203,
+  youtubeMusicEnd:1397,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=1203s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"68":{
+  audio:"audio/hino-68.mp3",
+  spotify:"49EDLZuoyWp0MSfD03SJ0b",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/49EDLZuoyWp0MSfD03SJ0b",
+  youtubeSearch:"Orquestra Sacra Hino 68 Sem tardar, vai a Cristo",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:1397,
+  youtubeMusicEnd:1557,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=1397s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"69":{
+  audio:"audio/hino-69.mp3",
+  spotifySearch:"Orquestra Sacra Hino 69 A família de Jesus",
+  youtubeSearch:"Orquestra Sacra Hino 69 A família de Jesus",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:1557,
+  youtubeMusicEnd:1809,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=1557s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"70":{
+  audio:"audio/hino-70.mp3",
+  spotify:"0R4nLrkKQ1r7KMPJ9oiP21",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/0R4nLrkKQ1r7KMPJ9oiP21",
+  youtubeSearch:"Orquestra Sacra Hino 70 Senhor, Tu és a minha Esperança",
+  youtubeMusic:"p0Gq5QKt26g",
+  youtubeMusicStart:1809,
+  youtubeMusicOrigin:"https://www.youtube.com/watch?v=p0Gq5QKt26g&t=1809s",
+  fonteExterna:"Spotify/YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+
  "45":{
   audio:"audio/hino-45.mp3?v=697",
   spotify:"0834t6lumVQ5FKetjMgREw",
@@ -2397,6 +2570,115 @@ const LETRAS={
   ],
   coro:["Oh! Vem a Jesus,", "Que por nós morreu sobre a cruz;", "Seu sangue precioso Ele derramou", "E com Deus nos reconciliou."]
  },
+"61":{
+  tipo:"hino",
+  titulo:"A minha alma deseja ver-Te",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","final"],
+  estrofes:[
+   ["A minha alma quer contemplar-Te,","Ó meu fiel e amado Jesus;","Quero servir-Te, quero seguir-Te","E caminhar Contigo na luz."],
+   ["És Torre forte à minha alma,","És Proteção em tempos de dor;","Tu me alegras, Tu me preservas","De todo mal, ó meu Redentor."],
+   ["Vivo aguardando a Tua volta","Para subir Contigo a Deus;","A todo instante vivo anelante","Por contemplar a glória dos céus."]
+  ],
+  final:["A minha alma deseja ver-Te,","Sinto por Ti imenso amor;","Eu Te adoro, Te imploro:","Faz-me viver Contigo, Senhor."]
+ },
+"62":{
+  tipo:"hino",
+  titulo:"Ó Criador, forte Rocha és",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","estrofe-4"],
+  estrofes:[
+   ["Ó Criador, forte Rocha és, imenso é o Teu poder;","Eu me abrigo em Ti, Senhor, a fim de nunca perecer."],
+   ["Ó Criador, Teu fiel favor me faz jubilar de amor;","Com toda a alma, imploro a Ti: oh! vem me defender, Senhor."],
+   ["Ó Criador, vem me preservar do mal e da tentação;","Mui fraco sou, recorro a Ti; atende minha oração."],
+   ["Ó Criador, poderoso Deus, espero em Teu amor;","Opera sempre a meu favor; louvores Te darei, Senhor."]
+  ]
+ },
+"63":{
+  tipo:"hino",
+  titulo:"Se vós baterdes, Ele vos abre",
+  estrutura:["estrofe-1","estrofe-2","final"],
+  estrofes:[
+   ["Com fé chegai-vos ao grande Mestre, Cristo Jesus, o Senhor;","Seus dons celestes, Sua virtude derramará por amor;","Não duvideis, pois de Cristo vem o que vós precisais;","Tudo Ele pode fazer-vos, além do que vós pensais."],
+   ["O mar revolto e a tempestade Cristo Jesus aplacou;","Os cegos viram, coxos andaram, a muitos purificou;","Mortos voltaram à vida, foram entregues aos seus;","Cristo, o Verbo eterno, veio por graça de Deus."]
+  ],
+  final:["Se vós baterdes, Ele vos abre;","O que pedirdes, dará.","Se vós buscardes o Mestre,","Por vós achado será."]
+ },
+"64":{
+  tipo:"hino",
+  titulo:"Tu, que vives sem destino",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","estrofe-4"],
+  estrofes:[
+   ["Tu, que vives sem destino neste mundo de perdição,","Vem a Cristo, que te concede salvação, verdadeiro perdão."],
+   ["Tu, que estás sem esperança neste mundo cruel de dor,","Vem a Cristo e não vaciles, pois te chama com grande amor."],
+   ["Deixa Cristo conduzir-te, segue a Ele com devoção;","É só Ele o real Caminho, é o Autor da eternal redenção."],
+   ["Pecadores fomos todos, mas Jesus veio nos salvar;","Para, um dia, na Sua glória, a coroa da vida nos dar."]
+  ]
+ },
+"65":{
+  tipo:"hino",
+  titulo:"Igual ao Mestre!",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Igual ao Mestre eu desejo ser,","Em humildade e mansidão viver,","Sempre, com zelo, em santidade andar","E minha vida a Ele consagrar."],
+   ["Cristo, o Mestre, Sua cruz levou","E o Pai eterno O glorificou;","Também desejo a minha cruz levar","E, para sempre, com Ele habitar."],
+   ["Como é o Mestre, no céu, O verei;","À semelhança d'Ele eu serei,","Num corpo santo, glorioso e imortal,","Habitarei na cidade eternal."]
+  ],
+  coro:["Meu coração é todo Teu, Senhor,","Ele é um templo para Teu louvor,","Guarda-o do mal, ao vir a tentação;","Sou Teu remido, divino Redentor."]
+ },
+"66":{
+  tipo:"hino",
+  titulo:"Cansado estás? Vem a Jesus",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Cansado estás? Vem a Jesus, o justo Remidor;","Terás em ti a Sua luz e Seu divino amor."],
+   ["Da opressão, livrar-te-á Jesus, o Redentor;","Da perdição, salvar-te-á por Seu imenso amor."],
+   ["Ele é o Amor que não tem par, Amigo celestial;","A vida eterna quer te dar no reino divinal."]
+  ],
+  coro:["Vem, oprimido, sem tardar, à Fonte do perdão;","O Redentor te faz herdar eterna salvação."]
+ },
+"67":{
+  tipo:"hino",
+  titulo:"\"Vinde a Mim!\"",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","final"],
+  estrofes:[
+   ["Não há palavra doce igual à de Jesus,","Palavra da verdade, que para o céu conduz.","Quando estiveres triste, terás consolação","Buscando a Jesus Cristo, Autor da salvação."],
+   ["Não andes mais distante do Salvador Jesus,","Que, com amor, te chama, pois é a tua Luz.","Se fores desprezado e não tiveres paz,","Vem logo entregar-te ao Salvador veraz."],
+   ["Vem, sem tardar, unir-te a Quem te diz assim,","Com voz celeste e doce: “Oh! Vem, sim, vem a Mim”.","Por Sua mão guiado, aqui tu andarás","Tranquilo, bem seguro e, um dia, ao céu irás."]
+  ],
+  final:["“Vinde a Mim, vós todos cansados e oprimidos”,","Falou o grande Mestre, Jesus, o Redentor;","Pois Seu fardo é leve, Seu jugo é suave,","Só Ele traz alívio: perdão ao pecador."]
+ },
+"68":{
+  tipo:"hino",
+  titulo:"Sem tardar, vai a Cristo",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Se, cansado e aflito, tu procuras salvação,","Não demores, vai a Cristo, que concede redenção."],
+   ["Dá um passo para Cristo e receberás perdão;","E, por Deus, serás benquisto, sendo um fiel cristão."],
+   ["Não recuses o chamado do divino Remidor","E serás justificado ante Deus, o Criador."]
+  ],
+  coro:["Sem tardar, sem tardar,","Vai a Cristo, o Salvador;","Ele quer te salvar,","Segue a Ele com fervor."]
+ },
+"69":{
+  tipo:"hino",
+  titulo:"A família de Jesus",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Em volta de Jesus se achava a multidão,","Ouvindo Seus conselhos e aprendendo a retidão.","Alguém aproximou-se para Lhe anunciar","Que Sua mãe e Seus irmãos queriam Lhe falar."],
+   ["Respondeu o grande Mestre, estendendo Suas mãos:","“Aqui está a Minha mãe, também os Meus irmãos;","Àqueles que obedecem a Deus Pai, que está nos céus,","Jesus os chama de irmãos e coerdeiros Seus.”"],
+   ["Oh! Que amor profundo Jesus tem pelos Seus,","Pois chama-os de irmãos e filhos do eterno Deus;","Tão excelente afeto Deus fará compreender","Ao homem que invocá-Lo e cumprir o Seu querer."]
+  ]
+ },
+"70":{
+  tipo:"hino",
+  titulo:"Senhor, Tu és a minha Esperança",
+  estrutura:["estrofe-1","coro","estrofe-2","estrofe-3"],
+  estrofes:[
+   ["Senhor, Tu és a minha Esperança,","Seguir-Te-ei de todo o meu coração;","Em Ti está a minha confiança","De receber, no céu, o galardão."],
+   ["Senhor, Tu és a minha Fortaleza,","E és também o meu potente Salvador;","Tu removes toda a minha incerteza,","A vida e fé me deste, Redentor."],
+   ["Agora tenho Tua alegria,","Viva esperança, paz, vigor, amor e luz;","Tu és meu Guarda e também meu Guia,","És tudo para mim, ó bom Jesus."]
+  ],
+  coro:["Ao céu desejo ir","Contigo, ó Senhor;","Ali irei fruir","Os bens eternos, ó bom Salvador."]
+ },
+
  "Coro 1":{
   tipo:"coro",
   titulo:"Aleluia! Aleluia!",
@@ -2979,7 +3261,14 @@ function loadHymnMedia(kind,media,button){
      ? (media.youtubeOrigin||('https://www.youtube.com/watch?v='+id))
      : (media.youtubeMusicOrigin||('https://music.youtube.com/watch?v='+id));
    const f=document.createElement('iframe');
-   f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
+   let embedUrl='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
+   if(kind==='youtubeMusic'){
+     const start=Number(media.youtubeMusicStart||0);
+     const end=Number(media.youtubeMusicEnd||0);
+     if(start>0) embedUrl+='&start='+start;
+     if(end>0) embedUrl+='&end='+end;
+   }
+   f.src=embedUrl;
    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
    f.allowFullscreen=true;f.loading='lazy';f.title=kind==='youtube'?'YouTube player':'YouTube Music player';
    f.setAttribute('scrolling','no');yt.appendChild(f);
