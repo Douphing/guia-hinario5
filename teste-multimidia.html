@@ -1,4 +1,20 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.01 TESTE: integração incremental dos Hinos 101–120 sobre a base V7.00.
+- Hinos 1–100 protegidos; somente as duas correções V7.00 permanecem.
+- Letras e estruturas 101–120 integradas conforme a partitura do projeto.
+- MP3 locais: audio/hino-101.mp3 até audio/hino-120.mp3.
+- Spotify/YouTube: somente IDs diretos validados da Orquestra Sacra.
+- YouTube Music: CCB - Vozes do Campo, coletâneas 101–110 e 111–120, com início/fim individual.
+- Hinos 102 e 105 preservam casas/terceira execução e Final.
+- Nenhum campo spotifySearch, youtubeSearch ou youtubeMusicSearch foi criado no novo lote.
+-->
+
+<!-- V7.00: consolidação da base oficial 1–100.
+- Hino 81: restaurada referência local audio/hino-81.mp3.
+- Hino 46: removido campo legado youtubeMusicSearch; mantido ID direto e registrada youtubeMusicOrigin.
+- Demais dados, mídias, letras, funções e configurações 1–100 preservados.
+-->
+
 <!-- V6.99: integração incremental dos Hinos 81–100 sobre a base atual com Hinos 1–80 integralmente preservados.
 - Letras e estruturas dos Hinos 81–100 conferidas com a partitura final(2).pdf do projeto.
 - MP3 local referenciado como audio/hino-81.mp3 até audio/hino-100.mp3.
@@ -1421,8 +1437,8 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/6Y4vOzgCnzdmSd7LKOeQHm",
   youtubeOrigin:"https://www.youtube.com/watch?v=zxMle-QROcM",
   youtube:"zxMle-QROcM",
-  youtubeMusicSearch:"https://music.youtube.com/watch?v=Qxzskvh-V5A",
   youtubeMusic:"Qxzskvh-V5A",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Qxzskvh-V5A",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1889,6 +1905,7 @@ const MULTIMIDIA={
  },
 /* V6.99 — MULTIMIDIA Hinos 81–100: somente mídias diretas validadas; sem campos *Search. */
 "81":{
+  audio:"audio/hino-81.mp3",
   spotify:"3MGbmghB0bnAIObQbKEItc",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3MGbmghB0bnAIObQbKEItc",
@@ -2184,6 +2201,248 @@ const MULTIMIDIA={
   youtubeMusicStart:1767,
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=rU_cxeD3UQc&t=1767s",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+
+/* V7.01 TESTE — MULTIMIDIA Hinos 101–120: integração incremental; Hinos 1–100 protegidos. */
+"101":{
+  audio:"audio/hino-101.mp3",
+  spotify:"3iVCxMFDwVuXsgKVEhnXTv",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/3iVCxMFDwVuXsgKVEhnXTv",
+  youtube:"9z-8dAFG_JE",
+  youtubeOrigin:"https://www.youtube.com/watch?v=9z-8dAFG_JE",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:179,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=0s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"102":{
+  audio:"audio/hino-102.mp3",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:179,
+  youtubeMusicEnd:412,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=179s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura",
+  formaEspecial:"casas-1-2-e-final-na-3"
+ },
+"103":{
+  audio:"audio/hino-103.mp3",
+  youtube:"30jgD8ZZF2A",
+  youtubeOrigin:"https://www.youtube.com/watch?v=30jgD8ZZF2A",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:412,
+  youtubeMusicEnd:674,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=412s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"104":{
+  audio:"audio/hino-104.mp3",
+  spotify:"2QJzfIqFQTTC00R1epebzI",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/2QJzfIqFQTTC00R1epebzI",
+  youtube:"fsdSup1pMCs",
+  youtubeOrigin:"https://www.youtube.com/watch?v=fsdSup1pMCs",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:674,
+  youtubeMusicEnd:832,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=674s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"105":{
+  audio:"audio/hino-105.mp3",
+  youtube:"nQx3s3Wm9yI",
+  youtubeOrigin:"https://www.youtube.com/watch?v=nQx3s3Wm9yI",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:832,
+  youtubeMusicEnd:1043,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=832s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura",
+  formaEspecial:"casas-1-2-e-final-na-3"
+ },
+"106":{
+  audio:"audio/hino-106.mp3",
+  youtube:"-zCFccrCa_Y",
+  youtubeOrigin:"https://www.youtube.com/watch?v=-zCFccrCa_Y",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:1043,
+  youtubeMusicEnd:1232,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=1043s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"107":{
+  audio:"audio/hino-107.mp3",
+  youtube:"ZMpHJ7VuAi0",
+  youtubeOrigin:"https://www.youtube.com/watch?v=ZMpHJ7VuAi0",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:1232,
+  youtubeMusicEnd:1473,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=1232s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"108":{
+  audio:"audio/hino-108.mp3",
+  youtube:"S5H8tVwvTNY",
+  youtubeOrigin:"https://www.youtube.com/watch?v=S5H8tVwvTNY",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:1473,
+  youtubeMusicEnd:1624,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=1473s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"109":{
+  audio:"audio/hino-109.mp3",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:1624,
+  youtubeMusicEnd:1769,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=1624s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"110":{
+  audio:"audio/hino-110.mp3",
+  youtubeMusic:"HCyLhPY6e-E",
+  youtubeMusicStart:1769,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HCyLhPY6e-E&t=1769s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"111":{
+  audio:"audio/hino-111.mp3",
+  spotify:"1gE5oecN1kWlkakIq6PmSa",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1gE5oecN1kWlkakIq6PmSa",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:186,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=0s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"112":{
+  audio:"audio/hino-112.mp3",
+  youtube:"wGoH2Mu5lSU",
+  youtubeOrigin:"https://www.youtube.com/watch?v=wGoH2Mu5lSU",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:186,
+  youtubeMusicEnd:354,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=186s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"113":{
+  audio:"audio/hino-113.mp3",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:354,
+  youtubeMusicEnd:582,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=354s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"114":{
+  audio:"audio/hino-114.mp3",
+  youtube:"3jmH44LAjYA",
+  youtubeOrigin:"https://www.youtube.com/watch?v=3jmH44LAjYA",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:582,
+  youtubeMusicEnd:782,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=582s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"115":{
+  audio:"audio/hino-115.mp3",
+  spotify:"1znhAB2dpDdQKV8sS6rD6I",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/1znhAB2dpDdQKV8sS6rD6I",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:782,
+  youtubeMusicEnd:1007,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=782s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"116":{
+  audio:"audio/hino-116.mp3",
+  spotify:"50cRqYFMZpFiloteZIWQ8x",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/50cRqYFMZpFiloteZIWQ8x",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:1007,
+  youtubeMusicEnd:1212,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=1007s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"117":{
+  audio:"audio/hino-117.mp3",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:1212,
+  youtubeMusicEnd:1471,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=1212s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"118":{
+  audio:"audio/hino-118.mp3",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:1471,
+  youtubeMusicEnd:1629,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=1471s",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"119":{
+  audio:"audio/hino-119.mp3",
+  youtube:"okCAk6A3OQQ",
+  youtubeOrigin:"https://www.youtube.com/watch?v=okCAk6A3OQQ",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:1629,
+  youtubeMusicEnd:1812,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=1629s",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  repeticoes:1,
+  modoReproducao:"partitura"
+ },
+"120":{
+  audio:"audio/hino-120.mp3",
+  spotify:"5y5CakRAKP5TkE8RKvvjI6",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/5y5CakRAKP5TkE8RKvvjI6",
+  youtube:"OeeOVAyozgU",
+  youtubeOrigin:"https://www.youtube.com/watch?v=OeeOVAyozgU",
+  youtubeMusic:"G_iDz5IAm5w",
+  youtubeMusicStart:1812,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=G_iDz5IAm5w&t=1812s",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3457,6 +3716,224 @@ const LETRAS={
    ["Com Jesus, celeste Esposo, para sempre reinaremos","No Seu lar de amor, lugar de esplendor;","Como Ele nós seremos no Seu reino eternal de luz;","Oh! Glória ao nosso Salvador!"]
   ],
   coro:["Todos juntos, jubilemos de um coração sincero,","Dando honra e Glória ao nosso Redentor;","O Seu sangue precioso Ele derramou por nós na cruz;","Remidos somos do Senhor."]
+ },
+
+/* V7.01 TESTE — LETRAS Hinos 101–120: integração incremental na estrutura existente. */
+"101":{
+  tipo:"hino",
+  titulo:"Cantemos, juntos, louvores a Deus",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "estrofe-4"],
+  estrofes:[
+   ["Cantemos, juntos, louvores a Deus", "E celebremos ao Senhor;", "Com júbilo elevemos aos céus", "Tributos santos ao Criador."],
+   ["Eternamente preside o Senhor,", "Seus dias não se findarão;", "Prostremo-nos ante Deus, Criador,", "Pois somos obra da Sua mão."],
+   ["Ó vinde e adoremos, por fé,", "Ao Deus que nos fez povo Seu;", "Onipresente e santo Ele é", "E prometeu nos levar ao céu."],
+   ["Se hoje ouvirmos a voz do Senhor,", "Devemos logo obedecer,", "Pois o repouso no reino de amor,", "De Deus, o Pai, vamos receber."]
+  ]
+ },
+"102":{
+  tipo:"hino",
+  titulo:"Sinto a voz divina do meu fiel Pastor",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "final"],
+  estrofes:[
+   ["Sinto a voz tão meiga de Cristo, o Redentor,", "Que sempre me consola com Seu sublime amor;", "A pastos verdejantes sempre me guiará;", "Com Seu cajado santo me apascentará."],
+   ["Amigo Seu, me chama, meu Salvador Jesus;", "O Seu falar sublime dá compreensão e luz;", "Quero, aos pés do Mestre, continuamente estar;", "Quero, nos Seus conselhos, sempre me deleitar."],
+   ["O meu divino Mestre fala com mansidão", "E traz à minha alma grande consolação;", "Em todas as angústias, na prova ou na dor,", "Dentro de mim eu sinto a voz do meu Senhor."]
+  ],
+  final:["Sinto a voz divina do meu fiel Pastor,", "Que sempre me ensina com infinito amor;", "A Sua face, um dia, na glória eu verei;", "Na bem-aventurança regozijar-me-ei."]
+ },
+"103":{
+  tipo:"hino",
+  titulo:"Bendize, ó minha alma",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Bendize, ó minha alma, ao teu amado Senhor,", "Bendize o Nome do eterno Deus; é grande o bem que te faz;", "Nunca te esqueças do amor e do celestial favor;", "É Ele Quem perdoa os erros teus e te dá conforto e paz."],
+   ["Todo o meu ser bendiga ao Deus que dá perfeição;", "O bálsamo que me alivia a dor, do Seu santo trono provém;", "Ele afastou, por Seu amor, de mim a grande maldição;", "E, aos que cumprem Sua eterna lei, reserva no céu sumo bem."],
+   ["Oh! Bendizei-O sempre, vós todos, os santos Seus,", "E todos vós que sempre O servis, o Seu Nome engrandecei;", "Ele é fiel, é justo e bom, e para todo o sempre é Deus;", "Vós todos que sois filhos do Senhor, a Ele somente temei."]
+  ],
+  coro:["Ao Pai da Eternidade,", "Grande em benignidade,", "Glória e majestade,", "Domínio, honra e louvor!"]
+ },
+"104":{
+  tipo:"hino",
+  titulo:"Santo, Santo és, Senhor",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["A Ti, ó Senhor, tributamos louvor,", "Honra, glória por Teu infinito favor."],
+   ["Amado Jesus, celestial Rei dos reis,", "Brevemente estarão, junto a Ti, Teus fiéis."],
+   ["Em breve no céu, Teus remidos, Senhor,", "Viverão para sempre no reino de amor."]
+  ],
+  coro:["Santo, Santo és, Senhor;", "Santo, Santo és Tu,", "Só a Ti todo o louvor", "Pertence, Senhor."]
+ },
+"105":{
+  tipo:"hino",
+  titulo:"Volta ao teu lar Paternal!",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "final"],
+  estrofes:[
+   ["Ó irmão que deixaste a casa do Senhor,", "Não mais andes longe do teu Pai celestial;", "Ele quer perdoar-te, por Seu sublime amor;", "Volta ao teu lar Paternal!"],
+   ["Ao lar que desprezaste, oh! volta, sem tardar,", "Pois só nele encontras paz e consolação;", "Tuas culpas confessa, sem nada ocultar,", "Grandioso é o Deus do perdão."],
+   ["O bom Pai te espera e quer te acolher,", "E, nos céus, os anjos se regozijarão;", "De virtude e luz o Senhor te quer prover", "E, ao fim, te dar salvação."]
+  ],
+  final:["Vai, ó pródigo, vai,", "Do pão do céu te saciar;", "Deus te quer perdoar", "E teus pecados lavar."]
+ },
+"106":{
+  tipo:"hino",
+  titulo:"Em nome do nosso Redentor",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Em nome do nosso Redentor", "Oramos a Ti, ó Deus;", "Oh! Vem com Teu calor, com Teu divino amor;", "Visita-nos desde os céus."],
+   ["Bendito és Tu, ó Criador,", "Fiel e potente Deus;", "Envia, ó Senhor, o Teu Consolador;", "Conforta os santos Teus."],
+   ["Com fé nos prostramos, ó Senhor,", "Em santa adoração;", "Aceita-nos, ó Deus; responde-nos, dos céus;", "Oh! Põe-nos em comunhão."]
+  ]
+ },
+"107":{
+  tipo:"hino",
+  titulo:"O fim de tudo chegará",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["O fim de tudo chegará, ouvi, pecadores,", "Só Cristo vos perdoará e vida vos dará;", "O fim está bem perto, bem perto, bem perto,", "Fazei então concerto com Quem vos quer salvar;", "Ó vinde, contritos, depressa, sem tardar,", "A Cristo piedoso, que a glória vos quer dar."],
+   ["Arrependei-vos e aceitai a Cristo, o Cordeiro;", "A Ele as culpas confessai e o mundo rejeitai;", "Não desprezeis a sorte, pois grande é essa sorte", "Que livrará da morte e do eterno ardor,", "Da ira vindoura vos livra o Redentor;", "Perfeito refúgio é Cristo, o Salvador."],
+   ["Ó vinde já vos entregar, Jesus vos convida", "E quer a Deus vos adotar, também herança dar;", "É grande Seu afeto, divino afeto,", "É o Seu amor, perfeito, potente a salvar;", "Ó vinde, depressa, as bênçãos desfrutar,", "Com glória eterna ireis no céu reinar."]
+  ]
+ },
+"108":{
+  tipo:"hino",
+  titulo:"É Jesus a Fonte de riqueza",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "estrofe-4"],
+  estrofes:[
+   ["É Jesus a Fonte de riqueza,", "Nosso Escudo, nossa Fortaleza;", "É a nossa Luz, nosso Precursor,", "É o Caminho e bom Pastor."],
+   ["É Jesus a Rocha preciosa,", "A Verdade eterna gloriosa;", "D'Ele temos fé para O seguir", "E reinarmos no porvir."],
+   ["É Jesus a nossa eterna Sorte,", "Sua obra aboliu a morte;", "Derramou na cruz sangue expiador,", "Resgatou-nos o Senhor."],
+   ["É Jesus o Rei vitorioso,", "O Sublime, Santo e Poderoso;", "É o Autor da fé e Consumador;", "É, de tudo, o Senhor."]
+  ]
+ },
+"109":{
+  tipo:"hino",
+  titulo:"Vem, ó Senhor, ajudar-me",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Vem, ó Senhor, ajudar-me nas minhas tribulações;", "Eu, confiante, espero Tuas libertações."],
+   ["Vem, ó Senhor, ajudar-me neste meu peregrinar;", "Nas provações e lutas podes me abrigar."],
+   ["Vem, ó Senhor, ajudar-me para poder batalhar;", "Reveste-me de força para não vacilar."]
+  ],
+  coro:["Vem ajudar-me sempre, ó forte Defensor,", "Para que nesta vida possa ser vencedor."]
+ },
+"110":{
+  tipo:"hino",
+  titulo:"Vigiai, irmãos",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Vigiai, irmãos, em todo o tempo,", "Como ensina o Senhor;", "E, orando, achareis sustento,", "Sentireis maior vigor."],
+   ["Vigiai, pois não sabeis a hora", "Em que o Senhor virá;", "Ele diz, também a nós agora,", "Que mui breve voltará."],
+   ["Vigiando, atentos, aguardemos", "Nosso amado Salvador;", "Nossas vestes brancas conservemos;", "Vigiemos com fervor."]
+  ],
+  coro:["Oh! Vigiai em todo o tempo", "Para que o coração", "Sinta vigor, também alento,", "E de Deus a santa unção."]
+ },
+"111":{
+  tipo:"hino",
+  titulo:"Do sepulcro ressurgiu triunfante",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Do sepulcro, eis que, triunfante,", "Ressurgiu o Filho do eterno Deus", "Para dar-nos Sua fé constante", "E ao fim levar-nos para os céus.", "Foi Jesus, o Mestre, sepultado,", "Mas a morte não O pôde mais reter;", "Quem não tinha em Si nenhum pecado,", "Veio pelo pecador morrer."],
+   ["Quando as discípulas chegaram", "Com aromas para ungirem o Senhor,", "No sepulcro não mais O acharam,", "Pois da morte fora vencedor.", "Viram anjos que lhes informaram", "Que entre os mortos Cristo não estava mais;", "Cheias de alegria retornaram,", "Contemplando maravilhas tais."],
+   ["Aos apóstolos apresentou-Se,", "E lhes disse: \"Seja em vós a Minha paz\";", "A tristeza em glória transformou-se", "Pela Sua aparição veraz.", "Em Jerusalém permaneceram;", "Revestidos foram do poder de Deus;", "As virtudes eles receberam,", "Veio o Dom bendito desde os céus."]
+  ]
+ },
+"112":{
+  tipo:"hino",
+  titulo:"Sigamos sempre ao Senhor",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Irmãos, avante com nosso Rei, o santo Libertador;", "Permaneçamos na Sua lei; sigamos sempre ao Senhor."],
+   ["O Evangelho nos conduziu a Cristo, o Redentor,", "Que nossas almas do mal remiu; sirvamos sempre ao Senhor."],
+   ["Devemos sempre obedecer aos Seus preceitos de amor", "E Seus conselhos em nós reter; amemos sempre ao Senhor."]
+  ],
+  coro:["Jesus nos conduzirá aos céus,", "Sigamos sempre ao Senhor;", "Habitaremos com nosso Deus", "No reino de esplendor."]
+ },
+"113":{
+  tipo:"hino",
+  titulo:"O Senhor seja louvado",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["O Senhor seja louvado,", "Pois mandou-nos Sua luz;", "Entoemos, ó remidos,", "Hinos ao Senhor Jesus."],
+   ["O Senhor seja louvado", "Pelos resgatados Seus,", "Que desejam, ansiosos,", "Ver a glória do bom Deus."],
+   ["O Senhor seja louvado,", "Pois nos deu o Seu Penhor:", "Seu Espírito eterno,", "Divinal Consolador."]
+  ],
+  coro:["Exaltado, aclamado,", "Seja Cristo, o Redentor;", "D'Ele temos a vitória", "Por Seu sangue justo e remidor."]
+ },
+"114":{
+  tipo:"hino",
+  titulo:"Clama ao Mestre, Cristo Jesus",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Quando te sentires abatido,", "Cristo te estende a Sua mão;", "Ele é o santo e verdadeiro Amigo,", "Ele é a tua Porção."],
+   ["Quando estiveres perturbado,", "Busca de Cristo paz e vigor;", "Não te deixará desanimado", "O teu fiel Salvador."],
+   ["Vindo sobre ti ardente prova,", "Bate à porta do Criador", "Que, por Cristo, as forças te renova", "E te fará vencedor."]
+  ],
+  coro:["Clama ao Mestre, Cristo Jesus;", "D'Ele o poder sentirás;", "Ele disse: \"Eis que estou convosco\";", "Cristo é Quem te conduz."]
+ },
+"115":{
+  tipo:"hino",
+  titulo:"Minha alma engrandece...",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Minha alma engrandece ao meu Salvador, que para mim atentou;", "Meu espírito sente o grande amor de Deus, que me perdoou.", "Redimida por Seu grande favor, minha alma louva a Deus.", "Com Seu sangue precioso, o Redentor pagou os pecados meus."],
+   ["Sorte entre os remidos me concedeu Jesus, o meu Salvador;", "Deu-me a liberdade para servir a Deus com sincero amor;", "Cristo converteu o meu coração com o Seu eterno poder", "E as trevas do mal também dissipou; agora eu posso ver."],
+   ["Pela luz da Palavra sinto o Senhor que, com amor, me conduz;", "Forças receberei, virtude, saber e fé no Senhor Jesus;", "Finalmente entrarei lá no céu para ver a face de Deus;", "Oh! Que felicidade Cristo me deu, pois vou habitar nos céus."]
+  ]
+ },
+"116":{
+  tipo:"hino",
+  titulo:"Amo ao Senhor",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "estrofe-4"],
+  estrofes:[
+   ["Amo ao Senhor, pois ouviu-me quando clamei;", "Ele inclinou Seus ouvidos quando orei;", "Tive tristeza, tive aflição,", "Mas Deus mandou-me consolação."],
+   ["É piedoso e sublime, o justo Deus;", "Ele tem misericórdia dos santos Seus.", "Volta, minh'alma, a descansar,", "Bênçãos preciosas Deus vai te dar."],
+   ["Meus pés livraste da queda, ó meu Senhor,", "E preservaste do pranto Teu servidor.", "Que posso dar-Te por esse bem,", "Que tão somente de Ti provém?!"],
+   ["Elevarei meus louvores a Ti, ó Deus,", "Diante de todo o Teu povo, nos átrios Teus.", "Teu santo Nome invocarei;", "Com minha vida Te servirei."]
+  ]
+ },
+"117":{
+  tipo:"hino",
+  titulo:"Jesus habita em meu coração",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "coro"],
+  estrofes:[
+   ["Ao Salvador vivente eu sirvo com amor,", "Por Sua vida tenho real consolação;", "Que vive, é bem certo, Jesus, o Redentor,", "Pois Sua voz eu sinto no coração."],
+   ["Em mim se manifesta a vida de Jesus,", "Por fé estou unido ao Pai celestial,", "E nada deste mundo agora me seduz,", "Pois Cristo me separa de todo o mal."],
+   ["Jubila, sim, jubila e canta, ó cristão,", "Alegremente exalta a Cristo, excelso Rei;", "Bem perto já se encontra a tua redenção,", "Conserva-te unido à Sua grei."]
+  ],
+  coro:["Jesus, Jesus habita em meu coração;", "Andar com Ele e ouvir-Lhe a voz é, para mim, um prazer.", "Jesus, Jesus, Autor da salvação,", "É a Fonte eterna do saber, é a Vida do meu ser."]
+ },
+"118":{
+  tipo:"hino",
+  titulo:"Fiel Salvador é Jesus",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Fiel Salvador é Jesus, o meu Rei,", "O meu poderoso Senhor;", "Estando em perigo, refúgio terei", "À sombra do meu Redentor."],
+   ["Por nome, Jesus, o Senhor, me chamou,", "Minh'alma preciosa Lhe é;", "Com Seu grande amor Ele me circundou,", "Firmou-me na graça e na fé."],
+   ["A fúria das águas jamais temerei,", "Jesus me dará Sua mão;", "Passando no fogo, não me queimarei,", "Com Sua fiel proteção."]
+  ],
+  coro:["Estou abrigado em meu Salvador,", "Nenhum mal me pode atingir.", "Jesus tem por mim entranhável amor,", "Amor que não posso exprimir!", "Amor que não posso exprimir!"]
+ },
+"119":{
+  tipo:"hino",
+  titulo:"Luz aos meus pés é a Tua Palavra",
+  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "estrofe-4"],
+  estrofes:[
+   ["Luz aos meus pés é Tua sã Palavra,", "Luz para o meu caminho, ó Senhor;", "Ela sustém minh'alma e me salva", "De todo o mal, no mundo sedutor."],
+   ["A ser perfeito, Tua lei me ensina;", "É o que desejo, ó Senhor, meu Deus;", "A minha mente ela ilumina", "E me conserva nos caminhos Teus."],
+   ["Meditarei no sábio Teu conselho;", "Nele constantemente pensarei,", "Pois ele é celestial espelho;", "Em Teus preceitos me alegrarei."],
+   ["Guardo em mim os Teus ensinamentos", "Que, por amor, envias, ó Senhor;", "E cumprirei Teus santos mandamentos", "Por Jesus Cristo, justo Redentor."]
+  ]
+ },
+"120":{
+  tipo:"hino",
+  titulo:"Nossa cruz tomemos",
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
+  estrofes:[
+   ["Ó irmãos, devemos nos renunciar", "E, em cada dia, nossa cruz tomar;", "Pela fé sigamos ao Senhor Jesus,", "Ao celeste e eterno reino Ele nos conduz."],
+   ["Deus dará virtude para suportar", "Todo o vitupério que se apresentar;", "A terrena vida breve findará,", "Mas a vida sempiterna reservada está."],
+   ["Bem-aventurados somos, ó irmãos,", "Pois já fomos feitos, dos céus, cidadãos;", "Seja a nossa vida consagrada a Deus,", "Que dará real tesouro aos remidos Seus."]
+  ],
+  coro:["Nossa cruz tomemos, amados,", "Caminhemos na luz,", "Firmes nas pisadas", "Do Senhor Jesus."]
  },
 
  "Coro 1":{
