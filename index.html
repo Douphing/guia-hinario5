@@ -1,4 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.00: consolidação da base oficial 1–100.
+- Hino 81: restaurada referência local audio/hino-81.mp3.
+- Hino 46: removido campo legado youtubeMusicSearch; mantido ID direto e registrada youtubeMusicOrigin.
+- Demais dados, mídias, letras, funções e configurações 1–100 preservados.
+-->
+
 <!-- V6.99: integração incremental dos Hinos 81–100 sobre a base atual com Hinos 1–80 integralmente preservados.
 - Letras e estruturas dos Hinos 81–100 conferidas com a partitura final(2).pdf do projeto.
 - MP3 local referenciado como audio/hino-81.mp3 até audio/hino-100.mp3.
@@ -1421,8 +1427,8 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/6Y4vOzgCnzdmSd7LKOeQHm",
   youtubeOrigin:"https://www.youtube.com/watch?v=zxMle-QROcM",
   youtube:"zxMle-QROcM",
-  youtubeMusicSearch:"https://music.youtube.com/watch?v=Qxzskvh-V5A",
   youtubeMusic:"Qxzskvh-V5A",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=Qxzskvh-V5A",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -1889,6 +1895,7 @@ const MULTIMIDIA={
  },
 /* V6.99 — MULTIMIDIA Hinos 81–100: somente mídias diretas validadas; sem campos *Search. */
 "81":{
+  audio:"audio/hino-81.mp3",
   spotify:"3MGbmghB0bnAIObQbKEItc",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3MGbmghB0bnAIObQbKEItc",
