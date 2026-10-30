@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.03 TESTE: correções pontuais sobre a base atual anexada.
+- Hino 117: ordem visual corrigida para 1ª estrofe -> CORO -> 2ª -> 3ª, conforme partitura.
+- MP3 corrigidos: 121, 122, 124, 125, 126, 131, 136 e 138.
+- Andamentos movidos do limite inferior para a região média das faixas oficiais.
+- Fermatas dos hinos corrigidos reduzidas para evitar prolongamentos excessivos.
+- Cache-busting ?v=703 aplicado somente aos oito MP3 corrigidos.
+- Demais letras, mídias, funções, CSS, JavaScript, Analytics, PWA e recursos pessoais preservados.
+-->
+
 <!-- V7.02 TESTE: integração incremental dos Hinos 121–140 sobre a base oficial V7.01.
 - Hinos 1–120 protegidos e mantidos sem alteração em MULTIMIDIA e LETRAS.
 - Letras e estruturas 121–140 conferidas com a partitura final(2).pdf e arquivos MuseScore do acervo.
@@ -2519,7 +2528,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "121":{
-  audio:"audio/hino-121.mp3",
+  audio:"audio/hino-121.mp3?v=703",
   spotify:"562UgvxDx5XGKmKHndz2zv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/562UgvxDx5XGKmKHndz2zv",
@@ -2533,7 +2542,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "122":{
-  audio:"audio/hino-122.mp3",
+  audio:"audio/hino-122.mp3?v=703",
   spotify:"2FsIpgumIaFIe93QsUjTKX",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2FsIpgumIaFIe93QsUjTKX",
@@ -2563,7 +2572,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "124":{
-  audio:"audio/hino-124.mp3",
+  audio:"audio/hino-124.mp3?v=703",
   spotify:"3lldJaItjD7qMO93SwZuBx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3lldJaItjD7qMO93SwZuBx",
@@ -2578,7 +2587,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "125":{
-  audio:"audio/hino-125.mp3",
+  audio:"audio/hino-125.mp3?v=703",
   spotify:"6HgteSmvrAWTQ45Dbk8TWH",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6HgteSmvrAWTQ45Dbk8TWH",
@@ -2593,7 +2602,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "126":{
-  audio:"audio/hino-126.mp3",
+  audio:"audio/hino-126.mp3?v=703",
   spotify:"5ppYnT2qIzBkI2F7uJZ1Tg",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/5ppYnT2qIzBkI2F7uJZ1Tg",
@@ -2667,7 +2676,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "131":{
-  audio:"audio/hino-131.mp3",
+  audio:"audio/hino-131.mp3?v=703",
   spotify:"7oKRh10kHsqouUHvYCrqzv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7oKRh10kHsqouUHvYCrqzv",
@@ -2708,7 +2717,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "136":{
-  audio:"audio/hino-136.mp3",
+  audio:"audio/hino-136.mp3?v=703",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2718,7 +2727,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "138":{
-  audio:"audio/hino-138.mp3",
+  audio:"audio/hino-138.mp3?v=703",
   youtube:"Q8DO0YqrBew",
   youtubeOrigin:"https://www.youtube.com/watch?v=Q8DO0YqrBew",
   fonteExterna:"YouTube: Orquestra Sacra",
@@ -4188,7 +4197,7 @@ const LETRAS={
 "117":{
   tipo:"hino",
   titulo:"Jesus habita em meu coração",
-  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "coro"],
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
   estrofes:[
    ["Ao Salvador vivente eu sirvo com amor,", "Por Sua vida tenho real consolação;", "Que vive, é bem certo, Jesus, o Redentor,", "Pois Sua voz eu sinto no coração."],
    ["Em mim se manifesta a vida de Jesus,", "Por fé estou unido ao Pai celestial,", "E nada deste mundo agora me seduz,", "Pois Cristo me separa de todo o mal."],
