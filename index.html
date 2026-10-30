@@ -1,4 +1,89 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.12 TESTE: correção musical do MP3 do Hino 129.
+- Hino 129: passagens entre estrofe/coro mantêm pulso contínuo.
+- Removidas pausas artificiais geradas por Breath na fonte linearizada do MP3.
+- Mantida somente a primeira marca de andamento para evitar reinicialização nas passagens 2 e 3.
+- Fermatas internas/de passagem: timeStretch 1.40.
+- Fermata final: timeStretch 1.45.
+- YouTube Music 121–140 e correções da V7.11 preservados.
+-->
+
+<!-- V7.11 TESTE: revisão YouTube Music 121–140 + ajuste fino Hino 125.
+- 121, 125 e 127: faixas individuais CCB - Vozes do Campo - Topic.
+- 122–124: coletânea oficial 121–125, tempos corrigidos pelos capítulos publicados.
+- 126 e 128–130: coletânea oficial 126–130; corrigido o ID que estava com hífen extra.
+- 131–140: coletânea oficial 131–140 com tempos individuais.
+- Hino 125: andamento/linha do tempo preservados; somente a fermata de colcheia do coro recebe leve reforço.
+- Spotify, YouTube normal, letras e demais funções preservados.
+-->
+
+<!-- V7.10 TESTE: ajuste fino das fermatas do Hino 125.
+- Mantidos andamento e linha do tempo corrigida da V7.07.
+- Fermatas de passagem: 1.35.
+- Fermatas de fechamento: 1.45.
+- Não retorna ao alongamento antigo de 2.0.
+- Mídias externas da V7.09 preservadas.
+-->
+
+<!-- V7.09 TESTE: correção do YouTube Music do Hino 125.
+- Hino 125 deixa de usar a coletânea 121–125 com timestamp.
+- Passa a usar a faixa individual oficial "CCB - Vozes do Campo - Topic", ID HLUAb9TwrLg.
+- Removidos youtubeMusicStart/youtubeMusicEnd do Hino 125.
+- Demais Hinos 121–140 permanecem iguais à V7.08 nesta revisão.
+- MP3/andamentos/linha do tempo da V7.07 preservados.
+-->
+
+<!-- V7.08 TESTE: correção do player YouTube Music.
+- Mantida a base V7.07 (MP3/andamentos/linha do tempo).
+- Em HTTPS, YouTube Music usa player padrão youtube.com/embed com origin + widget_referrer.
+- Em arquivo local (file://), o Guia não tenta carregar iframe sujeito ao erro 153 sem HTTP Referer.
+- "Abrir na origem" preserva o link music.youtube.com e o timestamp do hino.
+- Spotify, YouTube normal, letras, favoritos, chamados, registros e demais funções preservados.
+-->
+
+<!-- V7.07 TESTE: correção da linha do tempo interna dos MP3 Hinos 121–140.
+- Recalculados os ticks absolutos das repetições 2, 3 e 4 no MuseScore.
+- Corrige a queda aparente de andamento nos coros/repetições, especialmente Hino 125.
+- Hinos 122 e 125 preservam as correções de respirações/fermatas da V7.06.
+- Andamentos, letras, mídias externas e funções do Guia permanecem preservados.
+- Produção não modificada.
+-->
+
+<!-- V7.06 TESTE: correção fina de reprodução dos Hinos 122 e 125 sobre a V7.05.
+- Hino 122: andamento contínuo; removidas pausas artificiais de Breath no MP3; fermatas deduplicadas e encurtadas.
+- Hino 125: andamento contínuo na unidade correta da partitura; transição para o coro sem queda artificial; fermatas deduplicadas e encurtadas.
+- Demais Hinos 121–140 e mídias externas da V7.05 preservados.
+- Produção não modificada.
+-->
+
+<!-- V7.05 TESTE: revisão de mídias externas dos Hinos 121–140 sobre a V7.04.
+- Mantidos integralmente os MP3/andamentos V7.04 e todas as funções do Guia.
+- Hino 122: YouTube corrigido para o vídeo exato da Orquestra Hymns (eb6LMlMbHQ0).
+- Hino 132: YouTube exato da Orquestra Hymns adicionado (-BuaLAQLjp0).
+- Hino 138: Spotify exato da Orquestra Sacra adicionado (3ztjE7Y8QirPGUtkjlLYqV).
+- YouTube Music 121–130: links de origem passam a abrir no timestamp do respectivo hino.
+- Spotify 121–140: origens existentes normalizadas para URL canônica /track/ID.
+- Nenhum fallback de busca foi criado; mídias ainda sem ID direto validado continuam indisponíveis.
+-->
+
+<!-- V7.04 TESTE: regeneração completa dos andamentos dos Hinos 121–140.
+- Todos os 20 MP3 do lote 121–140 devem ser regenerados com um único critério de andamento.
+- Alvos escolhidos dentro da faixa impressa na partitura, evitando o limite inferior excessivamente lento.
+- Fermatas explícitas com timeStretch=2 reduzidas para 1.35 no lote inteiro.
+- Estruturas linearizadas, casas, retornelas e Final preservados; Hino 138 mantém forma especial.
+- Hino 117 mantém a correção visual já aprovada: 1ª estrofe → CORO → 2ª → 3ª.
+- Nenhuma mídia externa, Analytics, PWA, favoritos, chamados, registros ou funções do Guia foi alterada.
+-->
+
+<!-- V7.03 TESTE: correções pontuais sobre a base atual anexada.
+- Hino 117: ordem visual corrigida para 1ª estrofe -> CORO -> 2ª -> 3ª, conforme partitura.
+- MP3 corrigidos: 121, 122, 124, 125, 126, 131, 136 e 138.
+- Andamentos movidos do limite inferior para a região média das faixas oficiais.
+- Fermatas dos hinos corrigidos reduzidas para evitar prolongamentos excessivos.
+- Cache-busting ?v=703 aplicado somente aos oito MP3 corrigidos.
+- Demais letras, mídias, funções, CSS, JavaScript, Analytics, PWA e recursos pessoais preservados.
+-->
+
 <!-- V7.02 TESTE: integração incremental dos Hinos 121–140 sobre a base oficial V7.01.
 - Hinos 1–120 protegidos e mantidos sem alteração em MULTIMIDIA e LETRAS.
 - Letras e estruturas 121–140 conferidas com a partitura final(2).pdf e arquivos MuseScore do acervo.
@@ -340,6 +425,16 @@ REGRA CONSOLIDADA:
 #v2LetterText .v2Chorus{position:relative;text-align:center!important;}
 #v2LetterText .v2ChorusTitle{display:table!important;margin:0 auto 10px!important;padding:4px 16px!important;border-radius:999px!important;background:#f1e4c9!important;color:#9b7228!important;font:700 .72rem Arial,sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;}
 </style>
+
+<style id="v708-youtube-music-local-warning">
+#hymnDetail .hd-youtube-local-warning{
+  display:grid;gap:7px;padding:18px;border:1px solid #d9caa9;border-radius:14px;
+  background:#fffaf0;color:#4f4639;font:400 .9rem/1.4 Arial,sans-serif
+}
+#hymnDetail .hd-youtube-local-warning strong{color:#173149;font-size:1.05rem}
+#hymnDetail .hd-youtube-local-warning small{color:#766b5d}
+</style>
+
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -2519,224 +2614,287 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "121":{
-  audio:"audio/hino-121.mp3",
+  audio:"audio/hino-121.mp3?v=707",
   spotify:"562UgvxDx5XGKmKHndz2zv",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/562UgvxDx5XGKmKHndz2zv",
+  spotifyOrigin:"https://open.spotify.com/track/562UgvxDx5XGKmKHndz2zv",
   youtube:"Bxj5G0DOU4E",
   youtubeOrigin:"https://www.youtube.com/watch?v=Bxj5G0DOU4E",
-  youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicEnd: 225,
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  youtubeMusic:"0IAi8BQMPrs",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=0IAi8BQMPrs",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "122":{
-  audio:"audio/hino-122.mp3",
+  audio:"audio/hino-122.mp3?v=707",
   spotify:"2FsIpgumIaFIe93QsUjTKX",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2FsIpgumIaFIe93QsUjTKX",
-  youtube:"cBCo3hWAotE",
-  youtubeOrigin:"https://www.youtube.com/watch?v=cBCo3hWAotE",
+  spotifyOrigin:"https://open.spotify.com/track/2FsIpgumIaFIe93QsUjTKX",
+  youtube:"eb6LMlMbHQ0",
+  youtubeOrigin:"https://www.youtube.com/watch?v=eb6LMlMbHQ0",
   youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=226s",
   youtubeMusicStart:226,
-  youtubeMusicEnd: 448,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusicEnd:448,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "123":{
-  audio:"audio/hino-123.mp3",
+  audio:"audio/hino-123.mp3?v=707",
   spotify:"2d6JfMZGcQsBCuVMo7mx2E",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2d6JfMZGcQsBCuVMo7mx2E",
+  spotifyOrigin:"https://open.spotify.com/track/2d6JfMZGcQsBCuVMo7mx2E",
   youtube:"jwzm0FzncDo",
   youtubeOrigin:"https://www.youtube.com/watch?v=jwzm0FzncDo",
   youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0",
-  youtubeMusicStart:449,
-  youtubeMusicEnd: 578,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=448s",
+  youtubeMusicStart:448,
+  youtubeMusicEnd:581,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "124":{
-  audio:"audio/hino-124.mp3",
+  audio:"audio/hino-124.mp3?v=707",
   spotify:"3lldJaItjD7qMO93SwZuBx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3lldJaItjD7qMO93SwZuBx",
   youtube:"YKyQ_Tz2X24",
   youtubeOrigin:"https://www.youtube.com/watch?v=YKyQ_Tz2X24",
   youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0",
-  youtubeMusicStart:578,
-  youtubeMusicEnd: 820,
-  fonteExterna:"Spotify: Orquestra Sacra",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=581s",
+  youtubeMusicStart:581,
+  youtubeMusicEnd:819,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "125":{
-  audio:"audio/hino-125.mp3",
+  audio:"audio/hino-125.mp3?v=711",
   spotify:"6HgteSmvrAWTQ45Dbk8TWH",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6HgteSmvrAWTQ45Dbk8TWH",
   youtube:"ck-P6Nb0nWg",
   youtubeOrigin:"https://www.youtube.com/watch?v=ck-P6Nb0nWg",
-  youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0",
-  youtubeMusicStart:820,
-  youtubeMusicEnd:1054,
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"HLUAb9TwrLg",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HLUAb9TwrLg",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "126":{
-  audio:"audio/hino-126.mp3",
+  audio:"audio/hino-126.mp3?v=707",
   spotify:"5ppYnT2qIzBkI2F7uJZ1Tg",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/5ppYnT2qIzBkI2F7uJZ1Tg",
+  spotifyOrigin:"https://open.spotify.com/track/5ppYnT2qIzBkI2F7uJZ1Tg",
   youtube:"Q_DHObGuZw4",
   youtubeOrigin:"https://www.youtube.com/watch?v=Q_DHObGuZw4",
-  youtubeMusic:"-iKkKcx0YZL4",
+  youtubeMusic:"iKkKcx0YZL4",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
-  youtubeMusicEnd:198,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:200,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "127":{
-  audio:"audio/hino-127.mp3",
+  audio:"audio/hino-127.mp3?v=707",
   spotify:"1vZ5WQJqB36GH0k8q36xwi",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/1vZ5WQJqB36GH0k8q36xwi",
+  spotifyOrigin:"https://open.spotify.com/track/1vZ5WQJqB36GH0k8q36xwi",
   youtube:"KZRr1d1K2-4",
   youtubeOrigin:"https://www.youtube.com/watch?v=KZRr1d1K2-4",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
-  youtubeMusicStart: 199,
-  youtubeMusicEnd:373,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusic:"blKsNiS2e9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=blKsNiS2e9E",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "128":{
-  audio:"audio/hino-128.mp3",
+  audio:"audio/hino-128.mp3?v=707",
   spotify:"2njRz1TntNHr1pU4sQhfJJ",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2njRz1TntNHr1pU4sQhfJJ",
+  spotifyOrigin:"https://open.spotify.com/track/2njRz1TntNHr1pU4sQhfJJ",
   youtube:"g8QzngptAdk",
   youtubeOrigin:"https://www.youtube.com/watch?v=g8QzngptAdk",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
-  youtubeMusicStart: 373,
-  youtubeMusicEnd:550,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=372s",
+  youtubeMusicStart:372,
+  youtubeMusicEnd:551,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "129":{
-  audio:"audio/hino-129.mp3",
+  audio:"audio/hino-129.mp3?v=712",
   spotify:"5hLavGG6FVOKboB5bh8l91",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/5hLavGG6FVOKboB5bh8l91",
+  spotifyOrigin:"https://open.spotify.com/track/5hLavGG6FVOKboB5bh8l91",
   youtube:"WctVTzCKsR8",
   youtubeOrigin:"https://www.youtube.com/watch?v=WctVTzCKsR8",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
-  youtubeMusicStart: 551,
-  youtubeMusicEnd:748,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=551s",
+  youtubeMusicStart:551,
+  youtubeMusicEnd:749,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "130":{
-  audio:"audio/hino-130.mp3",
+  audio:"audio/hino-130.mp3?v=707",
   spotify:"2cdYc45TglY63VJcJLb13c",
   spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2cdYc45TglY63VJcJLb13c",
+  spotifyOrigin:"https://open.spotify.com/track/2cdYc45TglY63VJcJLb13c",
   youtube:"WlCu9wiZYwM",
   youtubeOrigin:"https://www.youtube.com/watch?v=WlCu9wiZYwM",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
-  youtubeMusicStart: 750,
-  youtubeMusicEnd:979,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=749s",
+  youtubeMusicStart:749,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "131":{
-  audio:"audio/hino-131.mp3",
+  audio:"audio/hino-131.mp3?v=707",
   spotify:"7oKRh10kHsqouUHvYCrqzv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7oKRh10kHsqouUHvYCrqzv",
   youtube:"Da3EWGj9bPE",
   youtubeOrigin:"https://www.youtube.com/watch?v=Da3EWGj9bPE",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:200,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "132":{
-  audio:"audio/hino-132.mp3",
+  audio:"audio/hino-132.mp3?v=707",
   spotify:"1RKTj4DquJzc6Fuqxrx7s9",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1RKTj4DquJzc6Fuqxrx7s9",
-  fonteExterna:"Spotify: Orquestra Sacra",
+  youtube:"-BuaLAQLjp0",
+  youtubeOrigin:"https://www.youtube.com/watch?v=-BuaLAQLjp0",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=200s",
+  youtubeMusicStart:200,
+  youtubeMusicEnd:455,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "133":{
-  audio:"audio/hino-133.mp3",
+  audio:"audio/hino-133.mp3?v=707",
   youtube:"TCsSgthx5aE",
   youtubeOrigin:"https://www.youtube.com/watch?v=TCsSgthx5aE",
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=455s",
+  youtubeMusicStart:455,
+  youtubeMusicEnd:664,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "134":{
-  audio:"audio/hino-134.mp3",
+  audio:"audio/hino-134.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=664s",
+  youtubeMusicStart:664,
+  youtubeMusicEnd:862,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "135":{
-  audio:"audio/hino-135.mp3",
+  audio:"audio/hino-135.mp3?v=707",
   youtube:"mOMkaOmb-pU",
   youtubeOrigin:"https://www.youtube.com/watch?v=mOMkaOmb-pU",
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=862s",
+  youtubeMusicStart:862,
+  youtubeMusicEnd:1052,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "136":{
-  audio:"audio/hino-136.mp3",
+  audio:"audio/hino-136.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1052s",
+  youtubeMusicStart:1052,
+  youtubeMusicEnd:1273,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "137":{
-  audio:"audio/hino-137.mp3",
+  audio:"audio/hino-137.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1273s",
+  youtubeMusicStart:1273,
+  youtubeMusicEnd:1423,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "138":{
-  audio:"audio/hino-138.mp3",
+  audio:"audio/hino-138.mp3?v=707",
+  spotify:"3ztjE7Y8QirPGUtkjlLYqV",
+  spotifyType:"track",
+  spotifyOrigin:"https://open.spotify.com/track/3ztjE7Y8QirPGUtkjlLYqV",
   youtube:"Q8DO0YqrBew",
   youtubeOrigin:"https://www.youtube.com/watch?v=Q8DO0YqrBew",
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1423s",
+  youtubeMusicStart:1423,
+  youtubeMusicEnd:1622,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },
  "139":{
-  audio:"audio/hino-139.mp3",
+  audio:"audio/hino-139.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1622s",
+  youtubeMusicStart:1622,
+  youtubeMusicEnd:1807,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "140":{
-  audio:"audio/hino-140.mp3",
+  audio:"audio/hino-140.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1807s",
+  youtubeMusicStart:1807,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   spotify:"5dKjFwO2lLL3NKeIb5o5V8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5dKjFwO2lLL3NKeIb5o5V8",
-  fonteExterna:"Spotify: Orquestra Sacra",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4188,7 +4346,7 @@ const LETRAS={
 "117":{
   tipo:"hino",
   titulo:"Jesus habita em meu coração",
-  estrutura:["estrofe-1", "estrofe-2", "estrofe-3", "coro"],
+  estrutura:["estrofe-1", "coro", "estrofe-2", "estrofe-3"],
   estrofes:[
    ["Ao Salvador vivente eu sirvo com amor,", "Por Sua vida tenho real consolação;", "Que vive, é bem certo, Jesus, o Redentor,", "Pois Sua voz eu sinto no coração."],
    ["Em mim se manifesta a vida de Jesus,", "Por fé estou unido ao Pai celestial,", "E nada deste mundo agora me seduz,", "Pois Cristo me separa de todo o mal."],
@@ -5025,21 +5183,61 @@ function loadHymnMedia(kind,media,button){
      return;
    }
    const id=directId;
-   const source=kind==='youtube'
+   const isMusic=kind==='youtubeMusic';
+   const start=isMusic?Number(media.youtubeMusicStart||0):0;
+   const end=isMusic?Number(media.youtubeMusicEnd||0):0;
+
+   let source=kind==='youtube'
      ? (media.youtubeOrigin||('https://www.youtube.com/watch?v='+id))
      : (media.youtubeMusicOrigin||('https://music.youtube.com/watch?v='+id));
-   const f=document.createElement('iframe');
-   let embedUrl='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
-   if(kind==='youtubeMusic'){
-     const start=Number(media.youtubeMusicStart||0);
-     const end=Number(media.youtubeMusicEnd||0);
-     if(start>0) embedUrl+='&start='+start;
-     if(end>0) embedUrl+='&end='+end;
+
+   // Garante que "Abrir na origem" do YouTube Music leve ao trecho correto.
+   if(isMusic && start>0 && !/[?&]t=/.test(source)){
+     source += (source.includes('?')?'&':'?')+'t='+start+'s';
    }
-   f.src=embedUrl;
-   f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-   f.allowFullscreen=true;f.loading='lazy';f.title=kind==='youtube'?'YouTube player':'YouTube Music player';
-   f.setAttribute('scrolling','no');yt.appendChild(f);
+
+   const isLocal=location.protocol==='file:';
+
+   if(isLocal){
+     // O YouTube bloqueia embeds sem HTTP Referer (comum ao abrir HTML por file://).
+     // Em teste local, evita mostrar um player quebrado e mantém o link correto do Music.
+     const aviso=document.createElement('div');
+     aviso.className='hd-youtube-local-warning';
+     aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +'</strong>'
+       +'<span>O player incorporado não pode ser validado abrindo este HTML diretamente do computador.</span>'
+       +'<small>Teste o player no Guia publicado (https) ou use “Abrir na origem”.</small>';
+     yt.appendChild(aviso);
+   }else{
+     const f=document.createElement('iframe');
+
+     // Para YouTube Music, usa o domínio padrão do player do YouTube.
+     // O ID do Music é o mesmo ID audiovisual usado pelo player incorporado.
+     let embedBase=isMusic
+       ? 'https://www.youtube.com/embed/'
+       : 'https://www.youtube-nocookie.com/embed/';
+
+     const realOrigin=location.origin;
+     const widgetReferrer=location.href.split('#')[0];
+
+     let embedUrl=embedBase+id+'?rel=0&playsinline=1'
+       +'&origin='+encodeURIComponent(realOrigin)
+       +'&widget_referrer='+encodeURIComponent(widgetReferrer);
+
+     if(isMusic){
+       if(start>0) embedUrl+='&start='+start;
+       if(end>0) embedUrl+='&end='+end;
+     }
+
+     f.src=embedUrl;
+     f.referrerPolicy='strict-origin-when-cross-origin';
+     f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+     f.allowFullscreen=true;
+     f.loading='lazy';
+     f.title=kind==='youtube'?'YouTube player':'YouTube Music player';
+     f.setAttribute('scrolling','no');
+     yt.appendChild(f);
+   }
+
    links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
  }
 }
