@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.09 TESTE: correção do YouTube Music do Hino 125.
+- Hino 125 deixa de usar a coletânea 121–125 com timestamp.
+- Passa a usar a faixa individual oficial "CCB - Vozes do Campo - Topic", ID HLUAb9TwrLg.
+- Removidos youtubeMusicStart/youtubeMusicEnd do Hino 125.
+- Demais Hinos 121–140 permanecem iguais à V7.08 nesta revisão.
+- MP3/andamentos/linha do tempo da V7.07 preservados.
+-->
+
 <!-- V7.08 TESTE: correção do player YouTube Music.
 - Mantida a base V7.07 (MP3/andamentos/linha do tempo).
 - Em HTTPS, YouTube Music usa player padrão youtube.com/embed com origin + widget_referrer.
@@ -2645,11 +2653,10 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/6HgteSmvrAWTQ45Dbk8TWH",
   youtube:"ck-P6Nb0nWg",
   youtubeOrigin:"https://www.youtube.com/watch?v=ck-P6Nb0nWg",
-  youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=820s",
-  youtubeMusicStart:820,
-  youtubeMusicEnd:1054,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  youtubeMusic:"HLUAb9TwrLg",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=HLUAb9TwrLg",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
