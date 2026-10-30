@@ -1,4 +1,21 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.11 TESTE: revisão YouTube Music 121–140 + ajuste fino Hino 125.
+- 121, 125 e 127: faixas individuais CCB - Vozes do Campo - Topic.
+- 122–124: coletânea oficial 121–125, tempos corrigidos pelos capítulos publicados.
+- 126 e 128–130: coletânea oficial 126–130; corrigido o ID que estava com hífen extra.
+- 131–140: coletânea oficial 131–140 com tempos individuais.
+- Hino 125: andamento/linha do tempo preservados; somente a fermata de colcheia do coro recebe leve reforço.
+- Spotify, YouTube normal, letras e demais funções preservados.
+-->
+
+<!-- V7.10 TESTE: ajuste fino das fermatas do Hino 125.
+- Mantidos andamento e linha do tempo corrigida da V7.07.
+- Fermatas de passagem: 1.35.
+- Fermatas de fechamento: 1.45.
+- Não retorna ao alongamento antigo de 2.0.
+- Mídias externas da V7.09 preservadas.
+-->
+
 <!-- V7.09 TESTE: correção do YouTube Music do Hino 125.
 - Hino 125 deixa de usar a coletânea 121–125 com timestamp.
 - Passa a usar a faixa individual oficial "CCB - Vozes do Campo - Topic", ID HLUAb9TwrLg.
@@ -2594,10 +2611,10 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/562UgvxDx5XGKmKHndz2zv",
   youtube:"Bxj5G0DOU4E",
   youtubeOrigin:"https://www.youtube.com/watch?v=Bxj5G0DOU4E",
-  youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicEnd: 225,
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=0s",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  youtubeMusic:"0IAi8BQMPrs",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=0IAi8BQMPrs",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2611,7 +2628,8 @@ const MULTIMIDIA={
   youtubeMusic:"-do5aD1gsq0",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=226s",
   youtubeMusicStart:226,
-  youtubeMusicEnd: 448,
+  youtubeMusicEnd:448,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2624,9 +2642,10 @@ const MULTIMIDIA={
   youtube:"jwzm0FzncDo",
   youtubeOrigin:"https://www.youtube.com/watch?v=jwzm0FzncDo",
   youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=449s",
-  youtubeMusicStart:449,
-  youtubeMusicEnd: 578,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=448s",
+  youtubeMusicStart:448,
+  youtubeMusicEnd:581,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2639,15 +2658,16 @@ const MULTIMIDIA={
   youtube:"YKyQ_Tz2X24",
   youtubeOrigin:"https://www.youtube.com/watch?v=YKyQ_Tz2X24",
   youtubeMusic:"-do5aD1gsq0",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=578s",
-  youtubeMusicStart:578,
-  youtubeMusicEnd: 820,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-do5aD1gsq0&t=581s",
+  youtubeMusicStart:581,
+  youtubeMusicEnd:819,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "125":{
-  audio:"audio/hino-125.mp3?v=707",
+  audio:"audio/hino-125.mp3?v=711",
   spotify:"6HgteSmvrAWTQ45Dbk8TWH",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6HgteSmvrAWTQ45Dbk8TWH",
@@ -2667,9 +2687,11 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/5ppYnT2qIzBkI2F7uJZ1Tg",
   youtube:"Q_DHObGuZw4",
   youtubeOrigin:"https://www.youtube.com/watch?v=Q_DHObGuZw4",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-iKkKcx0YZL4&t=0s",
-  youtubeMusicEnd:198,
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:200,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2681,11 +2703,10 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/1vZ5WQJqB36GH0k8q36xwi",
   youtube:"KZRr1d1K2-4",
   youtubeOrigin:"https://www.youtube.com/watch?v=KZRr1d1K2-4",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-iKkKcx0YZL4&t=199s",
-  youtubeMusicStart: 199,
-  youtubeMusicEnd:373,
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
+  youtubeMusic:"blKsNiS2e9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=blKsNiS2e9E",
+  youtubeMusicOriginType:"faixa-individual-topic",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo - Topic",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2697,9 +2718,10 @@ const MULTIMIDIA={
   youtube:"g8QzngptAdk",
   youtubeOrigin:"https://www.youtube.com/watch?v=g8QzngptAdk",
   youtubeMusic:"iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=373s",
-  youtubeMusicStart: 373,
-  youtubeMusicEnd:550,
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=372s",
+  youtubeMusicStart:372,
+  youtubeMusicEnd:551,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2711,10 +2733,11 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/5hLavGG6FVOKboB5bh8l91",
   youtube:"WctVTzCKsR8",
   youtubeOrigin:"https://www.youtube.com/watch?v=WctVTzCKsR8",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-iKkKcx0YZL4&t=551s",
-  youtubeMusicStart: 551,
-  youtubeMusicEnd:748,
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=551s",
+  youtubeMusicStart:551,
+  youtubeMusicEnd:749,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2726,10 +2749,10 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/2cdYc45TglY63VJcJLb13c",
   youtube:"WlCu9wiZYwM",
   youtubeOrigin:"https://www.youtube.com/watch?v=WlCu9wiZYwM",
-  youtubeMusic:"-iKkKcx0YZL4",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=-iKkKcx0YZL4&t=750s",
-  youtubeMusicStart: 750,
-  youtubeMusicEnd:979,
+  youtubeMusic:"iKkKcx0YZL4",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=iKkKcx0YZL4&t=749s",
+  youtubeMusicStart:749,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2741,7 +2764,12 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/7oKRh10kHsqouUHvYCrqzv",
   youtube:"Da3EWGj9bPE",
   youtubeOrigin:"https://www.youtube.com/watch?v=Da3EWGj9bPE",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E",
+  youtubeMusicStart:0,
+  youtubeMusicEnd:200,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2752,7 +2780,12 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/1RKTj4DquJzc6Fuqxrx7s9",
   youtube:"-BuaLAQLjp0",
   youtubeOrigin:"https://www.youtube.com/watch?v=-BuaLAQLjp0",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=200s",
+  youtubeMusicStart:200,
+  youtubeMusicEnd:455,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Hymns · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2760,12 +2793,23 @@ const MULTIMIDIA={
   audio:"audio/hino-133.mp3?v=707",
   youtube:"TCsSgthx5aE",
   youtubeOrigin:"https://www.youtube.com/watch?v=TCsSgthx5aE",
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=455s",
+  youtubeMusicStart:455,
+  youtubeMusicEnd:664,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "134":{
   audio:"audio/hino-134.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=664s",
+  youtubeMusicStart:664,
+  youtubeMusicEnd:862,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2773,17 +2817,34 @@ const MULTIMIDIA={
   audio:"audio/hino-135.mp3?v=707",
   youtube:"mOMkaOmb-pU",
   youtubeOrigin:"https://www.youtube.com/watch?v=mOMkaOmb-pU",
-  fonteExterna:"YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=862s",
+  youtubeMusicStart:862,
+  youtubeMusicEnd:1052,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "136":{
   audio:"audio/hino-136.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1052s",
+  youtubeMusicStart:1052,
+  youtubeMusicEnd:1273,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "137":{
   audio:"audio/hino-137.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1273s",
+  youtubeMusicStart:1273,
+  youtubeMusicEnd:1423,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2794,22 +2855,37 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/3ztjE7Y8QirPGUtkjlLYqV",
   youtube:"Q8DO0YqrBew",
   youtubeOrigin:"https://www.youtube.com/watch?v=Q8DO0YqrBew",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1423s",
+  youtubeMusicStart:1423,
+  youtubeMusicEnd:1622,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },
  "139":{
   audio:"audio/hino-139.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1622s",
+  youtubeMusicStart:1622,
+  youtubeMusicEnd:1807,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
+  fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
  "140":{
   audio:"audio/hino-140.mp3?v=707",
+  youtubeMusic:"a1bz-Pp_Y9E",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1807s",
+  youtubeMusicStart:1807,
+  youtubeMusicOriginType:"coletanea-com-timestamp",
   spotify:"5dKjFwO2lLL3NKeIb5o5V8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5dKjFwO2lLL3NKeIb5o5V8",
-  fonteExterna:"Spotify: Orquestra Sacra",
+  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
  },
