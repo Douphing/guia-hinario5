@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.08 TESTE: correção do player YouTube Music.
+- Mantida a base V7.07 (MP3/andamentos/linha do tempo).
+- Em HTTPS, YouTube Music usa player padrão youtube.com/embed com origin + widget_referrer.
+- Em arquivo local (file://), o Guia não tenta carregar iframe sujeito ao erro 153 sem HTTP Referer.
+- "Abrir na origem" preserva o link music.youtube.com e o timestamp do hino.
+- Spotify, YouTube normal, letras, favoritos, chamados, registros e demais funções preservados.
+-->
+
 <!-- V7.07 TESTE: correção da linha do tempo interna dos MP3 Hinos 121–140.
 - Recalculados os ticks absolutos das repetições 2, 3 e 4 no MuseScore.
 - Corrige a queda aparente de andamento nos coros/repetições, especialmente Hino 125.
@@ -383,6 +391,16 @@ REGRA CONSOLIDADA:
 #v2LetterText .v2Chorus{position:relative;text-align:center!important;}
 #v2LetterText .v2ChorusTitle{display:table!important;margin:0 auto 10px!important;padding:4px 16px!important;border-radius:999px!important;background:#f1e4c9!important;color:#9b7228!important;font:700 .72rem Arial,sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;}
 </style>
+
+<style id="v708-youtube-music-local-warning">
+#hymnDetail .hd-youtube-local-warning{
+  display:grid;gap:7px;padding:18px;border:1px solid #d9caa9;border-radius:14px;
+  background:#fffaf0;color:#4f4639;font:400 .9rem/1.4 Arial,sans-serif
+}
+#hymnDetail .hd-youtube-local-warning strong{color:#173149;font-size:1.05rem}
+#hymnDetail .hd-youtube-local-warning small{color:#766b5d}
+</style>
+
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -5073,21 +5091,61 @@ function loadHymnMedia(kind,media,button){
      return;
    }
    const id=directId;
-   const source=kind==='youtube'
+   const isMusic=kind==='youtubeMusic';
+   const start=isMusic?Number(media.youtubeMusicStart||0):0;
+   const end=isMusic?Number(media.youtubeMusicEnd||0):0;
+
+   let source=kind==='youtube'
      ? (media.youtubeOrigin||('https://www.youtube.com/watch?v='+id))
      : (media.youtubeMusicOrigin||('https://music.youtube.com/watch?v='+id));
-   const f=document.createElement('iframe');
-   let embedUrl='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
-   if(kind==='youtubeMusic'){
-     const start=Number(media.youtubeMusicStart||0);
-     const end=Number(media.youtubeMusicEnd||0);
-     if(start>0) embedUrl+='&start='+start;
-     if(end>0) embedUrl+='&end='+end;
+
+   // Garante que "Abrir na origem" do YouTube Music leve ao trecho correto.
+   if(isMusic && start>0 && !/[?&]t=/.test(source)){
+     source += (source.includes('?')?'&':'?')+'t='+start+'s';
    }
-   f.src=embedUrl;
-   f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-   f.allowFullscreen=true;f.loading='lazy';f.title=kind==='youtube'?'YouTube player':'YouTube Music player';
-   f.setAttribute('scrolling','no');yt.appendChild(f);
+
+   const isLocal=location.protocol==='file:';
+
+   if(isLocal){
+     // O YouTube bloqueia embeds sem HTTP Referer (comum ao abrir HTML por file://).
+     // Em teste local, evita mostrar um player quebrado e mantém o link correto do Music.
+     const aviso=document.createElement('div');
+     aviso.className='hd-youtube-local-warning';
+     aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +'</strong>'
+       +'<span>O player incorporado não pode ser validado abrindo este HTML diretamente do computador.</span>'
+       +'<small>Teste o player no Guia publicado (https) ou use “Abrir na origem”.</small>';
+     yt.appendChild(aviso);
+   }else{
+     const f=document.createElement('iframe');
+
+     // Para YouTube Music, usa o domínio padrão do player do YouTube.
+     // O ID do Music é o mesmo ID audiovisual usado pelo player incorporado.
+     let embedBase=isMusic
+       ? 'https://www.youtube.com/embed/'
+       : 'https://www.youtube-nocookie.com/embed/';
+
+     const realOrigin=location.origin;
+     const widgetReferrer=location.href.split('#')[0];
+
+     let embedUrl=embedBase+id+'?rel=0&playsinline=1'
+       +'&origin='+encodeURIComponent(realOrigin)
+       +'&widget_referrer='+encodeURIComponent(widgetReferrer);
+
+     if(isMusic){
+       if(start>0) embedUrl+='&start='+start;
+       if(end>0) embedUrl+='&end='+end;
+     }
+
+     f.src=embedUrl;
+     f.referrerPolicy='strict-origin-when-cross-origin';
+     f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+     f.allowFullscreen=true;
+     f.loading='lazy';
+     f.title=kind==='youtube'?'YouTube player':'YouTube Music player';
+     f.setAttribute('scrolling','no');
+     yt.appendChild(f);
+   }
+
    links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
  }
 }
