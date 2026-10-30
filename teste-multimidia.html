@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.12 TESTE: correção musical do MP3 do Hino 129.
+- Hino 129: passagens entre estrofe/coro mantêm pulso contínuo.
+- Removidas pausas artificiais geradas por Breath na fonte linearizada do MP3.
+- Mantida somente a primeira marca de andamento para evitar reinicialização nas passagens 2 e 3.
+- Fermatas internas/de passagem: timeStretch 1.40.
+- Fermata final: timeStretch 1.45.
+- YouTube Music 121–140 e correções da V7.11 preservados.
+-->
+
 <!-- V7.11 TESTE: revisão YouTube Music 121–140 + ajuste fino Hino 125.
 - 121, 125 e 127: faixas individuais CCB - Vozes do Campo - Topic.
 - 122–124: coletânea oficial 121–125, tempos corrigidos pelos capítulos publicados.
@@ -2727,7 +2736,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "129":{
-  audio:"audio/hino-129.mp3?v=707",
+  audio:"audio/hino-129.mp3?v=712",
   spotify:"5hLavGG6FVOKboB5bh8l91",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5hLavGG6FVOKboB5bh8l91",
