@@ -1,49 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.18 TESTE: metrônomo em botão expansível, sem sobreposição.
-- Base V7.17 preservada.
-- Volta ao formato de botão compacto do metrônomo.
-- Ao abrir, os controles expandem dentro do fluxo do modal, sem painel flutuante.
-- O modal ganha rolagem interna ajustada, evitando cobrir mídias e demais botões.
-- Compasso, tonalidade e faixa de andamento aparecem somente quando o metrônomo está aberto.
-- Volume visual padrão: 50%, porém com curva de ganho reforçada.
-- 50% já é mais audível que nas primeiras versões; acima de 50% o ganho aumenta progressivamente.
--->
-
-<!-- V7.17 TESTE: metrônomo compacto com compasso e tonalidade.
-- Base V7.16 preservada.
-- Hino 125 passa a exibir de forma compacta: fórmula de compasso, tonalidade e faixa de andamento.
-- Sem novo modal e sem expansão do bloco principal.
-- Layout pensado para celular, com pequenos chips informativos.
--->
-
-<!-- V7.16 TESTE: metrônomo compacto inline no Hino 125 + volume reforçado.
-- Base V7.14 preservada.
-- Sem segundo modal/painel flutuante.
-- Controles principais ficam em uma faixa compacta dentro do modal.
-- Hino 125 mantém 6/8 com escolha 6 tempos / 2 pulsações.
-- Volume padrão: 100%.
-- Clique reforçado por Web Audio para estudo com instrumento.
-- Restante do Guia preservado.
--->
-
-<!-- V7.14 TESTE: refinamento do metrônomo piloto do Hino 125.
-- Base V7.13 preservada.
-- Modal do metrônomo mais compacto no celular.
-- Modo "2 tempos" renomeado para "2 pulsações".
-- Diferença sonora do modo 2 pulsações reforçada.
-- Explicação curta adicionada: 6 tempos = subdivisão; 2 pulsações = pulso principal do 6/8.
-- Demais funções, mídias, MP3, letras e hinos preservados.
--->
-
-<!-- V7.13 TESTE: piloto de metrônomo no Hino 125.
-- Base integral V7.12 preservada.
-- Metrônomo aparece somente no Hino 125.
-- Compacto e recolhido por padrão para não alongar o modal.
-- Andamento da partitura: ♪ = 96–120; padrão do teste: ♪ = 108.
-- Compasso 6/8; modos de pulso: 6 colcheias ou 2 pulsações pontuadas.
-- Volume próprio, acento forte no primeiro tempo, BPM ajustável e restaurar andamento.
-- Funciona com Web Audio, sem arquivo externo e sem internet.
-- Ao fechar o modal ou abrir outro hino, o metrônomo é interrompido.
+<!-- V7.19 TESTE: base consolidada a partir do index de produção enviado.
+- O arquivo index (3).html é a fonte de verdade desta versão.
+- Mídias, MP3, letras, timestamps, favoritos, chamados, registros, Analytics, PWA e funções da produção foram preservados.
+- Mantida a correção mais nova do YouTube Music do Hino 42 existente no teste anterior.
+- Recuperado o piloto de metrônomo V7.18 somente no Hino 125.
+- Nenhuma mídia 1–140 foi removida.
 -->
 
 <!-- V7.12 TESTE: correção musical do MP3 do Hino 129.
@@ -482,9 +443,6 @@ REGRA CONSOLIDADA:
 #hymnDetail .hd-youtube-local-warning small{color:#766b5d}
 </style>
 
-
-
-
 <style id="v718-metronomo-expandivel">
 #hymnDetail .hd-card{
   overflow-y:auto!important;
@@ -694,7 +652,6 @@ REGRA CONSOLIDADA:
   }
 }
 </style>
-
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -7602,9 +7559,6 @@ body:not(.index-mode):not(.welcome-mode){
 })();
 </script>
 
-
-
-
 <script id="v718-metronomo-engine">
 (function(){
   const state={
@@ -7872,5 +7826,4 @@ body:not(.index-mode):not(.welcome-mode){
   });
 })();
 </script>
-
 </body></html>
