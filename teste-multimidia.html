@@ -1,4 +1,15 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.13 TESTE: piloto de metrônomo no Hino 125.
+- Base integral V7.12 preservada.
+- Metrônomo aparece somente no Hino 125.
+- Compacto e recolhido por padrão para não alongar o modal.
+- Andamento da partitura: ♪ = 96–120; padrão do teste: ♪ = 108.
+- Compasso 6/8; modos de pulso: 6 colcheias ou 2 pulsações pontuadas.
+- Volume próprio, acento forte no primeiro tempo, BPM ajustável e restaurar andamento.
+- Funciona com Web Audio, sem arquivo externo e sem internet.
+- Ao fechar o modal ou abrir outro hino, o metrônomo é interrompido.
+-->
+
 <!-- V7.12 TESTE: correção musical do MP3 do Hino 129.
 - Hino 129: passagens entre estrofe/coro mantêm pulso contínuo.
 - Removidas pausas artificiais geradas por Breath na fonte linearizada do MP3.
@@ -433,6 +444,105 @@ REGRA CONSOLIDADA:
 }
 #hymnDetail .hd-youtube-local-warning strong{color:#173149;font-size:1.05rem}
 #hymnDetail .hd-youtube-local-warning small{color:#766b5d}
+</style>
+
+
+<style id="v713-metronomo-piloto">
+#hymnDetail .hd-metronome{
+  width:100%;margin:3px 0 7px;border:1px solid #dfd2b7;border-radius:12px;
+  background:linear-gradient(180deg,#fffdf8,#f7f0e2);overflow:hidden
+}
+#hymnDetail .hd-metronome-toggle{
+  width:100%;min-height:38px;border:0!important;background:transparent!important;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;
+  padding:7px 10px!important;color:#263746!important;cursor:pointer;box-shadow:none!important
+}
+#hymnDetail .hd-metronome-icon{
+  width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+  background:#b18438;color:#fff;font:800 17px/1 Georgia,serif
+}
+#hymnDetail .hd-metronome-summary{min-width:0;text-align:left}
+#hymnDetail .hd-metronome-summary strong{
+  display:block;font:800 .78rem/1.05 Arial,sans-serif;color:#263746
+}
+#hymnDetail .hd-metronome-summary small{
+  display:block;margin-top:2px;color:#756b5d;font:700 .64rem/1.1 Arial,sans-serif;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+#hymnDetail .hd-metronome-arrow{
+  color:#9a7228;font:800 1rem/1 Arial,sans-serif;transition:transform .18s ease
+}
+#hymnDetail .hd-metronome.is-open .hd-metronome-arrow{transform:rotate(180deg)}
+#hymnDetail .hd-metronome-panel{
+  border-top:1px solid #e5d9c2;padding:9px 10px 10px;background:#fffaf0
+}
+#hymnDetail .hd-metronome-panel[hidden]{display:none!important}
+#hymnDetail .hd-metronome-main{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center
+}
+#hymnDetail .hd-metronome-bpm{
+  display:grid;grid-template-columns:30px minmax(68px,1fr) 30px;gap:5px;align-items:center
+}
+#hymnDetail .hd-metronome-bpm button,
+#hymnDetail .hd-metronome-start,
+#hymnDetail .hd-metronome-mode button,
+#hymnDetail .hd-metronome-reset{
+  border:1px solid #d4c29d!important;background:#fff!important;color:#263746!important;
+  border-radius:8px!important;box-shadow:none!important;font-weight:800!important;cursor:pointer
+}
+#hymnDetail .hd-metronome-bpm button{
+  width:30px;height:30px;padding:0!important;font-size:17px!important
+}
+#hymnDetail .hd-metronome-value{
+  min-height:30px;border:1px solid #dfd2b7;border-radius:8px;background:#f8f3e8;
+  display:flex;align-items:center;justify-content:center;gap:5px;color:#263746;
+  font:800 .82rem/1 Arial,sans-serif
+}
+#hymnDetail .hd-metronome-value b{color:#9a7228;font-size:1rem}
+#hymnDetail .hd-metronome-start{
+  min-width:94px;height:32px;padding:0 10px!important;background:#b18438!important;
+  border-color:#a2762f!important;color:#fff!important;font-size:.73rem!important
+}
+#hymnDetail .hd-metronome-start.is-running{background:#30465d!important;border-color:#30465d!important}
+#hymnDetail .hd-metronome-options{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin-top:8px
+}
+#hymnDetail .hd-metronome-volume{
+  display:grid;grid-template-columns:auto minmax(70px,1fr) 37px;gap:6px;align-items:center;
+  color:#665d51;font:700 .65rem/1 Arial,sans-serif
+}
+#hymnDetail .hd-metronome-volume input{width:100%;accent-color:#b18438}
+#hymnDetail .hd-metronome-mode{display:flex;gap:4px}
+#hymnDetail .hd-metronome-mode button{
+  min-height:28px;padding:4px 7px!important;font-size:.62rem!important;white-space:nowrap
+}
+#hymnDetail .hd-metronome-mode button.is-active{
+  background:#263746!important;border-color:#263746!important;color:#fff!important
+}
+#hymnDetail .hd-metronome-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;
+  color:#7b7266;font:700 .60rem/1.2 Arial,sans-serif
+}
+#hymnDetail .hd-metronome-reset{
+  padding:4px 7px!important;font-size:.60rem!important
+}
+#hymnDetail.media-open .hd-metronome{margin:2px 0 5px}
+#hymnDetail.media-open .hd-metronome-toggle{min-height:34px;padding:5px 8px!important}
+#hymnDetail.media-open .hd-metronome-icon{width:23px;height:23px;font-size:15px}
+#hymnDetail.media-open .hd-metronome-summary strong{font-size:.70rem}
+#hymnDetail.media-open .hd-metronome-summary small{font-size:.57rem}
+@media(max-width:520px){
+  #hymnDetail .hd-metronome{margin:2px 0 6px}
+  #hymnDetail .hd-metronome-toggle{min-height:36px;padding:6px 8px!important}
+  #hymnDetail .hd-metronome-panel{padding:8px}
+  #hymnDetail .hd-metronome-main{grid-template-columns:minmax(0,1fr) 88px}
+  #hymnDetail .hd-metronome-bpm{grid-template-columns:28px minmax(60px,1fr) 28px}
+  #hymnDetail .hd-metronome-bpm button{width:28px;height:28px}
+  #hymnDetail .hd-metronome-start{min-width:88px;height:30px;font-size:.68rem!important}
+  #hymnDetail .hd-metronome-options{grid-template-columns:1fr}
+  #hymnDetail .hd-metronome-mode{justify-content:flex-end}
+  #hymnDetail .hd-metronome-footer{font-size:.56rem}
+}
 </style>
 
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
@@ -1503,8 +1613,8 @@ const MULTIMIDIA={
   spotifyOrigin:"https://open.spotify.com/track/0ehXNJPz60LU8yGMeFDlnt",
   youtube:"lR-DTp1lOXk",
   youtubeOrigin:"https://www.youtube.com/watch?v=lR-DTp1lOXk",
-  youtubeMusic:"gOCUgZ58FAI",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=gOCUgZ58FAI",
+  youtubeMusic:"lR-DTp1lOXk",
+  youtubeMusicOrigin:"https://music.youtube.com/watch?v=lR-DTp1lOXk",
   fonteExterna:"Orquestra Sacra",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -2686,6 +2796,15 @@ const MULTIMIDIA={
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=HLUAb9TwrLg",
   youtubeMusicOriginType:"faixa-individual-topic",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo - Topic",
+  metronomo:{
+    bpm:108,
+    min:96,
+    max:120,
+    unidade:"colcheia",
+    unidadeSimbolo:"♪",
+    compasso:"6/8",
+    volume:75
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -2800,9 +2919,6 @@ const MULTIMIDIA={
  },
  "133":{
   audio:"audio/hino-133.mp3?v=707",
-  spotify:"2uziivbZp1H3pjwRPxyQtm",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2uziivbZp1H3pjwRPxyQtm",
   youtube:"TCsSgthx5aE",
   youtubeOrigin:"https://www.youtube.com/watch?v=TCsSgthx5aE",
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -2816,11 +2932,6 @@ const MULTIMIDIA={
  },
  "134":{
   audio:"audio/hino-134.mp3?v=707",
-  spotify:"6QAnEPdRov9dMIi04qy3jw",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/6QAnEPdRov9dMIi04qy3jw",
-  youtube:"3Eyb50hi4f0",
-  youtubeOrigin:"https://www.youtube.com/watch?v=3Eyb50hi4f0",
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=664s",
   youtubeMusicStart:664,
@@ -2832,9 +2943,6 @@ const MULTIMIDIA={
  },
  "135":{
   audio:"audio/hino-135.mp3?v=707",
-  spotify:"0lvaAyqEUUC9wDTwvb2FrN",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/0lvaAyqEUUC9wDTwvb2FrN",
   youtube:"mOMkaOmb-pU",
   youtubeOrigin:"https://www.youtube.com/watch?v=mOMkaOmb-pU",
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -2848,11 +2956,6 @@ const MULTIMIDIA={
  },
  "136":{
   audio:"audio/hino-136.mp3?v=707",
-  spotify:"7Mq4H1jv0QEisjvJbAB2No",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/7Mq4H1jv0QEisjvJbAB2No",
-  youtube:"A6uQvkwfzw0",
-  youtubeOrigin:"https://www.youtube.com/watch?v=A6uQvkwfzw0",
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1052s",
   youtubeMusicStart:1052,
@@ -2864,11 +2967,6 @@ const MULTIMIDIA={
  },
  "137":{
   audio:"audio/hino-137.mp3?v=707",
-  spotify:"2BsF4Z51YI0G9d7RJSrfKL",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/2BsF4Z51YI0G9d7RJSrfKL",
-  youtube:"7SUmf927aqw",
-  youtubeOrigin:"https://www.youtube.com/watch?v=7SUmf927aqw",
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1273s",
   youtubeMusicStart:1273,
@@ -2897,11 +2995,6 @@ const MULTIMIDIA={
  },
  "139":{
   audio:"audio/hino-139.mp3?v=707",
-  spotify:"1LNv6PhPTQhsNZnSbdPacV",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/1LNv6PhPTQhsNZnSbdPacV",
-  youtube:"nMjQNL4mwyo",
-  youtubeOrigin:"https://www.youtube.com/watch?v=nMjQNL4mwyo",
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1622s",
   youtubeMusicStart:1622,
@@ -2912,7 +3005,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "140":{
-  audio:"audio/hino-141.mp3?v=707",
+  audio:"audio/hino-140.mp3?v=707",
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1807s",
   youtubeMusicStart:1807,
@@ -2920,36 +3013,6 @@ const MULTIMIDIA={
   spotify:"5dKjFwO2lLL3NKeIb5o5V8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5dKjFwO2lLL3NKeIb5o5V8",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
-  repeticoes:1,
-  modoReproducao:"partitura"
- },
- "141":{
-  audio:"audio/hino-140.mp3?v=707",
-  spotify:"3xBBjoIDoIZPNqtPVHlx1H",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/3xBBjoIDoIZPNqtPVHlx1H",
-  youtube:"tHpgdGGdA4M",
-  youtubeOrigin:"http://youtube.com/watch?v=tHpgdGGdA4M",
-  youtubeMusic:"ntixdKdlF6I",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=ntixdKdlF6I",
-  youtubeMusicEnd:174,
-  youtubeMusicOriginType:"coletanea-com-timestamp",
-  fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
-  repeticoes:1,
-  modoReproducao:"partitura"
- },
- "142":{
-  audio:"audio/hino-140.mp3?v=707",
-  spotify:"3xBBjoIDoIZPNqtPVHlx1H",
-  spotifyType:"track",
-  spotifyOrigin:"https://open.spotify.com/intl-pt/track/3xBBjoIDoIZPNqtPVHlx1H",
-  youtube:"tHpgdGGdA4M",
-  youtubeOrigin:"http://youtube.com/watch?v=tHpgdGGdA4M",
-  youtubeMusic:"ntixdKdlF6I",
-  youtubeMusicOrigin:"https://music.youtube.com/watch?v=ntixdKdlF6I",
-  youtubeMusicEnd:174,
-  youtubeMusicOriginType:"coletanea-com-timestamp",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   repeticoes:1,
   modoReproducao:"partitura"
@@ -5072,6 +5135,7 @@ function deleteCallRecord(id){
 }
 
 function openHymnDetail(h,cat){
+ stopHymnMetronome();
  const modal=document.getElementById('hymnDetail');
  window.__gaCurrentHymn=h;
  const gaOrigem=window.__gaOrigemConsulta||'lista';
@@ -5120,8 +5184,10 @@ function openHymnDetail(h,cat){
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
 
+   const metronomeHtml=media.metronomo ? buildHymnMetronomeHtml(media.metronomo) : '';
    area.innerHTML=
      '<div class="hd-media-title"><span class="hd-note">♫</span> Mídias do '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
+     metronomeHtml+
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
      '<div class="hd-slot" id="hdAudio"></div>'+
@@ -5130,6 +5196,7 @@ function openHymnDetail(h,cat){
      '<div class="hd-links" id="hdLinks"></div>';
 
    area.querySelectorAll('.hd-play:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   if(media.metronomo) initHymnMetronomeUI(media.metronomo);
  }else{
    area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
  }
@@ -7381,6 +7448,218 @@ body:not(.index-mode):not(.welcome-mode){
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
+})();
+</script>
+
+
+<script id="v713-metronomo-engine">
+(function(){
+  const state={
+    ctx:null,timer:null,running:false,nextTime:0,beat:0,
+    bpm:108,defaultBpm:108,min:96,max:120,volume:.75,
+    mode:'six',config:null
+  };
+
+  function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
+
+  window.buildHymnMetronomeHtml=function(cfg){
+    const bpm=Number(cfg.bpm||108);
+    const unit=cfg.unidadeSimbolo||'♪';
+    const meter=cfg.compasso||'6/8';
+    return `
+      <div class="hd-metronome" id="hdMetronome">
+        <button type="button" class="hd-metronome-toggle" id="hdMetronomeToggle"
+          aria-expanded="false" aria-controls="hdMetronomePanel">
+          <span class="hd-metronome-icon" aria-hidden="true">♪</span>
+          <span class="hd-metronome-summary">
+            <strong>Metrônomo</strong>
+            <small><span id="hdMetronomeSummaryUnit">${unit}</span> = <span id="hdMetronomeSummaryBpm">${bpm}</span> · ${meter} · volume ajustável</small>
+          </span>
+          <span class="hd-metronome-arrow" aria-hidden="true">⌄</span>
+        </button>
+        <div class="hd-metronome-panel" id="hdMetronomePanel" hidden>
+          <div class="hd-metronome-main">
+            <div class="hd-metronome-bpm">
+              <button type="button" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
+              <div class="hd-metronome-value"><b id="hdMetroUnit">${unit}</b><span>=</span><span id="hdMetroBpm">${bpm}</span></div>
+              <button type="button" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
+            </div>
+            <button type="button" class="hd-metronome-start" id="hdMetroStart">▶ Iniciar</button>
+          </div>
+          <div class="hd-metronome-options">
+            <label class="hd-metronome-volume">
+              <span>🔊</span>
+              <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${Number(cfg.volume||75)}" aria-label="Volume do metrônomo">
+              <span id="hdMetroVolumeText">${Number(cfg.volume||75)}%</span>
+            </label>
+            <div class="hd-metronome-mode" role="group" aria-label="Modo de pulso">
+              <button type="button" data-metro-mode="six" class="is-active">♪ 6 tempos</button>
+              <button type="button" data-metro-mode="two">♩. 2 tempos</button>
+            </div>
+          </div>
+          <div class="hd-metronome-footer">
+            <span>Faixa da partitura: ${unit} = ${Number(cfg.min||bpm)}–${Number(cfg.max||bpm)}</span>
+            <button type="button" class="hd-metronome-reset" id="hdMetroReset">Restaurar ${bpm}</button>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  function getCtx(){
+    if(!state.ctx){
+      state.ctx=new (window.AudioContext||window.webkitAudioContext)();
+    }
+    if(state.ctx.state==='suspended') state.ctx.resume();
+    return state.ctx;
+  }
+
+  function clickAt(time,accentLevel){
+    const ctx=getCtx();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.type='square';
+
+    const base=accentLevel===2 ? 1760 : accentLevel===1 ? 1260 : 900;
+    const amp=(0.16 + state.volume*0.34) * (accentLevel===2 ? 1 : accentLevel===1 ? .78 : .62);
+
+    osc.frequency.setValueAtTime(base,time);
+    gain.gain.setValueAtTime(Math.max(.01,amp),time);
+    gain.gain.exponentialRampToValueAtTime(.001,time+.045);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(time);
+    osc.stop(time+.05);
+  }
+
+  function effectiveBpm(){
+    return state.mode==='two' ? state.bpm/3 : state.bpm;
+  }
+
+  function beatsPerMeasure(){
+    return state.mode==='two' ? 2 : 6;
+  }
+
+  function schedule(){
+    if(!state.running||!state.ctx)return;
+    const ctx=state.ctx;
+    const lookAhead=.11;
+
+    while(state.nextTime < ctx.currentTime + lookAhead){
+      let accent=0;
+      if(state.beat===0) accent=2;
+      else if(state.mode==='six' && state.beat===3) accent=1;
+
+      clickAt(state.nextTime,accent);
+
+      const bpm=Math.max(1,effectiveBpm());
+      state.nextTime += 60/bpm;
+      state.beat=(state.beat+1)%beatsPerMeasure();
+    }
+  }
+
+  function refresh(){
+    const bpm=document.getElementById('hdMetroBpm');
+    const sumBpm=document.getElementById('hdMetronomeSummaryBpm');
+    const start=document.getElementById('hdMetroStart');
+    const vol=document.getElementById('hdMetroVolumeText');
+
+    if(bpm)bpm.textContent=String(state.bpm);
+    if(sumBpm)sumBpm.textContent=String(state.bpm);
+    if(vol)vol.textContent=Math.round(state.volume*100)+'%';
+
+    if(start){
+      start.textContent=state.running?'■ Parar':'▶ Iniciar';
+      start.classList.toggle('is-running',state.running);
+    }
+  }
+
+  window.stopHymnMetronome=function(){
+    if(state.timer){clearInterval(state.timer);state.timer=null}
+    state.running=false;
+    state.beat=0;
+    if(state.ctx) state.nextTime=state.ctx.currentTime+.05;
+    refresh();
+  };
+
+  function start(){
+    const ctx=getCtx();
+    state.running=true;
+    state.beat=0;
+    state.nextTime=ctx.currentTime+.06;
+    schedule();
+    if(state.timer)clearInterval(state.timer);
+    state.timer=setInterval(schedule,25);
+    refresh();
+  }
+
+  function setMode(mode){
+    state.mode=mode==='two'?'two':'six';
+    document.querySelectorAll('#hymnDetail [data-metro-mode]').forEach(btn=>{
+      btn.classList.toggle('is-active',btn.dataset.metroMode===state.mode);
+    });
+    if(state.running){
+      state.beat=0;
+      state.nextTime=getCtx().currentTime+.06;
+    }
+  }
+
+  function setBpm(value){
+    state.bpm=clamp(Math.round(Number(value)||state.defaultBpm),state.min,state.max);
+    refresh();
+  }
+
+  window.initHymnMetronomeUI=function(cfg){
+    state.config=cfg;
+    state.defaultBpm=Number(cfg.bpm||108);
+    state.bpm=state.defaultBpm;
+    state.min=Number(cfg.min||state.bpm);
+    state.max=Number(cfg.max||state.bpm);
+    state.volume=clamp(Number(cfg.volume||75)/100,0,1);
+    state.mode='six';
+    stopHymnMetronome();
+
+    const wrap=document.getElementById('hdMetronome');
+    const toggle=document.getElementById('hdMetronomeToggle');
+    const panel=document.getElementById('hdMetronomePanel');
+    if(!wrap||!toggle||!panel)return;
+
+    toggle.addEventListener('click',()=>{
+      const open=panel.hidden;
+      panel.hidden=!open;
+      wrap.classList.toggle('is-open',open);
+      toggle.setAttribute('aria-expanded',String(open));
+    });
+
+    document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(state.bpm-2));
+    document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(state.bpm+2));
+    document.getElementById('hdMetroReset')?.addEventListener('click',()=>setBpm(state.defaultBpm));
+
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>{
+      if(state.running) stopHymnMetronome();
+      else start();
+    });
+
+    document.getElementById('hdMetroVolume')?.addEventListener('input',e=>{
+      state.volume=clamp(Number(e.target.value)/100,0,1);
+      refresh();
+    });
+
+    document.querySelectorAll('#hymnDetail [data-metro-mode]').forEach(btn=>{
+      btn.addEventListener('click',()=>setMode(btn.dataset.metroMode));
+    });
+
+    refresh();
+  };
+
+  document.addEventListener('click',e=>{
+    const modal=document.getElementById('hymnDetail');
+    if(e.target?.id==='hdClose'||e.target===modal) stopHymnMetronome();
+  },true);
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') stopHymnMetronome();
+  });
 })();
 </script>
 
