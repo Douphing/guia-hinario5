@@ -1,4 +1,14 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.18 TESTE: metrônomo em botão expansível, sem sobreposição.
+- Base V7.17 preservada.
+- Volta ao formato de botão compacto do metrônomo.
+- Ao abrir, os controles expandem dentro do fluxo do modal, sem painel flutuante.
+- O modal ganha rolagem interna ajustada, evitando cobrir mídias e demais botões.
+- Compasso, tonalidade e faixa de andamento aparecem somente quando o metrônomo está aberto.
+- Volume visual padrão: 50%, porém com curva de ganho reforçada.
+- 50% já é mais audível que nas primeiras versões; acima de 50% o ganho aumenta progressivamente.
+-->
+
 <!-- V7.17 TESTE: metrônomo compacto com compasso e tonalidade.
 - Base V7.16 preservada.
 - Hino 125 passa a exibir de forma compacta: fórmula de compasso, tonalidade e faixa de andamento.
@@ -474,111 +484,214 @@ REGRA CONSOLIDADA:
 
 
 
-<style id="v716-metronomo-inline">
+
+<style id="v718-metronomo-expandivel">
+#hymnDetail .hd-card{
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+}
+#hymnDetail.metronome-open .hd-card{
+  max-height:calc(100dvh - 12px)!important;
+}
 #hymnDetail .hd-metronome{
-  width:100%;margin:3px 0 7px;padding:7px 8px;
-  border:1px solid #dfd2b7;border-radius:12px;
-  background:linear-gradient(180deg,#fffdf8,#f7f0e2)
+  width:100%;
+  margin:3px 0 7px;
+  border:1px solid #dfd2b7;
+  border-radius:12px;
+  background:linear-gradient(180deg,#fffdf8,#f7f0e2);
+  overflow:hidden;
 }
-#hymnDetail .hd-metronome-row{
-  display:grid;grid-template-columns:auto 28px minmax(56px,74px) 28px minmax(74px,88px) 32px;
-  gap:5px;align-items:center
-}
-#hymnDetail .hd-metronome-label{
-  display:flex;align-items:center;gap:6px;min-width:0;
-  color:#263746;font:800 .69rem/1 Arial,sans-serif
+#hymnDetail .hd-metronome-toggle{
+  width:100%;
+  min-height:36px;
+  border:0!important;
+  background:transparent!important;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  padding:6px 9px!important;
+  color:#263746!important;
+  cursor:pointer;
+  box-shadow:none!important;
 }
 #hymnDetail .hd-metronome-icon{
-  width:23px;height:23px;border-radius:7px;display:grid;place-items:center;
-  background:#b18438;color:#fff;font:800 15px/1 Georgia,serif;flex:0 0 auto
+  width:24px;height:24px;border-radius:7px;
+  display:grid;place-items:center;
+  background:#b18438;color:#fff;
+  font:800 15px/1 Georgia,serif;
 }
-#hymnDetail .hd-metronome-bpm-btn,
+#hymnDetail .hd-metronome-summary{
+  min-width:0;text-align:left;
+}
+#hymnDetail .hd-metronome-summary strong{
+  display:block;
+  font:800 .73rem/1.05 Arial,sans-serif;
+  color:#263746;
+}
+#hymnDetail .hd-metronome-summary small{
+  display:block;
+  margin-top:2px;
+  color:#756b5d;
+  font:700 .58rem/1.1 Arial,sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#hymnDetail .hd-metronome-arrow{
+  color:#9a7228;
+  font:800 1rem/1 Arial,sans-serif;
+  transition:transform .18s ease;
+}
+#hymnDetail .hd-metronome.is-open .hd-metronome-arrow{
+  transform:rotate(180deg);
+}
+#hymnDetail .hd-metronome-panel{
+  border-top:1px solid #e5d9c2;
+  padding:8px 9px 9px;
+  background:#fffaf0;
+}
+#hymnDetail .hd-metronome-panel[hidden]{
+  display:none!important;
+}
+#hymnDetail .hd-metronome-main{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 86px;
+  gap:6px;
+  align-items:center;
+}
+#hymnDetail .hd-metronome-bpm{
+  display:grid;
+  grid-template-columns:27px minmax(60px,1fr) 27px;
+  gap:4px;
+  align-items:center;
+}
+#hymnDetail .hd-metronome-bpm button,
 #hymnDetail .hd-metronome-start,
-#hymnDetail .hd-metronome-volume-btn,
-#hymnDetail .hd-metronome-mode button{
-  border:1px solid #d4c29d!important;background:#fff!important;color:#263746!important;
-  border-radius:8px!important;box-shadow:none!important;font-weight:800!important;cursor:pointer
+#hymnDetail .hd-metronome-mode button,
+#hymnDetail .hd-metronome-reset{
+  border:1px solid #d4c29d!important;
+  background:#fff!important;
+  color:#263746!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+  font-weight:800!important;
+  cursor:pointer;
 }
-#hymnDetail .hd-metronome-bpm-btn{
-  width:28px;height:28px;padding:0!important;font-size:15px!important
+#hymnDetail .hd-metronome-bpm button{
+  width:27px;height:27px;padding:0!important;font-size:15px!important;
 }
 #hymnDetail .hd-metronome-value{
-  min-height:28px;border:1px solid #dfd2b7;border-radius:8px;background:#f8f3e8;
-  display:flex;align-items:center;justify-content:center;gap:4px;
-  color:#263746;font:800 .72rem/1 Arial,sans-serif
+  min-height:27px;
+  border:1px solid #dfd2b7;
+  border-radius:8px;
+  background:#f8f3e8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  color:#263746;
+  font:800 .71rem/1 Arial,sans-serif;
 }
-#hymnDetail .hd-metronome-value b{color:#9a7228;font-size:.9rem}
+#hymnDetail .hd-metronome-value b{
+  color:#9a7228;
+  font-size:.9rem;
+}
 #hymnDetail .hd-metronome-start{
-  height:28px;padding:0 8px!important;background:#b18438!important;
-  border-color:#a2762f!important;color:#fff!important;font-size:.62rem!important
+  min-width:82px;
+  height:29px;
+  padding:0 8px!important;
+  background:#b18438!important;
+  border-color:#a2762f!important;
+  color:#fff!important;
+  font-size:.63rem!important;
 }
 #hymnDetail .hd-metronome-start.is-running{
-  background:#30465d!important;border-color:#30465d!important
+  background:#30465d!important;
+  border-color:#30465d!important;
 }
-#hymnDetail .hd-metronome-volume-btn{
-  width:32px;height:28px;padding:0!important;font-size:.78rem!important
+#hymnDetail .hd-metronome-volume{
+  display:grid;
+  grid-template-columns:auto minmax(75px,1fr) 38px;
+  gap:6px;
+  align-items:center;
+  margin-top:7px;
+  color:#665d51;
+  font:700 .60rem/1 Arial,sans-serif;
 }
-#hymnDetail .hd-metronome-subrow{
-  display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:6px
+#hymnDetail .hd-metronome-volume input{
+  width:100%;
+  accent-color:#b18438;
 }
-#hymnDetail .hd-metronome-mode{display:flex;gap:4px;min-width:0}
+#hymnDetail .hd-metronome-mode{
+  display:flex;
+  justify-content:center;
+  gap:4px;
+  margin-top:7px;
+}
 #hymnDetail .hd-metronome-mode button{
-  min-height:25px;padding:3px 6px!important;font-size:.56rem!important;white-space:nowrap
+  min-height:25px;
+  padding:3px 6px!important;
+  font-size:.56rem!important;
+  white-space:nowrap;
 }
 #hymnDetail .hd-metronome-mode button.is-active{
-  background:#263746!important;border-color:#263746!important;color:#fff!important
+  background:#263746!important;
+  border-color:#263746!important;
+  color:#fff!important;
 }
-#hymnDetail .hd-metronome-volume-inline{
-  display:none;grid-template-columns:auto minmax(78px,1fr) 34px;
-  gap:5px;align-items:center;margin-top:6px;
-  color:#665d51;font:700 .59rem/1 Arial,sans-serif
-}
-#hymnDetail .hd-metronome.show-volume .hd-metronome-volume-inline{display:grid}
-#hymnDetail .hd-metronome-volume-inline input{width:100%;accent-color:#b18438}
-#hymnDetail .hd-metronome-help{
-  color:#756b5d;font:700 .53rem/1.2 Arial,sans-serif;text-align:right
-}
-@media(max-width:520px){
-  #hymnDetail .hd-metronome{padding:6px}
-  #hymnDetail .hd-metronome-row{
-    grid-template-columns:23px 26px minmax(52px,68px) 26px minmax(68px,80px) 30px;
-    gap:4px
-  }
-  #hymnDetail .hd-metronome-label span:last-child{display:none}
-  #hymnDetail .hd-metronome-icon{width:23px;height:23px}
-  #hymnDetail .hd-metronome-bpm-btn{width:26px;height:26px}
-  #hymnDetail .hd-metronome-value{min-height:26px;font-size:.67rem}
-  #hymnDetail .hd-metronome-start{height:26px;font-size:.58rem!important}
-  #hymnDetail .hd-metronome-volume-btn{width:30px;height:26px}
-  #hymnDetail .hd-metronome-subrow{align-items:flex-start}
-  #hymnDetail .hd-metronome-help{font-size:.50rem;max-width:115px}
-}
-</style>
-
-
-<style id="v717-metronomo-info">
 #hymnDetail .hd-metronome-meta{
-  display:flex;align-items:center;justify-content:flex-start;gap:5px;flex-wrap:wrap;
-  margin-top:6px
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:6px;
 }
 #hymnDetail .hd-metronome-chip{
-  display:inline-flex;align-items:center;justify-content:center;min-height:22px;
-  padding:3px 7px;border:1px solid #dfd2b7;border-radius:999px;
-  background:#fff;color:#5f584f;font:800 .56rem/1 Arial,sans-serif;
-  white-space:nowrap
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:20px;
+  padding:2px 6px;
+  border:1px solid #ded4c0;
+  border-radius:999px;
+  background:#fff;
+  color:#665f56;
+  font:800 .52rem/1 Arial,sans-serif;
 }
-#hymnDetail .hd-metronome-chip.is-key{
-  background:#f5efe2;color:#7d6024;border-color:#d9c69e
+#hymnDetail .hd-metronome-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:6px;
+  color:#7b7266;
+  font:700 .54rem/1.2 Arial,sans-serif;
 }
-#hymnDetail .hd-metronome-chip.is-meter{
-  background:#eef2f5;color:#33495e;border-color:#cfd8df
-}
-#hymnDetail .hd-metronome-chip.is-range{
-  background:#f8f5ed;color:#6d655b
+#hymnDetail .hd-metronome-reset{
+  padding:3px 6px!important;
+  font-size:.54rem!important;
 }
 @media(max-width:520px){
-  #hymnDetail .hd-metronome-meta{gap:4px;margin-top:5px}
-  #hymnDetail .hd-metronome-chip{min-height:20px;padding:2px 6px;font-size:.52rem}
+  #hymnDetail .hd-metronome{
+    margin:2px 0 6px;
+  }
+  #hymnDetail .hd-metronome-toggle{
+    min-height:34px;
+    padding:5px 8px!important;
+  }
+  #hymnDetail .hd-metronome-panel{
+    padding:7px 8px 8px;
+  }
+  #hymnDetail .hd-metronome-main{
+    grid-template-columns:minmax(0,1fr) 82px;
+  }
+  #hymnDetail .hd-metronome-start{
+    min-width:82px;
+  }
+  #hymnDetail .hd-metronome-volume{
+    grid-template-columns:auto minmax(68px,1fr) 36px;
+  }
 }
 </style>
 
@@ -2841,7 +2954,7 @@ const MULTIMIDIA={
     unidadeSimbolo:"♪",
     compasso:"6/8",
     tonalidade:"Fá maior",
-    volume:100
+    volume:50
   },
   repeticoes:1,
   modoReproducao:"partitura"
@@ -7491,12 +7604,13 @@ body:not(.index-mode):not(.welcome-mode){
 
 
 
-<script id="v717-metronomo-engine">
+
+<script id="v718-metronomo-engine">
 (function(){
   const state={
     ctx:null,timer:null,running:false,nextTime:0,beat:0,
-    bpm:108,defaultBpm:108,min:96,max:120,volume:1,
-    mode:'six',config:null
+    bpm:108,defaultBpm:108,min:96,max:120,
+    volumeUI:50,mode:'six',config:null
   };
 
   function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -7504,85 +7618,129 @@ body:not(.index-mode):not(.welcome-mode){
   window.buildHymnMetronomeHtml=function(cfg){
     const bpm=Number(cfg.bpm||108);
     const unit=cfg.unidadeSimbolo||'♪';
+    const meter=cfg.compasso||'';
+    const key=cfg.tonalidade||'';
+    const min=Number(cfg.min||bpm);
+    const max=Number(cfg.max||bpm);
+    const volume=Number(cfg.volume??50);
+
     return `
       <div class="hd-metronome" id="hdMetronome">
-        <div class="hd-metronome-row">
-          <div class="hd-metronome-label">
-            <span class="hd-metronome-icon">${unit}</span>
-            <span>Metrônomo</span>
+        <button type="button" class="hd-metronome-toggle" id="hdMetronomeToggle"
+          aria-expanded="false" aria-controls="hdMetronomePanel">
+          <span class="hd-metronome-icon" aria-hidden="true">${unit}</span>
+          <span class="hd-metronome-summary">
+            <strong>Metrônomo</strong>
+            <small>${unit} = <span id="hdMetronomeSummaryBpm">${bpm}</span>${meter?' · '+meter:''}${key?' · '+key:''}</small>
+          </span>
+          <span class="hd-metronome-arrow" aria-hidden="true">⌄</span>
+        </button>
+
+        <div class="hd-metronome-panel" id="hdMetronomePanel" hidden>
+          <div class="hd-metronome-main">
+            <div class="hd-metronome-bpm">
+              <button type="button" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
+              <div class="hd-metronome-value"><b>${unit}</b><span>=</span><span id="hdMetroBpm">${bpm}</span></div>
+              <button type="button" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
+            </div>
+            <button type="button" class="hd-metronome-start" id="hdMetroStart">▶ Iniciar</button>
           </div>
-          <button type="button" class="hd-metronome-bpm-btn" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
-          <div class="hd-metronome-value"><b>${unit}</b><span>=</span><span id="hdMetroBpm">${bpm}</span></div>
-          <button type="button" class="hd-metronome-bpm-btn" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
-          <button type="button" class="hd-metronome-start" id="hdMetroStart">▶ Iniciar</button>
-          <button type="button" class="hd-metronome-volume-btn" id="hdMetroVolumeToggle" aria-label="Volume">🔊</button>
-        </div>
-        <div class="hd-metronome-subrow">
-          <div class="hd-metronome-mode">
+
+          <label class="hd-metronome-volume">
+            <span>🔊 Volume</span>
+            <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do metrônomo">
+            <span id="hdMetroVolumeText">${volume}%</span>
+          </label>
+
+          <div class="hd-metronome-mode" role="group" aria-label="Modo de pulso">
             <button type="button" data-metro-mode="six" class="is-active">♪ 6 tempos</button>
             <button type="button" data-metro-mode="two">♩. 2 pulsações</button>
           </div>
-          <div class="hd-metronome-help">6 tempos = subdivisão<br>2 pulsações = pulso principal</div>
+
+          <div class="hd-metronome-meta">
+            ${meter?`<span class="hd-metronome-chip">${meter}</span>`:''}
+            ${key?`<span class="hd-metronome-chip">${key}</span>`:''}
+            <span class="hd-metronome-chip">${unit} ${min}–${max}</span>
+          </div>
+
+          <div class="hd-metronome-footer">
+            <span>50% já usa ganho reforçado</span>
+            <button type="button" class="hd-metronome-reset" id="hdMetroReset">Restaurar ${bpm}</button>
+          </div>
         </div>
-        <div class="hd-metronome-meta" aria-label="Informações musicais">
-          <span class="hd-metronome-chip is-meter">${cfg.compasso||'—'}</span>
-          <span class="hd-metronome-chip is-key">${cfg.tonalidade||'Tonalidade não informada'}</span>
-          <span class="hd-metronome-chip is-range">${unit} ${Number(cfg.min||bpm)}–${Number(cfg.max||bpm)}</span>
-        </div>
-        <label class="hd-metronome-volume-inline" id="hdMetroVolumeRow">
-          <span>Volume</span>
-          <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${Number(cfg.volume||100)}">
-          <span id="hdMetroVolumeText">${Number(cfg.volume||100)}%</span>
-        </label>
       </div>`;
   };
 
   function getCtx(){
-    if(!state.ctx) state.ctx=new (window.AudioContext||window.webkitAudioContext)();
+    if(!state.ctx){
+      state.ctx=new (window.AudioContext||window.webkitAudioContext)();
+    }
     if(state.ctx.state==='suspended') state.ctx.resume();
     return state.ctx;
+  }
+
+  // Curva de volume:
+  // 0% = silêncio
+  // 50% = já bem audível
+  // 100% = ganho forte, limitado por compressor
+  function effectiveGain(){
+    const v=clamp(state.volumeUI,0,100)/100;
+    if(v<=0) return 0;
+    if(v<=.5){
+      return 0.12 + (v/.5)*0.68;   // 50% => 0.80
+    }
+    return 0.80 + ((v-.5)/.5)*0.75; // 100% => 1.55
   }
 
   function clickAt(time,accent){
     const ctx=getCtx();
 
-    // Clique duplo: um ataque principal + um componente mais grave curto.
-    // Isso aumenta a percepção sem depender apenas do volume do navegador.
+    const compressor=ctx.createDynamicsCompressor();
+    compressor.threshold.setValueAtTime(-10,time);
+    compressor.knee.setValueAtTime(8,time);
+    compressor.ratio.setValueAtTime(5,time);
+    compressor.attack.setValueAtTime(.002,time);
+    compressor.release.setValueAtTime(.08,time);
+    compressor.connect(ctx.destination);
+
     const master=ctx.createGain();
-    master.gain.setValueAtTime(1,time);
-    master.connect(ctx.destination);
+    master.gain.setValueAtTime(effectiveGain(),time);
+    master.connect(compressor);
 
     const osc1=ctx.createOscillator();
     const g1=ctx.createGain();
     osc1.type='square';
-    osc1.frequency.setValueAtTime(accent===2?1900:accent===1?1450:1050,time);
-    const amp1=(0.38 + state.volume*0.62) * (accent===2?1:accent===1?.82:.68);
-    g1.gain.setValueAtTime(Math.min(1,amp1),time);
-    g1.gain.exponentialRampToValueAtTime(.001,time+.055);
+    osc1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
+    const a1=accent===2?.95:accent===1?.72:.56;
+    g1.gain.setValueAtTime(a1,time);
+    g1.gain.exponentialRampToValueAtTime(.001,time+.06);
     osc1.connect(g1); g1.connect(master);
-    osc1.start(time); osc1.stop(time+.06);
+    osc1.start(time); osc1.stop(time+.065);
 
     const osc2=ctx.createOscillator();
     const g2=ctx.createGain();
     osc2.type='sine';
-    osc2.frequency.setValueAtTime(accent===2?620:accent===1?520:440,time);
-    const amp2=(0.16 + state.volume*0.28) * (accent===2?1:.72);
-    g2.gain.setValueAtTime(Math.min(.55,amp2),time);
-    g2.gain.exponentialRampToValueAtTime(.001,time+.04);
+    osc2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
+    const a2=accent===2?.40:accent===1?.28:.20;
+    g2.gain.setValueAtTime(a2,time);
+    g2.gain.exponentialRampToValueAtTime(.001,time+.05);
     osc2.connect(g2); g2.connect(master);
-    osc2.start(time); osc2.stop(time+.045);
+    osc2.start(time); osc2.stop(time+.055);
   }
 
   function effectiveBpm(){
     return state.mode==='two' ? state.bpm/3 : state.bpm;
   }
+
   function beatsPerMeasure(){
     return state.mode==='two' ? 2 : 6;
   }
 
   function schedule(){
     if(!state.running||!state.ctx)return;
-    const ctx=state.ctx, lookAhead=.11;
+    const ctx=state.ctx;
+    const lookAhead=.11;
+
     while(state.nextTime<ctx.currentTime+lookAhead){
       let accent;
       if(state.mode==='two'){
@@ -7598,26 +7756,35 @@ body:not(.index-mode):not(.welcome-mode){
 
   function refresh(){
     const bpm=document.getElementById('hdMetroBpm');
+    const sum=document.getElementById('hdMetronomeSummaryBpm');
     const start=document.getElementById('hdMetroStart');
     const vol=document.getElementById('hdMetroVolumeText');
+
     if(bpm)bpm.textContent=String(state.bpm);
+    if(sum)sum.textContent=String(state.bpm);
     if(start){
       start.textContent=state.running?'■ Parar':'▶ Iniciar';
       start.classList.toggle('is-running',state.running);
     }
-    if(vol)vol.textContent=Math.round(state.volume*100)+'%';
+    if(vol)vol.textContent=Math.round(state.volumeUI)+'%';
   }
 
   window.stopHymnMetronome=function(){
-    if(state.timer){clearInterval(state.timer);state.timer=null}
-    state.running=false;state.beat=0;
-    if(state.ctx)state.nextTime=state.ctx.currentTime+.05;
+    if(state.timer){
+      clearInterval(state.timer);
+      state.timer=null;
+    }
+    state.running=false;
+    state.beat=0;
+    if(state.ctx) state.nextTime=state.ctx.currentTime+.05;
     refresh();
   };
 
   function start(){
     const ctx=getCtx();
-    state.running=true;state.beat=0;state.nextTime=ctx.currentTime+.06;
+    state.running=true;
+    state.beat=0;
+    state.nextTime=ctx.currentTime+.06;
     schedule();
     if(state.timer)clearInterval(state.timer);
     state.timer=setInterval(schedule,25);
@@ -7635,9 +7802,29 @@ body:not(.index-mode):not(.welcome-mode){
     }
   }
 
-  function setBpm(v){
-    state.bpm=clamp(Math.round(Number(v)||state.defaultBpm),state.min,state.max);
+  function setBpm(value){
+    state.bpm=clamp(Math.round(Number(value)||state.defaultBpm),state.min,state.max);
     refresh();
+  }
+
+  function openPanel(){
+    const wrap=document.getElementById('hdMetronome');
+    const panel=document.getElementById('hdMetronomePanel');
+    const toggle=document.getElementById('hdMetronomeToggle');
+    const modal=document.getElementById('hymnDetail');
+    if(!wrap||!panel||!toggle||!modal)return;
+
+    const open=panel.hidden;
+    panel.hidden=!open;
+    wrap.classList.toggle('is-open',open);
+    modal.classList.toggle('metronome-open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+
+    if(open){
+      setTimeout(()=>{
+        wrap.scrollIntoView({block:'nearest',behavior:'smooth'});
+      },40);
+    }
   }
 
   window.initHymnMetronomeUI=function(cfg){
@@ -7646,30 +7833,43 @@ body:not(.index-mode):not(.welcome-mode){
     state.bpm=state.defaultBpm;
     state.min=Number(cfg.min||96);
     state.max=Number(cfg.max||120);
-    state.volume=clamp(Number(cfg.volume||100)/100,0,1);
+    state.volumeUI=clamp(Number(cfg.volume??50),0,100);
     state.mode='six';
+
     stopHymnMetronome();
 
+    document.getElementById('hdMetronomeToggle')?.addEventListener('click',openPanel);
     document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(state.bpm-2));
     document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(state.bpm+2));
-    document.getElementById('hdMetroStart')?.addEventListener('click',()=>state.running?stopHymnMetronome():start());
-    document.getElementById('hdMetroVolumeToggle')?.addEventListener('click',()=>{
-      document.getElementById('hdMetronome')?.classList.toggle('show-volume');
+    document.getElementById('hdMetroReset')?.addEventListener('click',()=>setBpm(state.defaultBpm));
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>{
+      state.running?stopHymnMetronome():start();
     });
     document.getElementById('hdMetroVolume')?.addEventListener('input',e=>{
-      state.volume=clamp(Number(e.target.value)/100,0,1);refresh();
+      state.volumeUI=clamp(Number(e.target.value),0,100);
+      refresh();
     });
     document.querySelectorAll('#hymnDetail [data-metro-mode]').forEach(btn=>{
       btn.addEventListener('click',()=>setMode(btn.dataset.metroMode));
     });
+
     refresh();
   };
 
   document.addEventListener('click',e=>{
     const modal=document.getElementById('hymnDetail');
-    if(e.target?.id==='hdClose'||e.target===modal)stopHymnMetronome();
+    if(e.target?.id==='hdClose'||e.target===modal){
+      stopHymnMetronome();
+      modal?.classList.remove('metronome-open');
+    }
   },true);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')stopHymnMetronome()});
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      stopHymnMetronome();
+      document.getElementById('hymnDetail')?.classList.remove('metronome-open');
+    }
+  });
 })();
 </script>
 
