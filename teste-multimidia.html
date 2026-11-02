@@ -1,4 +1,11 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.29 TESTE: ajuste fino da navegação no celular.
+- Base V7.28 preservada.
+- Setas anterior/próximo mantidas flutuantes.
+- Afastamento vertical aumentado entre as setas e o título "Mídias do Hino", principalmente no celular.
+- Nenhuma outra função do metrônomo, partitura ou mídias foi alterada.
+-->
+
 <!-- V7.28 TESTE: refinamento estrutural do metrônomo e navegação.
 - Base V7.27 preservada.
 - Cabeçalho do metrônomo usa texto "Abrir / Fechar" no lugar das setas.
@@ -1359,6 +1366,40 @@ body.score-full-open{overflow:hidden!important}
     height:32px!important;
     min-height:32px!important;
     font-size:.98rem!important;
+  }
+}
+</style>
+
+
+<style id="v729-ajuste-nav-mobile">
+/* Mais respiro entre navegação flutuante e "Mídias do Hino" */
+#hymnDetail .hd-hymn-nav{
+  margin:0 0 8px!important;
+}
+#hymnDetail .hd-hymn-nav + .hd-media-title{
+  margin-top:5px!important;
+}
+
+@media(max-width:600px){
+  #hymnDetail .hd-hymn-nav{
+    height:34px!important;
+    margin:1px 0 10px!important;
+  }
+  #hymnDetail .hd-hymn-nav button{
+    transform:translateY(-1px)!important;
+  }
+  #hymnDetail .hd-hymn-nav + .hd-media-title{
+    margin-top:6px!important;
+  }
+}
+
+@media(max-width:420px){
+  #hymnDetail .hd-hymn-nav{
+    height:32px!important;
+    margin:2px 0 11px!important;
+  }
+  #hymnDetail .hd-hymn-nav + .hd-media-title{
+    margin-top:7px!important;
   }
 }
 </style>
