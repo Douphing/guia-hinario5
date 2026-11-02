@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.28 TESTE: refinamento estrutural do metrônomo e navegação.
+- Base V7.27 preservada.
+- Cabeçalho do metrônomo usa texto "Abrir / Fechar" no lugar das setas.
+- Informações repetidas removidas: compasso e tonalidade ficam somente no cabeçalho.
+- Controles internos redistribuídos em áreas distintas: BPM, iniciar, pulso, padrão e volume.
+- Navegação anterior/próximo movida para acima de "Mídias do Hino", centralizada e flutuante.
+- Partitura em tela cheia permanece.
+-->
+
 <!-- V7.26 TESTE: partitura ampliável em tela cheia.
 - Base V7.25 preservada.
 - Miniatura da partitura continua compacta no metrônomo.
@@ -1007,192 +1016,350 @@ body.score-full-open{overflow:hidden!important}
 </style>
 
 
-<style id="v727-metronomo-refino-fino">
-/* Refinos finos pedidos pelo usuário */
-#hymnDetail .hd-v725-grid{
-  grid-template-columns:minmax(0,1fr) 96px;
-  gap:10px;
+
+<style id="v728-metronomo-layout">
+/* Cabeçalho: informação + Abrir/Fechar */
+#hymnDetail .hd-metronome{
+  margin:2px 0 5px!important;
+  border-radius:13px!important;
+}
+#hymnDetail .hd-metronome-toggle{
+  min-height:38px!important;
+  height:38px!important;
+  padding:5px 9px!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  gap:8px!important;
+}
+#hymnDetail .hd-metronome-state{
+  min-width:48px;
+  height:26px;
+  padding:0 8px;
+  border:1px solid #d6c49e;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#fffaf0;
+  color:#7b5d24;
+  font:800 .57rem/1 Arial,sans-serif;
+  box-shadow:0 2px 6px rgba(57,45,24,.06);
+}
+#hymnDetail .hd-metronome.is-open .hd-metronome-state{
+  background:#263746;
+  border-color:#263746;
+  color:#fff;
+}
+#hymnDetail .hd-metronome-arrow{display:none!important}
+
+/* Painel */
+#hymnDetail .hd-metronome-panel{
+  padding:9px 9px 8px!important;
+}
+#hymnDetail .hd-v728-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 92px;
+  gap:11px;
   align-items:start;
 }
-#hymnDetail .hd-v725-controls{
-  gap:7px;
+#hymnDetail .hd-v728-controls{
+  min-width:0;
+  display:grid;
+  gap:8px;
 }
-#hymnDetail .hd-v725-top{
-  grid-template-columns:28px 68px 28px minmax(84px,100px) minmax(68px,78px);
-  gap:6px;
-  justify-content:start;
+#hymnDetail .hd-v728-primary{
+  display:grid;
+  grid-template-columns:minmax(132px,1fr) minmax(76px,88px);
+  gap:8px;
+  align-items:center;
 }
-#hymnDetail .hd-v725-btn,
-#hymnDetail .hd-v725-start,
-#hymnDetail .hd-v725-close,
-#hymnDetail .hd-v725-pulse button,
-#hymnDetail .hd-v725-reset{
-  border-radius:10px!important;
+#hymnDetail .hd-v728-bpm-group{
+  display:grid;
+  grid-template-columns:30px minmax(62px,1fr) 30px;
+  gap:5px;
+  align-items:center;
 }
-#hymnDetail .hd-v725-btn{width:28px!important;height:28px!important}
-#hymnDetail .hd-v725-bpm{
-  height:28px!important;
-  min-width:68px;
-}
-#hymnDetail .hd-v725-bpm input{width:36px!important}
-#hymnDetail .hd-v725-start,
-#hymnDetail .hd-v725-close{height:28px!important;padding:0 8px!important;font-size:.58rem!important}
-
-/* Volume mais enxuto, sem a caixa branca vazia */
-#hymnDetail .hd-v725-volume{
-  display:flex!important;
-  align-items:center!important;
-  gap:7px!important;
-  width:auto!important;
-  max-width:250px!important;
-  height:auto!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  border-radius:0!important;
+#hymnDetail .hd-v728-step,
+#hymnDetail .hd-v728-start,
+#hymnDetail .hd-v728-pulse button,
+#hymnDetail .hd-v728-reset{
+  border:1px solid #d4c29d!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  color:#263746!important;
   box-shadow:none!important;
-  justify-self:start!important;
+  font-weight:800!important;
 }
-#hymnDetail .hd-v725-volume input{
-  width:170px!important;
-  flex:0 0 170px!important;
+#hymnDetail .hd-v728-step{
+  width:30px;
+  height:30px;
+  padding:0!important;
+  font-size:16px!important;
+}
+#hymnDetail .hd-v728-bpm{
+  height:30px;
+  border:1px solid #dfd2b7;
+  border-radius:9px;
+  background:#f8f3e8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+}
+#hymnDetail .hd-v728-bpm b{
+  color:#9a7228;
+  font:800 .86rem/1 Arial,sans-serif;
+}
+#hymnDetail .hd-v728-bpm input{
+  width:39px;
+  height:24px;
+  padding:0;
+  border:0;
+  background:transparent;
+  text-align:center;
+  color:#263746;
+  font:800 .68rem/1 Arial,sans-serif;
+  appearance:textfield;
+  -moz-appearance:textfield;
+}
+#hymnDetail .hd-v728-bpm input::-webkit-outer-spin-button,
+#hymnDetail .hd-v728-bpm input::-webkit-inner-spin-button{appearance:none;margin:0}
+#hymnDetail .hd-v728-start{
+  height:31px;
+  padding:0 9px!important;
+  background:#b18438!important;
+  border-color:#a2762f!important;
+  color:#fff!important;
+  font-size:.63rem!important;
+}
+#hymnDetail .hd-v728-start.is-running{
+  background:#30465d!important;
+  border-color:#30465d!important;
+}
+
+#hymnDetail .hd-v728-secondary{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+}
+#hymnDetail .hd-v728-pulse-wrap{
+  min-width:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:7px;
+  align-items:center;
+}
+#hymnDetail .hd-v728-label{
+  color:#6d6458;
+  font:800 .57rem/1 Arial,sans-serif;
+  white-space:nowrap;
+}
+#hymnDetail .hd-v728-pulse{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  min-width:0;
+}
+#hymnDetail .hd-v728-pulse button{
+  min-height:28px;
+  padding:4px 7px!important;
+  font-size:.55rem!important;
+  white-space:nowrap;
+}
+#hymnDetail .hd-v728-pulse button.is-active{
+  background:#263746!important;
+  border-color:#263746!important;
+  color:#fff!important;
+}
+#hymnDetail .hd-v728-reset{
+  height:28px;
+  padding:0 9px!important;
+  font-size:.54rem!important;
+  white-space:nowrap;
+}
+
+#hymnDetail .hd-v728-tertiary{
+  display:grid;
+  grid-template-columns:minmax(0,220px) minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+}
+#hymnDetail .hd-v728-volume{
+  display:grid;
+  grid-template-columns:auto minmax(70px,1fr) 34px;
+  gap:6px;
+  align-items:center;
+  min-width:0;
+}
+#hymnDetail .hd-v728-volume input{
+  width:100%;
   accent-color:#b18438;
 }
-#hymnDetail .hd-v725-volume span:first-child{
-  min-width:auto!important;
+#hymnDetail .hd-v728-volume .vol-label{
+  color:#6d6458;
+  font:800 .55rem/1 Arial,sans-serif;
+  white-space:nowrap;
 }
-#hymnDetail #hdMetroVolumeText{
-  min-width:34px;
+#hymnDetail .hd-v728-volume #hdMetroVolumeText{
+  color:#665d51;
+  font:800 .55rem/1 Arial,sans-serif;
   text-align:right;
 }
+#hymnDetail .hd-v728-range{
+  color:#756b5d;
+  font:700 .53rem/1.2 Arial,sans-serif;
+  text-align:right;
+  white-space:nowrap;
+}
 
-#hymnDetail .hd-v725-mid{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:10px!important;
-  flex-wrap:wrap!important;
-}
-#hymnDetail .hd-v725-pulse{
-  display:flex!important;
-  align-items:center!important;
-  gap:6px!important;
-  flex-wrap:wrap!important;
-}
-#hymnDetail .hd-v725-pulse span{font-size:.64rem!important}
-#hymnDetail .hd-v725-pulse button{
-  height:28px!important;
-  padding:0 10px!important;
-  font-size:.57rem!important;
-}
-#hymnDetail .hd-v725-reset{
-  height:28px!important;
-  padding:0 10px!important;
-  font-size:.56rem!important;
-}
-#hymnDetail .hd-v725-meta{
-  gap:6px!important;
-}
-#hymnDetail .hd-v725-chip{
-  min-height:22px!important;
-  padding:3px 8px!important;
-  font-size:.54rem!important;
-}
+/* Partitura */
 #hymnDetail .hd-v725-thumb{
-  align-self:start!important;
   min-height:auto!important;
   border-radius:10px!important;
+  align-self:start!important;
 }
 #hymnDetail .hd-v725-thumb img{
   height:58px!important;
 }
 #hymnDetail .hd-v725-thumb span{
-  font-size:.52rem!important;
-  padding:4px 4px!important;
+  padding:4px!important;
+  font-size:.51rem!important;
 }
 
-/* Botões de navegação discretos e flutuantes */
-#hymnDetail #hdMediaArea{position:relative!important}
+/* Navegação flutuante, acima de Mídias do Hino */
 #hymnDetail .hd-hymn-nav{
-  position:sticky!important;
-  bottom:12px!important;
-  z-index:8!important;
-  height:0!important;
-  margin:0!important;
+  position:relative!important;
+  z-index:12!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:96px!important;
+  height:32px!important;
+  margin:-2px 0 1px!important;
   padding:0!important;
   border:0!important;
   pointer-events:none!important;
 }
 #hymnDetail .hd-hymn-nav .center{display:none!important}
 #hymnDetail .hd-hymn-nav button{
-  position:absolute!important;
-  top:-8px!important;
-  width:36px!important;
-  height:36px!important;
-  min-height:36px!important;
+  position:relative!important;
+  inset:auto!important;
+  width:34px!important;
+  min-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
   padding:0!important;
-  border:0!important;
-  border-radius:999px!important;
-  background:rgba(255,253,248,.96)!important;
-  color:#173149!important;
-  box-shadow:0 8px 18px rgba(17,30,45,.16)!important;
-  font:800 1rem/1 Arial,sans-serif!important;
+  border:1px solid rgba(177,132,56,.34)!important;
+  border-radius:50%!important;
+  background:linear-gradient(180deg,#fffefb,#f5eddd)!important;
+  color:#20364d!important;
+  box-shadow:
+    0 7px 15px rgba(23,49,73,.20),
+    0 2px 5px rgba(177,132,56,.14)!important;
+  font:800 1.05rem/1 Arial,sans-serif!important;
   pointer-events:auto!important;
+  transform:translateY(2px);
 }
 #hymnDetail .hd-hymn-nav button:hover,
 #hymnDetail .hd-hymn-nav button:focus-visible{
   background:#fff!important;
-  outline:2px solid rgba(177,132,56,.28)!important;
-  outline-offset:1px!important;
+  color:#9a7228!important;
+  outline:2px solid rgba(177,132,56,.22)!important;
+  outline-offset:2px!important;
+  box-shadow:0 8px 18px rgba(23,49,73,.25)!important;
 }
-#hymnDetail #hdPrevHymn{left:8px!important}
-#hymnDetail #hdNextHymn{right:8px!important}
-#hymnDetail .hd-hymn-nav button[disabled]{opacity:.35!important;display:none!important}
+#hymnDetail .hd-hymn-nav button[disabled]{display:none!important}
+
+/* O título recebe um pouco de respiro após as setas */
+#hymnDetail .hd-hymn-nav + .hd-media-title{
+  margin-top:2px!important;
+}
 
 @media(max-width:600px){
-  #hymnDetail .hd-v725-grid{
-    grid-template-columns:minmax(0,1fr) 82px;
+  #hymnDetail .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 78px;
     gap:8px;
   }
-  #hymnDetail .hd-v725-top{
-    grid-template-columns:24px 58px 24px minmax(70px,84px) minmax(58px,68px);
-    gap:5px;
+  #hymnDetail .hd-v728-controls{gap:7px}
+  #hymnDetail .hd-v728-primary{
+    grid-template-columns:minmax(120px,1fr) minmax(68px,78px);
+    gap:6px;
   }
-  #hymnDetail .hd-v725-btn{width:24px!important;height:26px!important}
-  #hymnDetail .hd-v725-bpm{height:26px!important}
-  #hymnDetail .hd-v725-bpm input{width:31px!important}
-  #hymnDetail .hd-v725-start,
-  #hymnDetail .hd-v725-close{height:26px!important;padding:0 6px!important;font-size:.53rem!important}
-  #hymnDetail .hd-v725-volume{max-width:210px!important;gap:6px!important}
-  #hymnDetail .hd-v725-volume input{width:136px!important;flex-basis:136px!important}
-  #hymnDetail .hd-v725-pulse span{font-size:.58rem!important}
-  #hymnDetail .hd-v725-pulse button,
-  #hymnDetail .hd-v725-reset{height:26px!important;padding:0 8px!important;font-size:.52rem!important}
-  #hymnDetail .hd-v725-chip{font-size:.50rem!important;min-height:20px!important;padding:2px 7px!important}
+  #hymnDetail .hd-v728-bpm-group{
+    grid-template-columns:27px minmax(56px,1fr) 27px;
+    gap:4px;
+  }
+  #hymnDetail .hd-v728-step{width:27px;height:28px}
+  #hymnDetail .hd-v728-bpm{height:28px}
+  #hymnDetail .hd-v728-bpm input{width:34px}
+  #hymnDetail .hd-v728-start{height:29px;font-size:.58rem!important;padding:0 6px!important}
+  #hymnDetail .hd-v728-pulse-wrap{gap:5px}
+  #hymnDetail .hd-v728-pulse{gap:4px}
+  #hymnDetail .hd-v728-pulse button{min-height:26px;padding:3px 5px!important;font-size:.50rem!important}
+  #hymnDetail .hd-v728-reset{height:26px;padding:0 7px!important;font-size:.50rem!important}
+  #hymnDetail .hd-v728-tertiary{
+    grid-template-columns:minmax(0,180px) minmax(0,1fr);
+    gap:7px;
+  }
+  #hymnDetail .hd-v728-volume{gap:5px}
+  #hymnDetail .hd-v728-range{font-size:.49rem}
   #hymnDetail .hd-v725-thumb img{height:50px!important}
-  #hymnDetail .hd-hymn-nav button{width:34px!important;height:34px!important;min-height:34px!important;top:-6px!important}
+  #hymnDetail .hd-hymn-nav{gap:82px!important}
 }
 
 @media(max-width:420px){
-  #hymnDetail .hd-v725-grid{grid-template-columns:minmax(0,1fr) 72px;gap:6px}
-  #hymnDetail .hd-v725-top{
-    grid-template-columns:22px 54px 22px minmax(62px,74px) minmax(52px,60px);
+  #hymnDetail .hd-metronome-panel{padding:7px 6px 7px!important}
+  #hymnDetail .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 70px;
+    gap:6px;
+  }
+  #hymnDetail .hd-v728-primary{
+    grid-template-columns:minmax(105px,1fr) 64px;
+    gap:5px;
+  }
+  #hymnDetail .hd-v728-bpm-group{
+    grid-template-columns:24px minmax(52px,1fr) 24px;
+    gap:3px;
+  }
+  #hymnDetail .hd-v728-step{width:24px;height:26px;font-size:14px!important}
+  #hymnDetail .hd-v728-bpm{height:26px}
+  #hymnDetail .hd-v728-bpm input{width:31px;font-size:.61rem!important}
+  #hymnDetail .hd-v728-start{height:27px;font-size:.52rem!important;padding:0 4px!important}
+  #hymnDetail .hd-v728-secondary{gap:5px}
+  #hymnDetail .hd-v728-pulse-wrap{
+    grid-template-columns:1fr;
+    gap:3px;
+  }
+  #hymnDetail .hd-v728-label{display:none}
+  #hymnDetail .hd-v728-pulse button{font-size:.47rem!important;padding:3px 4px!important}
+  #hymnDetail .hd-v728-reset{font-size:.47rem!important;padding:0 5px!important}
+  #hymnDetail .hd-v728-tertiary{
+    grid-template-columns:minmax(0,145px) minmax(0,1fr);
+    gap:5px;
+  }
+  #hymnDetail .hd-v728-volume{
+    grid-template-columns:auto minmax(60px,1fr) 30px;
     gap:4px;
   }
-  #hymnDetail .hd-v725-btn{width:22px!important;height:24px!important;font-size:13px!important}
-  #hymnDetail .hd-v725-bpm{height:24px!important}
-  #hymnDetail .hd-v725-bpm input{width:28px!important;font-size:.58rem!important}
-  #hymnDetail .hd-v725-start,
-  #hymnDetail .hd-v725-close{height:24px!important;padding:0 5px!important;font-size:.48rem!important}
-  #hymnDetail .hd-v725-volume{max-width:176px!important;gap:5px!important}
-  #hymnDetail .hd-v725-volume input{width:112px!important;flex-basis:112px!important}
-  #hymnDetail .hd-v725-pulse span{font-size:.54rem!important}
-  #hymnDetail .hd-v725-pulse{gap:4px!important}
-  #hymnDetail .hd-v725-pulse button,
-  #hymnDetail .hd-v725-reset{height:24px!important;padding:0 6px!important;font-size:.47rem!important}
-  #hymnDetail .hd-v725-meta{gap:4px!important}
-  #hymnDetail .hd-v725-chip{font-size:.46rem!important;min-height:18px!important;padding:2px 6px!important}
-  #hymnDetail .hd-v725-thumb img{height:44px!important}
+  #hymnDetail .hd-v728-volume .vol-label{font-size:.49rem}
+  #hymnDetail .hd-v728-range{
+    white-space:normal;
+    line-height:1.1;
+    font-size:.46rem;
+  }
+  #hymnDetail .hd-v725-thumb img{height:45px!important}
+  #hymnDetail .hd-v725-thumb span{font-size:.46rem!important;padding:3px!important}
+  #hymnDetail .hd-hymn-nav{
+    gap:72px!important;
+    height:30px!important;
+  }
+  #hymnDetail .hd-hymn-nav button{
+    width:32px!important;
+    min-width:32px!important;
+    height:32px!important;
+    min-height:32px!important;
+    font-size:.98rem!important;
+  }
 }
 </style>
 
@@ -5838,6 +6005,7 @@ function openHymnDetail(h,cat){
 
    const metronomeHtml=media.metronomo ? buildHymnMetronomeHtml(media.metronomo) : '';
    area.innerHTML=
+     buildHymnNavHtml(h)+
      '<div class="hd-media-title"><span class="hd-note">♫</span> Mídias do '+(String(h.num).startsWith('Coro ')?'Coro':'Hino')+'</div>'+
      metronomeHtml+
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
@@ -5845,14 +6013,13 @@ function openHymnDetail(h,cat){
      '<div class="hd-slot" id="hdAudio"></div>'+
      '<div class="hd-slot" id="hdSpotify"></div>'+
      '<div class="hd-slot" id="hdYoutube"></div>'+
-     '<div class="hd-links" id="hdLinks"></div>'+
-     buildHymnNavHtml(h);
+     '<div class="hd-links" id="hdLinks"></div>';
 
    area.querySelectorAll('.hd-play:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
    if(media.metronomo) initHymnMetronomeUI(media.metronomo);
    initHymnNav(h);
  }else{
-   area.innerHTML='<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>'+buildHymnNavHtml(h);
+   area.innerHTML=buildHymnNavHtml(h)+'<div class="hd-media-title">♫ Ouvir Hino ♫</div><div class="hd-unavailable">Este hino ainda não possui mídia cadastrada neste protótipo. Neste piloto, a mídia está configurada para o Hino 45 e para o Coro 1 (teste técnico).</div>';
    initHymnNav(h);
  }
  modal.classList.remove('media-open');
@@ -8127,6 +8294,8 @@ body:not(.index-mode):not(.welcome-mode){
     const meter=cfg.compasso||'';
     const key=cfg.tonalidade||'';
     const volume=Number(cfg.volume??50);
+    const min=Number(cfg.min||96);
+    const max=Number(cfg.max||120);
 
     return `
       <div class="hd-metronome" id="hdMetronome">
@@ -8137,44 +8306,46 @@ body:not(.index-mode):not(.welcome-mode){
             <strong>Metrônomo</strong>
             <small>${unit} = <span id="hdMetronomeSummaryBpm">${bpm}</span>${meter?' · '+meter:''}${key?' · '+key:''}</small>
           </span>
-          <span class="hd-metronome-arrow" aria-hidden="true">⌄</span>
+          <span class="hd-metronome-state" id="hdMetronomeState">Abrir</span>
         </button>
 
         <div class="hd-metronome-panel" id="hdMetronomePanel" hidden>
-          <div class="hd-v725-grid">
-            <div class="hd-v725-controls">
-              <div class="hd-v725-top">
-                <button type="button" class="hd-v725-btn" id="hdMetroMinus">−</button>
-                <label class="hd-v725-bpm" title="Toque no número para digitar o BPM">
-                  <b>${unit}</b>
-                  <input id="hdMetroBpmInput" type="number" inputmode="numeric"
-                    min="${Number(cfg.min||96)}" max="${Number(cfg.max||120)}" value="${bpm}">
-                </label>
-                <button type="button" class="hd-v725-btn" id="hdMetroPlus">+</button>
-                <button type="button" class="hd-v725-start" id="hdMetroStart">▶ Iniciar</button>
-                <button type="button" class="hd-v725-close" id="hdMetroClose">Fechar</button>
-              </div>
+          <div class="hd-v728-grid">
+            <div class="hd-v728-controls">
 
-              <label class="hd-v725-volume">
-                <span>🔊</span>
-                <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
-                <span id="hdMetroVolumeText">${volume}%</span>
-              </label>
-
-              <div class="hd-v725-mid">
-                <div class="hd-v725-pulse">
-                  <span>Pulso:</span>
-                  <button type="button" id="hdPulseSix" data-mode="six" class="is-active">♪ 6 tempos</button>
-                  <button type="button" id="hdPulseTwo" data-mode="two">♩. 2 puls.</button>
+              <div class="hd-v728-primary">
+                <div class="hd-v728-bpm-group">
+                  <button type="button" class="hd-v728-step" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
+                  <label class="hd-v728-bpm" title="Toque no número para digitar o BPM">
+                    <b>${unit}</b>
+                    <input id="hdMetroBpmInput" type="number" inputmode="numeric"
+                      min="${min}" max="${max}" value="${bpm}" aria-label="Andamento em BPM">
+                  </label>
+                  <button type="button" class="hd-v728-step" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
                 </div>
-                <button type="button" class="hd-v725-reset" id="hdMetroReset">↺ Padrão</button>
+                <button type="button" class="hd-v728-start" id="hdMetroStart">▶ Iniciar</button>
               </div>
 
-              <div class="hd-v725-meta">
-                ${meter?`<span class="hd-v725-chip">${meter}</span>`:''}
-                ${key?`<span class="hd-v725-chip">${key}</span>`:''}
-                <span class="hd-v725-chip">${unit} ${Number(cfg.min||96)}–${Number(cfg.max||120)}</span>
+              <div class="hd-v728-secondary">
+                <div class="hd-v728-pulse-wrap">
+                  <span class="hd-v728-label">Pulso</span>
+                  <div class="hd-v728-pulse">
+                    <button type="button" id="hdPulseSix" data-mode="six" class="is-active">♪ 6 tempos</button>
+                    <button type="button" id="hdPulseTwo" data-mode="two">♩. 2 pulsações</button>
+                  </div>
+                </div>
+                <button type="button" class="hd-v728-reset" id="hdMetroReset">↺ Padrão</button>
               </div>
+
+              <div class="hd-v728-tertiary">
+                <label class="hd-v728-volume">
+                  <span class="vol-label">🔊 Volume</span>
+                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
+                  <span id="hdMetroVolumeText">${volume}%</span>
+                </label>
+                <div class="hd-v728-range">Faixa de estudo: ${unit} = ${min}–${max}</div>
+              </div>
+
             </div>
 
             <div class="hd-v725-thumb" id="hdScoreThumb" role="button" tabindex="0"
@@ -8195,9 +8366,11 @@ body:not(.index-mode):not(.welcome-mode){
     const next=n<140?n+1:null;
     return `
       <div class="hd-hymn-nav" aria-label="Navegação entre hinos">
-        <button type="button" class="hd-nav-fab prev" id="hdPrevHymn" ${prev?`data-target="${prev}" title="Hino ${prev}" aria-label="Hino anterior, ${prev}"`:'disabled'}>&lt;</button>
+        <button type="button" id="hdPrevHymn"
+          ${prev?`data-target="${prev}" title="Hino anterior: ${prev}" aria-label="Hino anterior: ${prev}"`:'disabled'}>&lt;</button>
         <div class="center" aria-hidden="true">${n} de 140</div>
-        <button type="button" class="hd-nav-fab next" id="hdNextHymn" ${next?`data-target="${next}" title="Hino ${next}" aria-label="Próximo hino, ${next}"`:'disabled'}>&gt;</button>
+        <button type="button" id="hdNextHymn"
+          ${next?`data-target="${next}" title="Próximo hino: ${next}" aria-label="Próximo hino: ${next}"`:'disabled'}>&gt;</button>
       </div>`;
   };
 
@@ -8323,15 +8496,19 @@ body:not(.index-mode):not(.welcome-mode){
     refresh();
   }
 
-  function closePanel(){
+  function setPanelOpen(open){
     const wrap=document.getElementById('hdMetronome');
     const panel=document.getElementById('hdMetronomePanel');
     const toggle=document.getElementById('hdMetronomeToggle');
+    const stateText=document.getElementById('hdMetronomeState');
     if(!wrap||!panel||!toggle)return;
-    wrap.classList.remove('is-open');
-    panel.hidden=true;
-    toggle.setAttribute('aria-expanded','false');
+    wrap.classList.toggle('is-open',open);
+    panel.hidden=!open;
+    toggle.setAttribute('aria-expanded',String(open));
+    if(stateText)stateText.textContent=open?'Fechar':'Abrir';
   }
+
+  function closePanel(){ setPanelOpen(false); }
 
   window.initHymnMetronomeUI=function(cfg){
     state.config=cfg||{};
@@ -8349,12 +8526,9 @@ body:not(.index-mode):not(.welcome-mode){
     const toggle=document.getElementById('hdMetronomeToggle');
 
     toggle?.addEventListener('click',()=>{
-      wrap?.classList.add('is-open');
-      panel.hidden=false;
-      toggle.setAttribute('aria-expanded','true');
+      const open=toggle.getAttribute('aria-expanded')!=='true';
+      setPanelOpen(open);
     });
-
-    document.getElementById('hdMetroClose')?.addEventListener('click',closePanel);
     document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(state.bpm-2));
     document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(state.bpm+2));
     document.getElementById('hdMetroStart')?.addEventListener('click',()=>state.running?stopHymnMetronome():start());
