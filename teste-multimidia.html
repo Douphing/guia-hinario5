@@ -1006,6 +1006,196 @@ body.score-full-open{overflow:hidden!important}
 }
 </style>
 
+
+<style id="v727-metronomo-refino-fino">
+/* Refinos finos pedidos pelo usuário */
+#hymnDetail .hd-v725-grid{
+  grid-template-columns:minmax(0,1fr) 96px;
+  gap:10px;
+  align-items:start;
+}
+#hymnDetail .hd-v725-controls{
+  gap:7px;
+}
+#hymnDetail .hd-v725-top{
+  grid-template-columns:28px 68px 28px minmax(84px,100px) minmax(68px,78px);
+  gap:6px;
+  justify-content:start;
+}
+#hymnDetail .hd-v725-btn,
+#hymnDetail .hd-v725-start,
+#hymnDetail .hd-v725-close,
+#hymnDetail .hd-v725-pulse button,
+#hymnDetail .hd-v725-reset{
+  border-radius:10px!important;
+}
+#hymnDetail .hd-v725-btn{width:28px!important;height:28px!important}
+#hymnDetail .hd-v725-bpm{
+  height:28px!important;
+  min-width:68px;
+}
+#hymnDetail .hd-v725-bpm input{width:36px!important}
+#hymnDetail .hd-v725-start,
+#hymnDetail .hd-v725-close{height:28px!important;padding:0 8px!important;font-size:.58rem!important}
+
+/* Volume mais enxuto, sem a caixa branca vazia */
+#hymnDetail .hd-v725-volume{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:auto!important;
+  max-width:250px!important;
+  height:auto!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  justify-self:start!important;
+}
+#hymnDetail .hd-v725-volume input{
+  width:170px!important;
+  flex:0 0 170px!important;
+  accent-color:#b18438;
+}
+#hymnDetail .hd-v725-volume span:first-child{
+  min-width:auto!important;
+}
+#hymnDetail #hdMetroVolumeText{
+  min-width:34px;
+  text-align:right;
+}
+
+#hymnDetail .hd-v725-mid{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+}
+#hymnDetail .hd-v725-pulse{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  flex-wrap:wrap!important;
+}
+#hymnDetail .hd-v725-pulse span{font-size:.64rem!important}
+#hymnDetail .hd-v725-pulse button{
+  height:28px!important;
+  padding:0 10px!important;
+  font-size:.57rem!important;
+}
+#hymnDetail .hd-v725-reset{
+  height:28px!important;
+  padding:0 10px!important;
+  font-size:.56rem!important;
+}
+#hymnDetail .hd-v725-meta{
+  gap:6px!important;
+}
+#hymnDetail .hd-v725-chip{
+  min-height:22px!important;
+  padding:3px 8px!important;
+  font-size:.54rem!important;
+}
+#hymnDetail .hd-v725-thumb{
+  align-self:start!important;
+  min-height:auto!important;
+  border-radius:10px!important;
+}
+#hymnDetail .hd-v725-thumb img{
+  height:58px!important;
+}
+#hymnDetail .hd-v725-thumb span{
+  font-size:.52rem!important;
+  padding:4px 4px!important;
+}
+
+/* Botões de navegação discretos e flutuantes */
+#hymnDetail #hdMediaArea{position:relative!important}
+#hymnDetail .hd-hymn-nav{
+  position:sticky!important;
+  bottom:12px!important;
+  z-index:8!important;
+  height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  pointer-events:none!important;
+}
+#hymnDetail .hd-hymn-nav .center{display:none!important}
+#hymnDetail .hd-hymn-nav button{
+  position:absolute!important;
+  top:-8px!important;
+  width:36px!important;
+  height:36px!important;
+  min-height:36px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:rgba(255,253,248,.96)!important;
+  color:#173149!important;
+  box-shadow:0 8px 18px rgba(17,30,45,.16)!important;
+  font:800 1rem/1 Arial,sans-serif!important;
+  pointer-events:auto!important;
+}
+#hymnDetail .hd-hymn-nav button:hover,
+#hymnDetail .hd-hymn-nav button:focus-visible{
+  background:#fff!important;
+  outline:2px solid rgba(177,132,56,.28)!important;
+  outline-offset:1px!important;
+}
+#hymnDetail #hdPrevHymn{left:8px!important}
+#hymnDetail #hdNextHymn{right:8px!important}
+#hymnDetail .hd-hymn-nav button[disabled]{opacity:.35!important;display:none!important}
+
+@media(max-width:600px){
+  #hymnDetail .hd-v725-grid{
+    grid-template-columns:minmax(0,1fr) 82px;
+    gap:8px;
+  }
+  #hymnDetail .hd-v725-top{
+    grid-template-columns:24px 58px 24px minmax(70px,84px) minmax(58px,68px);
+    gap:5px;
+  }
+  #hymnDetail .hd-v725-btn{width:24px!important;height:26px!important}
+  #hymnDetail .hd-v725-bpm{height:26px!important}
+  #hymnDetail .hd-v725-bpm input{width:31px!important}
+  #hymnDetail .hd-v725-start,
+  #hymnDetail .hd-v725-close{height:26px!important;padding:0 6px!important;font-size:.53rem!important}
+  #hymnDetail .hd-v725-volume{max-width:210px!important;gap:6px!important}
+  #hymnDetail .hd-v725-volume input{width:136px!important;flex-basis:136px!important}
+  #hymnDetail .hd-v725-pulse span{font-size:.58rem!important}
+  #hymnDetail .hd-v725-pulse button,
+  #hymnDetail .hd-v725-reset{height:26px!important;padding:0 8px!important;font-size:.52rem!important}
+  #hymnDetail .hd-v725-chip{font-size:.50rem!important;min-height:20px!important;padding:2px 7px!important}
+  #hymnDetail .hd-v725-thumb img{height:50px!important}
+  #hymnDetail .hd-hymn-nav button{width:34px!important;height:34px!important;min-height:34px!important;top:-6px!important}
+}
+
+@media(max-width:420px){
+  #hymnDetail .hd-v725-grid{grid-template-columns:minmax(0,1fr) 72px;gap:6px}
+  #hymnDetail .hd-v725-top{
+    grid-template-columns:22px 54px 22px minmax(62px,74px) minmax(52px,60px);
+    gap:4px;
+  }
+  #hymnDetail .hd-v725-btn{width:22px!important;height:24px!important;font-size:13px!important}
+  #hymnDetail .hd-v725-bpm{height:24px!important}
+  #hymnDetail .hd-v725-bpm input{width:28px!important;font-size:.58rem!important}
+  #hymnDetail .hd-v725-start,
+  #hymnDetail .hd-v725-close{height:24px!important;padding:0 5px!important;font-size:.48rem!important}
+  #hymnDetail .hd-v725-volume{max-width:176px!important;gap:5px!important}
+  #hymnDetail .hd-v725-volume input{width:112px!important;flex-basis:112px!important}
+  #hymnDetail .hd-v725-pulse span{font-size:.54rem!important}
+  #hymnDetail .hd-v725-pulse{gap:4px!important}
+  #hymnDetail .hd-v725-pulse button,
+  #hymnDetail .hd-v725-reset{height:24px!important;padding:0 6px!important;font-size:.47rem!important}
+  #hymnDetail .hd-v725-meta{gap:4px!important}
+  #hymnDetail .hd-v725-chip{font-size:.46rem!important;min-height:18px!important;padding:2px 6px!important}
+  #hymnDetail .hd-v725-thumb img{height:44px!important}
+}
+</style>
+
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -8004,10 +8194,10 @@ body:not(.index-mode):not(.welcome-mode){
     const prev=n>1?n-1:null;
     const next=n<140?n+1:null;
     return `
-      <div class="hd-hymn-nav">
-        <button type="button" id="hdPrevHymn" ${prev?`data-target="${prev}"`:'disabled'}>${prev?`← ${prev}`:'← anterior'}</button>
-        <div class="center">${n} de 140</div>
-        <button type="button" id="hdNextHymn" ${next?`data-target="${next}"`:'disabled'}>${next?`${next} →`:'próximo →'}</button>
+      <div class="hd-hymn-nav" aria-label="Navegação entre hinos">
+        <button type="button" class="hd-nav-fab prev" id="hdPrevHymn" ${prev?`data-target="${prev}" title="Hino ${prev}" aria-label="Hino anterior, ${prev}"`:'disabled'}>&lt;</button>
+        <div class="center" aria-hidden="true">${n} de 140</div>
+        <button type="button" class="hd-nav-fab next" id="hdNextHymn" ${next?`data-target="${next}" title="Hino ${next}" aria-label="Próximo hino, ${next}"`:'disabled'}>&gt;</button>
       </div>`;
   };
 
