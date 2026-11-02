@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.30 TESTE: correções funcionais e compactação do metrônomo no celular.
+- Base V7.29 preservada.
+- Corrigida atualização visual de 6 tempos / 2 pulsações.
+- Slider de volume ampliado na área útil e ajustado para responder até 0–100% no celular.
+- Faixa de estudo simplificada para uma única linha.
+- Painel do metrônomo reduzido em altura e espaçamento.
+-->
+
 <!-- V7.29 TESTE: ajuste fino da navegação no celular.
 - Base V7.28 preservada.
 - Setas anterior/próximo mantidas flutuantes.
@@ -1400,6 +1408,219 @@ body.score-full-open{overflow:hidden!important}
   }
   #hymnDetail .hd-hymn-nav + .hd-media-title{
     margin-top:7px!important;
+  }
+}
+</style>
+
+
+<style id="v730-metronomo-mobile-fix">
+/* Painel menor */
+#hymnDetail .hd-metronome-panel{
+  padding:7px 8px 7px!important;
+}
+#hymnDetail .hd-v728-grid{
+  grid-template-columns:minmax(0,1fr) 76px!important;
+  gap:7px!important;
+}
+#hymnDetail .hd-v728-controls{
+  gap:6px!important;
+}
+#hymnDetail .hd-v728-primary{
+  grid-template-columns:minmax(118px,1fr) 74px!important;
+  gap:6px!important;
+}
+#hymnDetail .hd-v728-bpm-group{
+  grid-template-columns:26px minmax(58px,1fr) 26px!important;
+  gap:4px!important;
+}
+#hymnDetail .hd-v728-step{
+  width:26px!important;
+  height:27px!important;
+}
+#hymnDetail .hd-v728-bpm{
+  height:27px!important;
+}
+#hymnDetail .hd-v728-start{
+  height:28px!important;
+  padding:0 6px!important;
+  font-size:.56rem!important;
+}
+
+/* Pulso: estado ativo sempre visível */
+#hymnDetail .hd-v728-pulse{
+  gap:4px!important;
+}
+#hymnDetail .hd-v728-pulse button{
+  min-height:25px!important;
+  padding:3px 6px!important;
+  background:#fff!important;
+  border-color:#d4c29d!important;
+  color:#263746!important;
+}
+#hymnDetail .hd-v728-pulse button.is-active{
+  background:#263746!important;
+  border-color:#263746!important;
+  color:#fff!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)!important;
+}
+#hymnDetail .hd-v728-reset{
+  height:25px!important;
+  padding:0 7px!important;
+}
+
+/* Volume: ocupa melhor a largura útil */
+#hymnDetail .hd-v728-tertiary{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:7px!important;
+}
+#hymnDetail .hd-v728-volume{
+  grid-template-columns:auto minmax(105px,1fr) 32px!important;
+  gap:5px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+#hymnDetail .hd-v728-volume input[type="range"]{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  touch-action:manipulation!important;
+  accent-color:#b18438!important;
+}
+#hymnDetail .hd-v728-range{
+  white-space:nowrap!important;
+  text-align:right!important;
+  line-height:1!important;
+  font-size:.50rem!important;
+  color:#756b5d!important;
+}
+
+/* Miniatura mais compacta */
+#hymnDetail .hd-v725-thumb img{
+  height:45px!important;
+}
+#hymnDetail .hd-v725-thumb span{
+  padding:3px!important;
+  font-size:.46rem!important;
+}
+
+/* Celular */
+@media(max-width:600px){
+  #hymnDetail .hd-metronome-panel{
+    padding:6px 6px 6px!important;
+  }
+  #hymnDetail .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 68px!important;
+    gap:6px!important;
+  }
+  #hymnDetail .hd-v728-controls{
+    gap:5px!important;
+  }
+  #hymnDetail .hd-v728-primary{
+    grid-template-columns:minmax(108px,1fr) 66px!important;
+    gap:5px!important;
+  }
+  #hymnDetail .hd-v728-bpm-group{
+    grid-template-columns:24px minmax(54px,1fr) 24px!important;
+    gap:3px!important;
+  }
+  #hymnDetail .hd-v728-step{
+    width:24px!important;
+    height:25px!important;
+  }
+  #hymnDetail .hd-v728-bpm{
+    height:25px!important;
+  }
+  #hymnDetail .hd-v728-bpm input{
+    width:30px!important;
+    font-size:.60rem!important;
+  }
+  #hymnDetail .hd-v728-start{
+    height:26px!important;
+    font-size:.50rem!important;
+    padding:0 4px!important;
+  }
+
+  #hymnDetail .hd-v728-secondary{
+    gap:5px!important;
+  }
+  #hymnDetail .hd-v728-pulse-wrap{
+    gap:4px!important;
+  }
+  #hymnDetail .hd-v728-label{
+    font-size:.50rem!important;
+  }
+  #hymnDetail .hd-v728-pulse button{
+    min-height:24px!important;
+    padding:3px 4px!important;
+    font-size:.46rem!important;
+  }
+  #hymnDetail .hd-v728-reset{
+    height:24px!important;
+    padding:0 5px!important;
+    font-size:.46rem!important;
+  }
+
+  #hymnDetail .hd-v728-tertiary{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:5px!important;
+  }
+  #hymnDetail .hd-v728-volume{
+    grid-template-columns:auto minmax(90px,1fr) 30px!important;
+    gap:4px!important;
+  }
+  #hymnDetail .hd-v728-volume .vol-label{
+    font-size:.47rem!important;
+  }
+  #hymnDetail .hd-v728-range{
+    font-size:.45rem!important;
+  }
+  #hymnDetail .hd-v725-thumb img{
+    height:42px!important;
+  }
+}
+
+/* Celulares estreitos: mantém faixa sempre linear */
+@media(max-width:420px){
+  #hymnDetail .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 62px!important;
+    gap:5px!important;
+  }
+  #hymnDetail .hd-v728-primary{
+    grid-template-columns:minmax(102px,1fr) 61px!important;
+    gap:4px!important;
+  }
+  #hymnDetail .hd-v728-bpm-group{
+    grid-template-columns:22px minmax(50px,1fr) 22px!important;
+    gap:3px!important;
+  }
+  #hymnDetail .hd-v728-step{
+    width:22px!important;
+    height:24px!important;
+  }
+  #hymnDetail .hd-v728-bpm{
+    height:24px!important;
+  }
+  #hymnDetail .hd-v728-start{
+    height:25px!important;
+  }
+  #hymnDetail .hd-v728-pulse button{
+    font-size:.44rem!important;
+  }
+  #hymnDetail .hd-v728-tertiary{
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  #hymnDetail .hd-v728-volume{
+    grid-template-columns:auto minmax(82px,1fr) 28px!important;
+  }
+  #hymnDetail .hd-v728-range{
+    white-space:nowrap!important;
+    font-size:.43rem!important;
+  }
+  #hymnDetail .hd-v725-thumb img{
+    height:39px!important;
   }
 }
 </style>
@@ -8384,7 +8605,7 @@ body:not(.index-mode):not(.welcome-mode){
                   <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
                   <span id="hdMetroVolumeText">${volume}%</span>
                 </label>
-                <div class="hd-v728-range">Faixa de estudo: ${unit} = ${min}–${max}</div>
+                <div class="hd-v728-range">${unit} ${min}–${max}</div>
               </div>
 
             </div>
@@ -8489,7 +8710,7 @@ body:not(.index-mode):not(.welcome-mode){
   }
 
   function updatePulseButtons(){
-    document.querySelectorAll('#hymnDetail .hd-v725-pulse [data-mode]').forEach(btn=>{
+    document.querySelectorAll('#hymnDetail .hd-v728-pulse [data-mode]').forEach(btn=>{
       btn.classList.toggle('is-active',btn.dataset.mode===state.mode);
     });
   }
