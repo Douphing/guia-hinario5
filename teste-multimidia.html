@@ -1,4 +1,14 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.22 TESTE: refinamento visual do metrônomo simples no Hino 125.
+- Base V7.21 preservada.
+- Mantido o metrônomo recolhido por padrão.
+- Cabeçalho mantém andamento, compasso e tonalidade.
+- Removida a duplicidade visual de compasso e tonalidade na área expandida.
+- Mantida apenas a faixa de andamento abaixo dos controles.
+- Reduzidos espaços internos e margem até o Instrumental.
+- Volume padrão permanece 50% com ganho reforçado.
+-->
+
 <!-- V7.21 TESTE: retorno ao metrônomo simples.
 - Base V7.19 preservada integralmente.
 - A proposta V7.20 com Instrumental + Metrônomo, Partitura e navegação adicional foi descartada.
@@ -660,6 +670,7 @@ REGRA CONSOLIDADA:
   }
 }
 </style>
+\n<style id="v722-metronomo-refino">\n#hymnDetail .hd-metronome{margin:2px 0 4px!important;}\n#hymnDetail .hd-metronome-toggle{min-height:34px!important;padding:5px 8px!important;}\n#hymnDetail .hd-metronome-panel{padding:7px 8px 7px!important;}\n#hymnDetail .hd-metronome-volume{margin-top:6px!important;}\n#hymnDetail .hd-metronome-mode{margin-top:6px!important;}\n#hymnDetail .hd-metronome-meta{margin-top:5px!important;}\n#hymnDetail .hd-metronome-footer{margin-top:5px!important;}\n#hymnDetail .hd-media-instrumental{margin-top:2px!important;}\n#hymnDetail .hd-metronome-chip{background:#f8f5ed!important;color:#6d655b!important;border-color:#ded4c0!important;}\n@media(max-width:520px){#hymnDetail .hd-metronome-panel{padding:6px 7px 7px!important;}}\n</style>\n
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -7620,13 +7631,11 @@ body:not(.index-mode):not(.welcome-mode){
           </div>
 
           <div class="hd-metronome-meta">
-            ${meter?`<span class="hd-metronome-chip">${meter}</span>`:''}
-            ${key?`<span class="hd-metronome-chip">${key}</span>`:''}
-            <span class="hd-metronome-chip">${unit} ${min}–${max}</span>
+            <span class="hd-metronome-chip">Faixa: ${unit} = ${min}–${max}</span>
           </div>
 
           <div class="hd-metronome-footer">
-            <span>50% já usa ganho reforçado</span>
+            <span>50% = volume reforçado</span>
             <button type="button" class="hd-metronome-reset" id="hdMetroReset">Restaurar ${bpm}</button>
           </div>
         </div>
