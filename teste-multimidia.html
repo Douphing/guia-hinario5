@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.23 TESTE: metrônomo sem expansão vertical.
+- Base V7.22 preservada.
+- Ao abrir o metrônomo, a própria barra se transforma nos controles.
+- Não cria painel abaixo, não empurra mídias externas e não aumenta a altura do modal.
+- Spotify, YouTube e YouTube Music permanecem visíveis.
+- Volume é ajustado na mesma barra, sem abrir nova área.
+- Piloto permanece no Hino 125.
+-->
+
 <!-- V7.22 TESTE: refinamento visual do metrônomo simples no Hino 125.
 - Base V7.21 preservada.
 - Mantido o metrônomo recolhido por padrão.
@@ -670,7 +679,144 @@ REGRA CONSOLIDADA:
   }
 }
 </style>
-\n<style id="v722-metronomo-refino">\n#hymnDetail .hd-metronome{margin:2px 0 4px!important;}\n#hymnDetail .hd-metronome-toggle{min-height:34px!important;padding:5px 8px!important;}\n#hymnDetail .hd-metronome-panel{padding:7px 8px 7px!important;}\n#hymnDetail .hd-metronome-volume{margin-top:6px!important;}\n#hymnDetail .hd-metronome-mode{margin-top:6px!important;}\n#hymnDetail .hd-metronome-meta{margin-top:5px!important;}\n#hymnDetail .hd-metronome-footer{margin-top:5px!important;}\n#hymnDetail .hd-media-instrumental{margin-top:2px!important;}\n#hymnDetail .hd-metronome-chip{background:#f8f5ed!important;color:#6d655b!important;border-color:#ded4c0!important;}\n@media(max-width:520px){#hymnDetail .hd-metronome-panel{padding:6px 7px 7px!important;}}\n</style>\n
+\n\n
+
+<style id="v723-metronomo-inline-bar">
+#hymnDetail .hd-metronome{
+  width:100%!important;
+  margin:2px 0 5px!important;
+  min-height:36px!important;
+  border:1px solid #dfd2b7!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,#fffdf8,#f7f0e2)!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+#hymnDetail .hd-metronome-toggle{
+  width:100%!important;
+  min-height:36px!important;
+  height:36px!important;
+  border:0!important;
+  background:transparent!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:5px 9px!important;
+  color:#263746!important;
+  box-shadow:none!important;
+}
+#hymnDetail .hd-metronome-icon{
+  width:24px!important;height:24px!important;border-radius:7px!important;
+  display:grid!important;place-items:center!important;
+  background:#b18438!important;color:#fff!important;
+  font:800 15px/1 Georgia,serif!important;
+}
+#hymnDetail .hd-metronome-summary{min-width:0!important;text-align:left!important}
+#hymnDetail .hd-metronome-summary strong{
+  display:block!important;font:800 .73rem/1.05 Arial,sans-serif!important;color:#263746!important
+}
+#hymnDetail .hd-metronome-summary small{
+  display:block!important;margin-top:2px!important;color:#756b5d!important;
+  font:700 .58rem/1.1 Arial,sans-serif!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
+}
+#hymnDetail .hd-metronome-arrow{color:#9a7228!important;font:800 1rem/1 Arial,sans-serif!important}
+
+#hymnDetail .hd-metronome-panel{
+  display:none!important;
+  min-height:36px!important;
+  height:36px!important;
+  padding:4px 5px!important;
+  border:0!important;
+  background:transparent!important;
+}
+#hymnDetail .hd-metronome.is-open .hd-metronome-toggle{display:none!important}
+#hymnDetail .hd-metronome.is-open .hd-metronome-panel{
+  display:grid!important;
+  grid-template-columns:26px minmax(48px,62px) 26px minmax(58px,72px) minmax(68px,86px) minmax(50px,64px) 26px!important;
+  gap:4px!important;
+  align-items:center!important;
+}
+
+#hymnDetail .hd-metronome-panel[hidden]{display:none!important}
+#hymnDetail .hd-metronome.is-open .hd-metronome-panel[hidden]{display:none!important}
+
+#hymnDetail .hd-v723-btn,
+#hymnDetail .hd-v723-mode,
+#hymnDetail .hd-v723-close,
+#hymnDetail .hd-v723-volume-toggle{
+  height:28px!important;
+  min-width:0!important;
+  padding:0 5px!important;
+  border:1px solid #d4c29d!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  color:#263746!important;
+  box-shadow:none!important;
+  font:800 .62rem/1 Arial,sans-serif!important;
+  white-space:nowrap!important;
+}
+#hymnDetail .hd-v723-bpm{
+  height:28px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;gap:3px!important;
+  border:1px solid #dfd2b7!important;border-radius:8px!important;
+  background:#f8f3e8!important;color:#263746!important;
+  font:800 .68rem/1 Arial,sans-serif!important;
+}
+#hymnDetail .hd-v723-bpm b{color:#9a7228!important;font-size:.83rem!important}
+#hymnDetail .hd-v723-start{
+  background:#b18438!important;border-color:#a2762f!important;color:#fff!important;
+}
+#hymnDetail .hd-v723-start.is-running{
+  background:#30465d!important;border-color:#30465d!important
+}
+#hymnDetail .hd-v723-mode{
+  background:#fffaf0!important;
+}
+#hymnDetail .hd-v723-mode[data-current="two"]{
+  background:#263746!important;border-color:#263746!important;color:#fff!important
+}
+#hymnDetail .hd-v723-volume-toggle{
+  color:#173149!important;font-size:.58rem!important
+}
+#hymnDetail .hd-v723-close{
+  width:26px!important;padding:0!important;font-size:.85rem!important;color:#756b5d!important
+}
+
+/* volume mode replaces the control row, same height */
+#hymnDetail .hd-v723-volume-row{
+  display:none!important;
+  grid-column:1 / -1!important;
+  grid-template-columns:auto minmax(0,1fr) 38px 30px!important;
+  gap:6px!important;align-items:center!important;
+  height:28px!important;padding:0 2px!important;
+}
+#hymnDetail .hd-metronome.volume-mode .hd-v723-main-controls{display:none!important}
+#hymnDetail .hd-metronome.volume-mode .hd-v723-volume-row{display:grid!important}
+#hymnDetail .hd-v723-volume-row input{width:100%!important;accent-color:#b18438!important}
+#hymnDetail .hd-v723-volume-label{
+  color:#665d51!important;font:700 .60rem/1 Arial,sans-serif!important;white-space:nowrap!important
+}
+#hymnDetail .hd-v723-volume-value{
+  color:#665d51!important;font:800 .60rem/1 Arial,sans-serif!important;text-align:center!important
+}
+
+@media(max-width:420px){
+  #hymnDetail .hd-metronome.is-open .hd-metronome-panel{
+    grid-template-columns:24px minmax(44px,54px) 24px minmax(52px,62px) minmax(58px,72px) minmax(46px,56px) 24px!important;
+    gap:3px!important;
+    padding:4px!important;
+  }
+  #hymnDetail .hd-v723-btn,
+  #hymnDetail .hd-v723-mode,
+  #hymnDetail .hd-v723-volume-toggle{
+    padding:0 3px!important;font-size:.55rem!important
+  }
+  #hymnDetail .hd-v723-bpm{font-size:.61rem!important}
+}
+</style>
+
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -7578,12 +7724,12 @@ body:not(.index-mode):not(.welcome-mode){
 })();
 </script>
 
-<script id="v718-metronomo-engine">
+
+<script id="v723-metronomo-engine">
 (function(){
   const state={
     ctx:null,timer:null,running:false,nextTime:0,beat:0,
-    bpm:108,defaultBpm:108,min:96,max:120,
-    volumeUI:50,mode:'six',config:null
+    bpm:108,defaultBpm:108,min:96,max:120,volumeUI:50,mode:'six',config:null
   };
 
   function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -7593,8 +7739,6 @@ body:not(.index-mode):not(.welcome-mode){
     const unit=cfg.unidadeSimbolo||'♪';
     const meter=cfg.compasso||'';
     const key=cfg.tonalidade||'';
-    const min=Number(cfg.min||bpm);
-    const max=Number(cfg.max||bpm);
     const volume=Number(cfg.volume??50);
 
     return `
@@ -7610,115 +7754,79 @@ body:not(.index-mode):not(.welcome-mode){
         </button>
 
         <div class="hd-metronome-panel" id="hdMetronomePanel" hidden>
-          <div class="hd-metronome-main">
-            <div class="hd-metronome-bpm">
-              <button type="button" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
-              <div class="hd-metronome-value"><b>${unit}</b><span>=</span><span id="hdMetroBpm">${bpm}</span></div>
-              <button type="button" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
-            </div>
-            <button type="button" class="hd-metronome-start" id="hdMetroStart">▶ Iniciar</button>
+          <div class="hd-v723-main-controls" style="display:contents">
+            <button type="button" class="hd-v723-btn" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
+            <div class="hd-v723-bpm"><b>${unit}</b><span id="hdMetroBpm">${bpm}</span></div>
+            <button type="button" class="hd-v723-btn" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
+            <button type="button" class="hd-v723-btn hd-v723-start" id="hdMetroStart">▶ Iniciar</button>
+            <button type="button" class="hd-v723-mode" id="hdMetroMode" data-current="six">♪ 6 tempos</button>
+            <button type="button" class="hd-v723-volume-toggle" id="hdMetroVolumeToggle">🔊 ${volume}%</button>
+            <button type="button" class="hd-v723-close" id="hdMetroClose" aria-label="Fechar metrônomo">×</button>
           </div>
 
-          <label class="hd-metronome-volume">
-            <span>🔊 Volume</span>
-            <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do metrônomo">
-            <span id="hdMetroVolumeText">${volume}%</span>
-          </label>
-
-          <div class="hd-metronome-mode" role="group" aria-label="Modo de pulso">
-            <button type="button" data-metro-mode="six" class="is-active">♪ 6 tempos</button>
-            <button type="button" data-metro-mode="two">♩. 2 pulsações</button>
-          </div>
-
-          <div class="hd-metronome-meta">
-            <span class="hd-metronome-chip">Faixa: ${unit} = ${min}–${max}</span>
-          </div>
-
-          <div class="hd-metronome-footer">
-            <span>50% = volume reforçado</span>
-            <button type="button" class="hd-metronome-reset" id="hdMetroReset">Restaurar ${bpm}</button>
+          <div class="hd-v723-volume-row" id="hdMetroVolumeRow">
+            <span class="hd-v723-volume-label">🔊 Volume</span>
+            <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
+            <span class="hd-v723-volume-value" id="hdMetroVolumeText">${volume}%</span>
+            <button type="button" class="hd-v723-close" id="hdMetroVolumeBack" aria-label="Voltar">←</button>
           </div>
         </div>
       </div>`;
   };
 
   function getCtx(){
-    if(!state.ctx){
-      state.ctx=new (window.AudioContext||window.webkitAudioContext)();
-    }
+    if(!state.ctx) state.ctx=new (window.AudioContext||window.webkitAudioContext)();
     if(state.ctx.state==='suspended') state.ctx.resume();
     return state.ctx;
   }
 
-  // Curva de volume:
-  // 0% = silêncio
-  // 50% = já bem audível
-  // 100% = ganho forte, limitado por compressor
   function effectiveGain(){
     const v=clamp(state.volumeUI,0,100)/100;
     if(v<=0) return 0;
-    if(v<=.5){
-      return 0.12 + (v/.5)*0.68;   // 50% => 0.80
-    }
-    return 0.80 + ((v-.5)/.5)*0.75; // 100% => 1.55
+    if(v<=.5) return 0.14 + (v/.5)*0.76;
+    return 0.90 + ((v-.5)/.5)*0.82;
   }
 
   function clickAt(time,accent){
     const ctx=getCtx();
 
-    const compressor=ctx.createDynamicsCompressor();
-    compressor.threshold.setValueAtTime(-10,time);
-    compressor.knee.setValueAtTime(8,time);
-    compressor.ratio.setValueAtTime(5,time);
-    compressor.attack.setValueAtTime(.002,time);
-    compressor.release.setValueAtTime(.08,time);
-    compressor.connect(ctx.destination);
+    const comp=ctx.createDynamicsCompressor();
+    comp.threshold.setValueAtTime(-10,time);
+    comp.knee.setValueAtTime(8,time);
+    comp.ratio.setValueAtTime(5,time);
+    comp.attack.setValueAtTime(.002,time);
+    comp.release.setValueAtTime(.08,time);
+    comp.connect(ctx.destination);
 
     const master=ctx.createGain();
     master.gain.setValueAtTime(effectiveGain(),time);
-    master.connect(compressor);
+    master.connect(comp);
 
-    const osc1=ctx.createOscillator();
-    const g1=ctx.createGain();
-    osc1.type='square';
-    osc1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
-    const a1=accent===2?.95:accent===1?.72:.56;
-    g1.gain.setValueAtTime(a1,time);
+    const o1=ctx.createOscillator(), g1=ctx.createGain();
+    o1.type='square';
+    o1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
+    g1.gain.setValueAtTime(accent===2?.95:accent===1?.72:.56,time);
     g1.gain.exponentialRampToValueAtTime(.001,time+.06);
-    osc1.connect(g1); g1.connect(master);
-    osc1.start(time); osc1.stop(time+.065);
+    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.065);
 
-    const osc2=ctx.createOscillator();
-    const g2=ctx.createGain();
-    osc2.type='sine';
-    osc2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
-    const a2=accent===2?.40:accent===1?.28:.20;
-    g2.gain.setValueAtTime(a2,time);
+    const o2=ctx.createOscillator(), g2=ctx.createGain();
+    o2.type='sine';
+    o2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
+    g2.gain.setValueAtTime(accent===2?.40:accent===1?.28:.20,time);
     g2.gain.exponentialRampToValueAtTime(.001,time+.05);
-    osc2.connect(g2); g2.connect(master);
-    osc2.start(time); osc2.stop(time+.055);
+    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.055);
   }
 
-  function effectiveBpm(){
-    return state.mode==='two' ? state.bpm/3 : state.bpm;
-  }
-
-  function beatsPerMeasure(){
-    return state.mode==='two' ? 2 : 6;
-  }
+  function effectiveBpm(){return state.mode==='two'?state.bpm/3:state.bpm}
+  function beatsPerMeasure(){return state.mode==='two'?2:6}
 
   function schedule(){
     if(!state.running||!state.ctx)return;
-    const ctx=state.ctx;
-    const lookAhead=.11;
-
-    while(state.nextTime<ctx.currentTime+lookAhead){
-      let accent;
-      if(state.mode==='two'){
-        accent=state.beat===0?2:1;
-      }else{
-        accent=state.beat===0?2:(state.beat===3?1:0);
-      }
+    const ctx=state.ctx,look=.11;
+    while(state.nextTime<ctx.currentTime+look){
+      const accent=state.mode==='two'
+        ? (state.beat===0?2:1)
+        : (state.beat===0?2:(state.beat===3?1:0));
       clickAt(state.nextTime,accent);
       state.nextTime+=60/Math.max(1,effectiveBpm());
       state.beat=(state.beat+1)%beatsPerMeasure();
@@ -7729,7 +7837,9 @@ body:not(.index-mode):not(.welcome-mode){
     const bpm=document.getElementById('hdMetroBpm');
     const sum=document.getElementById('hdMetronomeSummaryBpm');
     const start=document.getElementById('hdMetroStart');
-    const vol=document.getElementById('hdMetroVolumeText');
+    const volText=document.getElementById('hdMetroVolumeText');
+    const volBtn=document.getElementById('hdMetroVolumeToggle');
+    const modeBtn=document.getElementById('hdMetroMode');
 
     if(bpm)bpm.textContent=String(state.bpm);
     if(sum)sum.textContent=String(state.bpm);
@@ -7737,91 +7847,86 @@ body:not(.index-mode):not(.welcome-mode){
       start.textContent=state.running?'■ Parar':'▶ Iniciar';
       start.classList.toggle('is-running',state.running);
     }
-    if(vol)vol.textContent=Math.round(state.volumeUI)+'%';
+    if(volText)volText.textContent=Math.round(state.volumeUI)+'%';
+    if(volBtn)volBtn.textContent='🔊 '+Math.round(state.volumeUI)+'%';
+    if(modeBtn){
+      modeBtn.dataset.current=state.mode;
+      modeBtn.textContent=state.mode==='two'?'♩. 2 puls.':'♪ 6 tempos';
+    }
   }
 
   window.stopHymnMetronome=function(){
-    if(state.timer){
-      clearInterval(state.timer);
-      state.timer=null;
-    }
-    state.running=false;
-    state.beat=0;
-    if(state.ctx) state.nextTime=state.ctx.currentTime+.05;
+    if(state.timer){clearInterval(state.timer);state.timer=null}
+    state.running=false;state.beat=0;
+    if(state.ctx)state.nextTime=state.ctx.currentTime+.05;
     refresh();
   };
 
   function start(){
     const ctx=getCtx();
-    state.running=true;
-    state.beat=0;
-    state.nextTime=ctx.currentTime+.06;
+    state.running=true;state.beat=0;state.nextTime=ctx.currentTime+.06;
     schedule();
     if(state.timer)clearInterval(state.timer);
     state.timer=setInterval(schedule,25);
     refresh();
   }
 
-  function setMode(mode){
-    state.mode=mode==='two'?'two':'six';
-    document.querySelectorAll('#hymnDetail [data-metro-mode]').forEach(btn=>{
-      btn.classList.toggle('is-active',btn.dataset.metroMode===state.mode);
-    });
-    if(state.running){
-      state.beat=0;
-      state.nextTime=getCtx().currentTime+.06;
-    }
-  }
-
-  function setBpm(value){
-    state.bpm=clamp(Math.round(Number(value)||state.defaultBpm),state.min,state.max);
+  function setBpm(v){
+    state.bpm=clamp(Math.round(Number(v)||state.defaultBpm),state.min,state.max);
     refresh();
   }
 
-  function openPanel(){
+  function closeBar(){
     const wrap=document.getElementById('hdMetronome');
     const panel=document.getElementById('hdMetronomePanel');
     const toggle=document.getElementById('hdMetronomeToggle');
-    const modal=document.getElementById('hymnDetail');
-    if(!wrap||!panel||!toggle||!modal)return;
-
-    const open=panel.hidden;
-    panel.hidden=!open;
-    wrap.classList.toggle('is-open',open);
-    modal.classList.toggle('metronome-open',open);
-    toggle.setAttribute('aria-expanded',String(open));
-
-    if(open){
-      setTimeout(()=>{
-        wrap.scrollIntoView({block:'nearest',behavior:'smooth'});
-      },40);
-    }
+    if(!wrap||!panel||!toggle)return;
+    wrap.classList.remove('is-open','volume-mode');
+    panel.hidden=true;
+    toggle.setAttribute('aria-expanded','false');
   }
 
   window.initHymnMetronomeUI=function(cfg){
-    state.config=cfg;
+    state.config=cfg||{};
     state.defaultBpm=Number(cfg.bpm||108);
     state.bpm=state.defaultBpm;
     state.min=Number(cfg.min||96);
     state.max=Number(cfg.max||120);
     state.volumeUI=clamp(Number(cfg.volume??50),0,100);
     state.mode='six';
-
     stopHymnMetronome();
 
-    document.getElementById('hdMetronomeToggle')?.addEventListener('click',openPanel);
+    const wrap=document.getElementById('hdMetronome');
+    const panel=document.getElementById('hdMetronomePanel');
+    const toggle=document.getElementById('hdMetronomeToggle');
+
+    toggle?.addEventListener('click',()=>{
+      wrap?.classList.add('is-open');
+      panel.hidden=false;
+      toggle.setAttribute('aria-expanded','true');
+    });
+
+    document.getElementById('hdMetroClose')?.addEventListener('click',closeBar);
     document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(state.bpm-2));
     document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(state.bpm+2));
-    document.getElementById('hdMetroReset')?.addEventListener('click',()=>setBpm(state.defaultBpm));
-    document.getElementById('hdMetroStart')?.addEventListener('click',()=>{
-      state.running?stopHymnMetronome():start();
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>state.running?stopHymnMetronome():start());
+
+    document.getElementById('hdMetroMode')?.addEventListener('click',()=>{
+      state.mode=state.mode==='two'?'six':'two';
+      state.beat=0;
+      if(state.running)state.nextTime=getCtx().currentTime+.06;
+      refresh();
+    });
+
+    document.getElementById('hdMetroVolumeToggle')?.addEventListener('click',()=>{
+      wrap?.classList.add('volume-mode');
+    });
+    document.getElementById('hdMetroVolumeBack')?.addEventListener('click',()=>{
+      wrap?.classList.remove('volume-mode');
     });
     document.getElementById('hdMetroVolume')?.addEventListener('input',e=>{
       state.volumeUI=clamp(Number(e.target.value),0,100);
       refresh();
-    });
-    document.querySelectorAll('#hymnDetail [data-metro-mode]').forEach(btn=>{
-      btn.addEventListener('click',()=>setMode(btn.dataset.metroMode));
     });
 
     refresh();
@@ -7831,16 +7936,17 @@ body:not(.index-mode):not(.welcome-mode){
     const modal=document.getElementById('hymnDetail');
     if(e.target?.id==='hdClose'||e.target===modal){
       stopHymnMetronome();
-      modal?.classList.remove('metronome-open');
+      closeBar();
     }
   },true);
 
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){
       stopHymnMetronome();
-      document.getElementById('hymnDetail')?.classList.remove('metronome-open');
+      closeBar();
     }
   });
 })();
 </script>
+
 </body></html>
