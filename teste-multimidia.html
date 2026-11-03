@@ -1,4 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.44.2 TESTE: navegação aprimorada no visualizador de partituras.
+- Em partituras multipágina, a roda do mouse percorre as páginas; Ctrl/Command + roda ajusta o zoom.
+- Teclas PageUp/PageDown, Home/End e setas percorrem partituras multipágina.
+- Falhas de carregamento de páginas exibem aviso legível, sem ocultar outras páginas.
+- Base V7.44.1 preservada fora do visualizador.
+-->
 <!-- V7.44.1 TESTE: correção do visualizador de partituras.
 - Zoom mínimo reduzido de 100% para 50%.
 - Botão “−” agora reduz para 75% e 50%.
@@ -1456,6 +1462,10 @@ body.score-full-open{overflow:hidden!important}
 }
 </style>
 
+<style id="v7442-partitura-feedback">
+#scoreFullscreen .score-page-unavailable{max-width:min(94vw,560px);margin:8px;padding:18px 14px;border:1px solid #e8c39c;border-radius:12px;background:#fff8ed;color:#583f2f;text-align:center;font:700 .87rem/1.45 Arial,sans-serif}
+#scoreFullscreen .score-page-unavailable[hidden],#scoreFullscreen .score-page[hidden]{display:none!important}
+</style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -11699,7 +11709,18 @@ body:not(.index-mode):not(.welcome-mode){
       img.src=src;
       img.alt=`${title||'Partitura'} — página ${i+1} de ${pages.length}`;
       img.draggable=false;
+      const unavailable=document.createElement('div');
+      unavailable.className='score-page-unavailable';
+      unavailable.hidden=true;
+      unavailable.setAttribute('role','status');
+      unavailable.textContent=`Não foi possível carregar a página ${i+1}. Confira a pasta assets/partituras/`;
+      img.addEventListener('error',()=>{
+        img.hidden=true;
+        unavailable.hidden=false;
+        apply();
+      },{once:true});
       block.appendChild(img);
+      block.appendChild(unavailable);
       wrap.appendChild(block);
     });
     viewer.multiPage=pages.length>1;
@@ -11715,7 +11736,9 @@ body:not(.index-mode):not(.welcome-mode){
     const fullTitle=box.querySelector('.score-full-title strong');
     const fullSmall=box.querySelector('.score-full-title small');
     if(fullTitle)fullTitle.textContent=title;
-    if(fullSmall)fullSmall.textContent=pages.length>1?`${pages.length} páginas · arraste para navegar · pinça para ampliar ou reduzir`:'Partitura · arraste · pinça para ampliar ou reduzir';
+    if(fullSmall)fullSmall.textContent=pages.length>1?`${pages.length} páginas · arraste ou role para navegar · pinça para zoom`:'Partitura · arraste · pinça para ampliar ou reduzir';
+    const hint=el('scoreHint');
+    if(hint)hint.textContent=pages.length>1?'Arraste ou use a roda do mouse para navegar · Ctrl + roda para zoom':'Arraste para navegar · pinça para ampliar ou reduzir';
     box.setAttribute('aria-label','Partitura ampliada de '+title);
     resetView();
     box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.classList.add('score-full-open');
@@ -11749,7 +11772,17 @@ body:not(.index-mode):not(.welcome-mode){
     el('scoreZoomIn')?.addEventListener('click',()=>zoomBy(.25));
     el('scoreZoomOut')?.addEventListener('click',()=>zoomBy(-.25));
     el('scoreZoomReset')?.addEventListener('click',resetView);
-    stage.addEventListener('wheel',e=>{e.preventDefault();zoomBy(e.deltaY<0?.18:-.18)},{passive:false});
+    stage.addEventListener('wheel',e=>{
+      e.preventDefault();
+      if(viewer.multiPage && !e.ctrlKey && !e.metaKey){
+        const factor=e.deltaMode===1?16:e.deltaMode===2?stage.clientHeight:1;
+        viewer.x-=e.deltaX*factor;
+        viewer.y-=e.deltaY*factor;
+        apply();
+      }else{
+        zoomBy(e.deltaY<0?.18:-.18);
+      }
+    },{passive:false});
     stage.addEventListener('pointerdown',e=>{
       e.preventDefault();
       stage.setPointerCapture?.(e.pointerId);viewer.pointers.set(e.pointerId,e);wrap.classList.add('is-dragging');
@@ -11776,7 +11809,23 @@ body:not(.index-mode):not(.welcome-mode){
     });
     function pointerEnd(e){viewer.pointers.delete(e.pointerId);if(viewer.pointers.size===0){viewer.dragStart=null;wrap.classList.remove('is-dragging')}else if(viewer.pointers.size===1){const p=[...viewer.pointers.values()][0];viewer.dragStart={px:p.clientX,py:p.clientY,x:viewer.x,y:viewer.y}}}
     stage.addEventListener('pointerup',pointerEnd);stage.addEventListener('pointercancel',pointerEnd);
-    document.addEventListener('keydown',e=>{if(!box.classList.contains('open'))return;if(e.key==='Escape')closeViewer();else if(e.key==='+')zoomBy(.25);else if(e.key==='-')zoomBy(-.25);else if(e.key==='0')resetView()});
+    document.addEventListener('keydown',e=>{
+      if(!box.classList.contains('open'))return;
+      if(e.key==='Escape'){closeViewer();return}
+      if(e.key==='+'||e.key==='='){e.preventDefault();zoomBy(.25);return}
+      if(e.key==='-'){e.preventDefault();zoomBy(-.25);return}
+      if(e.key==='0'){e.preventDefault();resetView();return}
+      if(!viewer.multiPage)return;
+      const step=Math.max(80,Math.round(stage.clientHeight*.75));
+      const moves={ArrowDown:70,ArrowUp:-70,PageDown:step,PageUp:-step};
+      if(Object.prototype.hasOwnProperty.call(moves,e.key)){
+        e.preventDefault();viewer.y-=moves[e.key];apply();
+      }else if(e.key==='Home'){
+        e.preventDefault();viewer.y=0;apply();
+      }else if(e.key==='End'){
+        e.preventDefault();viewer.y=-1e9;apply();
+      }
+    });
   }
   const originalInit=window.initHymnMetronomeUI;
   window.initHymnMetronomeUI=function(cfg){if(typeof originalInit==='function')originalInit(cfg);init()};
