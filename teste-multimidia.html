@@ -1,4 +1,15 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.35 TESTE: correção navegação + presença visual do Spotify.
+- Base V7.34 preservada.
+- Removido o contador central n/n da navegação entre hinos.
+- Mantidas somente as setas < e >.
+- Spotify passa a aparecer sempre nos Hinos 141–160:
+  * com ID direto: botão ativo e player normal;
+  * sem ID direto validado: botão visível, desativado, "ainda não disponível".
+- Nenhum fallback de busca automática foi criado.
+- Dados e mídias dos Hinos 1–140 não foram alterados.
+-->
+
 <!-- V7.34 TESTE: YouTube direto — Hinos 141–160.
 - Base V7.33 preservada.
 - IDs de YouTube fornecidos pelo usuário aplicados em 19/20 hinos.
@@ -1655,6 +1666,32 @@ body.score-full-open{overflow:hidden!important}
   #hymnDetail .hd-v725-thumb img{
     height:39px!important;
   }
+}
+</style>
+
+
+<style id="v735-nav-spotify-fix">
+/* V7.35: não deixa nenhum contador n/n ocupar espaço na navegação */
+#hymnDetail .hd-hymn-nav .center{
+  display:none!important;
+  width:0!important;
+  height:0!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:0!important;
+}
+#hymnDetail .hd-hymn-nav{
+  grid-template-columns:auto auto!important;
+}
+
+/* Spotify pendente continua visível sem simular uma mídia inexistente */
+#hymnDetail .hd-play.hd-media-pending{
+  opacity:.62!important;
+  filter:grayscale(.18);
+  cursor:not-allowed!important;
+}
+#hymnDetail .hd-play.hd-media-pending .brand.spotify{
+  opacity:.82;
 }
 </style>
 
@@ -4134,6 +4171,7 @@ const MULTIMIDIA={
 
  "141":{
   audio:"audio/hino-141.mp3?v=733",
+  spotifyPending:true,
   youtube:"tHpgdGGdA4M",
   youtubeOrigin:"https://www.youtube.com/watch?v=tHpgdGGdA4M",
   youtubeMusic:"ntixdKdlF6I",
@@ -4146,6 +4184,7 @@ const MULTIMIDIA={
  },
  "142":{
   audio:"audio/hino-142.mp3?v=733",
+  spotifyPending:true,
   youtube:"cih5DQGFZ_0",
   youtubeOrigin:"https://www.youtube.com/watch?v=cih5DQGFZ_0",
   youtubeMusic:"ntixdKdlF6I",
@@ -4188,6 +4227,7 @@ const MULTIMIDIA={
  },
  "145":{
   audio:"audio/hino-145.mp3?v=733",
+  spotifyPending:true,
   youtube:"A1y_oBP6mxA",
   youtubeOrigin:"https://www.youtube.com/watch?v=A1y_oBP6mxA",
   youtubeMusic:"ntixdKdlF6I",
@@ -4200,6 +4240,7 @@ const MULTIMIDIA={
  },
  "146":{
   audio:"audio/hino-146.mp3?v=733",
+  spotifyPending:true,
   youtube:"UItXNL_lz8A",
   youtubeOrigin:"https://www.youtube.com/watch?v=UItXNL_lz8A",
   youtubeMusic:"ntixdKdlF6I",
@@ -4227,6 +4268,7 @@ const MULTIMIDIA={
  },
  "148":{
   audio:"audio/hino-148.mp3?v=733",
+  spotifyPending:true,
   youtube:"6hpvibajkvQ",
   youtubeOrigin:"https://www.youtube.com/watch?v=6hpvibajkvQ",
   youtubeMusic:"ntixdKdlF6I",
@@ -4239,6 +4281,7 @@ const MULTIMIDIA={
  },
  "149":{
   audio:"audio/hino-149.mp3?v=733",
+  spotifyPending:true,
   youtubeMusic:"ntixdKdlF6I",
   youtubeMusicStart:1621,
   youtubeMusicEnd:1812,
@@ -4250,6 +4293,7 @@ const MULTIMIDIA={
  },
  "150":{
   audio:"audio/hino-150.mp3?v=733",
+  spotifyPending:true,
   youtube:"RRLbX-n3cxU",
   youtubeOrigin:"https://www.youtube.com/watch?v=RRLbX-n3cxU",
   youtubeMusic:"ntixdKdlF6I",
@@ -4261,6 +4305,7 @@ const MULTIMIDIA={
  },
  "151":{
   audio:"audio/hino-151.mp3?v=733",
+  spotifyPending:true,
   youtube:"tQUHdHs9Qi0",
   youtubeOrigin:"https://www.youtube.com/watch?v=tQUHdHs9Qi0",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4273,6 +4318,7 @@ const MULTIMIDIA={
  },
  "152":{
   audio:"audio/hino-152.mp3?v=733",
+  spotifyPending:true,
   youtube:"ZowthnnSa4M",
   youtubeOrigin:"https://www.youtube.com/watch?v=ZowthnnSa4M",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4285,6 +4331,7 @@ const MULTIMIDIA={
  },
  "153":{
   audio:"audio/hino-153.mp3?v=733",
+  spotifyPending:true,
   youtube:"Way-PkQCQlw",
   youtubeOrigin:"https://www.youtube.com/watch?v=Way-PkQCQlw",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4297,6 +4344,7 @@ const MULTIMIDIA={
  },
  "154":{
   audio:"audio/hino-154.mp3?v=733",
+  spotifyPending:true,
   youtube:"A7puwny5EZQ",
   youtubeOrigin:"https://www.youtube.com/watch?v=A7puwny5EZQ",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4309,6 +4357,7 @@ const MULTIMIDIA={
  },
  "155":{
   audio:"audio/hino-155.mp3?v=733",
+  spotifyPending:true,
   youtube:"BDabBy4Zlkc",
   youtubeOrigin:"https://www.youtube.com/watch?v=BDabBy4Zlkc",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4321,6 +4370,7 @@ const MULTIMIDIA={
  },
  "156":{
   audio:"audio/hino-156.mp3?v=733",
+  spotifyPending:true,
   youtube:"fvtKlkFU5Mo",
   youtubeOrigin:"https://www.youtube.com/watch?v=fvtKlkFU5Mo",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4333,6 +4383,7 @@ const MULTIMIDIA={
  },
  "157":{
   audio:"audio/hino-157.mp3?v=733",
+  spotifyPending:true,
   youtube:"ZJ_tFvwKYiA",
   youtubeOrigin:"https://www.youtube.com/watch?v=ZJ_tFvwKYiA",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4345,6 +4396,7 @@ const MULTIMIDIA={
  },
  "158":{
   audio:"audio/hino-158.mp3?v=733",
+  spotifyPending:true,
   youtube:"U1MWl3vR49U",
   youtubeOrigin:"https://www.youtube.com/watch?v=U1MWl3vR49U",
   youtubeMusic:"rDHTsO_1K-k",
@@ -4357,6 +4409,7 @@ const MULTIMIDIA={
  },
  "159":{
   audio:"audio/hino-159.mp3?v=733",
+  spotifyPending:true,
   youtube:"0at3MKqAgOs",
   youtubeOrigin:"https://www.youtube.com/watch?v=0at3MKqAgOs",
   youtubeMusic:"rDHTsO_1K-k",
@@ -6749,8 +6802,8 @@ function openHymnDetail(h,cat){
      : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
 
    const platformBtns=[];
-   if(media.spotify||media.spotifySearch){
-     const pending=!media.spotify && !!media.spotifySearch;
+   if(media.spotify||media.spotifySearch||media.spotifyPending){
+     const pending=!media.spotify && (!!media.spotifySearch||!!media.spotifyPending);
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
    if(media.youtube||media.youtubeSearch){
@@ -9127,7 +9180,6 @@ body:not(.index-mode):not(.welcome-mode){
       <div class="hd-hymn-nav" aria-label="Navegação entre hinos">
         <button type="button" id="hdPrevHymn"
           ${prev?`data-target="${prev}" title="Hino anterior: ${prev}" aria-label="Hino anterior: ${prev}"`:'disabled'}>&lt;</button>
-        <div class="center" aria-hidden="true">${n} de 160</div>
         <button type="button" id="hdNextHymn"
           ${next?`data-target="${next}" title="Próximo hino: ${next}" aria-label="Próximo hino: ${next}"`:'disabled'}>&gt;</button>
       </div>`;
