@@ -1,5 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.55 TESTE: janela única de vídeo agrupada, arrastável; sem controles soltos. Ocultar pausa vídeo. -->
+<!-- V7.56 TESTE: janela única de vídeo agrupada, arrastável; sem controles soltos. Ocultar pausa vídeo. -->
 <!-- V7.54 TESTE: plataformas mais finas, status de indisponibilidade compacto.
      Modo Próximo é o padrão; controle de sequência só aparece após abrir
      MP3, YouTube ou YouTube Music. Spotify permanece manual.
@@ -9026,16 +9026,16 @@ function loadHymnMedia(kind,media,button,automatico=false){
      source += (source.includes('?')?'&':'?')+'t='+start+'s';
    }
 
-   const isLocal=location.protocol==='file:';
+   const isLocal=!/^https?:$/.test(location.protocol);
 
    if(isLocal){
      // O YouTube bloqueia embeds sem HTTP Referer (comum ao abrir HTML por file://).
      // Em teste local, evita mostrar um player quebrado e mantém o link correto do Music.
      const aviso=document.createElement('div');
      aviso.className='hd-youtube-local-warning';
-     aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +'</strong>'
-       +'<span>O player incorporado não pode ser validado abrindo este HTML diretamente do computador.</span>'
-       +'<small>Teste o player no Guia publicado (https) ou use “Abrir na origem”.</small>';
+     aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +' — reprodução no Guia indisponível</strong>'
+       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.56 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
+       +'<small>Enquanto isso, use “Abrir na origem” para assistir diretamente na plataforma.</small>';
      yt.appendChild(aviso);
    }else{
      const f=document.createElement('iframe');
@@ -9069,7 +9069,13 @@ function loadHymnMedia(kind,media,button,automatico=false){
      novoIframe=f;fimTrecho=end;
    }
 
-   links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>';
+   links.innerHTML='<a href="'+source+'" target="_blank" rel="noopener">Abrir na origem ↗</a>'+
+     (!isLocal?'<button type="button" class="ga-float-inline" id="gaFloatFromModal" aria-label="Abrir vídeo em janela flutuante">▣ Janela flutuante</button>':'');
+   if(!isLocal){
+     document.getElementById('gaFloatFromModal')?.addEventListener('click',()=>{
+       window.GuiaPlayerPersistente?.minimizeVideo?.();
+     });
+   }
  }
  window.GuiaReproducaoContinua?.attach(kind,{audio:novoAudio,iframe:novoIframe,end:fimTrecho,automatico});
 }
@@ -12289,7 +12295,7 @@ body:not(.index-mode):not(.welcome-mode){
 </script>
 
 
-<style id="v755-player-agrupado">
+<style id="v756-player-agrupado">
 /* Mini-player MP3 da V7.50: mantido. */
 #gaMiniPlayer[hidden],#gaFloatingVideoBar[hidden]{display:none!important}
 #gaMiniPlayer{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
@@ -12393,7 +12399,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕</button>
 </div>
 
-<script id="v755-player-persistente">
+<script id="v756-player-persistente">
 (function(){
  'use strict';
  const el=id=>document.getElementById(id);
@@ -12495,7 +12501,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    if(!detail.classList.contains('open'))return false;
    const a=current();
    if(a.kind==='instrumental'&&a.audio){showMini();return true}
-   if(isVideo(a.kind)&&a.iframe&&location.protocol!=='file:'){showFloat();return true}
+   if(isVideo(a.kind)&&a.iframe&&/^https?:$/.test(location.protocol)){showFloat();return true}
    return false;
  }
  function reopen(){
@@ -12507,7 +12513,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    if(!wasHidden)return;
    const a=current();
    if(a.kind==='instrumental'&&a.audio)showMini();
-   else if(isVideo(a.kind)&&a.iframe&&location.protocol!=='file:')showFloat();
+   else if(isVideo(a.kind)&&a.iframe&&/^https?:$/.test(location.protocol))showFloat();
  }
  function toggleFloat(){
    if(!detail.classList.contains('ga-video-floating'))return;
@@ -12556,9 +12562,15 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  float?.addEventListener('pointerup',stopDrag);
  float?.addEventListener('pointercancel',stopDrag);
  window.addEventListener('resize',()=>{if(detail.classList.contains('ga-video-floating'))requestAnimationFrame(()=>positionCard());});
- window.GuiaPlayerPersistente={onModalClose,beforeStop,hideForSequence,
-   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden,collapsed:floatCollapsed,
-    grouped:float?.parentElement===card})};
+  function minimizeVideo(){
+    const a=current();
+    if(!detail.classList.contains('open')||!isVideo(a.kind)||!a.iframe||!/^https?:$/.test(location.protocol))return false;
+    showFloat();
+    return true;
+  }
+  window.GuiaPlayerPersistente={onModalClose,beforeStop,hideForSequence,minimizeVideo,
+    isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden,collapsed:floatCollapsed,
+     grouped:float?.parentElement===card})};
 })();
 </script>
 
@@ -12622,4 +12634,16 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 </style>
 
+<style id="v756-mobile-player-feedback">
+/* Link de origem mantido como solicitado; comando flutuante só aparece com vídeo disponível. */
+#hymnDetail #hdLinks:not(:empty){display:flex!important;justify-content:center!important;
+ align-items:center!important;gap:9px!important;flex-wrap:wrap!important;padding:4px 2px!important}
+#hymnDetail #hdLinks .ga-float-inline{display:inline-flex!important;align-items:center!important;
+ justify-content:center!important;min-height:28px!important;padding:4px 10px!important;
+ font:700 .68rem/1.2 Arial,sans-serif!important;border:1px solid #d4c29d!important;
+ border-radius:8px!important;background:#fffaf0!important;color:#263746!important;box-shadow:none!important}
+#hymnDetail .hd-youtube-local-warning{line-height:1.42!important;text-align:left!important}
+#hymnDetail .hd-youtube-local-warning strong{font-size:.93rem!important}
+@media(max-width:420px){#hymnDetail #hdLinks{gap:6px!important}}
+</style>
 </body></html>
