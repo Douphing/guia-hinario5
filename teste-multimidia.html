@@ -1,4 +1,12 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.51 TESTE: mini player de MP3 e vídeo flutuante visível ao fechar o modal.
+- MP3 preserva o elemento original em execução e oferece barra fixa de pause/play, próximo,
+  abrir hino, parar, posição e tempo; não promete tocar com navegador fechado.
+- YouTube/YouTube Music mantém o iframe visível na página com controles nativos,
+  botão reabrir e parar; sem áudio oculto e sem prometer autoplay irrestrito.
+- Próximo/aleatório mantém o modo de visualização (mini ou flutuante) em sequência.
+- Sem modificar dados de hinos, letras, favoritos, partituras ou produção.
+-->
 <!-- V7.49 TESTE: reprodução contínua opcional.
 - Opções discretas: Parar (padrão), Próximo disponível, Aleatório.
 - MP3: avança somente ao terminar todas as repetições previstas pela partitura.
@@ -6286,7 +6294,7 @@ const MULTIMIDIA={
   youtubeOrigin:"https://www.youtube.com/watch?v=ZJ_tFvwKYiA",
   youtubeMusic:"rDHTsO_1K-k",
   youtubeMusicStart:1216,
-  youtubeMusicEnd:1402,
+  youtubeMusicEnd:1413,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1216s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
   metronomo:{
@@ -9065,7 +9073,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
  const modal=document.getElementById('hymnDetail');
  const close=()=>{
    modal.classList.remove('open','media-open');
-   modal.setAttribute('aria-hidden','true');
+   modal.setAttribute('aria-hidden',modal.classList.contains('ga-video-floating')?'false':'true');
    document.body.classList.remove('modal-open');
  };
  document.getElementById('hdClose').addEventListener('click',close);
@@ -12060,31 +12068,34 @@ body:not(.index-mode):not(.welcome-mode){
 </script>
 
 
-<style id="v749-sequencia-estilos">
-/* V7.49: controles compactos; cores e modal original preservados. */
-#hymnDetail .hd-sequence{display:flex;align-items:center;justify-content:center;gap:9px;
- margin:6px 0 3px;padding:4px 7px;border:1px solid #e0d3ba;border-radius:10px;
- background:#fffaf0;color:#263746;font:700 .71rem/1 Arial,sans-serif}
-#hymnDetail .hd-sequence-label{white-space:nowrap;color:#675a46}
+<style id="v751-sequencia-estilos">
+/* V7.51: sequência mais discreta; menos altura e menos ruído visual no modal. */
+#hymnDetail .hd-sequence{display:flex;align-items:center;justify-content:center;gap:7px;
+ margin:4px 0 2px;padding:0;border:0;background:transparent;color:#263746;
+ font:700 .67rem/1 Arial,sans-serif}
+#hymnDetail .hd-sequence-label{white-space:nowrap;color:#6c614f;font-weight:800}
 #hymnDetail .hd-sequence-modes{display:flex;gap:4px;flex-wrap:nowrap}
-#hymnDetail .hd-sequence-modes button{min-height:28px;padding:4px 9px!important;
+#hymnDetail .hd-sequence-modes button{min-height:25px;padding:3px 8px!important;
  border:1px solid #d4c29d!important;border-radius:8px!important;background:#fff!important;
- color:#263746!important;white-space:nowrap;box-shadow:none!important;font:700 .68rem/1 Arial,sans-serif!important}
+ color:#263746!important;white-space:nowrap;box-shadow:none!important;font:700 .64rem/1 Arial,sans-serif!important}
 #hymnDetail .hd-sequence-modes button[aria-pressed="true"]{background:#263746!important;
  color:#fff!important;border-color:#263746!important}
 #hymnDetail .hd-sequence-note:not([hidden]){display:flex;justify-content:center;align-items:center;
- flex-wrap:wrap;gap:7px;padding:5px 9px;margin:3px auto 4px;border-radius:8px;
- background:#f8f2e5;color:#68593e;text-align:center;font:700 .66rem/1.3 Arial,sans-serif}
+ flex-wrap:wrap;gap:6px;padding:4px 8px;margin:2px auto 4px;border-radius:8px;
+ background:#f8f2e5;color:#68593e;text-align:center;font:700 .61rem/1.25 Arial,sans-serif}
 #hymnDetail .hd-sequence-note button{border:1px solid #b18438!important;background:#fffaf0!important;
- color:#263746!important;border-radius:7px!important;padding:5px 8px!important;
- font:700 .68rem Arial,sans-serif!important}
-@media(max-width:420px){#hymnDetail .hd-sequence{gap:5px;padding:4px 3px;font-size:.64rem}
+ color:#263746!important;border-radius:7px!important;padding:4px 7px!important;
+ font:700 .62rem Arial,sans-serif!important}
+#hymnDetail .hd-links{width:100%;max-width:100%;margin-top:4px;text-align:center;overflow-wrap:anywhere}
+#hymnDetail .hd-links a{color:#736552;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:420px){#hymnDetail .hd-sequence{gap:4px;font-size:.60rem}
  #hymnDetail .hd-sequence-modes{gap:3px}
- #hymnDetail .hd-sequence-modes button{font-size:.61rem!important;padding:4px 6px!important;min-height:27px}}
+ #hymnDetail .hd-sequence-modes button{font-size:.58rem!important;padding:3px 6px!important;min-height:24px}
+ #hymnDetail .hd-links a{font-size:10px}}
 @media(max-width:340px){#hymnDetail .hd-sequence{flex-wrap:wrap;row-gap:4px}}
 </style>
 
-<script id="v749-reproducao-continua">
+<script id="v751-reproducao-continua">
 (function(){
  'use strict';
  const st={mode:'stop',kind:null,audio:null,iframe:null,end:0,player:null,
@@ -12102,15 +12113,9 @@ body:not(.index-mode):not(.welcome-mode){
    }
  }
  function info(){
-   if(st.mode==='stop'){note('');return}
-   if(st.kind==='spotify'){
-     note('Spotify: por enquanto, a troca entre hinos é manual.');return;
-   }
-   if(isYT(st.kind)&&location.protocol==='file:'){
-     note('YouTube: teste a sequência na versão publicada (https).');return;
-   }
-   if(st.kind){note((st.mode==='next'?'Próximo':'Aleatório')+' ao terminar a mídia.');return}
-   note('Escolha uma mídia e inicie a reprodução.');
+   /* V7.51: modo ativo já fica indicado no botão; evita poluição visual.
+      Mensagens aparecem somente quando realmente necessário. */
+   note('');
  }
  function refresh(){
    document.querySelectorAll('#hdSequence [data-sequence]').forEach(b=>{
@@ -12120,6 +12125,7 @@ body:not(.index-mode):not(.welcome-mode){
    info();
  }
  function stopInternal(){
+   window.GuiaPlayerPersistente?.beforeStop();
    ++st.revision;
    if(st.poll){clearInterval(st.poll);st.poll=null}
    try{st.audio?.pause()}catch(e){}
@@ -12130,6 +12136,14 @@ body:not(.index-mode):not(.welcome-mode){
    st.complete=false;st.connecting=false;
  }
  function cleanup(){stopInternal();}
+ function getActive(){return {kind:st.kind,audio:st.audio,iframe:st.iframe,player:st.player,mode:st.mode};}
+ function advanceNow(){
+   if(!st.kind||st.kind==='spotify')return;
+   const old=st.mode;
+   st.mode='next';st.complete=false;
+   finish(st.kind,window.__gaCurrentHymn);
+   st.mode=old;refresh();
+ }
  function eligible(kind,num){
    const m=window.MULTIMIDIA?.[num] || (typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[num]:null);
    if(!m)return false;
@@ -12158,12 +12172,14 @@ body:not(.index-mode):not(.welcome-mode){
    const next=typeof findHymn==='function'?findHymn(nextKey):null;
    const nextMedia=typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[nextKey]:null;
    if(!next||!nextMedia){note('O próximo hino não está disponível nesta mídia.');return}
+   const estavaRecolhido=!!window.GuiaPlayerPersistente?.isHidden();
    try{
      window.__gaOrigemConsulta='sequencia_midia';
      openHymnDetail(next,next.ocasiao?.split('/')[0]||'');
      const button=el('hdMediaArea')?.querySelector('.hd-play[data-kind="'+kind+'"]');
      if(!button||button.disabled){note('Escolha outra mídia para continuar.');return}
      loadHymnMedia(kind,nextMedia,button,true);
+     window.GuiaPlayerPersistente?.hideForSequence(estavaRecolhido);
    }catch(e){note('Não foi possível avançar automaticamente. Abra o próximo hino manualmente.');}
  }
  function ensureYT(){
@@ -12248,14 +12264,191 @@ body:not(.index-mode):not(.welcome-mode){
  // Interromper som ao fechar, sem alterar os manipuladores de fechar já existentes.
  const detail=el('hymnDetail');
  detail?.addEventListener('click',e=>{
-   if(e.target===detail||e.target?.id==='hdClose')cleanup();
+   if(e.target===detail||e.target?.id==='hdClose'){
+     if(!window.GuiaPlayerPersistente?.onModalClose())cleanup();
+   }
  },true);
  document.addEventListener('keydown',e=>{
-   if(e.key==='Escape'&&detail?.classList.contains('open'))cleanup();
+   if(e.key==='Escape'&&detail?.classList.contains('open')){
+     if(!window.GuiaPlayerPersistente?.onModalClose())cleanup();
+   }
  },true);
- window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,
+ window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,
    // Apenas para verificação local da implementação; não altera o projeto.
    getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe})};
+})();
+</script>
+
+
+<style id="v751-player-estilos">
+/* V7.51: cores do Guia preservadas, barra pequena e controles reais. */
+#gaMiniPlayer[hidden],#gaFloatingVideoBar[hidden]{display:none!important}
+#gaMiniPlayer{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));
+ transform:translateX(-50%);z-index:10030;width:min(620px,calc(100vw - 20px));
+ padding:9px 12px 8px;border:1px solid #b18438;border-radius:15px;
+ background:#fffaf0;color:#263746;box-shadow:0 6px 30px rgba(11,20,28,.30);
+ font:700 .76rem/1.3 Arial,sans-serif}
+#gaMiniPlayer .ga-mini-main{display:flex;align-items:center;gap:8px}
+#gaMiniPlayer .ga-mini-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;
+ border-radius:10px;background:#b18438;color:white;font:800 19px Georgia,serif}
+#gaMiniPlayer .ga-mini-name{flex:1;min-width:0}
+#gaMiniPlayer .ga-mini-name strong{display:block;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gaMiniPlayer .ga-mini-name small{display:block;color:#756a59;font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gaMiniPlayer .ga-mini-buttons{display:flex;gap:5px;align-items:center}
+#gaMiniPlayer button,#gaFloatingVideoBar button{min-height:34px;min-width:34px;padding:4px 7px!important;
+ background:#fff!important;color:#263746!important;border:1px solid #d4c29d!important;
+ border-radius:9px!important;box-shadow:none!important;cursor:pointer;
+ font:800 .75rem Arial,sans-serif!important}
+#gaMiniPlayer button.ga-mini-play{background:#263746!important;color:white!important;border-color:#263746!important}
+#gaMiniPlayer button.ga-mini-stop{background:#faf0dd!important;color:#805115!important}
+#gaMiniPlayer .ga-mini-seek{display:grid;grid-template-columns:37px minmax(0,1fr) 37px;gap:7px;align-items:center;margin-top:6px}
+#gaMiniPlayer .ga-mini-seek input{width:100%;height:18px;padding:0;margin:0;accent-color:#b18438}
+#gaMiniPlayer .ga-mini-seek span{font:700 .63rem Arial,sans-serif;color:#766e62;text-align:center}
+body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bottom,0px)))}
+/* Vídeo continua visível; não transforma YouTube em áudio oculto. */
+#hymnDetail.ga-video-floating{--ga-float-h:clamp(200px,26vw,236px);
+ display:flex!important;pointer-events:none!important;background:transparent!important;
+ padding:0!important;backdrop-filter:none!important}
+#hymnDetail.ga-video-floating .hd-card{visibility:hidden!important;pointer-events:none!important}
+#hymnDetail.ga-video-floating #hdYoutube{visibility:visible!important;pointer-events:auto!important;
+ position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;right:12px!important;
+ left:auto!important;top:auto!important;width:min(420px,calc(100vw - 24px))!important;
+ max-width:calc(100vw - 24px)!important;min-height:200px!important;margin:0!important;
+ padding:0!important;background:#172b45!important;border:2px solid #b18438!important;
+ border-radius:0 0 12px 12px!important;overflow:hidden!important;
+ box-shadow:0 10px 32px rgba(0,0,0,.34)!important;z-index:10005!important}
+#hymnDetail.ga-video-floating #hdYoutube iframe{display:block!important;visibility:visible!important;
+ width:100%!important;height:var(--ga-float-h)!important;min-height:200px!important;
+ max-height:none!important;aspect-ratio:auto!important;margin:0!important;border-radius:0!important}
+#gaFloatingVideoBar{--ga-float-h:clamp(200px,26vw,236px);position:fixed;
+ right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px) + var(--ga-float-h));
+ z-index:10040;width:min(420px,calc(100vw - 24px));padding:6px 8px;
+ display:flex;align-items:center;gap:7px;border:1px solid #b18438;border-bottom:none;
+ border-radius:12px 12px 0 0;background:#263746;color:white;box-shadow:0 6px 23px rgba(0,0,0,.28);
+ font:700 .69rem Arial,sans-serif}
+#gaFloatingVideoBar strong{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gaFloatingVideoBar button{background:#f9f7f0!important;min-height:30px;min-width:30px;padding:3px 7px!important;font-size:.68rem!important}
+@media(max-width:400px){#gaMiniPlayer{padding:8px 9px}#gaMiniPlayer .ga-mini-main{gap:5px}
+ #gaMiniPlayer .ga-mini-icon{width:31px;height:34px;flex-basis:31px}
+ #gaMiniPlayer .ga-mini-buttons{gap:3px}#gaMiniPlayer button{min-width:30px;padding:4px 5px!important}}
+</style>
+
+<div id="gaMiniPlayer" role="region" aria-label="Reprodução de MP3" hidden>
+ <div class="ga-mini-main">
+  <div class="ga-mini-icon" aria-hidden="true">♫</div>
+  <div class="ga-mini-name"><strong id="gaMiniTitle">Hino</strong><small id="gaMiniStatus">MP3 instrumental</small></div>
+  <div class="ga-mini-buttons">
+   <button id="gaMiniOpen" type="button" title="Abrir o hino" aria-label="Abrir o hino">↗</button>
+   <button id="gaMiniPlay" type="button" class="ga-mini-play" title="Pausar ou reproduzir" aria-label="Pausar ou reproduzir">Ⅱ</button>
+   <button id="gaMiniNext" type="button" title="Próximo hino" aria-label="Próximo hino">⏭</button>
+   <button id="gaMiniStop" type="button" class="ga-mini-stop" title="Parar e fechar" aria-label="Parar e fechar">✕</button>
+  </div>
+ </div>
+ <div class="ga-mini-seek"><span id="gaMiniElapsed">0:00</span><input id="gaMiniProgress" type="range" min="0" max="100" value="0" aria-label="Posição do MP3"><span id="gaMiniDuration">0:00</span></div>
+</div>
+<div id="gaFloatingVideoBar" role="region" aria-label="Controles do vídeo flutuante" hidden>
+ <strong id="gaFloatTitle">Vídeo do hino</strong>
+ <button id="gaFloatOpen" type="button" aria-label="Abrir modal do hino">Abrir</button>
+ <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕ Parar</button>
+</div>
+
+<script id="v750-player-persistente">
+(function(){
+ 'use strict';
+ const el=id=>document.getElementById(id);
+ const detail=el('hymnDetail');
+ const mini=el('gaMiniPlayer');const float=el('gaFloatingVideoBar');
+ let minimized=false;let activeAudio=null;
+ const current=()=>window.GuiaReproducaoContinua?.getActive?.()||{};
+ const isVideo=k=>k==='youtube'||k==='youtubeMusic';
+ const title=()=>{const h=window.__gaCurrentHymn||{};
+  return (String(h.num||'').startsWith('Coro ')?'':'Hino ')+String(h.num||'')+' — '+String(h.titulo||'');};
+ function fmt(v){if(!Number.isFinite(v)||v<0)return '0:00';
+  return Math.floor(v/60)+':'+String(Math.floor(v%60)).padStart(2,'0');}
+ function refreshAudio(){
+   const a=current().audio;
+   if(!minimized||!a||current().kind!=='instrumental')return;
+   el('gaMiniTitle').textContent=title();
+   el('gaMiniStatus').textContent=a.error?'MP3 indisponível':a.paused?'MP3 instrumental · pausado':'MP3 instrumental · reproduzindo';
+   const p=el('gaMiniPlay');p.textContent=a.paused?'▶':'Ⅱ';p.setAttribute('aria-label',a.paused?'Reproduzir':'Pausar');
+   const duration=Number.isFinite(a.duration)?a.duration:0;
+   el('gaMiniElapsed').textContent=fmt(a.currentTime);
+   el('gaMiniDuration').textContent=fmt(duration);
+   el('gaMiniProgress').value=duration?String(Math.max(0,Math.min(100,a.currentTime/duration*100))):'0';
+   el('gaMiniProgress').disabled=!duration;
+ }
+ function watchAudio(){
+   const a=current().audio;
+   if(!a||a===activeAudio)return;
+   activeAudio=a;
+   for(const evt of ['timeupdate','durationchange','play','pause','ended','error','loadedmetadata']){
+     a.addEventListener(evt,()=>{if(current().audio===a)refreshAudio()});
+   }
+ }
+ function showMini(){
+   minimized=true;
+   detail.classList.remove('ga-video-floating');
+   float.hidden=true;mini.hidden=false;
+   document.body.classList.add('ga-mini-active');
+   watchAudio();refreshAudio();
+ }
+ function showFloat(){
+   minimized=true;
+   mini.hidden=true;document.body.classList.remove('ga-mini-active');
+   detail.classList.add('ga-video-floating');
+   float.hidden=false;
+   el('gaFloatTitle').textContent=title();
+ }
+ function beforeStop(){
+   minimized=false;
+   mini.hidden=true;float.hidden=true;
+   detail.classList.remove('ga-video-floating');
+   document.body.classList.remove('ga-mini-active');
+   activeAudio=null;
+ }
+ function onModalClose(){
+   if(!detail.classList.contains('open'))return false;
+   const a=current();
+   if(a.kind==='instrumental'&&a.audio){showMini();return true}
+   if(isVideo(a.kind)&&a.iframe&&location.protocol!=='file:'){showFloat();return true}
+   return false;
+ }
+ function reopen(){
+   beforeStop();
+   detail.classList.add('open','media-open');
+   detail.setAttribute('aria-hidden','false');
+   document.body.classList.add('modal-open');
+ }
+ function hideForSequence(wasHidden){
+   if(!wasHidden)return;
+   const a=current();
+   if(a.kind==='instrumental'&&a.audio)showMini();
+   else if(isVideo(a.kind)&&a.iframe&&location.protocol!=='file:')showFloat();
+   else return;
+   detail.classList.remove('open','media-open');
+   detail.setAttribute('aria-hidden',detail.classList.contains('ga-video-floating')?'false':'true');
+   document.body.classList.remove('modal-open');
+ }
+ el('gaMiniOpen')?.addEventListener('click',reopen);
+ el('gaFloatOpen')?.addEventListener('click',reopen);
+ el('gaMiniPlay')?.addEventListener('click',()=>{
+   const a=current().audio;if(!a)return;
+   if(a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{
+     el('gaMiniStatus').textContent='Toque novamente para tentar reproduzir';
+   })}else a.pause();
+   refreshAudio();
+ });
+ el('gaMiniNext')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.advanceNow?.());
+ el('gaMiniStop')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.cleanup());
+ el('gaFloatStop')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.cleanup());
+ el('gaMiniProgress')?.addEventListener('input',e=>{
+   const a=current().audio;
+   if(!a||!Number.isFinite(a.duration)||a.duration<=0)return;
+   try{a.currentTime=a.duration*Math.max(0,Math.min(100,Number(e.target.value)))/100}catch(err){}
+   refreshAudio();
+ });
+ window.GuiaPlayerPersistente={onModalClose,beforeStop,hideForSequence,
+   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden})};
 })();
 </script>
 
