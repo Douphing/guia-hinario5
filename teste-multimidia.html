@@ -1,4 +1,8 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.52 TESTE: plataformas mais finas, status de indisponibilidade compacto.
+     Modo Próximo é o padrão; controle de sequência só aparece após abrir
+     MP3, YouTube ou YouTube Music. Spotify permanece manual.
+     Base V7.51 preservada fora desses controles. -->
 <!-- V7.51 TESTE: mini player de MP3 e vídeo flutuante visível ao fechar o modal.
 - MP3 preserva o elemento original em execução e oferece barra fixa de pause/play, próximo,
   abrir hino, parar, posição e tempo; não promete tocar com navegador fechado.
@@ -8858,15 +8862,15 @@ function openHymnDetail(h,cat){
 
    if(forceThreePlatforms||media.spotify||media.spotifySearch||media.spotifyPending){
      const pending=forceThreePlatforms ? !media.spotify : (!media.spotify && (!!media.spotifySearch||!!media.spotifyPending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(pending?'<small>Indisponível</small>':'')+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtube||media.youtubeSearch||media.youtubePending){
      const pending=forceThreePlatforms ? !media.youtube : (!media.youtube && (!!media.youtubeSearch||!!media.youtubePending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(pending?'<small>Indisponível</small>':'')+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
      const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube Music'+(pending?'<small>Indisponível</small>':'')+'</span><b>›</b></button>');
    }
 
    const metronomeHtml=media.metronomo ? buildHymnMetronomeHtml(media.metronomo) : '';
@@ -8876,11 +8880,11 @@ function openHymnDetail(h,cat){
      metronomeHtml+
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
-     '<div class="hd-sequence" id="hdSequence" aria-label="Modo de reprodução contínua">'+
+     '<div class="hd-sequence" id="hdSequence" aria-label="Modo de reprodução contínua" hidden>'+ 
        '<span class="hd-sequence-label">Ao terminar</span>'+
        '<div class="hd-sequence-modes" role="group" aria-label="Ao terminar a mídia">'+
-         '<button type="button" data-sequence="stop" aria-pressed="true">Parar</button>'+
-         '<button type="button" data-sequence="next" aria-pressed="false">Próximo</button>'+
+         '<button type="button" data-sequence="stop" aria-pressed="false">Parar</button>'+
+         '<button type="button" data-sequence="next" aria-pressed="true">Próximo</button>'+
          '<button type="button" data-sequence="random" aria-pressed="false">Aleatório</button>'+
        '</div>'+
      '</div>'+
@@ -12098,7 +12102,7 @@ body:not(.index-mode):not(.welcome-mode){
 <script id="v751-reproducao-continua">
 (function(){
  'use strict';
- const st={mode:'stop',kind:null,audio:null,iframe:null,end:0,player:null,
+ const st={mode:'next',kind:null,audio:null,iframe:null,end:0,player:null,
    poll:null,revision:0,complete:false,connecting:false};
  let ytPromise=null;
  const el=id=>document.getElementById(id);
@@ -12241,6 +12245,10 @@ body:not(.index-mode):not(.welcome-mode){
  function attach(kind,options){
    st.kind=kind;st.audio=options.audio||null;st.iframe=options.iframe||null;
    st.end=Math.max(0,Number(options.end)||0);st.complete=false;
+   const seq=el('hdSequence');
+   // Mostra o modo de sequência apenas com mídia aberta e compatível.
+   // Spotify continua manual: evita sugerir uma troca automática inexistente.
+   if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind));
    refresh();
    if(st.audio && options.automatico){
      const a=st.audio;
@@ -12451,5 +12459,65 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden})};
 })();
 </script>
+
+
+<style id="v752-media-compact-sequence">
+/* Somente a seção de mídias é modificada; mantém paleta, mini-player e metrônomo. */
+#hymnDetail #hdSequence[hidden]{display:none!important}
+#hymnDetail #hdMediaArea .hd-media-platforms{gap:6px!important;margin-bottom:2px!important}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;min-height:40px!important;height:40px!important;max-height:40px!important;
+  padding:3px 6px!important;gap:5px!important;border-radius:12px!important;
+  white-space:normal!important;overflow:hidden!important;
+  font-size:11px!important;line-height:1.05!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .brand{
+  width:22px!important;height:22px!important;flex:0 0 22px!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .brand svg{
+  max-width:100%!important;max-height:100%!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .hd-platform-copy{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:center!important;gap:2px!important;flex:0 1 auto!important;min-width:0!important;
+  white-space:normal!important;line-height:1.08!important;text-align:center!important;
+  overflow:visible!important;text-overflow:clip!important;font-size:10.6px!important;
+  font-weight:800!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .hd-platform-copy small{
+  display:block!important;font:700 8.5px/1.05 Arial,sans-serif!important;
+  color:inherit!important;opacity:.94!important;letter-spacing:0!important;
+  white-space:nowrap!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform.hd-media-pending{
+  opacity:.7!important;cursor:not-allowed!important
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform b{display:none!important}
+#hymnDetail #hdSequence:not([hidden]){margin:5px 0 4px!important;gap:6px!important}
+@media(max-width:520px){
+  #hymnDetail #hdMediaArea .hd-media-platforms{gap:5px!important}
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform{
+    min-height:37px!important;height:37px!important;max-height:37px!important;
+    padding:2px 4px!important;gap:3px!important;border-radius:11px!important
+  }
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .brand{
+    width:19px!important;height:19px!important;flex:0 0 19px!important
+  }
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .hd-platform-copy{
+    font-size:10px!important;line-height:1.03!important
+  }
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .hd-platform-copy small{
+    font-size:8px!important
+  }
+  #hymnDetail #hdSequence:not([hidden]){margin:4px 0 3px!important}
+}
+@media(max-width:360px){
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .brand{
+    width:16px!important;height:16px!important;flex:0 0 16px!important
+  }
+  #hymnDetail #hdMediaArea .hd-media-platforms .hd-platform .hd-platform-copy{font-size:9.3px!important}
+}
+</style>
 
 </body></html>
