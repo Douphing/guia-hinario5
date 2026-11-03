@@ -1,5 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.57 TESTE: minimização com vídeo YouTube sempre visível (mínimo 200x200), sem pausa deliberada;
+<!-- V7.58 TESTE: minimização com vídeo YouTube sempre visível (mínimo 200x200), sem pausa deliberada;
      controles Anterior/Próximo em mini player MP3 e vídeo flutuante;
      Minimizar ao lado de Ao terminar; preserva o iframe original e a base V7.56. -->
 <!-- V7.56 TESTE: janela única de vídeo agrupada, arrastável; sem controles soltos. Ocultar pausa vídeo. -->
@@ -9038,7 +9038,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
      const aviso=document.createElement('div');
      aviso.className='hd-youtube-local-warning';
      aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +' — reprodução no Guia indisponível</strong>'
-       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.57 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
+       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.58 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
        +'<small>Enquanto isso, use “Abrir na origem” para assistir diretamente na plataforma.</small>';
      yt.appendChild(aviso);
    }else{
@@ -12398,7 +12398,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   <div class="ga-mini-icon" aria-hidden="true">♫</div>
   <div class="ga-mini-name"><strong id="gaMiniTitle">Hino</strong><small id="gaMiniStatus">MP3 instrumental</small></div>
   <div class="ga-mini-buttons">
-   <button id="gaMiniOpen" type="button" title="Abrir o hino" aria-label="Abrir o hino">↗</button>
+   <button id="gaMiniOpen" type="button" title="Maximizar: voltar ao modal do hino" aria-label="Maximizar: voltar ao modal do hino">↗</button>
    <button id="gaMiniPlay" type="button" class="ga-mini-play" title="Pausar ou reproduzir" aria-label="Pausar ou reproduzir">Ⅱ</button>
    <button id="gaMiniPrev" type="button" title="Hino anterior" aria-label="Hino anterior">⏮</button>
    <button id="gaMiniNext" type="button" title="Próximo hino" aria-label="Próximo hino">⏭</button>
@@ -12410,7 +12410,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 <div id="gaFloatingVideoBar" role="region" aria-label="Controles do vídeo flutuante" hidden>
  <strong id="gaFloatTitle" title="Arraste aqui para mover a janela">⠿ Vídeo do hino</strong>
  <button id="gaFloatToggle" type="button" aria-label="Reduzir ou ampliar vídeo">Reduzir</button>
- <button id="gaFloatOpen" type="button" aria-label="Abrir modal do hino">Abrir</button>
+ <button id="gaFloatOpen" type="button" title="Maximizar: voltar ao modal completo" aria-label="Maximizar: voltar ao modal completo do hino">Maximizar ↗</button>
  <button id="gaFloatPrev" type="button" title="Hino anterior" aria-label="Hino anterior">⏮</button>
  <button id="gaFloatNext" type="button" aria-label="Próximo hino">⏭</button>
  <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕</button>
@@ -12471,6 +12471,9 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    detail.style.setProperty('--ga-float-bottom','auto');
  }
  function resetCardPosition(){
+   drag=null;
+   detail.style.removeProperty('--ga-drag-x');
+   detail.style.removeProperty('--ga-drag-y');
    floatPos=null;
    for(const k of ['--ga-float-left','--ga-float-top','--ga-float-right','--ga-float-bottom'])detail.style.removeProperty(k);
  }
@@ -12495,6 +12498,8 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    watchAudio();refreshAudio();
  }
  function showFloat(){
+   detail.style.removeProperty('--ga-drag-x');
+   detail.style.removeProperty('--ga-drag-y');
    minimized=true;floatCollapsed=true; /* Player segue visível e não é recriado. */
    mini.hidden=true;document.body.classList.remove('ga-mini-active');
    detail.classList.remove('open','media-open','ga-video-collapsed');
@@ -12556,24 +12561,50 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    try{a.currentTime=a.duration*Math.max(0,Math.min(100,Number(e.target.value)))/100}catch(err){}
    refreshAudio();
  });
- /* Pointer move na própria barra: o cartão INTEIRO (cabeçalho + iframe) acompanha. */
+ /* V7.58: toque sem atraso. Mover por transform GPU: nao ler layout por movimento. */
+ function getDragBounds(){
+   const w=card?.offsetWidth||300, h=card?.offsetHeight||240;
+   return {minX:8,maxX:Math.max(8,window.innerWidth-w-8),
+           minY:8,maxY:Math.max(8,window.innerHeight-h-8)};
+ }
+ function clampDrag(v,low,high){return Math.max(low,Math.min(high,v));}
+ function previewDrag(x,y){
+   /* O cartao, o video e o cabecalho se movem juntos; o iframe nao e desmontado. */
+   detail.style.setProperty('--ga-drag-x',(x-drag.startLeft)+'px');
+   detail.style.setProperty('--ga-drag-y',(y-drag.startTop)+'px');
+ }
  float?.addEventListener('pointerdown',e=>{
    if(!detail.classList.contains('ga-video-floating')||e.target.closest('button'))return;
+   if(e.pointerType==='mouse'&&e.button!==0)return;
    if(!floatPos)positionCard(true);
-   drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:floatPos.x,top:floatPos.y};
+   const bounds=getDragBounds();
+   drag={id:e.pointerId,px:e.clientX,py:e.clientY,
+     startLeft:floatPos.x,startTop:floatPos.y,
+     x:floatPos.x,y:floatPos.y,bounds};
    float.classList.add('is-dragging');
    try{float.setPointerCapture(e.pointerId)}catch(err){}
-   e.preventDefault();
- });
+   if(e.cancelable)e.preventDefault();
+ },{passive:false});
  float?.addEventListener('pointermove',e=>{
    if(!drag||drag.id!==e.pointerId)return;
-   floatPos={x:drag.left+e.clientX-drag.x,y:drag.top+e.clientY-drag.y};
-   positionCard();
- });
+   drag.x=clampDrag(drag.startLeft+e.clientX-drag.px,drag.bounds.minX,drag.bounds.maxX);
+   drag.y=clampDrag(drag.startTop+e.clientY-drag.py,drag.bounds.minY,drag.bounds.maxY);
+   previewDrag(drag.x,drag.y);
+   if(e.cancelable)e.preventDefault();
+ },{passive:false});
  function stopDrag(e){
    if(!drag||drag.id!==e.pointerId)return;
-   drag=null;float?.classList.remove('is-dragging');
+   const finalPos={x:drag.x,y:drag.y};
+   drag=null;
+   float?.classList.remove('is-dragging');
    try{float.releasePointerCapture(e.pointerId)}catch(err){}
+   /* Atualiza a posicao base e remove o deslocamento na mesma tarefa,
+      evitando salto e evitando reflow enquanto o dedo se movimenta. */
+   floatPos=finalPos;
+   detail.style.setProperty('--ga-float-left',floatPos.x+'px');
+   detail.style.setProperty('--ga-float-top',floatPos.y+'px');
+   detail.style.setProperty('--ga-drag-x','0px');
+   detail.style.setProperty('--ga-drag-y','0px');
  }
  float?.addEventListener('pointerup',stopDrag);
  float?.addEventListener('pointercancel',stopDrag);
@@ -12665,7 +12696,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 </style>
 
 <style id="v757-minimize-and-navigation">
-/* V7.57: minimização SEM ocultar player YouTube. Impede pausas por display:none no celular. */
+/* V7.58: minimização SEM ocultar player YouTube. Impede pausas por display:none no celular. */
 #hymnDetail .hd-sequence{flex-wrap:wrap!important;row-gap:5px!important}
 #hymnDetail .ga-minimize-inline{border:1px solid #c7ad77!important;border-radius:8px!important;
  background:#f7f0e3!important;color:#263746!important;min-height:25px!important;
@@ -12695,6 +12726,28 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  #gaMiniPlayer .ga-mini-name strong{font-size:.68rem!important}
  #gaMiniPlayer .ga-mini-buttons{gap:3px!important}
  #gaMiniPlayer .ga-mini-buttons button{min-height:30px!important;min-width:28px!important;padding:3px 4px!important;font-size:.67rem!important}
+}
+</style>
+
+<style id="v758-floating-drag-responsive">
+/* Alteracao cirurgica V7.58: arraste direto em GPU, sem leituras de layout no movimento. */
+#hymnDetail.ga-video-floating .hd-card{
+ transform:translate3d(var(--ga-drag-x,0px),var(--ga-drag-y,0px),0)!important;
+ will-change:transform!important;
+}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar,
+#hymnDetail.ga-video-floating #gaFloatingVideoBar strong{
+ touch-action:none!important;-webkit-touch-callout:none!important;
+ -webkit-user-select:none!important;user-select:none!important;
+}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar strong{
+ min-height:28px!important;display:flex!important;align-items:center!important;cursor:grab!important;
+}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar.is-dragging strong{cursor:grabbing!important}
+@media(max-width:420px){
+ #hymnDetail.ga-video-floating #gaFloatingVideoBar #gaFloatOpen{
+  font-size:.60rem!important;letter-spacing:-.1px!important;white-space:nowrap!important;
+ }
 }
 </style>
 </body></html>
