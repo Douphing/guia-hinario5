@@ -1,414 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.36 TESTE: restauração visual das mídias 130–140.
-- Base V7.35 preservada.
-- Hinos 130–140 passam a mostrar Spotify e YouTube mesmo quando o ID direto não existe no histórico.
-- IDs já construídos continuam intactos.
-- YouTube Music 130–140 e respectivos timestamps permanecem intactos.
-- Nenhum link novo ou fallback de busca foi inventado.
-- Hinos 1–129 e 141–160 preservados.
+<!-- V7.37 TESTE: limpeza definitiva do topo e padrão fixo das três mídias.
+Base V7.36. Hinos 130–160 sempre exibem Spotify, YouTube e YouTube Music.
+Mídias sem link direto permanecem visíveis e desativadas.
 -->
 
-<!-- V7.35 TESTE: correção navegação + presença visual do Spotify.
-- Base V7.34 preservada.
-- Removido o contador central n/n da navegação entre hinos.
-- Mantidas somente as setas < e >.
-- Spotify passa a aparecer sempre nos Hinos 141–160:
-  * com ID direto: botão ativo e player normal;
-  * sem ID direto validado: botão visível, desativado, "ainda não disponível".
-- Nenhum fallback de busca automática foi criado.
-- Dados e mídias dos Hinos 1–140 não foram alterados.
--->
-
-<!-- V7.34 TESTE: YouTube direto — Hinos 141–160.
-- Base V7.33 preservada.
-- IDs de YouTube fornecidos pelo usuário aplicados em 19/20 hinos.
-- Hino 149 permanece sem YouTube porque o link fornecido veio sem ID.
-- Spotify, YouTube Music/Vozes do Campo, MP3, letras e Hinos 1–140 preservados.
--->
-
-<!-- V7.33 TESTE: MP3 141–160 revisados.
-- Base V7.32 preservada.
-- Apenas cache-busting dos MP3 141–160 alterado de v=731 para v=733.
-- Andamentos/ticks são corrigidos no novo gerador MP3.
-- Hinos 1–140 e mídias externas permanecem intactos.
--->
-
-<!-- V7.32 TESTE: YouTube Music / Vozes do Campo — Hinos 141–160.
-- Base V7.31 preservada.
-- Links fornecidos pelo usuário.
-- Timestamps conferidos nas descrições oficiais dos dois vídeos.
-- youtubeMusicStart/youtubeMusicEnd adicionados para 141–159.
-- Hinos 150 e 160 recebem somente start por serem os últimos de cada coletânea.
-- Hinos 1–140 não alterados.
--->
-
-<!-- V7.31 TESTE: continuação do Guia — Hinos 141–160.
-- Base aprovada V7.30 preservada.
-- Hinos 1–140 não foram alterados em MULTIMIDIA nem LETRAS.
-- Inseridos Hinos 141–160 com letra/estrutura e referência local de MP3.
-- Mídias externas somente quando validadas por número + título + fonte aceita.
-- Sem campos de busca automática/fallback.
-- Hino 149 tratado com estrutura especial de casas 1–2 / casa 3 / Final.
-- Navegação do modal ampliada até o Hino 160.
--->
-
-<!-- V7.30 TESTE: correções funcionais e compactação do metrônomo no celular.
-- Base V7.29 preservada.
-- Corrigida atualização visual de 6 tempos / 2 pulsações.
-- Slider de volume ampliado na área útil e ajustado para responder até 0–100% no celular.
-- Faixa de estudo simplificada para uma única linha.
-- Painel do metrônomo reduzido em altura e espaçamento.
--->
-
-<!-- V7.29 TESTE: ajuste fino da navegação no celular.
-- Base V7.28 preservada.
-- Setas anterior/próximo mantidas flutuantes.
-- Afastamento vertical aumentado entre as setas e o título "Mídias do Hino", principalmente no celular.
-- Nenhuma outra função do metrônomo, partitura ou mídias foi alterada.
--->
-
-<!-- V7.28 TESTE: refinamento estrutural do metrônomo e navegação.
-- Base V7.27 preservada.
-- Cabeçalho do metrônomo usa texto "Abrir / Fechar" no lugar das setas.
-- Informações repetidas removidas: compasso e tonalidade ficam somente no cabeçalho.
-- Controles internos redistribuídos em áreas distintas: BPM, iniciar, pulso, padrão e volume.
-- Navegação anterior/próximo movida para acima de "Mídias do Hino", centralizada e flutuante.
-- Partitura em tela cheia permanece.
--->
-
-<!-- V7.26 TESTE: partitura ampliável em tela cheia.
-- Base V7.25 preservada.
-- Miniatura da partitura continua compacta no metrônomo.
-- Ao tocar na miniatura, a partitura real do Hino 125 abre em tela cheia.
-- Incluídos: Fechar, zoom +/-, restaurar zoom, roda do mouse e gesto de pinça/arrastar no celular.
-- Ao fechar a partitura, o modal do hino e o estado do metrônomo permanecem no mesmo ponto.
-- Mídias externas continuam sempre visíveis; navegação Anterior/Próximo permanece no rodapé do modal.
--->
-
-<!-- V7.25 TESTE: metrônomo compacto no celular + mídias sempre visíveis.
-- Base V7.24 preservada.
-- Abrir o metrônomo NÃO oculta Instrumental/Spotify/YouTube/YouTube Music.
-- Botão "Minimizar" substituído por "Fechar".
-- Navegação Anterior/Próximo removida do metrônomo e colocada no rodapé do modal.
-- Miniatura da partitura mantida, porém menor.
-- Padrão de pulsação, BPM editável, restaurar padrão, compasso e tonalidade preservados.
--->
-
-<!-- V7.24 TESTE: modo de estudo do metrônomo ocupando o espaço das mídias.
-- Base V7.23 preservada.
-- Ao abrir o metrônomo, Instrumental/Spotify/YouTube/YouTube Music ficam temporariamente ocultos.
-- O metrônomo ocupa esse espaço; ao minimizar, as mídias voltam ao lugar original.
-- Mantidos: BPM editável, +/-, padrão de pulsação, restaurar padrão, volume reforçado.
-- Incluídos: fórmula de compasso, tonalidade, miniatura real da partitura do Hino 125 e navegação 124/126.
-- Piloto continua somente no Hino 125.
--->
-
-<!-- V7.23 TESTE: metrônomo sem expansão vertical.
-- Base V7.22 preservada.
-- Ao abrir o metrônomo, a própria barra se transforma nos controles.
-- Não cria painel abaixo, não empurra mídias externas e não aumenta a altura do modal.
-- Spotify, YouTube e YouTube Music permanecem visíveis.
-- Volume é ajustado na mesma barra, sem abrir nova área.
-- Piloto permanece no Hino 125.
--->
-
-<!-- V7.22 TESTE: refinamento visual do metrônomo simples no Hino 125.
-- Base V7.21 preservada.
-- Mantido o metrônomo recolhido por padrão.
-- Cabeçalho mantém andamento, compasso e tonalidade.
-- Removida a duplicidade visual de compasso e tonalidade na área expandida.
-- Mantida apenas a faixa de andamento abaixo dos controles.
-- Reduzidos espaços internos e margem até o Instrumental.
-- Volume padrão permanece 50% com ganho reforçado.
--->
-
-<!-- V7.21 TESTE: retorno ao metrônomo simples.
-- Base V7.19 preservada integralmente.
-- A proposta V7.20 com Instrumental + Metrônomo, Partitura e navegação adicional foi descartada.
-- Mantido somente o metrônomo piloto simples do Hino 125, como na V7.19/V7.18.
-- Mídias, MP3, timestamps, letras e funções dos Hinos 1–140 permanecem preservados.
-- Volume padrão do metrônomo: 50%, com ganho reforçado.
--->
-
-<!-- V7.19 TESTE: base consolidada a partir do index de produção enviado.
-- O arquivo index (3).html é a fonte de verdade desta versão.
-- Mídias, MP3, letras, timestamps, favoritos, chamados, registros, Analytics, PWA e funções da produção foram preservados.
-- Mantida a correção mais nova do YouTube Music do Hino 42 existente no teste anterior.
-- Recuperado o piloto de metrônomo V7.18 somente no Hino 125.
-- Nenhuma mídia 1–140 foi removida.
--->
-
-<!-- V7.12 TESTE: correção musical do MP3 do Hino 129.
-- Hino 129: passagens entre estrofe/coro mantêm pulso contínuo.
-- Removidas pausas artificiais geradas por Breath na fonte linearizada do MP3.
-- Mantida somente a primeira marca de andamento para evitar reinicialização nas passagens 2 e 3.
-- Fermatas internas/de passagem: timeStretch 1.40.
-- Fermata final: timeStretch 1.45.
-- YouTube Music 121–140 e correções da V7.11 preservados.
--->
-
-<!-- V7.11 TESTE: revisão YouTube Music 121–140 + ajuste fino Hino 125.
-- 121, 125 e 127: faixas individuais CCB - Vozes do Campo - Topic.
-- 122–124: coletânea oficial 121–125, tempos corrigidos pelos capítulos publicados.
-- 126 e 128–130: coletânea oficial 126–130; corrigido o ID que estava com hífen extra.
-- 131–140: coletânea oficial 131–140 com tempos individuais.
-- Hino 125: andamento/linha do tempo preservados; somente a fermata de colcheia do coro recebe leve reforço.
-- Spotify, YouTube normal, letras e demais funções preservados.
--->
-
-<!-- V7.10 TESTE: ajuste fino das fermatas do Hino 125.
-- Mantidos andamento e linha do tempo corrigida da V7.07.
-- Fermatas de passagem: 1.35.
-- Fermatas de fechamento: 1.45.
-- Não retorna ao alongamento antigo de 2.0.
-- Mídias externas da V7.09 preservadas.
--->
-
-<!-- V7.09 TESTE: correção do YouTube Music do Hino 125.
-- Hino 125 deixa de usar a coletânea 121–125 com timestamp.
-- Passa a usar a faixa individual oficial "CCB - Vozes do Campo - Topic", ID HLUAb9TwrLg.
-- Removidos youtubeMusicStart/youtubeMusicEnd do Hino 125.
-- Demais Hinos 121–140 permanecem iguais à V7.08 nesta revisão.
-- MP3/andamentos/linha do tempo da V7.07 preservados.
--->
-
-<!-- V7.08 TESTE: correção do player YouTube Music.
-- Mantida a base V7.07 (MP3/andamentos/linha do tempo).
-- Em HTTPS, YouTube Music usa player padrão youtube.com/embed com origin + widget_referrer.
-- Em arquivo local (file://), o Guia não tenta carregar iframe sujeito ao erro 153 sem HTTP Referer.
-- "Abrir na origem" preserva o link music.youtube.com e o timestamp do hino.
-- Spotify, YouTube normal, letras, favoritos, chamados, registros e demais funções preservados.
--->
-
-<!-- V7.07 TESTE: correção da linha do tempo interna dos MP3 Hinos 121–140.
-- Recalculados os ticks absolutos das repetições 2, 3 e 4 no MuseScore.
-- Corrige a queda aparente de andamento nos coros/repetições, especialmente Hino 125.
-- Hinos 122 e 125 preservam as correções de respirações/fermatas da V7.06.
-- Andamentos, letras, mídias externas e funções do Guia permanecem preservados.
-- Produção não modificada.
--->
-
-<!-- V7.06 TESTE: correção fina de reprodução dos Hinos 122 e 125 sobre a V7.05.
-- Hino 122: andamento contínuo; removidas pausas artificiais de Breath no MP3; fermatas deduplicadas e encurtadas.
-- Hino 125: andamento contínuo na unidade correta da partitura; transição para o coro sem queda artificial; fermatas deduplicadas e encurtadas.
-- Demais Hinos 121–140 e mídias externas da V7.05 preservados.
-- Produção não modificada.
--->
-
-<!-- V7.05 TESTE: revisão de mídias externas dos Hinos 121–140 sobre a V7.04.
-- Mantidos integralmente os MP3/andamentos V7.04 e todas as funções do Guia.
-- Hino 122: YouTube corrigido para o vídeo exato da Orquestra Hymns (eb6LMlMbHQ0).
-- Hino 132: YouTube exato da Orquestra Hymns adicionado (-BuaLAQLjp0).
-- Hino 138: Spotify exato da Orquestra Sacra adicionado (3ztjE7Y8QirPGUtkjlLYqV).
-- YouTube Music 121–130: links de origem passam a abrir no timestamp do respectivo hino.
-- Spotify 121–140: origens existentes normalizadas para URL canônica /track/ID.
-- Nenhum fallback de busca foi criado; mídias ainda sem ID direto validado continuam indisponíveis.
--->
-
-<!-- V7.04 TESTE: regeneração completa dos andamentos dos Hinos 121–140.
-- Todos os 20 MP3 do lote 121–140 devem ser regenerados com um único critério de andamento.
-- Alvos escolhidos dentro da faixa impressa na partitura, evitando o limite inferior excessivamente lento.
-- Fermatas explícitas com timeStretch=2 reduzidas para 1.35 no lote inteiro.
-- Estruturas linearizadas, casas, retornelas e Final preservados; Hino 138 mantém forma especial.
-- Hino 117 mantém a correção visual já aprovada: 1ª estrofe → CORO → 2ª → 3ª.
-- Nenhuma mídia externa, Analytics, PWA, favoritos, chamados, registros ou funções do Guia foi alterada.
--->
-
-<!-- V7.03 TESTE: correções pontuais sobre a base atual anexada.
-- Hino 117: ordem visual corrigida para 1ª estrofe -> CORO -> 2ª -> 3ª, conforme partitura.
-- MP3 corrigidos: 121, 122, 124, 125, 126, 131, 136 e 138.
-- Andamentos movidos do limite inferior para a região média das faixas oficiais.
-- Fermatas dos hinos corrigidos reduzidas para evitar prolongamentos excessivos.
-- Cache-busting ?v=703 aplicado somente aos oito MP3 corrigidos.
-- Demais letras, mídias, funções, CSS, JavaScript, Analytics, PWA e recursos pessoais preservados.
--->
-
-<!-- V7.02 TESTE: integração incremental dos Hinos 121–140 sobre a base oficial V7.01.
-- Hinos 1–120 protegidos e mantidos sem alteração em MULTIMIDIA e LETRAS.
-- Letras e estruturas 121–140 conferidas com a partitura final(2).pdf e arquivos MuseScore do acervo.
-- MP3 locais referenciados como audio/hino-121.mp3 até audio/hino-140.mp3; reprodução única, forma linearizada na partitura.
-- Hino 138: casas 1.2 nas duas primeiras passagens, casa 3 e Final na terceira.
-- Mídias externas ativadas somente com ID direto validado das fontes autorizadas.
-- Nenhum campo spotifySearch, youtubeSearch ou youtubeMusicSearch foi criado no novo lote.
-- Arquivo de produção não foi modificado.
--->
-
-<!-- V7.01 TESTE: integração incremental dos Hinos 101–120 sobre a base V7.00.
-- Hinos 1–100 protegidos; somente as duas correções V7.00 permanecem.
-- Letras e estruturas 101–120 integradas conforme a partitura do projeto.
-- MP3 locais: audio/hino-101.mp3 até audio/hino-120.mp3.
-- Spotify/YouTube: somente IDs diretos validados da Orquestra Sacra.
-- YouTube Music: CCB - Vozes do Campo, coletâneas 101–110 e 111–120, com início/fim individual.
-- Hinos 102 e 105 preservam casas/terceira execução e Final.
-- Nenhum campo spotifySearch, youtubeSearch ou youtubeMusicSearch foi criado no novo lote.
--->
-
-<!-- V7.00: consolidação da base oficial 1–100.
-- Hino 81: restaurada referência local audio/hino-81.mp3.
-- Hino 46: removido campo legado youtubeMusicSearch; mantido ID direto e registrada youtubeMusicOrigin.
-- Demais dados, mídias, letras, funções e configurações 1–100 preservados.
--->
-
-<!-- V6.99: integração incremental dos Hinos 81–100 sobre a base atual com Hinos 1–80 integralmente preservados.
-- Letras e estruturas dos Hinos 81–100 conferidas com a partitura final(2).pdf do projeto.
-- MP3 local referenciado como audio/hino-81.mp3 até audio/hino-100.mp3.
-- Spotify: somente IDs diretos validados da Orquestra Sacra.
-- YouTube: somente IDs diretos validados da Orquestra Sacra / Orquestra Hymns.
-- YouTube Music: CCB - Vozes do Campo, coletâneas 81–90 e 91–100, com início/fim individual por hino.
-- Hinos 92 e 97 preservam tratamento especial de casas/voltas e Final conforme a partitura.
-- Nenhuma função, mídia, letra, ID, URL, timestamp ou configuração dos Hinos 1–80 foi alterada.
--->
-<!-- V6.98: integração dos Hinos 61–70 sobre a base V6.97 atual.
-- Base V6.97 preservada integralmente, incluindo correção mobile do piloto Hino 45, Analytics, favoritos, registros e compartilhamento.
-- Letras e estruturas dos Hinos 61–70 incorporadas a partir da transcrição já conferida com a partitura final(2).pdf.
-- MP3 local referenciado como audio/hino-61.mp3 até audio/hino-70.mp3.
-- Spotify e YouTube mantêm a política Orquestra Sacra / Orquestra Hymns; somente IDs diretos já validados são ativados.
-- YouTube Music passa a usar CCB - Vozes do Campo, com a coletânea 61–70 e início/fim exatos de cada hino dentro do player.
-- Hino 61 preserva tratamento especial de execução conforme voltas/final da partitura.
--->
-<!-- V6.97: correção do piloto Hino 45 no celular.
-- Restaura configuração completa do Hino 45 com URLs diretas e cache-busting do MP3.
-- Ao abrir uma mídia, o modal leva o player ativo para a área visível em vez de voltar ao topo.
-- No celular, o modal de mídia volta a permitir rolagem interna quando necessária, evitando player oculto.
-- Mantidos os IDs aprovados: Spotify 0834t6lumVQ5FKetjMgREw, YouTube aFtzMzwvMfo e YouTube Music DF966OAKcUQ.
--->
-<!-- V6.96: correção do retorno do modal do hino.
-- O modal do hino passa a usar o mesmo bloqueio de rolagem do modal de Pesquisa (body.modal-open).
-- Removido o bloqueio direto em document.documentElement, que fazia o Chrome móvel recalcular o sticky ao fechar o hino.
-- Menu e cabeçalho da ocasião preservam a posição ao retornar do modal.
-- Base V6.95 e correção de Analytics preservadas.
--->
-<!-- V6.95: restauração do comportamento original dos cabeçalhos fixos.
-- Removida a estratégia V6.94 com position:fixed, placeholder e espaço artificial.
-- Menu de navegação volta a usar position:sticky no fluxo normal da página.
-- Cabeçalho da ocasião volta a usar position:sticky logo abaixo do menu.
-- A altura do menu é recalculada ao entrar/sair de ocasião, redimensionar, rotacionar ou retornar ao Guia.
-- Evita o grande espaço em branco/atropelamento ao retornar para a lista.
-- Correção do Analytics da V6.93 preservada.
--->
-
-<!-- V6.93: correção do Google Analytics para consultas de hinos.
-- O evento consultar_hino passa a ser enviado sempre que o detalhe de um hino/coro é realmente aberto.
-- Consultas pela lista, favoritos, histórico, links compartilhados, registros e estudo passam a alimentar “Hinos mais consultados”.
-- O clique em resultado de pesquisa mantém o evento pesquisar_hino, evitando contagem dupla de consultar_hino.
-- Mídias, letras, favoritos, registros e compartilhamentos da V6.92 preservados.
--->
-<!-- V6.92: integração completa dos Hinos 51–60.
-- Letras dos Hinos 51–60 adicionadas ao objeto LETRAS, conforme a partitura final(2).pdf.
-- Estruturas musicais preservadas: estrofes, coros e Final.
-- Mídias da V6.91 preservadas.
-- Hino 52: a expressão final da 1ª estrofe foi completada como “grande amor”, corroborada por fontes externas,
-  pois a partitura fornecida apresenta a linha visualmente truncada após “por Seu”.
-- Base 1–50, Coro 1, busca por letra, favoritos, registros e compartilhamentos preservados.
--->
-<!-- V6.91: integração real de mídias dos Hinos 51–60.
-- Hinos 51–60 agora possuem entrada MULTIMIDIA e deixam de cair na mensagem genérica do piloto.
-- Todos recebem referência para audio/hino-XX.mp3.
-- Links externos diretos somente quando confirmados como Orquestra Sacra.
-- Serviços sem ID direto permanecem como “ainda não disponível”.
-- Base 1–50, Coro 1, busca, favoritos, registros e compartilhamentos preservados.
--->
-<!-- V6.90: ajuste de linguagem exclusivamente na interface de mídias.
-- "em validação" foi substituído por "ainda não disponível" para o usuário final.
-- A lógica interna continua igual: somente a mídia sem ID direto fica indisponível.
-- Mídias já validadas permanecem ativas.
-- Hino 45 e demais pilotos/mídias aprovadas preservados.
-- Busca por letra, favoritos, registros e compartilhamentos preservados.
--->
-<!-- V6.89: revisão real das mídias externas Hinos 32–50.
-- Status passa a ser efetivamente por serviço: Spotify, YouTube e YouTube Music.
-- Mantida exclusivamente a fonte Orquestra Sacra/Hyamms para novas mídias externas.
-- Hinos 32–40 preservam Spotify direto da Orquestra Sacra.
-- Hinos 41–50 passam a ter Spotify direto da Orquestra Sacra onde validado.
-- YouTube/YT Music diretos adicionados somente quando o vídeo da Orquestra Sacra foi confirmado.
-- Serviços ainda sem ID direto permanecem individualmente “em validação”.
-- Hino 45 preservado como piloto aprovado.
-- Busca por letra, MP3 local, favoritos, registros e compartilhamentos preservados.
--->
-<!-- V6.88: correção de política de fontes externas.
-- YouTube/YouTube Music diretos só permanecem quando a fonte validada é Orquestra Sacra/Hyamms.
-- Removidas mídias de Orquestra Filarmônica dos Amigos, CouTinho TuBa CCB, JHON CCB, Santo Compasso e Congregar Oficial.
-- Hino 45 preservado como piloto multimídia previamente aprovado.
-- Hinos sem fonte Orquestra Sacra/Hyamms validada retornam para “em validação”.
-- Busca pela letra, MP3 locais, favoritos, registros e compartilhamentos preservados.
--->
-<!-- V6.87: continuidade Hinos 41 a 50 + correção de mídias 32, 33, 34 e 36.
-- YouTube/YouTube Music corrigidos com links diretos confirmados para 32, 33, 34 e 36.
-- Letras adicionadas: Hinos 41–44 e 46–50.
-- Hino 45 preservado integralmente como piloto já validado.
-- Busca por trecho da letra da V6.86 preservada; novos hinos entram automaticamente no índice.
-- MP3 local previsto para 41–44 e 46–50 em audio/hino-N.mp3.
-- Mídias externas do novo lote só recebem ID direto quando há correspondência exata confirmada.
-- Favoritos, chamados, registros, observações e compartilhamento preservados.
--->
-<!-- V6.86: busca por trecho da letra + revisão YouTube Hinos 31–40.
-- Pesquisa passa a considerar número, título, ocasião, apropriação, categoria e letras já cadastradas.
-- Índice de busca é criado uma única vez e reutilizado, evitando normalizar todas as letras a cada tecla.
-- Resultado encontrado somente pela letra mostra o trecho correspondente.
-- YouTube/YouTube Music diretos adicionados após validação: Hinos 31, 32 e 40.
-- Hinos 33, 34, 36 e 39 permanecem em validação para YouTube/YouTube Music.
-- Base funcional e recursos pessoais/compartilhamento preservados.
--->
-<!-- V6.85: consolidação multimídia dos Hinos 31 a 40.
-- MP3 local referenciado para os Hinos 31–40.
-- Spotify direto da Orquestra Sacra validado para todos os Hinos 31–40.
-- YouTube + YouTube Music diretos mantidos somente onde validados: 35, 37 e 38.
-- Demais YouTube/YouTube Music permanecem em validação, sem IDs aproximados.
-- Base funcional V6.84 preservada.
--->
-<!-- V6.84: lote de teste Hinos 31 a 40 sobre a base oficial de produção V6.83.
-- Letras conferidas a partir da partitura/PDF do projeto.
-- Estrutura visual: coro na posição musical indicada pela partitura.
-- MP3 local previsto como arquivo único linearizado; navegador não repete estrofes.
-- Mídias externas: somente IDs diretos validados; demais permanecem em validação.
-- Todas as funções existentes (favoritos, chamados, observações e compartilhamentos) preservadas.
--->
-<!-- V6.83: mídias diretas concluídas para Hinos 22, 26 e 30.
-- IDs de YouTube e YouTube Music fornecidos pelo usuário.
-- Removidos fallbacks youtubeSearch/youtubeMusicSearch nesses três hinos.
-- Players passam a abrir dentro do modal no mesmo padrão dos demais hinos.
--->
-<!-- V6.82: consolidação do compartilhamento preservado.
-- Compartilhar hino: envia somente o hino.
-- Compartilhar registro específico: data + anotação opcional.
-- Recebedor escolhe adicionar aos próprios registros, abrir o hino ou fechar.
-- Nenhum registro recebido é salvo automaticamente.
-- Registros pessoais existentes são preservados.
--->
-<!-- V6.81: estrutura visual da letra revisada conforme a partitura. Hinos 22, 24, 26, 28, 29 e 30: 1a estrofe -> CORO -> 2a -> 3a. Hino 21 permanece com Final especial. -->
-<!-- V6.79: lote Hinos 21-30; letras conforme partitura; Hino 21 com FINAL; mídias diretas somente quando validadas. -->
-<!-- V6.78: Hino 6 com bloco de CORO explicitamente identificado na letra (1-2-3-CORO). -->
-<!-- V6.76: letra do Hino 6 corrigida para seguir a partitura: 1ª estrofe → 2ª estrofe → 3ª estrofe → Coro. -->
-<!-- V6.75: Hinos 11–20 adicionados à base Git atual com IDs diretos para players dentro do modal; somente “Abrir na origem” sai do Guia. -->
-
-<!-- V6.74: Hinos 1-10 com mídias diretas; players internos no modal no padrão do Hino 45. -->
-<!-- V6.73: nenhuma mídia abre nova aba automaticamente. IDs diretos tocam no modal; mídias ainda sem ID ficam visíveis como "ainda não disponível". -->
-<!-- V6.72: removida faixa intermediária de validação. Fallback abre busca exata diretamente em Spotify/YouTube/YouTube Music. -->
-<!-- V6.71: modal de mídias revisado. Instrumental em linha própria + Spotify + YouTube + YouTube Music garantidos para Hinos 1–10. -->
-<!-- V6.68: Hinos 1-5 atualizados; 6-10 adicionados com MP3 único conforme partitura e todas as mídias. -->
-<!-- V6.67: pacote de mídia obrigatório por hino = MP3 local + Spotify + YouTube + YouTube Music; fallback por busca exata quando ID direto não está validado. -->
-<!-- V6.66: audio definitivo em MP3 unico por hino, linearizado conforme a partitura. Hinos 1-5 e 45 tocam uma unica vez; navegador nao repete estrofes. -->
-<!-- V6.65:
-REGRA CONSOLIDADA:
-1) "estrutura" controla somente a apresentação visual da letra.
-2) O coro é escrito uma única vez no modal, na posição lógica indicada pela partitura.
-3) A reprodução do áudio deve obedecer separadamente barras de repetição, retornelas, voltas e finais da partitura.
-4) Hinos 3, 4, 5 e 45: visual 1-CORO-2-3.
-5) Casos como Hino 61 exigem reprodução especial conforme a partitura, não simples repetição do MP3 inteiro.
--->
-<!-- V6.64: Hinos 3 e 4 seguem 1-CORO-2-3; Hino 5 mantém 1-2-3-CORO conforme retornela. -->
-<!-- V6.63: regra visual de letras corrigida — coro escrito uma única vez conforme a disposição/retornela da partitura. -->
-<!-- V6.62: Spotify corrigido nos Hinos 2-5; embed quando ID direto, busca exata Orquestra Sacra como fallback seguro. -->
-<!-- V6.61: Hinos 2-5; letras final.pdf; estrutura musical repetível; áudio externo em pasta. -->
-<!-- V6.60: Hino 1 com transição natural do próprio MP3, sem atraso artificial entre estrofes; 61 BPM mantidos. -->
-<!-- V6.59: Hino 1 com pausa de 1 segundo entre estrofes, mantendo 61 BPM. -->
-<!-- V6.58: Hino 1 a 61 BPM (dentro de 56-66), preload auto e sem atraso artificial entre estrofes. -->
-<!-- V6.57: piloto completo Hino 1 — MuseScore local + Orquestra Sacra + letra do final.pdf. -->
-<!-- V6.54: deep-link da Meia-Hora é consumido após a primeira abertura; F5 volta ao estado inicial. -->
-<!-- V6.53: normalização de busca reforçada com fallback explícito de acentos na pesquisa geral e Meia-Hora. -->
-<!-- V6.52: busca da Meia-Hora normalizada; mensagem específica quando não há coros na relação sugestiva. -->
-<!-- V6.51: pesquisa principal normalizada para ignorar acentos e maiúsculas/minúsculas; inclui título, ocasião e apropriação. -->
-<!-- V6.49: auditoria final concluída; tabela das 5 fases conferida integralmente com a fonte visual; duplicidades da fonte preservadas; base funcional preservada. --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
       content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título, incluindo a relação sugestiva de Hinos para Meia-Hora com andamento. Guia independente e não oficial."><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><link rel="canonical"
       href="https://douphing.github.io/guia-hinario5/"><meta name="application-name" content="Guia Hinário 5"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Guia Hinário 5"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png"><link rel="apple-touch-icon" href="assets/icon-192.png"><meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Guia Hinário 5"><meta property="og:title"
       content="Guia Hinário 5 CCB – Hinos por Ocasião"><meta property="og:description"
@@ -783,7 +379,6 @@ REGRA CONSOLIDADA:
   }
 }
 </style>
-\n\n
 
 
 
@@ -1705,9 +1300,43 @@ body.score-full-open{overflow:hidden!important}
 </style>
 
 
-<style id="v736-midias-130-140">
-#hymnDetail .hd-media-platforms .hd-media-pending{
-  pointer-events:none!important;
+<style id="v736-three-media-consistency">
+/* Mantém as três plataformas no mesmo padrão visual */
+#hymnDetail .hd-media-platforms{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:6px!important;
+}
+#hymnDetail .hd-media-platforms .hd-play{
+  width:100%!important;
+}
+#hymnDetail .hd-media-pending{
+  opacity:.58!important;
+  cursor:not-allowed!important;
+}
+#hymnDetail .hd-media-pending b{
+  opacity:.35!important;
+}
+</style>
+
+
+<style id="v737-force-three-platform-bars">
+#hymnDetail #hdMediaArea .hd-media-platforms{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:6px!important;
+  width:100%!important;
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-platform{
+  display:flex!important;
+  width:100%!important;
+  min-height:42px!important;
+  visibility:visible!important;
+}
+#hymnDetail #hdMediaArea .hd-media-platforms .hd-media-pending{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:.58!important;
 }
 </style>
 
@@ -4309,6 +3938,7 @@ const MULTIMIDIA={
  "149":{
   audio:"audio/hino-149.mp3?v=733",
   spotifyPending:true,
+  youtubePending:true,
   youtubeMusic:"ntixdKdlF6I",
   youtubeMusicStart:1621,
   youtubeMusicEnd:1812,
@@ -6829,16 +6459,19 @@ function openHymnDetail(h,cat){
      : '<div class="hd-unavailable">Instrumental local ainda não cadastrado.</div>';
 
    const platformBtns=[];
-   if(media.spotify||media.spotifySearch||media.spotifyPending){
-     const pending=!media.spotify && (!!media.spotifySearch||!!media.spotifyPending);
+   const hymnNum=Number(h&&h.num);
+   const forceThreePlatforms=Number.isFinite(hymnNum)&&hymnNum>=130&&hymnNum<=160;
+
+   if(forceThreePlatforms||media.spotify||media.spotifySearch||media.spotifyPending){
+     const pending=forceThreePlatforms ? !media.spotify : (!media.spotify && (!!media.spotifySearch||!!media.spotifyPending));
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
-   if(media.youtube||media.youtubeSearch||media.youtubePending){
-     const pending=!media.youtube && (!!media.youtubeSearch||!!media.youtubePending);
+   if(forceThreePlatforms||media.youtube||media.youtubeSearch||media.youtubePending){
+     const pending=forceThreePlatforms ? !media.youtube : (!media.youtube && (!!media.youtubeSearch||!!media.youtubePending));
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
-   if(media.youtubeMusic||media.youtubeMusicSearch){
-     const pending=!media.youtubeMusic && !!media.youtubeMusicSearch;
+   if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
+     const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span>YouTube Music'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
 
@@ -9606,6 +9239,34 @@ body:not(.index-mode):not(.welcome-mode){
   });
 
   window.addEventListener('load',init);
+})();
+</script>
+
+
+<script id="v737-remove-literal-backslash-n">
+(function(){
+  function cleanLiteralBackslashN(){
+    if(!document.body) return;
+    const skip=new Set(['SCRIPT','STYLE','TEXTAREA','PRE','CODE']);
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    let node;
+    while((node=walker.nextNode())){
+      const p=node.parentElement;
+      if(p && skip.has(p.tagName)) continue;
+      if(node.nodeValue && node.nodeValue.includes('\\n')) nodes.push(node);
+    }
+    nodes.forEach(n=>{
+      n.nodeValue=n.nodeValue
+        .replace(/\\n\\n/g,'')
+        .replace(/(^|\s)\\n(?=\s|$)/g,'$1');
+    });
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',cleanLiteralBackslashN,{once:true});
+  }else{
+    cleanLiteralBackslashN();
+  }
 })();
 </script>
 
