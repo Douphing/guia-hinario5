@@ -1,4 +1,11 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.44.1 TESTE: correção do visualizador de partituras.
+- Zoom mínimo reduzido de 100% para 50%.
+- Botão “−” agora reduz para 75% e 50%.
+- Pinça passa a funcionar também a partir de 100%.
+- Arraste habilitado no visualizador, inclusive em partituras multipágina.
+- Base V7.44 preservada fora do visualizador de partituras.
+-->
 <!-- V7.44 TESTE: reconstrução completa das partituras.
 PDFs agrupados hino-A-B são divididos no início real do Hino B.
 A continuação do Hino A é preservada como página 2.
@@ -1400,11 +1407,11 @@ body.score-full-open{overflow:hidden!important}
 
 /* O modal deve permitir rolagem natural quando houver mais de uma página. */
 #scoreFullscreen .score-stage{
-  overflow:auto!important;
+  overflow:hidden!important;
   align-items:flex-start!important;
   justify-content:center!important;
-  touch-action:pan-y pinch-zoom!important;
-  -webkit-overflow-scrolling:touch!important;
+  touch-action:none!important;
+  -webkit-overflow-scrolling:auto!important;
   padding:10px 0 40px!important;
 }
 #scoreFullscreen .score-pages-wrap{
@@ -11622,7 +11629,7 @@ body:not(.index-mode):not(.welcome-mode){
   <div class="score-full-head">
     <div class="score-full-title">
       <strong>Partitura</strong>
-      <small>Partitura · toque e arraste · use pinça para ampliar</small>
+      <small>Partitura · arraste · pinça para ampliar ou reduzir</small>
     </div>
     <div class="score-full-actions">
       <button type="button" id="scoreZoomOut" aria-label="Diminuir zoom">−</button>
@@ -11633,7 +11640,7 @@ body:not(.index-mode):not(.welcome-mode){
   </div>
   <div class="score-stage" id="scoreStage">
     <div class="score-pages-wrap" id="scoreFullPages" aria-label="Páginas da partitura"></div>
-    <div class="score-hint" id="scoreHint">Role para ver todas as páginas · pinça para ampliar</div>
+    <div class="score-hint" id="scoreHint">Arraste para navegar · pinça para ampliar ou reduzir</div>
   </div>
 </div>
 
@@ -11644,9 +11651,22 @@ body:not(.index-mode):not(.welcome-mode){
   function el(id){return document.getElementById(id)}
   function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
   function target(){return el('scoreFullPages')}
+  function constrainPan(){
+    const wrap=target(),stage=el('scoreStage');
+    if(!wrap||!stage)return;
+    const contentW=Math.max(wrap.scrollWidth,wrap.offsetWidth);
+    const contentH=Math.max(wrap.scrollHeight,wrap.offsetHeight);
+    const scaledW=contentW*viewer.scale;
+    const scaledH=contentH*viewer.scale;
+    const maxX=Math.max(0,(scaledW-stage.clientWidth)/2);
+    const minY=Math.min(0,stage.clientHeight-scaledH-20);
+    viewer.x=clamp(viewer.x,-maxX,maxX);
+    viewer.y=clamp(viewer.y,minY,0);
+  }
   function apply(){
     const wrap=target(),reset=el('scoreZoomReset');
     if(!wrap)return;
+    constrainPan();
     wrap.style.transform=`translate(${viewer.x}px,${viewer.y}px) scale(${viewer.scale})`;
     if(reset)reset.textContent=Math.round(viewer.scale*100)+'%';
   }
@@ -11695,7 +11715,7 @@ body:not(.index-mode):not(.welcome-mode){
     const fullTitle=box.querySelector('.score-full-title strong');
     const fullSmall=box.querySelector('.score-full-title small');
     if(fullTitle)fullTitle.textContent=title;
-    if(fullSmall)fullSmall.textContent=pages.length>1?`${pages.length} páginas · role para baixo · pinça para ampliar`:'Partitura · toque e arraste · use pinça para ampliar';
+    if(fullSmall)fullSmall.textContent=pages.length>1?`${pages.length} páginas · arraste para navegar · pinça para ampliar ou reduzir`:'Partitura · arraste · pinça para ampliar ou reduzir';
     box.setAttribute('aria-label','Partitura ampliada de '+title);
     resetView();
     box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.classList.add('score-full-open');
@@ -11707,9 +11727,12 @@ body:not(.index-mode):not(.welcome-mode){
     resetView();setTimeout(()=>el('hdScoreThumb')?.focus(),0);
   }
   function zoomBy(delta){
-    const old=viewer.scale;viewer.scale=clamp(viewer.scale+delta,1,4);
-    if(viewer.scale===1&&!viewer.multiPage){viewer.x=0;viewer.y=0}
-    else if(old!==viewer.scale){viewer.x*=viewer.scale/old;viewer.y*=viewer.scale/old}
+    const old=viewer.scale;viewer.scale=clamp(viewer.scale+delta,.5,4);
+    if(old!==viewer.scale){
+      viewer.x*=viewer.scale/old;
+      viewer.y*=viewer.scale/old;
+    }
+    if(viewer.scale<=1&&!viewer.multiPage){viewer.x=0;viewer.y=0}
     apply();
   }
   function distance(a,b){return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}
@@ -11728,23 +11751,26 @@ body:not(.index-mode):not(.welcome-mode){
     el('scoreZoomReset')?.addEventListener('click',resetView);
     stage.addEventListener('wheel',e=>{e.preventDefault();zoomBy(e.deltaY<0?.18:-.18)},{passive:false});
     stage.addEventListener('pointerdown',e=>{
-      /* Em 100%, partituras multipágina usam a rolagem vertical nativa do celular. */
-      if(viewer.multiPage && viewer.scale===1){
+      e.preventDefault();
+      stage.setPointerCapture?.(e.pointerId);viewer.pointers.set(e.pointerId,e);wrap.classList.add('is-dragging');
+      if(viewer.pointers.size===1){
+        viewer.dragStart={px:e.clientX,py:e.clientY,x:viewer.x,y:viewer.y};
         const now=Date.now();
         if(now-viewer.lastTap<320){resetView();viewer.lastTap=0}else viewer.lastTap=now;
-        return;
+      }else if(viewer.pointers.size===2){
+        const pts=[...viewer.pointers.values()];
+        viewer.pinchStartDistance=distance(pts[0],pts[1]);
+        viewer.pinchStartScale=viewer.scale;
+        viewer.dragStart=null;
+        viewer.lastTap=0;
       }
-      stage.setPointerCapture?.(e.pointerId);viewer.pointers.set(e.pointerId,e);wrap.classList.add('is-dragging');
-      if(viewer.pointers.size===1){viewer.dragStart={px:e.clientX,py:e.clientY,x:viewer.x,y:viewer.y}}
-      else if(viewer.pointers.size===2){const pts=[...viewer.pointers.values()];viewer.pinchStartDistance=distance(pts[0],pts[1]);viewer.pinchStartScale=viewer.scale;viewer.dragStart=null}
-      const now=Date.now();if(now-viewer.lastTap<320){resetView();viewer.lastTap=0}else viewer.lastTap=now;
     });
     stage.addEventListener('pointermove',e=>{
       if(!viewer.pointers.has(e.pointerId))return;viewer.pointers.set(e.pointerId,e);
       if(viewer.pointers.size===2){
         const pts=[...viewer.pointers.values()],d=distance(pts[0],pts[1]);
-        if(viewer.pinchStartDistance>0){viewer.scale=clamp(viewer.pinchStartScale*(d/viewer.pinchStartDistance),1,4);apply()}
-      }else if(viewer.pointers.size===1&&viewer.dragStart&&(viewer.scale>1||viewer.multiPage)){
+        if(viewer.pinchStartDistance>0){viewer.scale=clamp(viewer.pinchStartScale*(d/viewer.pinchStartDistance),.5,4);apply()}
+      }else if(viewer.pointers.size===1&&viewer.dragStart){
         viewer.x=viewer.dragStart.x+(e.clientX-viewer.dragStart.px);viewer.y=viewer.dragStart.y+(e.clientY-viewer.dragStart.py);apply();
       }
     });
@@ -11756,6 +11782,7 @@ body:not(.index-mode):not(.welcome-mode){
   window.initHymnMetronomeUI=function(cfg){if(typeof originalInit==='function')originalInit(cfg);init()};
   document.addEventListener('click',e=>{if(e.target===el('scoreFullscreen'))closeViewer()});
   window.addEventListener('load',init);
+  window.addEventListener('resize',()=>{if(el('scoreFullscreen')?.classList.contains('open'))apply()});
 })();
 </script>
 
