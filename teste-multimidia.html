@@ -1,5 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.52 TESTE: plataformas mais finas, status de indisponibilidade compacto.
+<!-- V7.53 TESTE: plataformas mais finas, status de indisponibilidade compacto.
      Modo Próximo é o padrão; controle de sequência só aparece após abrir
      MP3, YouTube ou YouTube Music. Spotify permanece manual.
      Base V7.51 preservada fora desses controles. -->
@@ -12288,8 +12288,8 @@ body:not(.index-mode):not(.welcome-mode){
 </script>
 
 
-<style id="v751-player-estilos">
-/* V7.51: cores do Guia preservadas, barra pequena e controles reais. */
+<style id="v753-player-estilos">
+/* V7.53: vídeo flutuante mais organizado, arrastável e recolhível. */
 #gaMiniPlayer[hidden],#gaFloatingVideoBar[hidden]{display:none!important}
 #gaMiniPlayer{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));
  transform:translateX(-50%);z-index:10030;width:min(620px,calc(100vw - 20px));
@@ -12313,29 +12313,40 @@ body:not(.index-mode):not(.welcome-mode){
 #gaMiniPlayer .ga-mini-seek input{width:100%;height:18px;padding:0;margin:0;accent-color:#b18438}
 #gaMiniPlayer .ga-mini-seek span{font:700 .63rem Arial,sans-serif;color:#766e62;text-align:center}
 body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bottom,0px)))}
-/* Vídeo continua visível; não transforma YouTube em áudio oculto. */
-#hymnDetail.ga-video-floating{--ga-float-h:clamp(200px,26vw,236px);
+#hymnDetail.ga-video-floating{--ga-float-w:min(420px,calc(100vw - 24px));--ga-float-h:clamp(188px,26vw,236px);
  display:flex!important;pointer-events:none!important;background:transparent!important;
  padding:0!important;backdrop-filter:none!important}
 #hymnDetail.ga-video-floating .hd-card{visibility:hidden!important;pointer-events:none!important}
 #hymnDetail.ga-video-floating #hdYoutube{visibility:visible!important;pointer-events:auto!important;
  position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;right:12px!important;
- left:auto!important;top:auto!important;width:min(420px,calc(100vw - 24px))!important;
- max-width:calc(100vw - 24px)!important;min-height:200px!important;margin:0!important;
+ left:auto!important;top:auto!important;width:var(--ga-float-w)!important;
+ max-width:calc(100vw - 24px)!important;min-height:188px!important;margin:0!important;
  padding:0!important;background:#172b45!important;border:2px solid #b18438!important;
  border-radius:0 0 12px 12px!important;overflow:hidden!important;
- box-shadow:0 10px 32px rgba(0,0,0,.34)!important;z-index:10005!important}
+ box-shadow:0 10px 32px rgba(0,0,0,.34)!important;z-index:10005!important;
+ transform:translate(var(--ga-float-x,0px),var(--ga-float-y,0px))!important}
 #hymnDetail.ga-video-floating #hdYoutube iframe{display:block!important;visibility:visible!important;
- width:100%!important;height:var(--ga-float-h)!important;min-height:200px!important;
+ width:100%!important;height:var(--ga-float-h)!important;min-height:188px!important;
  max-height:none!important;aspect-ratio:auto!important;margin:0!important;border-radius:0!important}
-#gaFloatingVideoBar{--ga-float-h:clamp(200px,26vw,236px);position:fixed;
- right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px) + var(--ga-float-h));
- z-index:10040;width:min(420px,calc(100vw - 24px));padding:6px 8px;
- display:flex;align-items:center;gap:7px;border:1px solid #b18438;border-bottom:none;
+#hymnDetail.ga-video-floating.ga-video-collapsed #hdYoutube{width:1px!important;height:1px!important;min-height:1px!important;
+ opacity:0!important;overflow:hidden!important;right:-9999px!important;bottom:-9999px!important;
+ transform:none!important;pointer-events:none!important}
+#gaFloatingVideoBar{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px) + var(--ga-float-h,220px));
+ z-index:10040;width:var(--ga-float-w,min(420px,calc(100vw - 24px)));padding:6px 8px;
+ display:flex;align-items:center;gap:6px;border:1px solid #b18438;border-bottom:none;
  border-radius:12px 12px 0 0;background:#263746;color:white;box-shadow:0 6px 23px rgba(0,0,0,.28);
- font:700 .69rem Arial,sans-serif}
+ font:700 .69rem Arial,sans-serif;pointer-events:auto!important;cursor:grab;user-select:none;
+ transform:translate(var(--ga-float-x,0px),var(--ga-float-y,0px))}
+#gaFloatingVideoBar.is-dragging{cursor:grabbing}
 #gaFloatingVideoBar strong{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #gaFloatingVideoBar button{background:#f9f7f0!important;min-height:30px;min-width:30px;padding:3px 7px!important;font-size:.68rem!important}
+#hymnDetail.ga-video-floating.ga-video-collapsed #gaFloatingVideoBar{border-bottom:1px solid #b18438;border-radius:12px!important}
+@media(max-width:640px){
+ #hymnDetail.ga-video-floating{--ga-float-w:min(300px,calc(100vw - 18px));--ga-float-h:clamp(138px,42vw,176px)}
+ #gaFloatingVideoBar{width:var(--ga-float-w);right:9px;bottom:calc(9px + env(safe-area-inset-bottom,0px) + var(--ga-float-h));padding:5px 6px;gap:5px;font-size:.62rem}
+ #gaFloatingVideoBar button{min-height:28px;min-width:28px;padding:3px 6px!important;font-size:.60rem!important}
+ #hymnDetail.ga-video-floating #hdYoutube{right:9px!important;bottom:calc(9px + env(safe-area-inset-bottom,0px))!important}
+}
 @media(max-width:400px){#gaMiniPlayer{padding:8px 9px}#gaMiniPlayer .ga-mini-main{gap:5px}
  #gaMiniPlayer .ga-mini-icon{width:31px;height:34px;flex-basis:31px}
  #gaMiniPlayer .ga-mini-buttons{gap:3px}#gaMiniPlayer button{min-width:30px;padding:4px 5px!important}}
@@ -12356,23 +12367,27 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 </div>
 <div id="gaFloatingVideoBar" role="region" aria-label="Controles do vídeo flutuante" hidden>
  <strong id="gaFloatTitle">Vídeo do hino</strong>
+ <button id="gaFloatToggle" type="button" aria-label="Recolher ou mostrar vídeo">Ocultar</button>
  <button id="gaFloatOpen" type="button" aria-label="Abrir modal do hino">Abrir</button>
- <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕ Parar</button>
+ <button id="gaFloatNext" type="button" aria-label="Próximo hino">⏭</button>
+ <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕</button>
 </div>
 
-<script id="v750-player-persistente">
+<script id="v753-player-persistente">
 (function(){
  'use strict';
  const el=id=>document.getElementById(id);
  const detail=el('hymnDetail');
  const mini=el('gaMiniPlayer');const float=el('gaFloatingVideoBar');
- let minimized=false;let activeAudio=null;
+ let minimized=false,activeAudio=null,floatCollapsed=false;
+ let drag=null,floatPos={x:0,y:0};
  const current=()=>window.GuiaReproducaoContinua?.getActive?.()||{};
  const isVideo=k=>k==='youtube'||k==='youtubeMusic';
  const title=()=>{const h=window.__gaCurrentHymn||{};
   return (String(h.num||'').startsWith('Coro ')?'':'Hino ')+String(h.num||'')+' — '+String(h.titulo||'');};
  function fmt(v){if(!Number.isFinite(v)||v<0)return '0:00';
   return Math.floor(v/60)+':'+String(Math.floor(v%60)).padStart(2,'0');}
+ function isMobile(){return window.matchMedia('(max-width:640px)').matches}
  function refreshAudio(){
    const a=current().audio;
    if(!minimized||!a||current().kind!=='instrumental')return;
@@ -12393,9 +12408,33 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      a.addEventListener(evt,()=>{if(current().audio===a)refreshAudio()});
    }
  }
+ function applyFloatMode(){
+   if(!float)return;
+   detail.classList.toggle('ga-video-collapsed',!!floatCollapsed);
+   const btn=el('gaFloatToggle');
+   if(btn){
+     btn.textContent=floatCollapsed?'Vídeo':'Ocultar';
+     btn.setAttribute('aria-label',floatCollapsed?'Mostrar vídeo':'Recolher vídeo');
+     btn.title=floatCollapsed?'Mostrar vídeo':'Recolher vídeo';
+   }
+   el('gaFloatTitle').textContent=title();
+ }
+ function applyFloatPos(){
+   detail.style.setProperty('--ga-float-x', floatPos.x+'px');
+   detail.style.setProperty('--ga-float-y', floatPos.y+'px');
+ }
+ function resetFloatPos(){floatPos={x:0,y:0};applyFloatPos()}
+ function clampFloatPos(x,y){
+   const barW=float?.offsetWidth||300;
+   const barH=float?.offsetHeight||42;
+   const totalH=floatCollapsed?barH:(barH + (isMobile()?176:236));
+   const minX=-(Math.max(0,window.innerWidth - barW - 18));
+   const minY=-(Math.max(0,window.innerHeight - totalH - 18));
+   return {x:Math.max(minX,Math.min(0,x)), y:Math.max(minY,Math.min(0,y))};
+ }
  function showMini(){
-   minimized=true;
-   detail.classList.remove('ga-video-floating');
+   minimized=true; floatCollapsed=false;
+   detail.classList.remove('ga-video-floating','ga-video-collapsed');
    float.hidden=true;mini.hidden=false;
    document.body.classList.add('ga-mini-active');
    watchAudio();refreshAudio();
@@ -12405,14 +12444,16 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    mini.hidden=true;document.body.classList.remove('ga-mini-active');
    detail.classList.add('ga-video-floating');
    float.hidden=false;
-   el('gaFloatTitle').textContent=title();
+   if(floatPos.x===0&&floatPos.y===0) resetFloatPos(); else applyFloatPos();
+   floatCollapsed=isMobile();
+   applyFloatMode();
  }
  function beforeStop(){
-   minimized=false;
+   minimized=false; floatCollapsed=false; drag=null;
    mini.hidden=true;float.hidden=true;
-   detail.classList.remove('ga-video-floating');
+   detail.classList.remove('ga-video-floating','ga-video-collapsed');
    document.body.classList.remove('ga-mini-active');
-   activeAudio=null;
+   activeAudio=null; resetFloatPos();
  }
  function onModalClose(){
    if(!detail.classList.contains('open'))return false;
@@ -12437,8 +12478,15 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    detail.setAttribute('aria-hidden',detail.classList.contains('ga-video-floating')?'false':'true');
    document.body.classList.remove('modal-open');
  }
+ function toggleFloat(){
+   if(!detail.classList.contains('ga-video-floating'))return;
+   floatCollapsed=!floatCollapsed;
+   floatPos=clampFloatPos(floatPos.x,floatPos.y); applyFloatPos();
+   applyFloatMode();
+ }
  el('gaMiniOpen')?.addEventListener('click',reopen);
  el('gaFloatOpen')?.addEventListener('click',reopen);
+ el('gaFloatToggle')?.addEventListener('click',toggleFloat);
  el('gaMiniPlay')?.addEventListener('click',()=>{
    const a=current().audio;if(!a)return;
    if(a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{
@@ -12447,6 +12495,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    refreshAudio();
  });
  el('gaMiniNext')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.advanceNow?.());
+ el('gaFloatNext')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.advanceNow?.());
  el('gaMiniStop')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.cleanup());
  el('gaFloatStop')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.cleanup());
  el('gaMiniProgress')?.addEventListener('input',e=>{
@@ -12455,8 +12504,30 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    try{a.currentTime=a.duration*Math.max(0,Math.min(100,Number(e.target.value)))/100}catch(err){}
    refreshAudio();
  });
+ float?.addEventListener('pointerdown',e=>{
+   if(e.target.closest('button'))return;
+   drag={sx:e.clientX, sy:e.clientY, ox:floatPos.x, oy:floatPos.y};
+   float.classList.add('is-dragging');
+   try{float.setPointerCapture(e.pointerId)}catch(err){}
+ });
+ float?.addEventListener('pointermove',e=>{
+   if(!drag)return;
+   floatPos=clampFloatPos(drag.ox + (e.clientX-drag.sx), drag.oy + (e.clientY-drag.sy));
+   applyFloatPos();
+ });
+ function endDrag(e){
+   if(!drag)return; drag=null; float?.classList.remove('is-dragging');
+   try{float?.releasePointerCapture?.(e.pointerId)}catch(err){}
+ }
+ float?.addEventListener('pointerup',endDrag);
+ float?.addEventListener('pointercancel',endDrag);
+ window.addEventListener('resize',()=>{
+   if(detail.classList.contains('ga-video-floating')){
+     floatPos=clampFloatPos(floatPos.x,floatPos.y); applyFloatPos();
+   }
+ });
  window.GuiaPlayerPersistente={onModalClose,beforeStop,hideForSequence,
-   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden})};
+   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden,collapsed:floatCollapsed})};
 })();
 </script>
 
