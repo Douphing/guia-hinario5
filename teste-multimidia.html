@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.55 TESTE: janela única de vídeo agrupada, arrastável; sem controles soltos. Ocultar pausa vídeo. -->
 <!-- V7.54 TESTE: plataformas mais finas, status de indisponibilidade compacto.
      Modo Próximo é o padrão; controle de sequência só aparece após abrir
      MP3, YouTube ou YouTube Music. Spotify permanece manual.
@@ -12288,14 +12289,12 @@ body:not(.index-mode):not(.welcome-mode){
 </script>
 
 
-<style id="v753-player-estilos">
-/* V7.54: vídeo flutuante mais organizado, arrastável e recolhível. */
+<style id="v755-player-agrupado">
+/* Mini-player MP3 da V7.50: mantido. */
 #gaMiniPlayer[hidden],#gaFloatingVideoBar[hidden]{display:none!important}
-#gaMiniPlayer{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));
- transform:translateX(-50%);z-index:10030;width:min(620px,calc(100vw - 20px));
- padding:9px 12px 8px;border:1px solid #b18438;border-radius:15px;
- background:#fffaf0;color:#263746;box-shadow:0 6px 30px rgba(11,20,28,.30);
- font:700 .76rem/1.3 Arial,sans-serif}
+#gaMiniPlayer{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+ z-index:10030;width:min(620px,calc(100vw - 20px));padding:9px 12px 8px;border:1px solid #b18438;border-radius:15px;
+ background:#fffaf0;color:#263746;box-shadow:0 6px 30px rgba(11,20,28,.30);font:700 .76rem/1.3 Arial,sans-serif}
 #gaMiniPlayer .ga-mini-main{display:flex;align-items:center;gap:8px}
 #gaMiniPlayer .ga-mini-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;
  border-radius:10px;background:#b18438;color:white;font:800 19px Georgia,serif}
@@ -12305,50 +12304,72 @@ body:not(.index-mode):not(.welcome-mode){
 #gaMiniPlayer .ga-mini-buttons{display:flex;gap:5px;align-items:center}
 #gaMiniPlayer button,#gaFloatingVideoBar button{min-height:34px;min-width:34px;padding:4px 7px!important;
  background:#fff!important;color:#263746!important;border:1px solid #d4c29d!important;
- border-radius:9px!important;box-shadow:none!important;cursor:pointer;
- font:800 .75rem Arial,sans-serif!important}
+ border-radius:9px!important;box-shadow:none!important;cursor:pointer;font:800 .75rem Arial,sans-serif!important}
 #gaMiniPlayer button.ga-mini-play{background:#263746!important;color:white!important;border-color:#263746!important}
 #gaMiniPlayer button.ga-mini-stop{background:#faf0dd!important;color:#805115!important}
 #gaMiniPlayer .ga-mini-seek{display:grid;grid-template-columns:37px minmax(0,1fr) 37px;gap:7px;align-items:center;margin-top:6px}
 #gaMiniPlayer .ga-mini-seek input{width:100%;height:18px;padding:0;margin:0;accent-color:#b18438}
 #gaMiniPlayer .ga-mini-seek span{font:700 .63rem Arial,sans-serif;color:#766e62;text-align:center}
 body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bottom,0px)))}
-#hymnDetail.ga-video-floating{--ga-float-w:min(420px,calc(100vw - 24px));--ga-float-h:clamp(188px,26vw,236px);
- display:flex!important;pointer-events:none!important;background:transparent!important;
- padding:0!important;backdrop-filter:none!important}
-#hymnDetail.ga-video-floating .hd-card{visibility:hidden!important;pointer-events:none!important}
-#hymnDetail.ga-video-floating #hdYoutube{visibility:visible!important;pointer-events:auto!important;
- position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;right:12px!important;
- left:auto!important;top:auto!important;width:var(--ga-float-w)!important;
- max-width:calc(100vw - 24px)!important;min-height:188px!important;margin:0!important;
- padding:0!important;background:#172b45!important;border:2px solid #b18438!important;
- border-radius:0 0 12px 12px!important;overflow:hidden!important;
- box-shadow:0 10px 32px rgba(0,0,0,.34)!important;z-index:10005!important;
- transform:translate(var(--ga-float-x,0px),var(--ga-float-y,0px))!important}
-#hymnDetail.ga-video-floating #hdYoutube iframe{display:block!important;visibility:visible!important;
- width:100%!important;height:var(--ga-float-h)!important;min-height:188px!important;
- max-height:none!important;aspect-ratio:auto!important;margin:0!important;border-radius:0!important}
-#hymnDetail.ga-video-floating.ga-video-collapsed #hdYoutube{width:1px!important;height:1px!important;min-height:1px!important;
- opacity:0!important;overflow:hidden!important;right:-9999px!important;bottom:-9999px!important;
- transform:none!important;pointer-events:none!important}
-#gaFloatingVideoBar{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px) + var(--ga-float-h,220px));
- z-index:10040;width:var(--ga-float-w,min(420px,calc(100vw - 24px)));padding:6px 8px;
- display:flex;align-items:center;gap:6px;border:1px solid #b18438;border-bottom:none;
- border-radius:12px 12px 0 0;background:#263746;color:white;box-shadow:0 6px 23px rgba(0,0,0,.28);
- font:700 .69rem Arial,sans-serif;pointer-events:auto!important;user-select:none;
- transform:none!important}
-#gaFloatingVideoBar strong{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#gaFloatingVideoBar button{background:#f9f7f0!important;min-height:30px;min-width:30px;padding:3px 7px!important;font-size:.68rem!important}
-#hymnDetail.ga-video-floating.ga-video-collapsed #gaFloatingVideoBar{border-bottom:1px solid #b18438;border-radius:12px!important}
-@media(max-width:640px){
- #hymnDetail.ga-video-floating{--ga-float-w:min(300px,calc(100vw - 18px));--ga-float-h:clamp(138px,42vw,176px)}
- #gaFloatingVideoBar{width:var(--ga-float-w);right:9px;bottom:calc(9px + env(safe-area-inset-bottom,0px) + var(--ga-float-h));padding:5px 6px;gap:5px;font-size:.62rem}
- #gaFloatingVideoBar button{min-height:28px;min-width:28px;padding:3px 6px!important;font-size:.60rem!important}
- #hymnDetail.ga-video-floating #hdYoutube{right:9px!important;bottom:calc(9px + env(safe-area-inset-bottom,0px))!important}
+/* Toda a janela de vídeo é o mesmo hd-card. Nenhum iframe é movido/recarregado. */
+#hymnDetail.ga-video-floating{display:block!important;inset:0!important;position:fixed!important;
+ padding:0!important;margin:0!important;background:transparent!important;pointer-events:none!important;
+ backdrop-filter:none!important;overflow:visible!important;z-index:10020!important}
+#hymnDetail.ga-video-floating .hd-card{
+ display:flex!important;flex-direction:column!important;gap:0!important;visibility:visible!important;
+ pointer-events:auto!important;position:fixed!important;
+ left:var(--ga-float-left,auto)!important;top:var(--ga-float-top,auto)!important;
+ right:var(--ga-float-right,12px)!important;bottom:var(--ga-float-bottom,12px)!important;
+ width:min(420px,calc(100vw - 24px))!important;min-width:0!important;max-width:calc(100vw - 16px)!important;
+ height:auto!important;min-height:0!important;max-height:calc(100dvh - 16px)!important;
+ margin:0!important;padding:0!important;overflow:hidden!important;border-radius:14px!important;
+ border:2px solid #b18438!important;background:#182838!important;box-shadow:0 12px 36px rgba(0,0,0,.35)!important;
+ transform:none!important;z-index:10021!important;
 }
-@media(max-width:400px){#gaMiniPlayer{padding:8px 9px}#gaMiniPlayer .ga-mini-main{gap:5px}
- #gaMiniPlayer .ga-mini-icon{width:31px;height:34px;flex-basis:31px}
- #gaMiniPlayer .ga-mini-buttons{gap:3px}#gaMiniPlayer button{min-width:30px;padding:4px 5px!important}}
+#hymnDetail.ga-video-floating .hd-card::before,
+#hymnDetail.ga-video-floating .hd-card::after{display:none!important}
+/* Esconder tudo, realmente, exceto a barra e o player. */
+#hymnDetail.ga-video-floating .hd-card > :not(#gaFloatingVideoBar):not(#hdMediaArea){display:none!important}
+#hymnDetail.ga-video-floating #hdMediaArea{display:block!important;position:static!important;
+ width:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;
+ border:0!important;background:transparent!important;overflow:hidden!important}
+#hymnDetail.ga-video-floating #hdMediaArea > :not(#hdYoutube){display:none!important}
+#hymnDetail.ga-video-floating #hdYoutube{display:block!important;visibility:visible!important;
+ position:relative!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+ transform:none!important;z-index:1!important;pointer-events:auto!important;
+ width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;
+ margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;overflow:hidden!important;background:#101923!important}
+#hymnDetail.ga-video-floating #hdYoutube iframe{display:block!important;visibility:visible!important;
+ width:100%!important;max-width:100%!important;height:auto!important;min-height:200px!important;
+ max-height:calc(100dvh - 68px)!important;aspect-ratio:16/9!important;border:0!important;
+ border-radius:0!important;margin:0!important;pointer-events:auto!important}
+/* Barra é filha do mesmo cartão e serve de alça para mover tudo junto. */
+#hymnDetail.ga-video-floating #gaFloatingVideoBar{display:flex!important;visibility:visible!important;
+ position:relative!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+ transform:none!important;order:-1!important;z-index:3!important;flex:0 0 auto!important;
+ align-items:center!important;gap:5px!important;min-height:42px!important;width:100%!important;max-width:100%!important;
+ padding:6px 7px!important;margin:0!important;border:0!important;border-radius:0!important;
+ color:#fff!important;background:#263746!important;box-shadow:none!important;
+ font:700 .69rem/1 Arial,sans-serif!important;cursor:grab!important;
+ touch-action:none!important;user-select:none!important;-webkit-user-select:none!important}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar.is-dragging{cursor:grabbing!important}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar strong{flex:1 1 auto!important;min-width:0!important;
+ overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:.72rem!important}
+#hymnDetail.ga-video-floating #gaFloatingVideoBar button{flex:0 0 auto!important;
+ min-width:28px!important;min-height:29px!important;padding:3px 6px!important;
+ border:1px solid #d8c8a4!important;border-radius:9px!important;background:#f9f7f0!important;
+ color:#263746!important;box-shadow:none!important;font:800 .66rem/1 Arial,sans-serif!important;
+ cursor:pointer!important;touch-action:manipulation!important}
+#hymnDetail.ga-video-floating.ga-video-collapsed #hdYoutube{display:none!important}
+#hymnDetail.ga-video-floating.ga-video-collapsed .hd-card{max-height:55px!important}
+@media(max-width:640px){
+ #hymnDetail.ga-video-floating .hd-card{width:min(330px,calc(100vw - 16px))!important;border-radius:12px!important}
+ #hymnDetail.ga-video-floating #gaFloatingVideoBar{min-height:42px!important;padding:5px!important;gap:4px!important}
+ #hymnDetail.ga-video-floating #gaFloatingVideoBar strong{font-size:.65rem!important}
+ #hymnDetail.ga-video-floating #gaFloatingVideoBar button{font-size:.62rem!important;min-width:28px!important;min-height:30px!important;padding:3px 5px!important}
+ #hymnDetail.ga-video-floating #hdYoutube iframe{min-height:200px!important}
+}
 </style>
 
 <div id="gaMiniPlayer" role="region" aria-label="Reprodução de MP3" hidden>
@@ -12365,27 +12386,34 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  <div class="ga-mini-seek"><span id="gaMiniElapsed">0:00</span><input id="gaMiniProgress" type="range" min="0" max="100" value="0" aria-label="Posição do MP3"><span id="gaMiniDuration">0:00</span></div>
 </div>
 <div id="gaFloatingVideoBar" role="region" aria-label="Controles do vídeo flutuante" hidden>
- <strong id="gaFloatTitle">Vídeo do hino</strong>
- <button id="gaFloatToggle" type="button" aria-label="Recolher ou mostrar vídeo">Ocultar</button>
+ <strong id="gaFloatTitle" title="Arraste aqui para mover a janela">⠿ Vídeo do hino</strong>
+ <button id="gaFloatToggle" type="button" aria-label="Ocultar vídeo (pausa a reprodução)">Ocultar</button>
  <button id="gaFloatOpen" type="button" aria-label="Abrir modal do hino">Abrir</button>
  <button id="gaFloatNext" type="button" aria-label="Próximo hino">⏭</button>
  <button id="gaFloatStop" type="button" aria-label="Parar vídeo e fechar">✕</button>
 </div>
 
-<script id="v754-player-persistente">
+<script id="v755-player-persistente">
 (function(){
  'use strict';
  const el=id=>document.getElementById(id);
  const detail=el('hymnDetail');
- const mini=el('gaMiniPlayer');const float=el('gaFloatingVideoBar');
- let minimized=false,activeAudio=null,floatCollapsed=false;
+ const card=detail?.querySelector('.hd-card');
+ const mini=el('gaMiniPlayer'),float=el('gaFloatingVideoBar');
+ /* Importante: mover só a barra (não o iframe), para preservar reprodução e posição. */
+ if(card&&float&&float.parentElement!==card)card.insertBefore(float,card.firstChild);
+ let minimized=false,activeAudio=null,floatCollapsed=false,drag=null;
+ let floatPos=null;
  const current=()=>window.GuiaReproducaoContinua?.getActive?.()||{};
  const isVideo=k=>k==='youtube'||k==='youtubeMusic';
  const title=()=>{const h=window.__gaCurrentHymn||{};
   return (String(h.num||'').startsWith('Coro ')?'':'Hino ')+String(h.num||'')+' — '+String(h.titulo||'');};
+ function shortTitle(){
+   const h=window.__gaCurrentHymn||{};
+   return (String(h.num||'').startsWith('Coro ')?'':'Hino ')+String(h.num||'');
+ }
  function fmt(v){if(!Number.isFinite(v)||v<0)return '0:00';
   return Math.floor(v/60)+':'+String(Math.floor(v%60)).padStart(2,'0');}
- function isMobile(){return window.matchMedia('(max-width:640px)').matches}
  function refreshAudio(){
    const a=current().audio;
    if(!minimized||!a||current().kind!=='instrumental')return;
@@ -12406,43 +12434,62 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      a.addEventListener(evt,()=>{if(current().audio===a)refreshAudio()});
    }
  }
+ function positionCard(reset=false){
+   if(!detail.classList.contains('ga-video-floating')||!card)return;
+   const box=card.getBoundingClientRect();
+   const w=box.width||Math.min(420,innerWidth-24),h=box.height||250;
+   if(reset||!floatPos){floatPos={x:Math.max(8,innerWidth-w-12),y:Math.max(8,innerHeight-h-12)};}
+   floatPos.x=Math.max(8,Math.min(innerWidth-w-8,floatPos.x));
+   floatPos.y=Math.max(8,Math.min(innerHeight-h-8,floatPos.y));
+   detail.style.setProperty('--ga-float-left',floatPos.x+'px');
+   detail.style.setProperty('--ga-float-top',floatPos.y+'px');
+   detail.style.setProperty('--ga-float-right','auto');
+   detail.style.setProperty('--ga-float-bottom','auto');
+ }
+ function resetCardPosition(){
+   floatPos=null;
+   for(const k of ['--ga-float-left','--ga-float-top','--ga-float-right','--ga-float-bottom'])detail.style.removeProperty(k);
+ }
  function applyFloatMode(){
-   if(!float)return;
-   detail.classList.toggle('ga-video-collapsed',!!floatCollapsed);
+   detail.classList.toggle('ga-video-collapsed',floatCollapsed);
    const btn=el('gaFloatToggle');
    if(btn){
      btn.textContent=floatCollapsed?'Vídeo':'Ocultar';
-     btn.setAttribute('aria-label',floatCollapsed?'Mostrar vídeo':'Ocultar vídeo');
-     btn.title=floatCollapsed?'Mostrar vídeo':'Ocultar vídeo';
+     btn.setAttribute('aria-label',floatCollapsed?'Mostrar vídeo':'Ocultar vídeo (pausa a reprodução)');
+     btn.title=floatCollapsed?'Mostrar vídeo':'Ocultar vídeo e pausar';
    }
-   el('gaFloatTitle').textContent=title();
+   const t=el('gaFloatTitle');
+   if(t){t.textContent='⠿ '+(innerWidth<=640?shortTitle():title());t.title='Arraste aqui para mover a janela';}
+ }
+ function pauseVideo(){
+   const a=current();
+   try{a.player?.pauseVideo?.()}catch(err){}
+   try{a.iframe?.contentWindow?.postMessage(JSON.stringify({event:'command',func:'pauseVideo',args:[]}),'*')}catch(err){}
  }
  function showMini(){
-   minimized=true; floatCollapsed=false;
+   minimized=true;floatCollapsed=false;
    detail.classList.remove('ga-video-floating','ga-video-collapsed','open','media-open');
    detail.setAttribute('aria-hidden','true');
-   float.hidden=true; mini.hidden=false;
-   document.body.classList.remove('modal-open');
-   document.body.classList.add('ga-mini-active');
+   float.hidden=true;mini.hidden=false;
+   document.body.classList.remove('modal-open');document.body.classList.add('ga-mini-active');
    watchAudio();refreshAudio();
  }
  function showFloat(){
-   minimized=true;
+   minimized=true;floatCollapsed=false; /* Não tocar vídeo com iframe oculto. */
    mini.hidden=true;document.body.classList.remove('ga-mini-active');
-   detail.classList.remove('open','media-open');
+   detail.classList.remove('open','media-open','ga-video-collapsed');
    detail.classList.add('ga-video-floating');
    detail.setAttribute('aria-hidden','false');
    document.body.classList.remove('modal-open');
-   float.hidden=false;
-   floatCollapsed=isMobile();
-   applyFloatMode();
+   float.hidden=false;applyFloatMode();
+   requestAnimationFrame(()=>positionCard(true));
  }
  function beforeStop(){
-   minimized=false; floatCollapsed=false;
+   minimized=false;floatCollapsed=false;drag=null;
    mini.hidden=true;float.hidden=true;
    detail.classList.remove('ga-video-floating','ga-video-collapsed');
    document.body.classList.remove('ga-mini-active');
-   activeAudio=null;
+   activeAudio=null;resetCardPosition();
  }
  function onModalClose(){
    if(!detail.classList.contains('open'))return false;
@@ -12454,8 +12501,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  function reopen(){
    beforeStop();
    detail.classList.add('open','media-open');
-   detail.setAttribute('aria-hidden','false');
-   document.body.classList.add('modal-open');
+   detail.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');
  }
  function hideForSequence(wasHidden){
    if(!wasHidden)return;
@@ -12465,8 +12511,9 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  }
  function toggleFloat(){
    if(!detail.classList.contains('ga-video-floating'))return;
-   floatCollapsed=!floatCollapsed;
-   applyFloatMode();
+   if(!floatCollapsed)pauseVideo();
+   floatCollapsed=!floatCollapsed;applyFloatMode();
+   requestAnimationFrame(()=>positionCard());
  }
  el('gaMiniOpen')?.addEventListener('click',reopen);
  el('gaFloatOpen')?.addEventListener('click',reopen);
@@ -12475,8 +12522,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    const a=current().audio;if(!a)return;
    if(a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{
      el('gaMiniStatus').textContent='Toque novamente para tentar reproduzir';
-   })}else a.pause();
-   refreshAudio();
+   })}else a.pause();refreshAudio();
  });
  el('gaMiniNext')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.advanceNow?.());
  el('gaFloatNext')?.addEventListener('click',()=>window.GuiaReproducaoContinua?.advanceNow?.());
@@ -12488,8 +12534,31 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    try{a.currentTime=a.duration*Math.max(0,Math.min(100,Number(e.target.value)))/100}catch(err){}
    refreshAudio();
  });
+ /* Pointer move na própria barra: o cartão INTEIRO (cabeçalho + iframe) acompanha. */
+ float?.addEventListener('pointerdown',e=>{
+   if(!detail.classList.contains('ga-video-floating')||e.target.closest('button'))return;
+   if(!floatPos)positionCard(true);
+   drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:floatPos.x,top:floatPos.y};
+   float.classList.add('is-dragging');
+   try{float.setPointerCapture(e.pointerId)}catch(err){}
+   e.preventDefault();
+ });
+ float?.addEventListener('pointermove',e=>{
+   if(!drag||drag.id!==e.pointerId)return;
+   floatPos={x:drag.left+e.clientX-drag.x,y:drag.top+e.clientY-drag.y};
+   positionCard();
+ });
+ function stopDrag(e){
+   if(!drag||drag.id!==e.pointerId)return;
+   drag=null;float?.classList.remove('is-dragging');
+   try{float.releasePointerCapture(e.pointerId)}catch(err){}
+ }
+ float?.addEventListener('pointerup',stopDrag);
+ float?.addEventListener('pointercancel',stopDrag);
+ window.addEventListener('resize',()=>{if(detail.classList.contains('ga-video-floating'))requestAnimationFrame(()=>positionCard());});
  window.GuiaPlayerPersistente={onModalClose,beforeStop,hideForSequence,
-   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden,collapsed:floatCollapsed})};
+   isHidden:()=>minimized,getState:()=>({minimized,mini:!mini.hidden,floating:!float.hidden,collapsed:floatCollapsed,
+    grouped:float?.parentElement===card})};
 })();
 </script>
 
