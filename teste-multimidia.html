@@ -1,4 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.48 TESTE: leitura contínua das partituras em celulares.
+- Todas as páginas ficam visíveis em sequência também no celular; sem botões Anterior/Próxima.
+- Coro 5: os dois recortes são reunidos na tela sem separação artificial.
+- Tela ajusta a partitura completa à altura disponível no celular; Largura permite leitura com rolagem.
+- Zoom, arraste, pinça e desktop mantidos; dados do projeto e index.html preservados.
+-->
 <!-- V7.47 TESTE: visualizador de partituras responsivo (sem alterar os dados dos hinos).
 - Desktop: páginas em sequência, rolagem contínua, ajuste à largura e à altura da página.
 - Celular: uma página por vez, anterior/próxima quando houver, ajuste à tela e à largura.
@@ -1545,6 +1551,20 @@ body.score-full-open{overflow:hidden!important}
   #scoreFullscreen .score-full-actions{gap:3px!important;grid-template-columns:28px minmax(40px,1fr) 28px minmax(44px,1fr) minmax(58px,1.3fr)}
   #scoreFullscreen .score-mobile-pager:not([hidden]){grid-template-columns:minmax(65px,1fr) auto minmax(65px,1fr);gap:4px;padding-inline:5px}
   #scoreFullscreen .score-mobile-pager button{font-size:.61rem;padding:0 4px}
+}
+</style>
+
+<style id="v748-partituras-continuas">
+/* Uma partitura contínua em qualquer tamanho: não altera os elementos do Guia. */
+#scoreFullscreen{grid-template-rows:auto minmax(0,1fr)!important}
+#scoreFullscreen .score-mobile-pager{display:none!important}
+@media(max-width:600px){
+  #scoreFullscreen .score-pages-wrap{gap:6px!important;padding-bottom:8px!important}
+  #scoreFullscreen .score-page-block{gap:0!important}
+  #scoreFullscreen .score-page-label{display:none!important}
+  #scoreFullscreen.coro5-continuo .score-pages-wrap{gap:0!important}
+  #scoreFullscreen.coro5-continuo .score-pages-wrap .score-page{box-shadow:none!important}
+  #scoreFullscreen .score-stage{padding-bottom:12px!important}
 }
 </style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
@@ -11735,15 +11755,10 @@ body:not(.index-mode):not(.welcome-mode){
     <div class="score-pages-wrap" id="scoreFullPages" aria-label="Páginas da partitura"></div>
     <div class="score-hint" id="scoreHint">Arraste para navegar · pinça para ampliar ou reduzir</div>
   </div>
-  <nav class="score-mobile-pager" id="scoreMobilePager" aria-label="Navegação entre páginas" hidden>
-    <button type="button" id="scorePrevPage" aria-label="Página anterior">‹ Anterior</button>
-    <span id="scorePageCounter" role="status" aria-live="polite">Página 1 de 1</span>
-    <button type="button" id="scoreNextPage" aria-label="Próxima página">Próxima ›</button>
-  </nav>
 </div>
 
 
-<script id="v747-partitura-engine">
+<script id="v748-partitura-engine">
 (function(){
   'use strict';
   // A V7.47 modifica apenas a apresentação das imagens externas das partituras.
@@ -11786,39 +11801,29 @@ body:not(.index-mode):not(.welcome-mode){
   function currentImage(){return viewer.pages[viewer.pageIndex]?.querySelector('img')||null}
   function pageCountText(){return `Página ${viewer.pageIndex+1} de ${viewer.pageCount}`}
   function updatePageMode(){
-    viewer.mobilePaged=mobile();
-    viewer.pages.forEach((block,i)=>{block.hidden=viewer.mobilePaged&&i!==viewer.pageIndex});
-    const pager=el('scoreMobilePager');
-    if(pager)pager.hidden=!(viewer.mobilePaged&&viewer.pageCount>1);
-    const counter=el('scorePageCounter');if(counter)counter.textContent=pageCountText();
-    const prev=el('scorePrevPage'),next=el('scoreNextPage');
-    if(prev)prev.disabled=viewer.pageIndex===0;
-    if(next)next.disabled=viewer.pageIndex>=viewer.pageCount-1;
+    // Todas as páginas ficam visíveis: o celular usa a mesma leitura contínua do desktop.
+    viewer.mobilePaged=false;
+    viewer.pages.forEach(block=>{block.hidden=false});
     const sub=el('scoreFullscreen')?.querySelector('.score-full-title small');
-    if(sub){sub.textContent=viewer.mobilePaged?
-      `${pageCountText()} · pinça ou botões para zoom`:
-      `${viewer.pageCount} ${viewer.pageCount===1?'página':'páginas'} · rolagem contínua`;}
-    const hint=el('scoreHint');if(hint){hint.textContent=viewer.mobilePaged?
-      'Arraste para navegar · pinça para zoom':
+    if(sub){sub.textContent=`${viewer.pageCount} ${viewer.pageCount===1?'página':'páginas'} · leitura contínua`;}
+    const hint=el('scoreHint');if(hint){hint.textContent=mobile()?
+      'Deslize para ler · pinça para zoom':
       'Role para navegar · Ctrl + roda para zoom';}
-  }
-  function setPage(index){
-    if(!viewer.mobilePaged||!viewer.pageCount)return;
-    viewer.pageIndex=clamp(index,0,viewer.pageCount-1);
-    viewer.x=0;viewer.y=0;clearGestures();
-    updatePageMode();
-    updateFit(false);
   }
   function updateFit(reset=true){
     const stage=el('scoreStage'),wrap=target();if(!stage||!wrap)return;
     const availW=Math.max(120,Math.min(1250,stage.clientWidth-(mobile()?12:30)));
     let width=availW;
     if(viewer.fitMode==='page'){
-      const img=currentImage()||viewer.pages[0]?.querySelector('img');
-      const ratio=img?.naturalWidth>0&&img?.naturalHeight>0?
-        img.naturalHeight/img.naturalWidth:1.414;
-      const availH=Math.max(120,stage.clientHeight-(mobile()?26:55));
-      width=Math.min(availW,availH/Math.max(.1,ratio));
+      const images=(mobile()?viewer.pages:[viewer.pages[0]])
+        .map(block=>block?.querySelector('img')).filter(Boolean);
+      // No celular, Tela considera a altura das páginas reunidas (e não só a primeira).
+      const totalRatio=images.reduce((sum,img)=>sum+(
+        img.naturalWidth>0&&img.naturalHeight>0?
+        img.naturalHeight/img.naturalWidth:1.414),0)||1.414;
+      const gap=mobile()?Math.max(0,viewer.pageCount-1)*(el('scoreFullscreen')?.classList.contains('coro5-continuo')?0:6):0;
+      const availH=Math.max(120,stage.clientHeight-(mobile()?20:55));
+      width=Math.min(availW,(availH-gap)/Math.max(.1,totalRatio));
     }
     wrap.style.setProperty('--score-fit-width',`${Math.max(80,Math.floor(width))}px`);
     if(reset){viewer.scale=1;viewer.x=0;viewer.y=0;clearGestures()}
@@ -11845,7 +11850,7 @@ body:not(.index-mode):not(.welcome-mode){
       unavailable.textContent=`Não foi possível carregar a página ${i+1}. Confira a pasta assets/partituras/`;
       img.addEventListener('load',()=>{
         if(!opened())return;
-        if(viewer.fitMode==='page'&&viewer.pageIndex===i)updateFit(false);
+        if(viewer.fitMode==='page')updateFit(false);
         else requestAnimationFrame(apply);
       });
       img.addEventListener('error',()=>{
@@ -11863,12 +11868,13 @@ body:not(.index-mode):not(.welcome-mode){
     const box=el('scoreFullscreen');if(!box)return;
     const thumb=el('hdScoreThumb'),title=thumb?.dataset?.scoreTitle||'Partitura';
     const pages=parsePages(thumb);
+    box.classList.toggle('coro5-continuo',/^coro\s*5\b/i.test(title));
     renderPages(pages,title);
     const heading=box.querySelector('.score-full-title strong');if(heading)heading.textContent=title;
     box.setAttribute('aria-label','Partitura ampliada de '+title);
     box.classList.add('open');box.setAttribute('aria-hidden','false');
     document.body.classList.add('score-full-open');
-    viewer.fitMode='width';updateFit(true);
+    viewer.fitMode=box.classList.contains('coro5-continuo')?'page':'width';updateFit(true);
     requestAnimationFrame(()=>el('scoreFullClose')?.focus());
   }
   function closeViewer(){
@@ -11911,8 +11917,6 @@ body:not(.index-mode):not(.welcome-mode){
     el('scoreZoomReset')?.addEventListener('click',resetView);
     el('scoreFitPage')?.addEventListener('click',()=>setFit('page'));
     el('scoreFitWidth')?.addEventListener('click',()=>setFit('width'));
-    el('scorePrevPage')?.addEventListener('click',()=>setPage(viewer.pageIndex-1));
-    el('scoreNextPage')?.addEventListener('click',()=>setPage(viewer.pageIndex+1));
     stage.addEventListener('wheel',e=>{
       e.preventDefault();
       if(e.ctrlKey||e.metaKey){
@@ -11982,8 +11986,6 @@ body:not(.index-mode):not(.welcome-mode){
         e.preventDefault();viewer.y=0;apply();
       }else if(e.key==='End'){
         e.preventDefault();viewer.y=-1e9;apply();
-      }else if(viewer.mobilePaged&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){
-        e.preventDefault();setPage(viewer.pageIndex+(e.key==='ArrowRight'?1:-1));
       }
     });
   }
