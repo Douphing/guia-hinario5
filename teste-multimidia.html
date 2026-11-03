@@ -1,9 +1,16 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.44.2 TESTE: navegação aprimorada no visualizador de partituras.
+<!-- V7.47 TESTE: visualizador de partituras responsivo (sem alterar os dados dos hinos).
+- Desktop: páginas em sequência, rolagem contínua, ajuste à largura e à altura da página.
+- Celular: uma página por vez, anterior/próxima quando houver, ajuste à tela e à largura.
+- Zoom por botões, Ctrl/Command + roda, pinça e arraste; teclas de navegação mantidas.
+- Metrônomo, áudio, letras, registros, favoritos e dados das mídias preservados.
+- Requer os arquivos externos em assets/partituras/; produção index.html não alterada.
+-->
+<!-- V7.46 TESTE: navegação aprimorada no visualizador de partituras.
 - Em partituras multipágina, a roda do mouse percorre as páginas; Ctrl/Command + roda ajusta o zoom.
 - Teclas PageUp/PageDown, Home/End e setas percorrem partituras multipágina.
 - Falhas de carregamento de páginas exibem aviso legível, sem ocultar outras páginas.
-- Base V7.44.1 preservada fora do visualizador.
+- Versões V7.44.x preservadas no histórico; demais recursos não alterados.
 -->
 <!-- V7.44.1 TESTE: correção do visualizador de partituras.
 - Zoom mínimo reduzido de 100% para 50%.
@@ -1465,6 +1472,80 @@ body.score-full-open{overflow:hidden!important}
 <style id="v7442-partitura-feedback">
 #scoreFullscreen .score-page-unavailable{max-width:min(94vw,560px);margin:8px;padding:18px 14px;border:1px solid #e8c39c;border-radius:12px;background:#fff8ed;color:#583f2f;text-align:center;font:700 .87rem/1.45 Arial,sans-serif}
 #scoreFullscreen .score-page-unavailable[hidden],#scoreFullscreen .score-page[hidden]{display:none!important}
+</style>
+
+<style id="v747-partituras-responsivas">
+/* Somente o visualizador ampliado: não interfere nas mídias nem no metrônomo. */
+#scoreFullscreen {grid-template-rows:auto minmax(0,1fr) auto!important}
+#scoreFullscreen .score-full-head {
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;
+  align-items:center!important;gap:9px!important;padding:9px 12px!important;
+}
+#scoreFullscreen .score-full-title{min-width:0}
+#scoreFullscreen .score-full-title strong{font-size:.92rem}
+#scoreFullscreen .score-full-actions{display:flex!important;justify-content:flex-end!important;flex-wrap:nowrap!important;gap:5px!important}
+#scoreFullscreen .score-full-actions button{white-space:nowrap!important}
+#scoreFullscreen .score-full-actions button[aria-pressed="true"]{
+  background:#b18438!important;color:#fff!important;border-color:#b18438!important;
+}
+#scoreFullscreen #scoreFullClose{
+  min-width:74px;height:36px;padding:0 10px;border-radius:9px;
+  background:#fff;color:#172b45;border:1px solid #fff;
+  font:800 .70rem/1 Arial,sans-serif;cursor:pointer;
+}
+#scoreFullscreen .score-stage{min-width:0;min-height:0;overflow:hidden!important;touch-action:none!important;padding:10px 0 24px!important}
+#scoreFullscreen .score-pages-wrap{
+  width:var(--score-fit-width,auto)!important;
+  max-width:100%!important;min-width:0!important;margin:0 auto!important;
+  transform-origin:top center!important;
+}
+#scoreFullscreen .score-page-block{width:100%!important;min-width:0!important}
+#scoreFullscreen .score-pages-wrap .score-page{
+  width:var(--score-fit-width,auto)!important;max-width:100%!important;
+  height:auto!important;object-fit:contain!important;user-select:none;
+}
+#scoreFullscreen .score-pages-wrap .score-page[hidden],
+#scoreFullscreen .score-pages-wrap .score-page-block[hidden]{display:none!important}
+#scoreFullscreen .score-mobile-pager{display:none!important}
+#scoreFullscreen .score-hint{bottom:6px!important}
+@media(max-width:600px){
+  #scoreFullscreen .score-full-head{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:auto auto!important;
+    gap:7px!important;padding:7px 9px 8px!important;
+  }
+  #scoreFullscreen .score-full-title{grid-column:1;grid-row:1}
+  #scoreFullscreen .score-full-title strong{font-size:.79rem!important}
+  #scoreFullscreen .score-full-title small{font-size:.59rem!important}
+  #scoreFullscreen #scoreFullClose{grid-column:2;grid-row:1;min-width:66px;height:32px;padding:0 7px;font-size:.63rem}
+  #scoreFullscreen .score-full-actions{
+    grid-column:1/-1;grid-row:2;justify-content:center!important;
+    display:grid!important;grid-template-columns:33px minmax(44px,1fr) 33px minmax(50px,1fr) minmax(66px,1.3fr);
+    gap:5px!important;
+  }
+  #scoreFullscreen .score-full-actions button{min-width:0!important;width:100%;height:34px!important;padding:0 3px!important;font-size:.64rem!important}
+  #scoreFullscreen .score-stage{padding:7px 0 23px!important}
+  #scoreFullscreen .score-pages-wrap{gap:0!important;padding-bottom:12px!important}
+  #scoreFullscreen .score-page-label{display:none!important}
+  #scoreFullscreen .score-mobile-pager:not([hidden]){
+    display:grid!important;grid-template-columns:minmax(80px,1fr) auto minmax(80px,1fr);
+    gap:7px;align-items:center;min-height:48px;padding:6px 9px calc(6px + env(safe-area-inset-bottom));
+    background:#172b45;border-top:1px solid rgba(255,255,255,.18);color:#e5e9ed;
+  }
+  #scoreFullscreen .score-mobile-pager button{
+    min-width:0;height:34px;border:1px solid rgba(255,255,255,.32);border-radius:9px;
+    background:#30465d;color:#fff;padding:0 7px;font:800 .69rem Arial,sans-serif;
+  }
+  #scoreFullscreen #scoreNextPage{background:#b18438;border-color:#b18438}
+  #scoreFullscreen .score-mobile-pager button:disabled{opacity:.38;cursor:default}
+  #scoreFullscreen #scorePageCounter{text-align:center;white-space:nowrap;font:800 .61rem Arial,sans-serif}
+  #scoreFullscreen .score-hint{font-size:.48rem!important;bottom:3px!important}
+}
+@media(max-width:350px){
+  #scoreFullscreen .score-full-actions{gap:3px!important;grid-template-columns:28px minmax(40px,1fr) 28px minmax(44px,1fr) minmax(58px,1.3fr)}
+  #scoreFullscreen .score-mobile-pager:not([hidden]){grid-template-columns:minmax(65px,1fr) auto minmax(65px,1fr);gap:4px;padding-inline:5px}
+  #scoreFullscreen .score-mobile-pager button{font-size:.61rem;padding:0 4px}
+}
 </style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
@@ -11641,35 +11722,47 @@ body:not(.index-mode):not(.welcome-mode){
       <strong>Partitura</strong>
       <small>Partitura · arraste · pinça para ampliar ou reduzir</small>
     </div>
-    <div class="score-full-actions">
-      <button type="button" id="scoreZoomOut" aria-label="Diminuir zoom">−</button>
-      <button type="button" id="scoreZoomReset" aria-label="Restaurar zoom">100%</button>
-      <button type="button" id="scoreZoomIn" aria-label="Aumentar zoom">+</button>
-      <button type="button" class="score-close" id="scoreFullClose">✕ Fechar</button>
+    <div class="score-full-actions" aria-label="Controles de visualização">
+      <button type="button" id="scoreZoomOut" aria-label="Diminuir zoom" title="Diminuir zoom">−</button>
+      <button type="button" id="scoreZoomReset" aria-label="Restaurar zoom a 100%" title="Restaurar zoom">100%</button>
+      <button type="button" id="scoreZoomIn" aria-label="Aumentar zoom" title="Aumentar zoom">+</button>
+      <button type="button" id="scoreFitPage" aria-pressed="false" aria-label="Ajustar página inteira à tela" title="Ajustar página inteira à tela">Tela</button>
+      <button type="button" id="scoreFitWidth" aria-pressed="true" aria-label="Ajustar à largura da tela" title="Ajustar à largura disponível">Largura</button>
     </div>
+    <button type="button" class="score-close" id="scoreFullClose" aria-label="Fechar visualizador">✕ Fechar</button>
   </div>
-  <div class="score-stage" id="scoreStage">
+  <div class="score-stage" id="scoreStage" aria-label="Área de leitura da partitura">
     <div class="score-pages-wrap" id="scoreFullPages" aria-label="Páginas da partitura"></div>
     <div class="score-hint" id="scoreHint">Arraste para navegar · pinça para ampliar ou reduzir</div>
   </div>
+  <nav class="score-mobile-pager" id="scoreMobilePager" aria-label="Navegação entre páginas" hidden>
+    <button type="button" id="scorePrevPage" aria-label="Página anterior">‹ Anterior</button>
+    <span id="scorePageCounter" role="status" aria-live="polite">Página 1 de 1</span>
+    <button type="button" id="scoreNextPage" aria-label="Próxima página">Próxima ›</button>
+  </nav>
 </div>
 
 
-<script id="v742-partitura-engine">
+<script id="v747-partitura-engine">
 (function(){
-  const viewer={scale:1,x:0,y:0,pointers:new Map(),pinchStartDistance:0,pinchStartScale:1,dragStart:null,lastTap:0,multiPage:false};
-  function el(id){return document.getElementById(id)}
-  function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
-  function target(){return el('scoreFullPages')}
+  'use strict';
+  // A V7.47 modifica apenas a apresentação das imagens externas das partituras.
+  const viewer={scale:1,x:0,y:0,pointers:new Map(),pinchStartDistance:0,
+    pinchStartScale:1,dragStart:null,lastTap:0,multiPage:false,
+    pageIndex:0,pageCount:0,mobilePaged:false,fitMode:'width',pages:[]};
+  const el=id=>document.getElementById(id);
+  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+  const target=()=>el('scoreFullPages');
+  const mobile=()=>window.matchMedia('(max-width:600px)').matches;
+  const opened=()=>!!el('scoreFullscreen')?.classList.contains('open');
+
   function constrainPan(){
     const wrap=target(),stage=el('scoreStage');
     if(!wrap||!stage)return;
-    const contentW=Math.max(wrap.scrollWidth,wrap.offsetWidth);
-    const contentH=Math.max(wrap.scrollHeight,wrap.offsetHeight);
-    const scaledW=contentW*viewer.scale;
-    const scaledH=contentH*viewer.scale;
+    const contentW=Math.max(wrap.scrollWidth,wrap.offsetWidth),contentH=Math.max(wrap.scrollHeight,wrap.offsetHeight);
+    const scaledW=contentW*viewer.scale,scaledH=contentH*viewer.scale;
     const maxX=Math.max(0,(scaledW-stage.clientWidth)/2);
-    const minY=Math.min(0,stage.clientHeight-scaledH-20);
+    const minY=Math.min(0,stage.clientHeight-scaledH-22);
     viewer.x=clamp(viewer.x,-maxX,maxX);
     viewer.y=clamp(viewer.y,minY,0);
   }
@@ -11680,90 +11773,134 @@ body:not(.index-mode):not(.welcome-mode){
     wrap.style.transform=`translate(${viewer.x}px,${viewer.y}px) scale(${viewer.scale})`;
     if(reset)reset.textContent=Math.round(viewer.scale*100)+'%';
   }
-  function resetView(){viewer.scale=1;viewer.x=0;viewer.y=0;viewer.pointers.clear();viewer.dragStart=null;apply()}
+  function clearGestures(){viewer.pointers.clear();viewer.dragStart=null;target()?.classList.remove('is-dragging')}
+  function resetView(){viewer.scale=1;viewer.x=0;viewer.y=0;clearGestures();apply()}
   function parsePages(thumb){
     try{
-      const raw=thumb?.dataset?.scorePages||'';
-      const arr=JSON.parse(decodeURIComponent(raw));
-      if(Array.isArray(arr)&&arr.length)return arr;
+      const arr=JSON.parse(decodeURIComponent(thumb?.dataset?.scorePages||''));
+      if(Array.isArray(arr)&&arr.length)return arr.filter(x=>typeof x==='string'&&x);
     }catch(e){}
-    const src=thumb?.querySelector('img')?.src;
+    const src=thumb?.querySelector('img')?.getAttribute('src');
     return src?[src]:[];
   }
+  function currentImage(){return viewer.pages[viewer.pageIndex]?.querySelector('img')||null}
+  function pageCountText(){return `Página ${viewer.pageIndex+1} de ${viewer.pageCount}`}
+  function updatePageMode(){
+    viewer.mobilePaged=mobile();
+    viewer.pages.forEach((block,i)=>{block.hidden=viewer.mobilePaged&&i!==viewer.pageIndex});
+    const pager=el('scoreMobilePager');
+    if(pager)pager.hidden=!(viewer.mobilePaged&&viewer.pageCount>1);
+    const counter=el('scorePageCounter');if(counter)counter.textContent=pageCountText();
+    const prev=el('scorePrevPage'),next=el('scoreNextPage');
+    if(prev)prev.disabled=viewer.pageIndex===0;
+    if(next)next.disabled=viewer.pageIndex>=viewer.pageCount-1;
+    const sub=el('scoreFullscreen')?.querySelector('.score-full-title small');
+    if(sub){sub.textContent=viewer.mobilePaged?
+      `${pageCountText()} · pinça ou botões para zoom`:
+      `${viewer.pageCount} ${viewer.pageCount===1?'página':'páginas'} · rolagem contínua`;}
+    const hint=el('scoreHint');if(hint){hint.textContent=viewer.mobilePaged?
+      'Arraste para navegar · pinça para zoom':
+      'Role para navegar · Ctrl + roda para zoom';}
+  }
+  function setPage(index){
+    if(!viewer.mobilePaged||!viewer.pageCount)return;
+    viewer.pageIndex=clamp(index,0,viewer.pageCount-1);
+    viewer.x=0;viewer.y=0;clearGestures();
+    updatePageMode();
+    updateFit(false);
+  }
+  function updateFit(reset=true){
+    const stage=el('scoreStage'),wrap=target();if(!stage||!wrap)return;
+    const availW=Math.max(120,Math.min(1250,stage.clientWidth-(mobile()?12:30)));
+    let width=availW;
+    if(viewer.fitMode==='page'){
+      const img=currentImage()||viewer.pages[0]?.querySelector('img');
+      const ratio=img?.naturalWidth>0&&img?.naturalHeight>0?
+        img.naturalHeight/img.naturalWidth:1.414;
+      const availH=Math.max(120,stage.clientHeight-(mobile()?26:55));
+      width=Math.min(availW,availH/Math.max(.1,ratio));
+    }
+    wrap.style.setProperty('--score-fit-width',`${Math.max(80,Math.floor(width))}px`);
+    if(reset){viewer.scale=1;viewer.x=0;viewer.y=0;clearGestures()}
+    el('scoreFitPage')?.setAttribute('aria-pressed',String(viewer.fitMode==='page'));
+    el('scoreFitWidth')?.setAttribute('aria-pressed',String(viewer.fitMode==='width'));
+    // Layout nas imagens carregadas pode ser concluído no próximo quadro.
+    requestAnimationFrame(apply);
+  }
+  function setFit(mode){viewer.fitMode=mode;updateFit(true)}
   function renderPages(pages,title){
-    const wrap=target(); if(!wrap)return;
-    wrap.innerHTML='';
+    const wrap=target();if(!wrap)return;
+    wrap.replaceChildren();viewer.pages=[];viewer.pageCount=pages.length;viewer.pageIndex=0;
     pages.forEach((src,i)=>{
-      const block=document.createElement('div');
-      block.className='score-page-block';
-
+      const block=document.createElement('div');block.className='score-page-block';
       if(pages.length>1){
-        const label=document.createElement('span');
-        label.className='score-page-label';
-        label.textContent=`Página ${i+1} de ${pages.length}`;
-        block.appendChild(label);
+        const label=document.createElement('span');label.className='score-page-label';
+        label.textContent=`Página ${i+1} de ${pages.length}`;block.appendChild(label);
       }
-
-      const img=document.createElement('img');
-      img.className='score-page';
-      img.src=src;
+      const img=document.createElement('img');img.className='score-page';
       img.alt=`${title||'Partitura'} — página ${i+1} de ${pages.length}`;
-      img.draggable=false;
-      const unavailable=document.createElement('div');
-      unavailable.className='score-page-unavailable';
-      unavailable.hidden=true;
-      unavailable.setAttribute('role','status');
+      img.draggable=false;img.decoding='async';
+      const unavailable=document.createElement('div');unavailable.className='score-page-unavailable';
+      unavailable.hidden=true;unavailable.setAttribute('role','status');
       unavailable.textContent=`Não foi possível carregar a página ${i+1}. Confira a pasta assets/partituras/`;
+      img.addEventListener('load',()=>{
+        if(!opened())return;
+        if(viewer.fitMode==='page'&&viewer.pageIndex===i)updateFit(false);
+        else requestAnimationFrame(apply);
+      });
       img.addEventListener('error',()=>{
-        img.hidden=true;
-        unavailable.hidden=false;
-        apply();
+        img.hidden=true;unavailable.hidden=false;
+        if(opened())requestAnimationFrame(apply);
       },{once:true});
-      block.appendChild(img);
-      block.appendChild(unavailable);
-      wrap.appendChild(block);
+      block.append(img,unavailable);wrap.appendChild(block);viewer.pages.push(block);
+      img.src=src;
     });
     viewer.multiPage=pages.length>1;
-    const stage=el('scoreStage');
-    if(stage){stage.scrollTop=0;stage.scrollLeft=0}
+    const stage=el('scoreStage');if(stage){stage.scrollTop=0;stage.scrollLeft=0}
+    updatePageMode();
   }
   function openViewer(){
-    const box=el('scoreFullscreen'); if(!box)return;
-    const thumb=el('hdScoreThumb');
-    const title=thumb?.dataset?.scoreTitle||'Partitura';
+    const box=el('scoreFullscreen');if(!box)return;
+    const thumb=el('hdScoreThumb'),title=thumb?.dataset?.scoreTitle||'Partitura';
     const pages=parsePages(thumb);
     renderPages(pages,title);
-    const fullTitle=box.querySelector('.score-full-title strong');
-    const fullSmall=box.querySelector('.score-full-title small');
-    if(fullTitle)fullTitle.textContent=title;
-    if(fullSmall)fullSmall.textContent=pages.length>1?`${pages.length} páginas · arraste ou role para navegar · pinça para zoom`:'Partitura · arraste · pinça para ampliar ou reduzir';
-    const hint=el('scoreHint');
-    if(hint)hint.textContent=pages.length>1?'Arraste ou use a roda do mouse para navegar · Ctrl + roda para zoom':'Arraste para navegar · pinça para ampliar ou reduzir';
+    const heading=box.querySelector('.score-full-title strong');if(heading)heading.textContent=title;
     box.setAttribute('aria-label','Partitura ampliada de '+title);
-    resetView();
-    box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.classList.add('score-full-open');
-    setTimeout(()=>el('scoreFullClose')?.focus(),0);
+    box.classList.add('open');box.setAttribute('aria-hidden','false');
+    document.body.classList.add('score-full-open');
+    viewer.fitMode='width';updateFit(true);
+    requestAnimationFrame(()=>el('scoreFullClose')?.focus());
   }
   function closeViewer(){
     const box=el('scoreFullscreen');if(!box)return;
-    box.classList.remove('open');box.setAttribute('aria-hidden','true');document.body.classList.remove('score-full-open');
-    resetView();setTimeout(()=>el('hdScoreThumb')?.focus(),0);
+    box.classList.remove('open');box.setAttribute('aria-hidden','true');
+    document.body.classList.remove('score-full-open');
+    resetView();requestAnimationFrame(()=>el('hdScoreThumb')?.focus());
+  }
+  function zoomAt(scale,clientX,clientY){
+    const stage=el('scoreStage');if(!stage)return;
+    const old=viewer.scale,next=clamp(scale,.5,4);if(old===next)return;
+    const rect=stage.getBoundingClientRect();
+    const ax=clientX-rect.left,ay=clientY-rect.top;
+    const originX=stage.clientWidth/2,originY=10;
+    const r=next/old;
+    viewer.x+=(ax-originX-viewer.x)*(1-r);
+    viewer.y+=(ay-originY-viewer.y)*(1-r);
+    viewer.scale=next;apply();
   }
   function zoomBy(delta){
-    const old=viewer.scale;viewer.scale=clamp(viewer.scale+delta,.5,4);
-    if(old!==viewer.scale){
-      viewer.x*=viewer.scale/old;
-      viewer.y*=viewer.scale/old;
-    }
-    if(viewer.scale<=1&&!viewer.multiPage){viewer.x=0;viewer.y=0}
-    apply();
+    const stage=el('scoreStage');if(!stage)return;
+    const rect=stage.getBoundingClientRect();
+    zoomAt(viewer.scale+delta,rect.left+rect.width/2,rect.top+rect.height/2);
   }
   function distance(a,b){return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}
   function init(){
     const thumb=el('hdScoreThumb');
     if(thumb&&!thumb.dataset.scoreBound){
       thumb.dataset.scoreBound='1';thumb.addEventListener('click',openViewer);
-      thumb.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openViewer()}});
+      thumb.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();openViewer()}
+      });
     }
     const box=el('scoreFullscreen'),stage=el('scoreStage'),wrap=target();
     if(!box||!stage||!wrap||box.dataset.bound)return;
@@ -11772,50 +11909,71 @@ body:not(.index-mode):not(.welcome-mode){
     el('scoreZoomIn')?.addEventListener('click',()=>zoomBy(.25));
     el('scoreZoomOut')?.addEventListener('click',()=>zoomBy(-.25));
     el('scoreZoomReset')?.addEventListener('click',resetView);
+    el('scoreFitPage')?.addEventListener('click',()=>setFit('page'));
+    el('scoreFitWidth')?.addEventListener('click',()=>setFit('width'));
+    el('scorePrevPage')?.addEventListener('click',()=>setPage(viewer.pageIndex-1));
+    el('scoreNextPage')?.addEventListener('click',()=>setPage(viewer.pageIndex+1));
     stage.addEventListener('wheel',e=>{
       e.preventDefault();
-      if(viewer.multiPage && !e.ctrlKey && !e.metaKey){
-        const factor=e.deltaMode===1?16:e.deltaMode===2?stage.clientHeight:1;
-        viewer.x-=e.deltaX*factor;
-        viewer.y-=e.deltaY*factor;
-        apply();
+      if(e.ctrlKey||e.metaKey){
+        const delta=e.deltaY<0?.18:-.18;zoomAt(viewer.scale+delta,e.clientX,e.clientY);
       }else{
-        zoomBy(e.deltaY<0?.18:-.18);
+        const factor=e.deltaMode===1?16:e.deltaMode===2?stage.clientHeight:1;
+        viewer.x-=e.deltaX*factor;viewer.y-=e.deltaY*factor;apply();
       }
     },{passive:false});
     stage.addEventListener('pointerdown',e=>{
+      if(e.pointerType==='mouse'&&e.button!==0)return;
       e.preventDefault();
-      stage.setPointerCapture?.(e.pointerId);viewer.pointers.set(e.pointerId,e);wrap.classList.add('is-dragging');
+      stage.setPointerCapture?.(e.pointerId);viewer.pointers.set(e.pointerId,e);
+      wrap.classList.add('is-dragging');
       if(viewer.pointers.size===1){
         viewer.dragStart={px:e.clientX,py:e.clientY,x:viewer.x,y:viewer.y};
-        const now=Date.now();
-        if(now-viewer.lastTap<320){resetView();viewer.lastTap=0}else viewer.lastTap=now;
       }else if(viewer.pointers.size===2){
         const pts=[...viewer.pointers.values()];
         viewer.pinchStartDistance=distance(pts[0],pts[1]);
         viewer.pinchStartScale=viewer.scale;
-        viewer.dragStart=null;
-        viewer.lastTap=0;
+        viewer.dragStart=null;viewer.lastTap=0;
       }
     });
     stage.addEventListener('pointermove',e=>{
-      if(!viewer.pointers.has(e.pointerId))return;viewer.pointers.set(e.pointerId,e);
+      if(!viewer.pointers.has(e.pointerId))return;
+      viewer.pointers.set(e.pointerId,e);
       if(viewer.pointers.size===2){
         const pts=[...viewer.pointers.values()],d=distance(pts[0],pts[1]);
-        if(viewer.pinchStartDistance>0){viewer.scale=clamp(viewer.pinchStartScale*(d/viewer.pinchStartDistance),.5,4);apply()}
+        const midX=(pts[0].clientX+pts[1].clientX)/2,midY=(pts[0].clientY+pts[1].clientY)/2;
+        if(viewer.pinchStartDistance>0){
+          zoomAt(viewer.pinchStartScale*d/viewer.pinchStartDistance,midX,midY);
+        }
       }else if(viewer.pointers.size===1&&viewer.dragStart){
-        viewer.x=viewer.dragStart.x+(e.clientX-viewer.dragStart.px);viewer.y=viewer.dragStart.y+(e.clientY-viewer.dragStart.py);apply();
+        viewer.x=viewer.dragStart.x+(e.clientX-viewer.dragStart.px);
+        viewer.y=viewer.dragStart.y+(e.clientY-viewer.dragStart.py);
+        apply();
       }
     });
-    function pointerEnd(e){viewer.pointers.delete(e.pointerId);if(viewer.pointers.size===0){viewer.dragStart=null;wrap.classList.remove('is-dragging')}else if(viewer.pointers.size===1){const p=[...viewer.pointers.values()][0];viewer.dragStart={px:p.clientX,py:p.clientY,x:viewer.x,y:viewer.y}}}
-    stage.addEventListener('pointerup',pointerEnd);stage.addEventListener('pointercancel',pointerEnd);
+    function pointerEnd(e){
+      const start=viewer.dragStart;
+      viewer.pointers.delete(e.pointerId);
+      if(viewer.pointers.size===0){
+        if(start&&Math.hypot(e.clientX-start.px,e.clientY-start.py)<12){
+          const now=Date.now();
+          if(now-viewer.lastTap<310){resetView();viewer.lastTap=0}
+          else viewer.lastTap=now;
+        }
+        viewer.dragStart=null;wrap.classList.remove('is-dragging');
+      }else if(viewer.pointers.size===1){
+        const p=[...viewer.pointers.values()][0];
+        viewer.dragStart={px:p.clientX,py:p.clientY,x:viewer.x,y:viewer.y};
+      }
+    }
+    stage.addEventListener('pointerup',pointerEnd);
+    stage.addEventListener('pointercancel',pointerEnd);
     document.addEventListener('keydown',e=>{
-      if(!box.classList.contains('open'))return;
-      if(e.key==='Escape'){closeViewer();return}
+      if(!opened())return;
+      if(e.key==='Escape'){e.preventDefault();closeViewer();return}
       if(e.key==='+'||e.key==='='){e.preventDefault();zoomBy(.25);return}
       if(e.key==='-'){e.preventDefault();zoomBy(-.25);return}
       if(e.key==='0'){e.preventDefault();resetView();return}
-      if(!viewer.multiPage)return;
       const step=Math.max(80,Math.round(stage.clientHeight*.75));
       const moves={ArrowDown:70,ArrowUp:-70,PageDown:step,PageUp:-step};
       if(Object.prototype.hasOwnProperty.call(moves,e.key)){
@@ -11824,14 +11982,24 @@ body:not(.index-mode):not(.welcome-mode){
         e.preventDefault();viewer.y=0;apply();
       }else if(e.key==='End'){
         e.preventDefault();viewer.y=-1e9;apply();
+      }else if(viewer.mobilePaged&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){
+        e.preventDefault();setPage(viewer.pageIndex+(e.key==='ArrowRight'?1:-1));
       }
     });
   }
   const originalInit=window.initHymnMetronomeUI;
-  window.initHymnMetronomeUI=function(cfg){if(typeof originalInit==='function')originalInit(cfg);init()};
-  document.addEventListener('click',e=>{if(e.target===el('scoreFullscreen'))closeViewer()});
+  window.initHymnMetronomeUI=function(cfg){
+    if(typeof originalInit==='function')originalInit(cfg);
+    init();
+  };
   window.addEventListener('load',init);
-  window.addEventListener('resize',()=>{if(el('scoreFullscreen')?.classList.contains('open'))apply()});
+  window.addEventListener('resize',()=>{
+    if(!opened())return;
+    const wasPaged=viewer.mobilePaged;
+    updatePageMode();
+    if(wasPaged!==viewer.mobilePaged){viewer.x=0;viewer.y=0}
+    updateFit(false);
+  });
 })();
 </script>
 
