@@ -1,4 +1,13 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.36 TESTE: restauração visual das mídias 130–140.
+- Base V7.35 preservada.
+- Hinos 130–140 passam a mostrar Spotify e YouTube mesmo quando o ID direto não existe no histórico.
+- IDs já construídos continuam intactos.
+- YouTube Music 130–140 e respectivos timestamps permanecem intactos.
+- Nenhum link novo ou fallback de busca foi inventado.
+- Hinos 1–129 e 141–160 preservados.
+-->
+
 <!-- V7.35 TESTE: correção navegação + presença visual do Spotify.
 - Base V7.34 preservada.
 - Removido o contador central n/n da navegação entre hinos.
@@ -1692,6 +1701,13 @@ body.score-full-open{overflow:hidden!important}
 }
 #hymnDetail .hd-play.hd-media-pending .brand.spotify{
   opacity:.82;
+}
+</style>
+
+
+<style id="v736-midias-130-140">
+#hymnDetail .hd-media-platforms .hd-media-pending{
+  pointer-events:none!important;
 }
 </style>
 
@@ -4070,6 +4086,7 @@ const MULTIMIDIA={
  },
  "133":{
   audio:"audio/hino-133.mp3?v=707",
+  spotifyPending:true,
   youtube:"TCsSgthx5aE",
   youtubeOrigin:"https://www.youtube.com/watch?v=TCsSgthx5aE",
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -4083,6 +4100,8 @@ const MULTIMIDIA={
  },
  "134":{
   audio:"audio/hino-134.mp3?v=707",
+  spotifyPending:true,
+  youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=664s",
   youtubeMusicStart:664,
@@ -4094,6 +4113,7 @@ const MULTIMIDIA={
  },
  "135":{
   audio:"audio/hino-135.mp3?v=707",
+  spotifyPending:true,
   youtube:"mOMkaOmb-pU",
   youtubeOrigin:"https://www.youtube.com/watch?v=mOMkaOmb-pU",
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -4107,6 +4127,8 @@ const MULTIMIDIA={
  },
  "136":{
   audio:"audio/hino-136.mp3?v=707",
+  spotifyPending:true,
+  youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1052s",
   youtubeMusicStart:1052,
@@ -4118,6 +4140,8 @@ const MULTIMIDIA={
  },
  "137":{
   audio:"audio/hino-137.mp3?v=707",
+  spotifyPending:true,
+  youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1273s",
   youtubeMusicStart:1273,
@@ -4146,6 +4170,8 @@ const MULTIMIDIA={
  },
  "139":{
   audio:"audio/hino-139.mp3?v=707",
+  spotifyPending:true,
+  youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1622s",
   youtubeMusicStart:1622,
@@ -4157,6 +4183,7 @@ const MULTIMIDIA={
  },
  "140":{
   audio:"audio/hino-140.mp3?v=707",
+  youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1807s",
   youtubeMusicStart:1807,
@@ -6806,8 +6833,8 @@ function openHymnDetail(h,cat){
      const pending=!media.spotify && (!!media.spotifySearch||!!media.spotifyPending);
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span>Spotify'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
-   if(media.youtube||media.youtubeSearch){
-     const pending=!media.youtube && !!media.youtubeSearch;
+   if(media.youtube||media.youtubeSearch||media.youtubePending){
+     const pending=!media.youtube && (!!media.youtubeSearch||!!media.youtubePending);
      platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span>YouTube'+(pending?' · ainda não disponível':'')+'</span><b>›</b></button>');
    }
    if(media.youtubeMusic||media.youtubeMusicSearch){
