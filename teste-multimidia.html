@@ -1,4 +1,10 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.38 TESTE: metrônomo adaptativo nos Hinos 141–160.
+Base V7.37 preservada.
+Hino 125 continua com o metrônomo e partitura anteriores.
+Hinos 141–160 usam metrônomo compacto sem miniatura de partitura.
+A pulsação acompanha o compasso: 6/8, 4/4, 3/4 ou 2/4.
+-->
 <!-- V7.37 TESTE: limpeza definitiva do topo e padrão fixo das três mídias.
 Base V7.36. Hinos 130–160 sempre exibem Spotify, YouTube e YouTube Music.
 Mídias sem link direto permanecem visíveis e desativadas.
@@ -1337,6 +1343,21 @@ body.score-full-open{overflow:hidden!important}
   display:flex!important;
   visibility:visible!important;
   opacity:.58!important;
+}
+</style>
+
+
+<style id="v738-metronomo-sem-partitura">
+#hymnDetail .hd-metronome.no-score .hd-v728-grid{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+#hymnDetail .hd-metronome.no-score .hd-v728-controls{
+  width:100%!important;
+}
+@media(max-width:600px){
+  #hymnDetail .hd-metronome.no-score .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
 }
 </style>
 
@@ -3835,6 +3856,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:145,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=0s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:110,
+    min:100,
+    max:120,
+    unidade:"colcheia",
+    unidadeSimbolo:"♪",
+    compasso:"6/8",
+    tonalidade:"Mi♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3848,6 +3880,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:340,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=145s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:100,
+    min:88,
+    max:112,
+    unidade:"colcheia",
+    unidadeSimbolo:"♪",
+    compasso:"6/8",
+    tonalidade:"Fá maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3863,6 +3906,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:605,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=340s",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:73,
+    min:66,
+    max:80,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Ré maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3878,6 +3932,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:831,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=605s",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:73,
+    min:66,
+    max:80,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"3/4",
+    tonalidade:"Mi♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3891,6 +3956,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1026,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=831s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:123,
+    min:108,
+    max:138,
+    unidade:"colcheia",
+    unidadeSimbolo:"♪",
+    compasso:"6/8",
+    tonalidade:"Ré♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3904,6 +3980,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1228,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=1026s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:68,
+    min:60,
+    max:76,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"3/4",
+    tonalidade:"Ré maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3919,6 +4006,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1453,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=1228s",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:80,
+    min:72,
+    max:88,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3932,6 +4030,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1621,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=1453s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:64,
+    min:56,
+    max:72,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"3/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3944,6 +4053,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1812,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=1621s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo",
+  metronomo:{
+    bpm:80,
+    min:72,
+    max:88,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Sol maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
@@ -3957,6 +4077,17 @@ const MULTIMIDIA={
   youtubeMusicStart:1812,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=ntixdKdlF6I&t=1812s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:62,
+    min:54,
+    max:69,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3970,6 +4101,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:254,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=0s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:75,
+    min:66,
+    max:84,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3983,6 +4125,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:455,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=254s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:82,
+    min:72,
+    max:92,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -3996,6 +4149,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:658,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=455s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:70,
+    min:60,
+    max:80,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Si♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4009,6 +4173,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:843,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=658s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:117,
+    min:108,
+    max:126,
+    unidade:"colcheia",
+    unidadeSimbolo:"♪",
+    compasso:"6/8",
+    tonalidade:"Mi♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4022,6 +4197,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1023,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=843s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:68,
+    min:60,
+    max:76,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Dó maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4035,6 +4221,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1216,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1023s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:76,
+    min:63,
+    max:88,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Mi♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4048,6 +4245,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1413,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1216s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:66,
+    min:60,
+    max:72,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"3/4",
+    tonalidade:"Lá♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4061,6 +4269,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1543,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1413s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:66,
+    min:60,
+    max:72,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"2/4",
+    tonalidade:"Dó maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4074,6 +4293,17 @@ const MULTIMIDIA={
   youtubeMusicEnd:1745,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1543s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:68,
+    min:60,
+    max:76,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Sol maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -4088,6 +4318,17 @@ const MULTIMIDIA={
   youtubeMusicStart:1745,
   youtubeMusicOrigin:"https://www.youtube.com/watch?v=rDHTsO_1K-k&t=1745s",
   fonteExterna:"Spotify: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo · YouTube: link direto fornecido pelo usuário",
+  metronomo:{
+    bpm:100,
+    min:88,
+    max:112,
+    unidade:"semínima",
+    unidadeSimbolo:"♩",
+    compasso:"4/4",
+    tonalidade:"Mi♭ maior",
+    volume:50,
+    partitura:false
+  },
   repeticoes:1,
   modoReproducao:"partitura"
  },
@@ -9046,6 +9287,284 @@ body:not(.index-mode):not(.welcome-mode){
 })();
 </script>
 
+
+
+<script id="v738-metronomo-compassos-engine">
+(function(){
+  const oldBuild=window.buildHymnMetronomeHtml;
+  const oldInit=window.initHymnMetronomeUI;
+  const oldStop=window.stopHymnMetronome;
+
+  const st={
+    ctx:null,timer:null,running:false,nextTime:0,beat:0,
+    bpm:80,defaultBpm:80,min:40,max:180,volumeUI:50,
+    mode:'primary',config:null,pulses:null,active:false
+  };
+
+  function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
+
+  function pulseConfig(cfg){
+    const meter=String(cfg.compasso||'4/4');
+    const unit=cfg.unidadeSimbolo||'♩';
+    if(meter==='6/8'){
+      return {
+        primary:{label:`${unit} 6 tempos`,beats:6,factor:1,secondaryAccent:3},
+        secondary:{label:'♩. 2 pulsações',beats:2,factor:1/3,secondaryAccent:-1}
+      };
+    }
+    const num=Math.max(1,Number((meter.split('/')[0]||4)));
+    return {
+      primary:{label:`${unit} ${num} ${num===1?'tempo':'tempos'}`,beats:num,factor:1,secondaryAccent:-1},
+      secondary:null
+    };
+  }
+
+  function getCtx(){
+    if(!st.ctx)st.ctx=new (window.AudioContext||window.webkitAudioContext)();
+    if(st.ctx.state==='suspended')st.ctx.resume();
+    return st.ctx;
+  }
+
+  function effectiveGain(){
+    const v=clamp(st.volumeUI,0,100)/100;
+    if(v<=0)return 0;
+    if(v<=.5)return .14+(v/.5)*.76;
+    return .90+((v-.5)/.5)*.82;
+  }
+
+  function clickAt(time,accent){
+    const ctx=getCtx();
+    const comp=ctx.createDynamicsCompressor();
+    comp.threshold.setValueAtTime(-10,time);
+    comp.knee.setValueAtTime(8,time);
+    comp.ratio.setValueAtTime(5,time);
+    comp.attack.setValueAtTime(.002,time);
+    comp.release.setValueAtTime(.08,time);
+    comp.connect(ctx.destination);
+
+    const master=ctx.createGain();
+    master.gain.setValueAtTime(effectiveGain(),time);
+    master.connect(comp);
+
+    const o1=ctx.createOscillator(),g1=ctx.createGain();
+    o1.type='square';
+    o1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
+    g1.gain.setValueAtTime(accent===2?.95:accent===1?.72:.56,time);
+    g1.gain.exponentialRampToValueAtTime(.001,time+.06);
+    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.065);
+
+    const o2=ctx.createOscillator(),g2=ctx.createGain();
+    o2.type='sine';
+    o2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
+    g2.gain.setValueAtTime(accent===2?.40:accent===1?.28:.20,time);
+    g2.gain.exponentialRampToValueAtTime(.001,time+.05);
+    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.055);
+  }
+
+  function currentPulse(){
+    if(st.mode==='secondary' && st.pulses?.secondary)return st.pulses.secondary;
+    return st.pulses?.primary||{beats:4,factor:1,secondaryAccent:-1};
+  }
+
+  function effectiveBpm(){return st.bpm*currentPulse().factor}
+  function beatsPerMeasure(){return currentPulse().beats}
+
+  function schedule(){
+    if(!st.running||!st.ctx)return;
+    const ctx=st.ctx,look=.11,p=currentPulse();
+    while(st.nextTime<ctx.currentTime+look){
+      const accent=st.beat===0?2:(p.secondaryAccent===st.beat?1:0);
+      clickAt(st.nextTime,accent);
+      st.nextTime+=60/Math.max(1,effectiveBpm());
+      st.beat=(st.beat+1)%Math.max(1,beatsPerMeasure());
+    }
+  }
+
+  function refresh(){
+    const input=document.getElementById('hdMetroBpmInput');
+    const sum=document.getElementById('hdMetronomeSummaryBpm');
+    const start=document.getElementById('hdMetroStart');
+    const vol=document.getElementById('hdMetroVolumeText');
+    if(input&&document.activeElement!==input)input.value=String(st.bpm);
+    if(sum)sum.textContent=String(st.bpm);
+    if(start){
+      start.textContent=st.running?'■ Parar':'▶ Iniciar';
+      start.classList.toggle('is-running',st.running);
+    }
+    if(vol)vol.textContent=Math.round(st.volumeUI)+'%';
+    document.querySelectorAll('#hymnDetail .hd-v728-pulse [data-mode]').forEach(btn=>{
+      btn.classList.toggle('is-active',btn.dataset.mode===st.mode);
+    });
+  }
+
+  function genericStop(){
+    if(st.timer){clearInterval(st.timer);st.timer=null}
+    st.running=false;st.beat=0;
+    if(st.ctx)st.nextTime=st.ctx.currentTime+.05;
+    if(st.active)refresh();
+  }
+
+  window.stopHymnMetronome=function(){
+    genericStop();
+    try{ if(oldStop) oldStop(); }catch(e){}
+  };
+
+  function start(){
+    const ctx=getCtx();
+    st.running=true;st.beat=0;st.nextTime=ctx.currentTime+.06;
+    schedule();
+    if(st.timer)clearInterval(st.timer);
+    st.timer=setInterval(schedule,25);
+    refresh();
+  }
+
+  function setBpm(value){
+    st.bpm=clamp(Math.round(Number(value)||st.defaultBpm),st.min,st.max);
+    refresh();
+  }
+
+  function setMode(mode){
+    if(mode==='secondary'&&!st.pulses?.secondary)mode='primary';
+    st.mode=mode==='secondary'?'secondary':'primary';
+    st.beat=0;
+    if(st.running)st.nextTime=getCtx().currentTime+.06;
+    refresh();
+  }
+
+  function setPanelOpen(open){
+    const wrap=document.getElementById('hdMetronome');
+    const panel=document.getElementById('hdMetronomePanel');
+    const toggle=document.getElementById('hdMetronomeToggle');
+    const stateText=document.getElementById('hdMetronomeState');
+    if(!wrap||!panel||!toggle)return;
+    wrap.classList.toggle('is-open',open);
+    panel.hidden=!open;
+    toggle.setAttribute('aria-expanded',String(open));
+    if(stateText)stateText.textContent=open?'Fechar':'Abrir';
+  }
+
+  window.buildHymnMetronomeHtml=function(cfg){
+    if(cfg?.partitura!==false && oldBuild)return oldBuild(cfg);
+
+    const bpm=Number(cfg.bpm||80);
+    const unit=cfg.unidadeSimbolo||'♩';
+    const meter=cfg.compasso||'';
+    const key=cfg.tonalidade||'';
+    const volume=Number(cfg.volume??50);
+    const min=Number(cfg.min||40);
+    const max=Number(cfg.max||180);
+    const pulses=pulseConfig(cfg);
+    const alt=pulses.secondary
+      ? `<button type="button" data-mode="secondary">${pulses.secondary.label}</button>`
+      : '';
+
+    return `
+      <div class="hd-metronome no-score" id="hdMetronome">
+        <button type="button" class="hd-metronome-toggle" id="hdMetronomeToggle"
+          aria-expanded="false" aria-controls="hdMetronomePanel">
+          <span class="hd-metronome-icon" aria-hidden="true">${unit}</span>
+          <span class="hd-metronome-summary">
+            <strong>Metrônomo</strong>
+            <small>${unit} = <span id="hdMetronomeSummaryBpm">${bpm}</span>${meter?' · '+meter:''}${key?' · '+key:''}</small>
+          </span>
+          <span class="hd-metronome-state" id="hdMetronomeState">Abrir</span>
+        </button>
+
+        <div class="hd-metronome-panel" id="hdMetronomePanel" hidden>
+          <div class="hd-v728-grid">
+            <div class="hd-v728-controls">
+              <div class="hd-v728-primary">
+                <div class="hd-v728-bpm-group">
+                  <button type="button" class="hd-v728-step" id="hdMetroMinus" aria-label="Diminuir andamento">−</button>
+                  <label class="hd-v728-bpm" title="Toque no número para digitar o BPM">
+                    <b>${unit}</b>
+                    <input id="hdMetroBpmInput" type="number" inputmode="numeric"
+                      min="${min}" max="${max}" value="${bpm}" aria-label="Andamento em BPM">
+                  </label>
+                  <button type="button" class="hd-v728-step" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
+                </div>
+                <button type="button" class="hd-v728-start" id="hdMetroStart">▶ Iniciar</button>
+              </div>
+
+              <div class="hd-v728-secondary">
+                <div class="hd-v728-pulse-wrap">
+                  <span class="hd-v728-label">Pulso</span>
+                  <div class="hd-v728-pulse">
+                    <button type="button" data-mode="primary" class="is-active">${pulses.primary.label}</button>
+                    ${alt}
+                  </div>
+                </div>
+                <button type="button" class="hd-v728-reset" id="hdMetroReset">↺ Padrão</button>
+              </div>
+
+              <div class="hd-v728-tertiary">
+                <label class="hd-v728-volume">
+                  <span class="vol-label">🔊 Volume</span>
+                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
+                  <span id="hdMetroVolumeText">${volume}%</span>
+                </label>
+                <div class="hd-v728-range">${unit} ${min}–${max}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  window.initHymnMetronomeUI=function(cfg){
+    if(cfg?.partitura!==false && oldInit){
+      st.active=false;
+      genericStop();
+      return oldInit(cfg);
+    }
+
+    try{ if(oldStop) oldStop(); }catch(e){}
+    st.active=true;
+    st.config=cfg||{};
+    st.defaultBpm=Number(cfg.bpm||80);
+    st.bpm=st.defaultBpm;
+    st.min=Number(cfg.min||40);
+    st.max=Number(cfg.max||180);
+    st.volumeUI=clamp(Number(cfg.volume??50),0,100);
+    st.pulses=pulseConfig(cfg);
+    st.mode='primary';
+    genericStop();
+
+    const toggle=document.getElementById('hdMetronomeToggle');
+    toggle?.addEventListener('click',()=>{
+      const open=toggle.getAttribute('aria-expanded')!=='true';
+      setPanelOpen(open);
+    });
+
+    document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(st.bpm-2));
+    document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(st.bpm+2));
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>st.running?genericStop():start());
+
+    const input=document.getElementById('hdMetroBpmInput');
+    input?.addEventListener('change',()=>setBpm(input.value));
+    input?.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){setBpm(input.value);input.blur();}
+    });
+
+    document.querySelectorAll('#hymnDetail .hd-v728-pulse [data-mode]').forEach(btn=>{
+      btn.addEventListener('click',()=>setMode(btn.dataset.mode));
+    });
+
+    document.getElementById('hdMetroReset')?.addEventListener('click',()=>{
+      st.bpm=st.defaultBpm;st.mode='primary';st.beat=0;
+      if(st.running)st.nextTime=getCtx().currentTime+.06;
+      refresh();
+    });
+
+    document.getElementById('hdMetroVolume')?.addEventListener('input',e=>{
+      st.volumeUI=clamp(Number(e.target.value),0,100);
+      refresh();
+    });
+
+    refresh();
+  };
+})();
+</script>
 
 <div id="scoreFullscreen" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Partitura ampliada do Hino 125">
   <div class="score-full-head">
