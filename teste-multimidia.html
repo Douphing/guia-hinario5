@@ -1,5 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.60 TESTE: controles de mídia com ícones, transporte e modos de término separados;
+<!-- V7.61 TESTE: controles de mídia com ícones, transporte e modos de término separados;
      repetir hino, pausa/reprodução e encerramento sem fechar o modal; V7.58 preservada. -->
 <!-- V7.58 TESTE: minimização com vídeo YouTube sempre visível (mínimo 200x200), sem pausa deliberada;
      controles Anterior/Próximo em mini player MP3 e vídeo flutuante;
@@ -8888,22 +8888,22 @@ function openHymnDetail(h,cat){
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
      '<div class="hd-sequence" id="hdSequence" aria-label="Controles da mídia" hidden>'+
        '<div class="hd-sequence-transport" role="group" aria-label="Controles de reprodução">'+
-         '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">⏮</button>'+
-         '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">▶</button>'+
-         '<button type="button" data-media-action="next" title="Próximo hino" aria-label="Reproduzir próximo hino">⏭</button>'+
-         '<button type="button" data-media-action="stop" title="Parar reprodução, mantendo a mídia aberta" aria-label="Parar reprodução">⏹</button>'+
-         '<button type="button" data-media-action="close" title="Fechar somente a mídia" aria-label="Fechar somente a mídia, mantendo o hino aberto">✕</button>'+
+         '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">'+guiaControleSvg('previous')+'</button>'+
+         '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">'+guiaControleSvg('play')+'</button>'+
+         '<button type="button" data-media-action="next" title="Próximo hino" aria-label="Reproduzir próximo hino">'+guiaControleSvg('next')+'</button>'+
+         '<button type="button" data-media-action="stop" title="Parar reprodução, mantendo a mídia aberta" aria-label="Parar reprodução">'+guiaControleSvg('stop')+'</button>'+
+         '<button type="button" data-media-action="close" title="Fechar somente a mídia" aria-label="Fechar somente a mídia, mantendo o hino aberto">'+guiaControleSvg('close')+'</button>'+
        '</div>'+
        '<div class="hd-sequence-ending">'+
          '<span class="hd-sequence-label">Ao terminar</span>'+
          '<div class="hd-sequence-modes" role="group" aria-label="Escolha o que acontece ao terminar">'+
-           '<button type="button" data-sequence="stop" aria-pressed="false" title="Parar ao terminar" aria-label="Parar ao terminar">🔚</button>'+
-           '<button type="button" data-sequence="next" aria-pressed="true" title="Próximo ao terminar" aria-label="Próximo hino ao terminar">⏭</button>'+
-           '<button type="button" data-sequence="repeat" aria-pressed="false" title="Repetir o mesmo hino" aria-label="Repetir o mesmo hino ao terminar">🔂</button>'+
-           '<button type="button" data-sequence="random" aria-pressed="false" title="Hino aleatório ao terminar" aria-label="Hino aleatório ao terminar">🔀</button>'+
+           '<button type="button" data-sequence="stop" aria-pressed="false" title="Parar ao terminar" aria-label="Parar ao terminar">'+guiaControleSvg('end')+'</button>'+
+           '<button type="button" data-sequence="next" aria-pressed="true" title="Próximo ao terminar" aria-label="Próximo hino ao terminar">'+guiaControleSvg('onward')+'</button>'+
+           '<button type="button" data-sequence="repeat" aria-pressed="false" title="Repetir o mesmo hino" aria-label="Repetir o mesmo hino ao terminar">'+guiaControleSvg('repeat')+'</button>'+
+           '<button type="button" data-sequence="random" aria-pressed="false" title="Hino aleatório ao terminar" aria-label="Hino aleatório ao terminar">'+guiaControleSvg('random')+'</button>'+
          '</div>'+
        '</div>'+
-       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">↘</button>'+
+       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">'+guiaControleSvg('minimize')+'</button>'+
      '</div>'+     '<div class="hd-sequence-note" id="hdSequenceNote" role="status" aria-live="polite" hidden></div>'+
      '<div class="hd-slot" id="hdAudio"></div>'+
      '<div class="hd-slot" id="hdSpotify"></div>'+
@@ -8922,6 +8922,24 @@ function openHymnDetail(h,cat){
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');
  document.body.classList.add('modal-open');
+}
+
+/* V7.61 — ícones vetoriais monocromáticos do player, no padrão visual do Guia. */
+function guiaControleSvg(name){
+ const icons={
+  previous:'<path d="m19 20-10-8 10-8v16Z"/><path d="M5 5v14"/>',
+  play:'<path d="m7 4 13 8-13 8V4Z"/>',
+  pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+  next:'<path d="m5 4 10 8-10 8V4Z"/><path d="M19 5v14"/>',
+  stop:'<rect x="5" y="5" width="14" height="14" rx="2"/>',
+  close:'<path d="M18 6 6 18M6 6l12 12"/>',
+  minimize:'<path d="M7 7 17 17M9 17h8V9"/>',
+  end:'<circle cx="12" cy="12" r="9"/><rect x="9" y="9" width="6" height="6" rx="1"/>',
+  onward:'<path d="M3 12h14m-6-6 6 6-6 6M21 5v14"/>',
+  repeat:'<path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3"/><path d="m10 12 2-2v5"/>',
+  random:'<path d="m18 14 4 4-4 4M18 2l4 4-4 4M2 18h2.5a5 5 0 0 0 4-2l7-8a5 5 0 0 1 4-2H22M2 6h2.5a5 5 0 0 1 4 2l2 2M14 14l1.5 2a5 5 0 0 0 4 2H22"/>'
+ };
+ return '<svg class="ga-ctl-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+(icons[name]||icons.stop)+'</svg>';
 }
 
 function calcularRepeticoesAudio(h,media){
@@ -9049,7 +9067,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
      const aviso=document.createElement('div');
      aviso.className='hd-youtube-local-warning';
      aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +' — reprodução no Guia indisponível</strong>'
-       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.60 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
+       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.61 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
        +'<small>Enquanto isso, use “Abrir na origem” para assistir diretamente na plataforma.</small>';
      yt.appendChild(aviso);
    }else{
@@ -12148,7 +12166,7 @@ body:not(.index-mode):not(.welcome-mode){
    const b=el('hdPlaybackToggle');if(!b)return;
    const active=!!st.kind && st.kind!=='spotify';
    b.disabled=!active;
-   b.textContent=st.playing?'⏸':'▶';
+   b.innerHTML=guiaControleSvg(st.playing?'pause':'play');
    b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
    b.title=st.playing?'Pausar reprodução':'Reproduzir mídia';
    const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
@@ -12853,65 +12871,78 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 </style>
 
-<style id="v759-sequence-icons">
-/* V7.60: separação visual clara entre transporte imediato e modo ao terminar. */
+<style id="v761-sequence-icons">
+/* V7.61 — 10 comandos em uma linha única, inclusive a 320px, sem emojis multicoloridos. */
 #hymnDetail #hdSequence:not([hidden]){
- display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ display:grid!important;
+ grid-template-columns:repeat(10,minmax(0,1fr))!important;
+ grid-auto-flow:row!important;
+ width:min(100%,460px)!important;max-width:100%!important;
+ padding:2px 0!important;margin:5px auto 4px!important;
+ gap:clamp(2px,.45vw,5px)!important;
  align-items:center!important;justify-items:stretch!important;
- column-gap:8px!important;row-gap:5px!important;max-width:100%!important;
- width:100%!important;margin:5px auto 4px!important;padding:0 2px!important;
+ flex-wrap:nowrap!important;
  font-family:Arial,sans-serif!important;
 }
-#hymnDetail #hdSequence .hd-sequence-transport{
- grid-column:1!important;grid-row:1!important;display:flex!important;align-items:center!important;
- justify-content:center!important;gap:6px!important;min-width:0!important;
+#hymnDetail #hdSequence .hd-sequence-transport,
+#hymnDetail #hdSequence .hd-sequence-ending,
+#hymnDetail #hdSequence .hd-sequence-modes{
+ display:contents!important;
 }
-#hymnDetail #hdSequence .hd-sequence-ending{
- grid-column:1/-1!important;grid-row:2!important;display:flex!important;
- align-items:center!important;justify-content:center!important;gap:8px!important;min-width:0!important;
-}
+/* Informação preservada para tecnologias assistivas, sem ocupar outra linha. */
 #hymnDetail #hdSequence .hd-sequence-label{
- font:800 .67rem/1.2 Arial,sans-serif!important;color:#685a41!important;white-space:nowrap!important;
+ position:absolute!important;width:1px!important;height:1px!important;
+ margin:-1px!important;padding:0!important;overflow:hidden!important;
+ clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;
 }
-#hymnDetail #hdSequence .hd-sequence-modes{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-width:0!important}
 #hymnDetail #hdSequence .hd-sequence-transport button,
 #hymnDetail #hdSequence .hd-sequence-modes button,
 #hymnDetail #hdSequence #gaMinimizeInline{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- flex:0 0 auto!important;min-width:36px!important;width:36px!important;height:34px!important;
- min-height:34px!important;max-height:34px!important;margin:0!important;padding:0!important;
- border:1px solid #d2bf95!important;border-radius:9px!important;
- background:#fffdf7!important;color:#263746!important;box-shadow:0 1px 3px rgba(21,30,40,.07)!important;
- font:800 19px/1 Arial,sans-serif!important;cursor:pointer!important;
- touch-action:manipulation!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ grid-column:auto!important;grid-row:auto!important;
+ flex:none!important;box-sizing:border-box!important;
+ width:100%!important;min-width:0!important;max-width:100%!important;
+ height:32px!important;min-height:32px!important;max-height:32px!important;
+ margin:0!important;padding:0!important;
+ color:#263746!important;background:#fffdf8!important;
+ border:1px solid #d4c5a9!important;border-radius:8px!important;
+ box-shadow:0 1px 2px rgba(26,35,44,.08)!important;
+ font-size:16px!important;line-height:1!important;
+ cursor:pointer!important;touch-action:manipulation!important;
+ -webkit-tap-highlight-color:transparent!important;
 }
+#hymnDetail #hdSequence .ga-ctl-svg{
+ display:block!important;width:18px!important;height:18px!important;
+ flex:0 0 18px!important;stroke:currentColor!important;
+ overflow:visible!important;pointer-events:none!important;
+}
+/* O ícone preenchido de parar/reproduzir não depende de emoji do sistema. */
 #hymnDetail #hdSequence .hd-sequence-modes button[aria-pressed="true"]{
- background:#263746!important;border-color:#263746!important;color:#fff!important;
- box-shadow:0 0 0 2px rgba(177,132,56,.20)!important;
+ color:#fff!important;background:#263746!important;border-color:#263746!important;
+ box-shadow:0 0 0 1px rgba(177,132,56,.36)!important;
 }
-#hymnDetail #hdSequence [data-media-action="play"]{background:#263746!important;color:#fff!important;border-color:#263746!important}
-#hymnDetail #hdSequence [data-media-action="stop"]{color:#854d24!important;background:#fcf2e8!important}
-#hymnDetail #hdSequence [data-media-action="close"]{color:#8c3d35!important;background:#f9ebea!important;border-color:#dab3a9!important}
+/* Diferenciação apenas por agrupamento; evita excesso de cores. */
+#hymnDetail #hdSequence [data-sequence="stop"]{position:relative!important}
+#hymnDetail #hdSequence [data-sequence="stop"]::before{
+ content:"";display:block;position:absolute;left:-5px;top:5px;height:20px;
+ width:1px;background:#b8ac96;pointer-events:none;
+}
+#hymnDetail #hdSequence [data-media-action="play"],
+#hymnDetail #hdSequence [data-media-action="stop"],
+#hymnDetail #hdSequence [data-media-action="close"],
 #hymnDetail #hdSequence #gaMinimizeInline{
- grid-column:2!important;grid-row:1!important;background:#f6e9cc!important;color:#845a1a!important;
- border-color:#c69b50!important;
+ background:#fffdf8!important;color:#263746!important;border-color:#d4c5a9!important;
 }
-#hymnDetail #hdSequence button:disabled{opacity:.35!important;cursor:not-allowed!important}
+#hymnDetail #hdSequence button:disabled{opacity:.32!important;cursor:not-allowed!important}
 #hymnDetail #hdSequence button:focus-visible{outline:2px solid #b18438!important;outline-offset:2px!important}
-@media(max-width:400px){
- #hymnDetail #hdSequence:not([hidden]){row-gap:4px!important;column-gap:5px!important;}
- #hymnDetail #hdSequence .hd-sequence-transport,
- #hymnDetail #hdSequence .hd-sequence-modes{gap:4px!important}
+@media(max-width:370px){
+ #hymnDetail #hdSequence:not([hidden]){gap:2px!important}
  #hymnDetail #hdSequence .hd-sequence-transport button,
  #hymnDetail #hdSequence .hd-sequence-modes button,
- #hymnDetail #hdSequence #gaMinimizeInline{min-width:32px!important;width:32px!important;min-height:33px!important;height:33px!important;font-size:18px!important}
- #hymnDetail #hdSequence .hd-sequence-label{font-size:.63rem!important}
-}
-@media(max-width:330px){
- #hymnDetail #hdSequence .hd-sequence-transport{gap:2px!important}
- #hymnDetail #hdSequence .hd-sequence-transport button,
- #hymnDetail #hdSequence .hd-sequence-modes button,
- #hymnDetail #hdSequence #gaMinimizeInline{min-width:30px!important;width:30px!important;}
+ #hymnDetail #hdSequence #gaMinimizeInline{
+  height:30px!important;min-height:30px!important;max-height:30px!important;border-radius:7px!important;
+ }
+ #hymnDetail #hdSequence .ga-ctl-svg{width:16px!important;height:16px!important;flex-basis:16px!important}
 }
 </style>
 </body></html>
