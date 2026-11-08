@@ -1,4 +1,6 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.60 TESTE: controles de mídia com ícones, transporte e modos de término separados;
+     repetir hino, pausa/reprodução e encerramento sem fechar o modal; V7.58 preservada. -->
 <!-- V7.58 TESTE: minimização com vídeo YouTube sempre visível (mínimo 200x200), sem pausa deliberada;
      controles Anterior/Próximo em mini player MP3 e vídeo flutuante;
      Minimizar ao lado de Ao terminar; preserva o iframe original e a base V7.56. -->
@@ -8884,16 +8886,25 @@ function openHymnDetail(h,cat){
      metronomeHtml+
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
-     '<div class="hd-sequence" id="hdSequence" aria-label="Modo de reprodução contínua" hidden>'+ 
-       '<span class="hd-sequence-label">Ao terminar</span>'+
-       '<div class="hd-sequence-modes" role="group" aria-label="Ao terminar a mídia">'+
-         '<button type="button" data-sequence="stop" aria-pressed="false">Parar</button>'+
-         '<button type="button" data-sequence="next" aria-pressed="true">Próximo</button>'+
-         '<button type="button" data-sequence="random" aria-pressed="false">Aleatório</button>'+
+     '<div class="hd-sequence" id="hdSequence" aria-label="Controles da mídia" hidden>'+
+       '<div class="hd-sequence-transport" role="group" aria-label="Controles de reprodução">'+
+         '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">⏮</button>'+
+         '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">▶</button>'+
+         '<button type="button" data-media-action="next" title="Próximo hino" aria-label="Reproduzir próximo hino">⏭</button>'+
+         '<button type="button" data-media-action="stop" title="Parar reprodução, mantendo a mídia aberta" aria-label="Parar reprodução">⏹</button>'+
+         '<button type="button" data-media-action="close" title="Fechar somente a mídia" aria-label="Fechar somente a mídia, mantendo o hino aberto">✕</button>'+
        '</div>'+
-       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">↘ Minimizar</button>'+
-     '</div>'+
-     '<div class="hd-sequence-note" id="hdSequenceNote" role="status" aria-live="polite" hidden></div>'+
+       '<div class="hd-sequence-ending">'+
+         '<span class="hd-sequence-label">Ao terminar</span>'+
+         '<div class="hd-sequence-modes" role="group" aria-label="Escolha o que acontece ao terminar">'+
+           '<button type="button" data-sequence="stop" aria-pressed="false" title="Parar ao terminar" aria-label="Parar ao terminar">🔚</button>'+
+           '<button type="button" data-sequence="next" aria-pressed="true" title="Próximo ao terminar" aria-label="Próximo hino ao terminar">⏭</button>'+
+           '<button type="button" data-sequence="repeat" aria-pressed="false" title="Repetir o mesmo hino" aria-label="Repetir o mesmo hino ao terminar">🔂</button>'+
+           '<button type="button" data-sequence="random" aria-pressed="false" title="Hino aleatório ao terminar" aria-label="Hino aleatório ao terminar">🔀</button>'+
+         '</div>'+
+       '</div>'+
+       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">↘</button>'+
+     '</div>'+     '<div class="hd-sequence-note" id="hdSequenceNote" role="status" aria-live="polite" hidden></div>'+
      '<div class="hd-slot" id="hdAudio"></div>'+
      '<div class="hd-slot" id="hdSpotify"></div>'+
      '<div class="hd-slot" id="hdYoutube"></div>'+
@@ -9038,7 +9049,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
      const aviso=document.createElement('div');
      aviso.className='hd-youtube-local-warning';
      aviso.innerHTML='<strong>'+ (isMusic?'YouTube Music':'YouTube') +' — reprodução no Guia indisponível</strong>'
-       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.58 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
+       +'<span>Este arquivo está aberto localmente no aparelho. Para assistir ao vídeo dentro do Guia e usar a janela flutuante, abra a V7.60 por um endereço HTTPS, como a página de testes no GitHub Pages.</span>'
        +'<small>Enquanto isso, use “Abrir na origem” para assistir diretamente na plataforma.</small>';
      yt.appendChild(aviso);
    }else{
@@ -12108,7 +12119,7 @@ body:not(.index-mode):not(.welcome-mode){
 (function(){
  'use strict';
  const st={mode:'next',kind:null,audio:null,iframe:null,end:0,player:null,
-   poll:null,revision:0,complete:false,connecting:false};
+   poll:null,revision:0,complete:false,connecting:false,playing:false};
  let ytPromise=null;
  const el=id=>document.getElementById(id);
  const isYT=kind=>kind==='youtube'||kind==='youtubeMusic';
@@ -12133,6 +12144,62 @@ body:not(.index-mode):not(.welcome-mode){
    });
    info();
  }
+ function refreshPlayback(){
+   const b=el('hdPlaybackToggle');if(!b)return;
+   const active=!!st.kind && st.kind!=='spotify';
+   b.disabled=!active;
+   b.textContent=st.playing?'⏸':'▶';
+   b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
+   b.title=st.playing?'Pausar reprodução':'Reproduzir mídia';
+   const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
+   if(prev)prev.disabled=!active||!hasPrevious();
+   const next=el('hdSequence')?.querySelector('[data-media-action="next"]');
+   if(next)next.disabled=!active;
+ }
+ // Parar interrompe a reprodução, mas preserva o elemento de mídia para retomar.
+ function stopNow(){
+   if(!st.kind)return;
+   // Ignora eventual evento de fim provocado por uma parada manual.
+   st.complete=true;
+   if(st.kind==='instrumental'&&st.audio){
+     try{st.audio.pause();st.audio.currentTime=0}catch(e){}
+   }else if(isYT(st.kind)){
+     let stopped=false;
+     try{if(st.player&&typeof st.player.stopVideo==='function'){st.player.stopVideo();stopped=true}}catch(e){}
+     if(!stopped&&st.iframe?.contentWindow){
+       try{st.iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:'stopVideo',args:[]}), '*')}catch(e){}
+     }
+   }
+   st.playing=false;refreshPlayback();
+ }
+ // Fechar desmonta áudio/vídeo e limpa somente a área da mídia: modal e hino permanecem.
+ function closeMediaNow(){
+   stopInternal();
+   for(const id of ['hdAudio','hdSpotify','hdYoutube','hdLinks']){const node=el(id);if(node)node.replaceChildren();}
+   el('hymnDetail')?.classList.remove('media-open');
+   document.querySelectorAll('#hymnDetail .hd-play.active').forEach(b=>b.classList.remove('active'));
+   const seq=el('hdSequence');if(seq)seq.hidden=true;
+   note('');refreshPlayback();
+ }
+ function playPauseNow(){
+   if(!st.kind||st.kind==='spotify')return;
+   if(st.kind==='instrumental'&&st.audio){
+     if(st.audio.paused){
+       st.complete=false;
+       const result=st.audio.play();
+       if(result&&result.catch)result.catch(()=>note('O navegador precisa de um toque no áudio para reproduzir.'));
+     }else st.audio.pause();
+   }else if(isYT(st.kind)){
+     try{
+       if(!st.player||typeof st.player.getPlayerState!=='function'){
+         note('O vídeo ainda está carregando. Use o botão de reprodução no próprio vídeo.');return;
+       }
+       const state=st.player.getPlayerState();
+       if(state===(window.YT?.PlayerState?.PLAYING??1))st.player.pauseVideo();
+       else {st.complete=false;st.player.playVideo();}
+     }catch(err){note('Use os controles de reprodução do vídeo.');}
+   }
+ }
  function stopInternal(){
    window.GuiaPlayerPersistente?.beforeStop();
    ++st.revision;
@@ -12142,7 +12209,8 @@ body:not(.index-mode):not(.welcome-mode){
    // Se não há controlador (ou no Spotify), remover o iframe realmente interrompe o som.
    document.querySelectorAll('#hdSpotify iframe,#hdYoutube iframe').forEach(f=>{try{f.remove()}catch(e){}});
    st.audio=null;st.player=null;st.iframe=null;st.kind=null;st.end=0;
-   st.complete=false;st.connecting=false;
+   st.complete=false;st.connecting=false;st.playing=false;
+   refreshPlayback();
  }
  function cleanup(){stopInternal();}
  function getActive(){return {kind:st.kind,audio:st.audio,iframe:st.iframe,player:st.player,mode:st.mode};}
@@ -12184,6 +12252,18 @@ body:not(.index-mode):not(.welcome-mode){
  function finish(kind,h){
    if(st.mode==='stop'||st.complete||kind!==st.kind)return;
    st.complete=true;
+   if(st.mode==='repeat'){
+     const key=String(h?.num||'');
+     const media=window.MULTIMIDIA?.[key]||(typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[key]:null);
+     const button=el('hdMediaArea')?.querySelector('.hd-play[data-kind="'+kind+'"]');
+     const wasHidden=!!window.GuiaPlayerPersistente?.isHidden?.();
+     if(!media||!button||button.disabled){st.complete=false;note('Não foi possível repetir esta mídia.');return;}
+     try{
+       loadHymnMedia(kind,media,button,true);
+       window.GuiaPlayerPersistente?.hideForSequence(wasHidden);
+     }catch(err){st.complete=false;note('Não foi possível repetir automaticamente. Reproduza o hino manualmente.');}
+     return;
+   }
    const nextKey=getNext(kind,h);
    if(!nextKey){st.complete=false;note('Fim da sequência de '+(String(h?.num||'').startsWith('Coro ')?'coros':'hinos')+' com esta mídia.');return}
    const next=typeof findHymn==='function'?findHymn(nextKey):null;
@@ -12223,22 +12303,26 @@ body:not(.index-mode):not(.welcome-mode){
    return ytPromise;
  }
  function connectYT(automatico){
-   if(!isYT(st.kind)||!st.iframe||st.connecting||st.player||st.mode==='stop')return;
+   if(!isYT(st.kind)||!st.iframe||st.connecting||st.player)return;
    if(location.protocol==='file:')return;
    st.connecting=true;
    const revision=st.revision, frame=st.iframe, kind=st.kind;
    ensureYT().then(YT=>{
-     if(revision!==st.revision||!frame.isConnected||st.mode==='stop')return;
+     if(revision!==st.revision||!frame.isConnected)return;
      st.player=new YT.Player(frame,{
        events:{
          onReady:e=>{
            if(revision!==st.revision)return;
+           refreshPlayback();
            if(automatico){
              try{e.target.playVideo()}catch(err){note('O navegador pode exigir início manual do próximo vídeo.');}
            }
          },
          onStateChange:e=>{
-           if(revision!==st.revision||st.mode==='stop')return;
+           if(revision!==st.revision)return;
+           st.playing=e.data===YT.PlayerState.PLAYING;
+           if(st.playing)st.complete=false;
+           refreshPlayback();
            if(e.data===YT.PlayerState.ENDED)finish(kind,window.__gaCurrentHymn);
          },
          onAutoplayBlocked:()=>{
@@ -12269,6 +12353,14 @@ body:not(.index-mode):not(.welcome-mode){
    // Spotify continua manual: evita sugerir uma troca automática inexistente.
    if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind));
    refresh();
+   st.playing=!!st.audio&&!st.audio.paused;
+   if(st.audio){
+     const a=st.audio;
+     for(const evt of ['play','playing','pause','ended'])a.addEventListener(evt,()=>{
+       if(st.audio===a){st.playing=!a.paused&&!a.ended;refreshPlayback();}
+     });
+   }
+   refreshPlayback();
    if(st.audio && options.automatico){
      const a=st.audio;
      const playback=a.play();
@@ -12279,6 +12371,16 @@ body:not(.index-mode):not(.welcome-mode){
    if(isYT(kind)&&st.iframe)connectYT(!!options.automatico);
  }
  function bind(){
+   document.querySelectorAll('#hdSequence [data-media-action]').forEach(b=>{
+     b.addEventListener('click',()=>{
+       const action=b.dataset.mediaAction;
+       if(action==='previous')retreatNow();
+       else if(action==='next')advanceNow();
+       else if(action==='play')playPauseNow();
+       else if(action==='stop')stopNow();
+       else if(action==='close')closeMediaNow();
+     });
+   });
    document.getElementById('gaMinimizeInline')?.addEventListener('click',()=>{
      window.GuiaPlayerPersistente?.minimizeActive?.();
    });
@@ -12286,10 +12388,10 @@ body:not(.index-mode):not(.welcome-mode){
      b.addEventListener('click',()=>{
        st.mode=b.dataset.sequence;
        refresh();
-       if(isYT(st.kind)&&st.mode!=='stop')connectYT(false);
+       if(isYT(st.kind))connectYT(false);
      });
    });
-   refresh();
+   refresh();refreshPlayback();
  }
  // Interromper som ao fechar, sem alterar os manipuladores de fechar já existentes.
  const detail=el('hymnDetail');
@@ -12303,7 +12405,7 @@ body:not(.index-mode):not(.welcome-mode){
      if(!window.GuiaPlayerPersistente?.onModalClose())cleanup();
    }
  },true);
- window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,retreatNow,hasPrevious,
+ window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,retreatNow,hasPrevious,stopNow,closeMediaNow,playPauseNow,
    // Apenas para verificação local da implementação; não altera o projeto.
    getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe})};
 })();
@@ -12748,6 +12850,68 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  #hymnDetail.ga-video-floating #gaFloatingVideoBar #gaFloatOpen{
   font-size:.60rem!important;letter-spacing:-.1px!important;white-space:nowrap!important;
  }
+}
+</style>
+
+<style id="v759-sequence-icons">
+/* V7.60: separação visual clara entre transporte imediato e modo ao terminar. */
+#hymnDetail #hdSequence:not([hidden]){
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:center!important;justify-items:stretch!important;
+ column-gap:8px!important;row-gap:5px!important;max-width:100%!important;
+ width:100%!important;margin:5px auto 4px!important;padding:0 2px!important;
+ font-family:Arial,sans-serif!important;
+}
+#hymnDetail #hdSequence .hd-sequence-transport{
+ grid-column:1!important;grid-row:1!important;display:flex!important;align-items:center!important;
+ justify-content:center!important;gap:6px!important;min-width:0!important;
+}
+#hymnDetail #hdSequence .hd-sequence-ending{
+ grid-column:1/-1!important;grid-row:2!important;display:flex!important;
+ align-items:center!important;justify-content:center!important;gap:8px!important;min-width:0!important;
+}
+#hymnDetail #hdSequence .hd-sequence-label{
+ font:800 .67rem/1.2 Arial,sans-serif!important;color:#685a41!important;white-space:nowrap!important;
+}
+#hymnDetail #hdSequence .hd-sequence-modes{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-width:0!important}
+#hymnDetail #hdSequence .hd-sequence-transport button,
+#hymnDetail #hdSequence .hd-sequence-modes button,
+#hymnDetail #hdSequence #gaMinimizeInline{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ flex:0 0 auto!important;min-width:36px!important;width:36px!important;height:34px!important;
+ min-height:34px!important;max-height:34px!important;margin:0!important;padding:0!important;
+ border:1px solid #d2bf95!important;border-radius:9px!important;
+ background:#fffdf7!important;color:#263746!important;box-shadow:0 1px 3px rgba(21,30,40,.07)!important;
+ font:800 19px/1 Arial,sans-serif!important;cursor:pointer!important;
+ touch-action:manipulation!important;
+}
+#hymnDetail #hdSequence .hd-sequence-modes button[aria-pressed="true"]{
+ background:#263746!important;border-color:#263746!important;color:#fff!important;
+ box-shadow:0 0 0 2px rgba(177,132,56,.20)!important;
+}
+#hymnDetail #hdSequence [data-media-action="play"]{background:#263746!important;color:#fff!important;border-color:#263746!important}
+#hymnDetail #hdSequence [data-media-action="stop"]{color:#854d24!important;background:#fcf2e8!important}
+#hymnDetail #hdSequence [data-media-action="close"]{color:#8c3d35!important;background:#f9ebea!important;border-color:#dab3a9!important}
+#hymnDetail #hdSequence #gaMinimizeInline{
+ grid-column:2!important;grid-row:1!important;background:#f6e9cc!important;color:#845a1a!important;
+ border-color:#c69b50!important;
+}
+#hymnDetail #hdSequence button:disabled{opacity:.35!important;cursor:not-allowed!important}
+#hymnDetail #hdSequence button:focus-visible{outline:2px solid #b18438!important;outline-offset:2px!important}
+@media(max-width:400px){
+ #hymnDetail #hdSequence:not([hidden]){row-gap:4px!important;column-gap:5px!important;}
+ #hymnDetail #hdSequence .hd-sequence-transport,
+ #hymnDetail #hdSequence .hd-sequence-modes{gap:4px!important}
+ #hymnDetail #hdSequence .hd-sequence-transport button,
+ #hymnDetail #hdSequence .hd-sequence-modes button,
+ #hymnDetail #hdSequence #gaMinimizeInline{min-width:32px!important;width:32px!important;min-height:33px!important;height:33px!important;font-size:18px!important}
+ #hymnDetail #hdSequence .hd-sequence-label{font-size:.63rem!important}
+}
+@media(max-width:330px){
+ #hymnDetail #hdSequence .hd-sequence-transport{gap:2px!important}
+ #hymnDetail #hdSequence .hd-sequence-transport button,
+ #hymnDetail #hdSequence .hd-sequence-modes button,
+ #hymnDetail #hdSequence #gaMinimizeInline{min-width:30px!important;width:30px!important;}
 }
 </style>
 </body></html>
