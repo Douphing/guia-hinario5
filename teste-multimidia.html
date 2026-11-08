@@ -12950,7 +12950,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 </style>
 <style id="v762-desktop-media-responsive">
-/* V7.63 — distribuição responsiva do modal de mídias no desktop.
+/* V7.62 — distribuição responsiva do modal de mídias no desktop.
    Ativa apenas com mídia aberta e largura suficiente, preservando o celular. */
 @media (min-width:960px){
   #hymnDetail.media-open:not(.ga-video-floating){
@@ -13178,6 +13178,82 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   if(pending)clearTimeout(pending);
   pending=setTimeout(()=>b.classList.remove('ga-show-name'),1600);
  },true);
+})();
+</script>
+
+<style id="v764-desktop-viewport-fit">
+/* V7.64 — em monitores com zoom ou altura reduzida, preservar o cabeçalho
+   e fazer a coluna de mídia caber sem rolagem sempre que possível.
+   Não afeta o layout mobile ou o player flutuante. */
+@media (min-width:960px){
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hero{
+    position:sticky!important;
+    top:0!important;
+    z-index:5!important;
+    background:linear-gradient(180deg,#fffdf8 0%,#faf5e9 100%)!important;
+    border:1px solid rgba(196,159,91,.40)!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) > .hd-card{
+    scrollbar-gutter:auto!important;
+    overscroll-behavior:contain!important;
+  }
+}
+@media (min-width:960px) and (max-height:700px){
+  #hymnDetail.media-open:not(.ga-video-floating) > .hd-card{
+    row-gap:3px!important;
+    padding:6px 12px 7px!important;
+    max-height:calc(100dvh - 16px)!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hero{
+    min-height:55px!important;
+    padding:4px 44px 2px 57px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-num .hd-number{font-size:29px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) h2{font-size:18px!important;margin-top:1px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-clef{font-size:40px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-staff{height:27px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-row{min-height:42px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-icon{min-height:42px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hymn-nav{
+    min-height:25px!important;
+    margin:0 auto 1px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-media-title{
+    margin:0 0 2px!important;
+    font-size:17px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdMetronome{
+    min-height:33px!important;
+    margin:2px 0!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-media-instrumental{margin:2px 0!important}
+  #hymnDetail.media-open:not(.ga-video-floating) #hdSequence:not([hidden]){margin:2px auto!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-links{margin:1px 0 0!important;padding:1px 2px!important}
+  /* Mantém a proporção 16:9 e a área visível de pelo menos 200px de altura
+     exigida pelo player YouTube incorporado. */
+  #hymnDetail.media-open:not(.ga-video-floating) #hdYoutube iframe{
+    width:min(100%,clamp(356px,calc(70dvh - 29px),480px))!important;
+    max-width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+  }
+}
+</style>
+<script id="v764-modal-scroll-safety">
+(function(){
+ 'use strict';
+ /* Ao selecionar outra mídia no desktop, não reutilizar a rolagem interna
+    que pode esconder o cabeçalho do hino. Não mexer no scroll mobile. */
+ const detail=document.getElementById('hymnDetail');
+ const card=detail?.querySelector('.hd-card');
+ if(!detail||!card)return;
+ const obs=new MutationObserver(()=>{
+   if(detail.classList.contains('open')&&detail.classList.contains('media-open')&&
+      window.matchMedia('(min-width:960px)').matches){
+     requestAnimationFrame(()=>{if(card.scrollTop>0)card.scrollTop=0});
+   }
+ });
+ obs.observe(detail,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body></html>
