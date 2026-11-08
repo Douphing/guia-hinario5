@@ -1,4 +1,8 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.63 TESTE: modal de mídia responsivo no desktop: informações e vídeo em duas colunas,
+     tamanho do vídeo equilibrado, altura limitada à tela e rolagem acessível somente em telas baixas;
+     layout de celular e ícones da V7.61 preservados; index.html não alterado. -->
+
 <!-- V7.61 TESTE: controles de mídia com ícones, transporte e modos de término separados;
      repetir hino, pausa/reprodução e encerramento sem fechar o modal; V7.58 preservada. -->
 <!-- V7.58 TESTE: minimização com vídeo YouTube sempre visível (mínimo 200x200), sem pausa deliberada;
@@ -8888,22 +8892,22 @@ function openHymnDetail(h,cat){
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
      '<div class="hd-sequence" id="hdSequence" aria-label="Controles da mídia" hidden>'+
        '<div class="hd-sequence-transport" role="group" aria-label="Controles de reprodução">'+
-         '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">'+guiaControleSvg('previous')+'</button>'+
-         '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">'+guiaControleSvg('play')+'</button>'+
-         '<button type="button" data-media-action="next" title="Próximo hino" aria-label="Reproduzir próximo hino">'+guiaControleSvg('next')+'</button>'+
-         '<button type="button" data-media-action="stop" title="Parar reprodução, mantendo a mídia aberta" aria-label="Parar reprodução">'+guiaControleSvg('stop')+'</button>'+
-         '<button type="button" data-media-action="close" title="Fechar somente a mídia" aria-label="Fechar somente a mídia, mantendo o hino aberto">'+guiaControleSvg('close')+'</button>'+
+         '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">'+guiaControleSvg('previous')+'<small class="ga-ctl-name">Anterior</small></button>'+
+         '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">'+guiaControleSvg('play')+'<small class="ga-ctl-name">Tocar</small></button>'+
+         '<button type="button" data-media-action="next" title="Próximo hino" aria-label="Reproduzir próximo hino">'+guiaControleSvg('next')+'<small class="ga-ctl-name">Próximo</small></button>'+
+         '<button type="button" data-media-action="stop" title="Parar a reprodução, sem fechar a mídia" aria-label="Parar reprodução, mantendo a mídia aberta">'+guiaControleSvg('stop')+'<small class="ga-ctl-name">Parar</small></button>'+
        '</div>'+
        '<div class="hd-sequence-ending">'+
          '<span class="hd-sequence-label">Ao terminar</span>'+
          '<div class="hd-sequence-modes" role="group" aria-label="Escolha o que acontece ao terminar">'+
-           '<button type="button" data-sequence="stop" aria-pressed="false" title="Parar ao terminar" aria-label="Parar ao terminar">'+guiaControleSvg('end')+'</button>'+
-           '<button type="button" data-sequence="next" aria-pressed="true" title="Próximo ao terminar" aria-label="Próximo hino ao terminar">'+guiaControleSvg('onward')+'</button>'+
-           '<button type="button" data-sequence="repeat" aria-pressed="false" title="Repetir o mesmo hino" aria-label="Repetir o mesmo hino ao terminar">'+guiaControleSvg('repeat')+'</button>'+
-           '<button type="button" data-sequence="random" aria-pressed="false" title="Hino aleatório ao terminar" aria-label="Hino aleatório ao terminar">'+guiaControleSvg('random')+'</button>'+
+           '<button type="button" data-sequence="stop" aria-pressed="false" title="Ao terminar: parar" aria-label="Parar ao terminar">'+guiaControleSvg('end')+'<small class="ga-ctl-name">Parar</small></button>'+
+           '<button type="button" data-sequence="next" aria-pressed="true" title="Ao terminar: próximo hino" aria-label="Próximo hino ao terminar">'+guiaControleSvg('onward')+'<small class="ga-ctl-name">Próximo</small></button>'+
+           '<button type="button" data-sequence="repeat" aria-pressed="false" title="Ao terminar: repetir o mesmo hino" aria-label="Repetir o mesmo hino ao terminar">'+guiaControleSvg('repeat')+'<small class="ga-ctl-name">Repetir</small></button>'+
+           '<button type="button" data-sequence="random" aria-pressed="false" title="Ao terminar: hino aleatório" aria-label="Hino aleatório ao terminar">'+guiaControleSvg('random')+'<small class="ga-ctl-name">Aleatório</small></button>'+
          '</div>'+
        '</div>'+
-       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">'+guiaControleSvg('minimize')+'</button>'+
+       '<button type="button" id="gaMinimizeInline" class="ga-minimize-inline" aria-label="Minimizar mídia e continuar no Guia" title="Minimizar mídia">'+guiaControleSvg('minimize')+'<small class="ga-ctl-name">Minimizar</small></button>'+
+       '<button type="button" data-media-action="close" class="ga-close-media" title="Fechar apenas a mídia; permanecer no hino" aria-label="Fechar a mídia, mantendo o modal do hino aberto">'+guiaControleSvg('close')+'<small class="ga-ctl-name">Fechar</small></button>'+
      '</div>'+     '<div class="hd-sequence-note" id="hdSequenceNote" role="status" aria-live="polite" hidden></div>'+
      '<div class="hd-slot" id="hdAudio"></div>'+
      '<div class="hd-slot" id="hdSpotify"></div>'+
@@ -12166,7 +12170,7 @@ body:not(.index-mode):not(.welcome-mode){
    const b=el('hdPlaybackToggle');if(!b)return;
    const active=!!st.kind && st.kind!=='spotify';
    b.disabled=!active;
-   b.innerHTML=guiaControleSvg(st.playing?'pause':'play');
+   b.innerHTML=guiaControleSvg(st.playing?'pause':'play')+'<small class="ga-ctl-name">'+(st.playing?'Pausar':'Tocar')+'</small>';
    b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
    b.title=st.playing?'Pausar reprodução':'Reproduzir mídia';
    const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
@@ -12945,4 +12949,235 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  #hymnDetail #hdSequence .ga-ctl-svg{width:16px!important;height:16px!important;flex-basis:16px!important}
 }
 </style>
+<style id="v762-desktop-media-responsive">
+/* V7.63 — distribuição responsiva do modal de mídias no desktop.
+   Ativa apenas com mídia aberta e largura suficiente, preservando o celular. */
+@media (min-width:960px){
+  #hymnDetail.media-open:not(.ga-video-floating){
+    padding:12px!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) > .hd-card{
+    display:grid!important;
+    grid-template-columns:minmax(0, .85fr) minmax(0, 1.15fr)!important;
+    grid-template-areas:
+      "hero hero"
+      "meta media"
+      "study media"
+      "actions media"
+      "history media"
+      "secondary media"
+      "divider media"!important;
+    grid-template-rows:auto auto auto auto auto auto minmax(0,1fr)!important;
+    align-items:start!important;
+    column-gap:clamp(16px,2.4vw,28px)!important;
+    row-gap:7px!important;
+    width:min(1010px,calc(100vw - 32px))!important;
+    max-width:1010px!important;
+    max-height:calc(100dvh - 26px)!important;
+    padding:12px 17px 14px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    scrollbar-width:thin!important;
+    box-shadow:0 14px 48px rgba(0,0,0,.3)!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hero{
+    grid-area:hero!important;
+    min-height:88px!important;
+    padding:9px 50px 6px 64px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta{
+    grid-area:meta!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    width:100%!important;
+    margin:0!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-row{
+    grid-template-columns:54px minmax(0,1fr)!important;
+    min-height:51px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdStudyInfo{
+    grid-area:study!important;
+    width:100%!important;
+    margin:0!important;
+    min-height:35px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-actions{
+    grid-area:actions!important;
+    width:100%!important;
+    margin:0!important;
+    gap:6px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdHistory{
+    grid-area:history!important;
+    margin:0!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-secondary-actions{
+    grid-area:secondary!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    gap:6px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-divider{
+    grid-area:divider!important;
+    display:none!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdMediaArea{
+    grid-area:media!important;
+    min-width:0!important;
+    width:100%!important;
+    align-self:start!important;
+    padding-left:clamp(12px,1.6vw,19px)!important;
+    border-left:1px solid rgba(177,132,56,.25)!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hymn-nav{
+    margin:0 auto 3px!important;
+    min-height:28px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-media-title{
+    margin:2px 0 6px!important;
+    font-size:20px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdMetronome{
+    margin:3px 0!important;
+    min-height:37px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-media-instrumental{
+    margin:4px 0!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdYoutube{
+    width:100%!important;
+    max-width:100%!important;
+    justify-content:center!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdYoutube iframe{
+    width:min(100%,480px)!important;
+    max-width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    max-height:none!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) #hdSequence:not([hidden]){
+    width:min(100%,460px)!important;
+    max-width:100%!important;
+    margin:4px auto!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-links{
+    margin-top:3px!important;
+  }
+}
+/* Em monitores com pouca altura, reduz ornamentos e espaçamento.
+   Mantém rolagem disponível como contingência em vez de cortar mídia. */
+@media (min-width:960px) and (max-height:710px){
+  #hymnDetail.media-open:not(.ga-video-floating) > .hd-card{
+    padding:8px 13px 10px!important;
+    row-gap:4px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-hero{
+    min-height:67px!important;
+    padding:6px 48px 3px 56px!important;
+  }
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-staff{height:28px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-clef{font-size:42px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-num .hd-number{font-size:30px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) h2{font-size:19px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta{gap:4px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-row{min-height:44px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-icon{min-height:44px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-meta-icon svg{width:30px!important;height:30px!important}
+  #hymnDetail.media-open:not(.ga-video-floating) .hd-media-title{font-size:18px!important;margin:0 0 3px!important}
+}
+
+</style>
+
+<style id="v763-controles-legiveis">
+/* V7.63 — reconhecimento dos botões: uma única faixa e nomes discretos. */
+#hymnDetail #hdSequence:not([hidden]){
+ grid-template-columns:repeat(10,minmax(0,1fr))!important;
+ width:min(100%,480px)!important;max-width:100%!important;
+ gap:clamp(2px,.40vw,5px)!important;
+ margin:4px auto 5px!important;
+}
+#hymnDetail #hdSequence .hd-sequence-transport button,
+#hymnDetail #hdSequence .hd-sequence-modes button,
+#hymnDetail #hdSequence #gaMinimizeInline,
+#hymnDetail #hdSequence .ga-close-media{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:1px!important;position:relative!important;min-width:0!important;max-width:100%!important;
+ width:100%!important;height:39px!important;min-height:39px!important;max-height:39px!important;
+ padding:2px 0 1px!important;overflow:hidden!important;
+ border-radius:9px!important;
+ background:#fffdf8!important;color:#263746!important;
+ border:1px solid #d4c5a9!important;box-shadow:0 1px 3px rgba(26,35,44,.08)!important;
+}
+#hymnDetail #hdSequence .ga-ctl-svg{
+ width:18px!important;height:18px!important;flex:0 0 18px!important;
+ transition:transform .12s ease!important;
+}
+/* O nome de um modo só aparece sob o símbolo quando selecionado.
+   Em controles momentâneos, aparece ao receber foco ou toque. */
+#hymnDetail #hdSequence .ga-ctl-name{
+ display:block!important;min-width:0!important;max-width:100%!important;
+ margin:0!important;padding:0!important;
+ color:inherit!important;font:700 7px/1.1 Arial,sans-serif!important;
+ white-space:nowrap!important;letter-spacing:-.15px!important;
+ opacity:0!important;pointer-events:none!important;
+}
+#hymnDetail #hdSequence .hd-sequence-modes button[aria-pressed="true"]{
+ background:#263746!important;border-color:#263746!important;color:#fff!important;
+ box-shadow:0 0 0 1px rgba(177,132,56,.25)!important;
+}
+#hymnDetail #hdSequence .hd-sequence-modes button[aria-pressed="true"] .ga-ctl-name,
+#hymnDetail #hdSequence .ga-close-media .ga-ctl-name,
+#hymnDetail #hdSequence button.ga-show-name .ga-ctl-name,
+#hymnDetail #hdSequence button:hover .ga-ctl-name,
+#hymnDetail #hdSequence button:focus-visible .ga-ctl-name{opacity:1!important}
+/* Fechar mídia fica no FINAL da sequência, com discreto destaque próprio. */
+#hymnDetail #hdSequence .ga-close-media{
+ background:#fbf1ed!important;color:#7d3f33!important;
+ border:1.5px solid #ba8678!important;
+ box-shadow:0 1px 4px rgba(109,55,42,.12)!important;
+}
+#hymnDetail #hdSequence .ga-close-media .ga-ctl-svg{stroke-width:2.5!important}
+#hymnDetail #hdSequence .ga-close-media:hover{background:#f5e6e0!important}
+/* Separação sutil: primeiro reprodução, depois modos, por fim janela / fechar. */
+#hymnDetail #hdSequence [data-sequence="stop"]::before{left:-4px!important;top:8px!important;height:22px!important}
+#hymnDetail #hdSequence #gaMinimizeInline{border-left:1px solid #d4c5a9!important}
+#hymnDetail #hdSequence .ga-close-media:focus-visible{outline:2px solid #aa7365!important;outline-offset:1px!important}
+@media(max-width:370px){
+ #hymnDetail #hdSequence:not([hidden]){gap:2px!important;width:100%!important}
+ #hymnDetail #hdSequence .hd-sequence-transport button,
+ #hymnDetail #hdSequence .hd-sequence-modes button,
+ #hymnDetail #hdSequence #gaMinimizeInline,
+ #hymnDetail #hdSequence .ga-close-media{
+  height:36px!important;min-height:36px!important;max-height:36px!important;
+  border-radius:7px!important;
+ }
+ #hymnDetail #hdSequence .ga-ctl-svg{width:16px!important;height:16px!important;flex-basis:16px!important}
+ #hymnDetail #hdSequence .ga-ctl-name{font-size:6.3px!important;letter-spacing:-.24px!important}
+}
+</style>
+<script id="v763-legendas-controles">
+/* Feedback breve no toque: mostra o nome do botão sem adicionar outra linha. */
+(function(){
+ 'use strict';
+ const bar=document.getElementById('hymnDetail');
+ if(!bar)return;
+ let pending=null;
+ bar.addEventListener('click',e=>{
+  const b=e.target.closest('#hdSequence button');
+  if(!b)return;
+  const row=b.closest('#hdSequence');
+  if(!row)return;
+  row.querySelectorAll('button.ga-show-name').forEach(x=>x.classList.remove('ga-show-name'));
+  b.classList.add('ga-show-name');
+  if(pending)clearTimeout(pending);
+  pending=setTimeout(()=>b.classList.remove('ga-show-name'),1600);
+ },true);
+})();
+</script>
 </body></html>
