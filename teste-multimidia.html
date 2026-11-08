@@ -12173,6 +12173,10 @@ body:not(.index-mode):not(.welcome-mode){
    b.innerHTML=guiaControleSvg(st.playing?'pause':'play')+'<small class="ga-ctl-name">'+(st.playing?'Pausar':'Tocar')+'</small>';
    b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
    b.title=st.playing?'Pausar reprodução':'Reproduzir mídia';
+   // V7.65: distinguir o estado atual do transporte; manter o rótulo no
+   // botão depois que o modal é reconstruído ao avançar ou repetir um hino.
+   b.dataset.playback=active?(st.playing?'playing':'ready'):'inactive';
+   b.setAttribute('aria-pressed',String(active&&st.playing));
    const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
    if(prev)prev.disabled=!active||!hasPrevious();
    const next=el('hdSequence')?.querySelector('[data-media-action="next"]');
@@ -13256,4 +13260,64 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  obs.observe(detail,{attributes:true,attributeFilter:['class']});
 })();
 </script>
+
+<style id="v765-desktop-main-and-playback-status">
+/* V7.65 — apenas o modal principal (sem mídia aberta) em desktops baixos.
+   A redução é suave, preserva conteúdo e deixa rolagem como contingência
+   para títulos longos / zoom extremo, ao invés de cortar informação. */
+@media (min-width:960px) and (max-height:590px){
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) > .hd-card{
+    padding:7px 13px 9px!important;
+    max-height:calc(100dvh - 14px)!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-hero{
+    min-height:68px!important;
+    padding:4px 46px 2px 50px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-num .hd-number{
+    font-size:30px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-hero h2{
+    font-size:19px!important;margin-top:1px!important;line-height:1.05!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-staff{height:29px!important;}
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-clef{
+    font-size:42px!important;top:-5px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-swoosh{
+    bottom:1px!important;height:12px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider{
+    min-height:7px!important;height:7px!important;margin:0!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider span{
+    font-size:11px!important;line-height:1!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-meta{
+    margin:2px 0 3px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-actions{
+    margin:2px 0!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-secondary-actions{
+    margin:2px 0 3px!important;
+  }
+}
+/* Texto do estado de reprodução não deve desaparecer após mudar de hino.
+   O texto sempre acompanha o ícone: 'Pausar' tocando; 'Tocar' parado/pausado.
+   Não altera os nomes temporários dos demais botões. */
+#hymnDetail #hdSequence:not([hidden]) #hdPlaybackToggle:not(:disabled) .ga-ctl-name{
+  opacity:1!important;
+}
+#hymnDetail #hdSequence:not([hidden]) #hdPlaybackToggle[data-playback="playing"]{
+  background:#f2ead9!important;
+  border-color:#b18438!important;
+  box-shadow:0 0 0 1px rgba(177,132,56,.15)!important;
+}
+#hymnDetail #hdSequence:not([hidden]) #hdPlaybackToggle[data-playback="playing"] .ga-ctl-svg{
+  color:#263746!important;
+}
+</style>
 </body></html>
