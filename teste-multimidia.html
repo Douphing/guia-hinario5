@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.66 TESTE: histórico compacto integrado aos botões secundários em telas móveis, sem aumento vertical do modal. Desktop V7.65 preservado. -->
 <!-- V7.63 TESTE: modal de mídia responsivo no desktop: informações e vídeo em duas colunas,
      tamanho do vídeo equilibrado, altura limitada à tela e rolagem acessível somente em telas baixas;
      layout de celular e ícones da V7.61 preservados; index.html não alterado. -->
@@ -13320,4 +13321,81 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   color:#263746!important;
 }
 </style>
+<style id="v766-mobile-history-fit">
+/* Celular: a linha "1 chamado · 1 observação" não deve empurrar o vídeo.
+   As contagens já são mostradas nos dois botões principais; acesso ao
+   histórico é mantido como ícone acessível na mesma linha de Letra/Compartilhar. */
+@media (max-width:700px){
+ #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr) 34px!important;
+   column-gap:5px!important;
+   align-items:center!important;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]){
+   box-sizing:border-box!important;
+   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+   position:relative!important;
+   width:34px!important;min-width:34px!important;max-width:34px!important;
+   height:34px!important;min-height:34px!important;max-height:34px!important;
+   margin:0!important;padding:2px 0!important;
+   border:1px solid #d7c4a1!important;border-radius:11px!important;
+   color:#765a29!important;background:#fffaf0!important;
+   box-shadow:0 1px 3px rgba(35,38,44,.08)!important;
+   cursor:pointer;
+   font-family:Arial,sans-serif!important;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]) > span:first-child{
+   display:block!important;flex:none!important;
+   font:700 15px/1 Arial,sans-serif!important;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden])::after{
+   content:'Hist.';display:block;flex:none;
+   font:700 7px/1 Arial,sans-serif!important;margin-top:1px;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory #hdHistoryText{
+   position:absolute!important;width:1px!important;height:1px!important;
+   padding:0!important;margin:-1px!important;border:0!important;
+   overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory > span[aria-hidden="true"]{
+   display:none!important;
+ }
+ #hymnDetail .hd-secondary-actions > #hdHistory:focus-visible{
+   outline:2px solid #b18438!important;outline-offset:2px!important;
+ }
+}
+</style>
+<script id="v766-mobile-history-fit">
+(function(){
+ 'use strict';
+ const detail=document.getElementById('hymnDetail');
+ const history=document.getElementById('hdHistory');
+ const text=document.getElementById('hdHistoryText');
+ const secondary=detail?.querySelector('.hd-secondary-actions');
+ if(!detail||!history||!text||!secondary)return;
+ const anchor=document.createComment('v766-history-original-position');
+ history.parentNode.insertBefore(anchor,history);
+ function positionHistory(){
+   const compact=window.matchMedia('(max-width:700px)').matches;
+   if(compact){
+     if(history.parentNode!==secondary)secondary.appendChild(history);
+   }else if(history.parentNode!==anchor.parentNode || history.previousSibling!==anchor){
+     anchor.parentNode.insertBefore(history,anchor.nextSibling);
+   }
+ }
+ function updateLabel(){
+   const t=text.textContent.trim();
+   const accessible=t?'Histórico: '+t:'Abrir histórico do hino';
+   history.setAttribute('aria-label',accessible);
+   history.title=accessible;
+ }
+ positionHistory();updateLabel();
+ let resizing=false;
+ window.addEventListener('resize',()=>{
+   if(resizing)return;resizing=true;
+   requestAnimationFrame(()=>{resizing=false;positionHistory()});
+ },{passive:true});
+ new MutationObserver(updateLabel).observe(text,{childList:true,characterData:true,subtree:true});
+})();
+</script>
 </body></html>
