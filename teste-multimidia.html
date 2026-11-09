@@ -13321,81 +13321,127 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   color:#263746!important;
 }
 </style>
-<style id="v766-mobile-history-fit">
-/* Celular: a linha "1 chamado · 1 observação" não deve empurrar o vídeo.
-   As contagens já são mostradas nos dois botões principais; acesso ao
-   histórico é mantido como ícone acessível na mesma linha de Letra/Compartilhar. */
+<style id="v768-records-balanced-layout">
+/* V7.68: Registros acessível na mesma faixa de Letra e Compartilhar,
+   tanto no desktop quanto no celular. Nenhuma linha adicional ocupa o modal. */
+#hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
+ display:grid!important;
+ grid-template-columns:minmax(0,.88fr) minmax(0,1.36fr) minmax(0,1.08fr)!important;
+ align-items:stretch!important;
+ gap:6px!important;
+ width:100%!important;
+ max-width:none!important;
+}
+#hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])) > button{
+ min-width:0!important;
+ width:100%!important;
+ max-width:100%!important;
+ height:36px!important;
+ min-height:36px!important;
+ max-height:36px!important;
+ padding:2px 5px!important;
+ margin:0!important;
+ border-radius:11px!important;
+ font:700 clamp(12px,1.05vw,14px)/1.05 Arial,sans-serif!important;
+ overflow:hidden!important;
+ text-align:center!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]){
+ box-sizing:border-box!important;
+ display:flex!important;flex-direction:row!important;
+ justify-content:center!important;align-items:center!important;
+ gap:4px!important;
+ background:#fffaf0!important;color:#263746!important;
+ border:1px solid #d7c4a1!important;
+ box-shadow:0 1px 3px rgba(35,38,44,.06)!important;
+ cursor:pointer;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]) > span:first-child{
+ display:inline-block!important;flex:none!important;
+ font:700 14px/1 Arial,sans-serif!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory:not([hidden])::after{
+ content:'Registros';display:inline-block;flex:none;
+ font-family:Arial,sans-serif!important;
+ font-weight:700!important;
+ font-size:inherit!important;
+ line-height:1.05!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory #hdHistoryText{
+ position:absolute!important;width:1px!important;height:1px!important;
+ padding:0!important;margin:-1px!important;border:0!important;
+ overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory > span[aria-hidden="true"]{
+ display:none!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory:focus-visible{
+ outline:2px solid #b18438!important;outline-offset:2px!important;
+}
+/* O grid de duas colunas não deve reservar uma linha vazia 'history' depois
+   que o botão foi levado para a faixa de ações secundárias. */
+@media (min-width:960px){
+ #hymnDetail.media-open:not(.ga-video-floating) > .hd-card{
+  grid-template-areas:
+   'hero hero'
+   'meta media'
+   'study media'
+   'actions media'
+   'secondary media'
+   'divider media'!important;
+  grid-template-rows:auto auto auto auto auto minmax(0,1fr)!important;
+ }
+ #hymnDetail.media-open:not(.ga-video-floating) .hd-secondary-actions > #hdHistory{
+  grid-area:auto!important;
+ }
+}
 @media (max-width:700px){
  #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
-   grid-template-columns:minmax(0,1fr) minmax(0,1fr) 34px!important;
-   column-gap:5px!important;
-   align-items:center!important;
+  grid-template-columns:minmax(0,.86fr) minmax(0,1.39fr) minmax(0,1.04fr)!important;
+  gap:4px!important;
+ }
+ #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])) > button{
+  font-size:clamp(9px,2.85vw,11.5px)!important;
+  padding:1px 3px!important;
+  gap:2px!important;
  }
  #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]){
-   box-sizing:border-box!important;
-   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
-   position:relative!important;
-   width:34px!important;min-width:34px!important;max-width:34px!important;
-   height:34px!important;min-height:34px!important;max-height:34px!important;
-   margin:0!important;padding:2px 0!important;
-   border:1px solid #d7c4a1!important;border-radius:11px!important;
-   color:#765a29!important;background:#fffaf0!important;
-   box-shadow:0 1px 3px rgba(35,38,44,.08)!important;
-   cursor:pointer;
-   font-family:Arial,sans-serif!important;
+  gap:2px!important;
  }
  #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]) > span:first-child{
-   display:block!important;flex:none!important;
-   font:700 15px/1 Arial,sans-serif!important;
+  font-size:12px!important;
  }
- #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden])::after{
-   content:'Hist.';display:block;flex:none;
-   font:700 7px/1 Arial,sans-serif!important;margin-top:1px;
+ #hymnDetail.media-open .hd-secondary-actions:has(> #hdHistory:not([hidden])) > button{
+  height:30px!important;min-height:30px!important;max-height:30px!important;
  }
- #hymnDetail .hd-secondary-actions > #hdHistory #hdHistoryText{
-   position:absolute!important;width:1px!important;height:1px!important;
-   padding:0!important;margin:-1px!important;border:0!important;
-   overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;
+}
+@media (max-width:350px){
+ #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])) > button{
+  font-size:9.2px!important;
  }
- #hymnDetail .hd-secondary-actions > #hdHistory > span[aria-hidden="true"]{
-   display:none!important;
- }
- #hymnDetail .hd-secondary-actions > #hdHistory:focus-visible{
-   outline:2px solid #b18438!important;outline-offset:2px!important;
+ #hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]) > span:first-child{
+  display:none!important;
  }
 }
 </style>
-<script id="v766-mobile-history-fit">
+<script id="v768-records-balanced-layout">
 (function(){
  'use strict';
  const detail=document.getElementById('hymnDetail');
  const history=document.getElementById('hdHistory');
- const text=document.getElementById('hdHistoryText');
+ const historyText=document.getElementById('hdHistoryText');
  const secondary=detail?.querySelector('.hd-secondary-actions');
- if(!detail||!history||!text||!secondary)return;
- const anchor=document.createComment('v766-history-original-position');
- history.parentNode.insertBefore(anchor,history);
- function positionHistory(){
-   const compact=window.matchMedia('(max-width:700px)').matches;
-   if(compact){
-     if(history.parentNode!==secondary)secondary.appendChild(history);
-   }else if(history.parentNode!==anchor.parentNode || history.previousSibling!==anchor){
-     anchor.parentNode.insertBefore(history,anchor.nextSibling);
-   }
- }
- function updateLabel(){
-   const t=text.textContent.trim();
-   const accessible=t?'Histórico: '+t:'Abrir histórico do hino';
-   history.setAttribute('aria-label',accessible);
-   history.title=accessible;
- }
- positionHistory();updateLabel();
- let resizing=false;
- window.addEventListener('resize',()=>{
-   if(resizing)return;resizing=true;
-   requestAnimationFrame(()=>{resizing=false;positionHistory()});
- },{passive:true});
- new MutationObserver(updateLabel).observe(text,{childList:true,characterData:true,subtree:true});
+ if(!detail||!history||!historyText||!secondary)return;
+ /* Move o botão existente, conservando listener de clique, hidden e contagens. */
+ secondary.appendChild(history);
+ const updateLabel=()=>{
+  const detailText=historyText.textContent.trim();
+  const accessible=detailText?'Registros do hino: '+detailText:'Abrir registros do hino';
+  history.setAttribute('aria-label',accessible);
+  history.title=accessible;
+ };
+ updateLabel();
+ new MutationObserver(updateLabel).observe(historyText,{childList:true,characterData:true,subtree:true});
 })();
 </script>
 </body></html>
