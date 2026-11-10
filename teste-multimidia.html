@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.75 TESTE: corrige o filtro de registros ao fechar e reabrir Hinos chamados no menu. Base V7.74; arquivos e dados preservados. -->
 <!-- V7.73 TESTE: base estável V7.70 com ajuste isolado e reversível no metrônomo para desktop baixo. Sem mover nós do HTML; produção index.html intacta. -->
 <!-- V7.66 TESTE: histórico compacto integrado aos botões secundários em telas móveis, sem aumento vertical do modal. Desktop V7.65 preservado. -->
 <!-- V7.63 TESTE: modal de mídia responsivo no desktop: informações e vídeo em duas colunas,
@@ -8736,6 +8737,8 @@ function openPersonal(view){
 function closePersonal(){
  const modal=document.getElementById('personalModal');
  modal.classList.remove('show');modal.setAttribute('aria-hidden','true');
+ // O filtro local pertence apenas à consulta que acabou de ser fechada.
+ window.__historyHymn=null;
 }
 function renderFavorites(){
  const box=document.getElementById('personalContent'), title=document.getElementById('personalTitle');
@@ -9363,8 +9366,8 @@ function downloadCallsCsv(){
     };
     document.getElementById('v2Support').onclick=()=>{registrarEventoGA('apoiar_guia',{etapa:'abrir'});document.getElementById('v2SupportOverlay').classList.add('show')};
     document.getElementById('v2Mark').onclick=()=>{registrarEventoGA('abrir_marcar_hino');resetMark();document.getElementById('v2MarkOverlay').classList.add('show');setTimeout(()=>document.getElementById('v2MarkInput').focus(),80)};
-    document.getElementById('v2Fav').onclick=()=>{registrarEventoGA('abrir_favoritos');try{openPersonal('favorites')}catch(e){}};
-    document.getElementById('v2Calls').onclick=()=>{registrarEventoGA('abrir_hinos_chamados');try{openPersonal('calls')}catch(e){}};
+    document.getElementById('v2Fav').onclick=()=>{registrarEventoGA('abrir_favoritos');window.__historyHymn=null;try{openPersonal('favorites')}catch(e){}};
+    document.getElementById('v2Calls').onclick=()=>{registrarEventoGA('abrir_hinos_chamados');window.__historyHymn=null;try{openPersonal('calls')}catch(e){}};
     refresh();
   }
 
