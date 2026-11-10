@@ -13542,4 +13542,122 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  new MutationObserver(update).observe(history,{attributes:true,attributeFilter:['hidden']});
 })();
 </script>
+
+<style id="v771-secondary-actions-and-divider-refine">
+/* V7.71 — refina a faixa Letra/Compartilhar/Registros e abaixa a clave
+   sem criar rolagem adicional nem empurrar as mídias. */
+#hymnDetail .hd-secondary-actions{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.22fr)!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  width:100%!important;
+  max-width:none!important;
+}
+#hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
+  grid-template-columns:minmax(0,1fr) minmax(0,1.18fr) minmax(0,1.02fr)!important;
+  gap:7px!important;
+}
+#hymnDetail .hd-secondary-actions > button{
+  min-width:0!important;
+  width:100%!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  padding:3px 8px!important;
+  margin:0!important;
+  border-radius:12px!important;
+  font:700 clamp(12.5px,1.02vw,14px)/1.08 Arial,sans-serif!important;
+  text-align:center!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+}
+#hymnDetail .hd-secondary-actions > #hdHistory:not([hidden]){
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+#hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:16px!important;
+  height:30px!important;
+  min-height:30px!important;
+  margin:16px 0 10px!important;
+  padding-top:5px!important;
+  overflow:visible!important;
+}
+#hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider span{
+  width:26px!important;
+  height:24px!important;
+  flex:0 0 26px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font:400 22px/1 Georgia,'Times New Roman',serif!important;
+  transform:translateY(4px)!important;
+}
+#hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider::before,
+#hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider::after{
+  align-self:center!important;
+}
+@media (max-width:700px){
+  #hymnDetail .hd-secondary-actions{
+    grid-template-columns:minmax(0,.98fr) minmax(0,1.18fr)!important;
+    gap:6px!important;
+  }
+  #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
+    grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr) minmax(0,1.03fr)!important;
+    gap:5px!important;
+  }
+  #hymnDetail .hd-secondary-actions > button{
+    height:35px!important;
+    min-height:35px!important;
+    max-height:35px!important;
+    padding:2px 6px!important;
+    font-size:clamp(10.2px,2.82vw,12.2px)!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider{
+    gap:14px!important;
+    height:27px!important;
+    min-height:27px!important;
+    margin:12px 0 8px!important;
+    padding-top:5px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider span{
+    width:24px!important;
+    height:22px!important;
+    flex-basis:24px!important;
+    font-size:20px!important;
+    transform:translateY(4px)!important;
+  }
+}
+@media (max-width:380px){
+  #hymnDetail .hd-secondary-actions:has(> #hdHistory:not([hidden])){
+    grid-template-columns:minmax(0,.93fr) minmax(0,1.1fr) minmax(0,1.0fr)!important;
+  }
+  #hymnDetail .hd-secondary-actions > button{
+    font-size:clamp(9.6px,2.65vw,11.4px)!important;
+    padding:2px 5px!important;
+  }
+}
+@media (min-width:960px) and (max-height:590px){
+  #hymnDetail .hd-secondary-actions > button{
+    height:35px!important;min-height:35px!important;max-height:35px!important;
+    font-size:12px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider{
+    margin:10px 0 6px!important;
+    height:24px!important;min-height:24px!important;
+    padding-top:4px!important;
+  }
+  #hymnDetail.open:not(.media-open):not(.ga-video-floating) .hd-divider span{
+    width:22px!important;height:20px!important;flex-basis:22px!important;
+    font-size:18px!important;transform:translateY(3px)!important;
+  }
+}
+</style>
+
 </body></html>
