@@ -1,5 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
-<!-- V7.70 TESTE: implementação HTML da prévia aprovada, com ajuste sutil de espaçamento da clave e a notificação dinâmica Registros preservada. Base V7.69; produção intacta. -->
+<!-- V7.73 TESTE: base estável V7.70 com ajuste isolado e reversível no metrônomo para desktop baixo. Sem mover nós do HTML; produção index.html intacta. -->
 <!-- V7.66 TESTE: histórico compacto integrado aos botões secundários em telas móveis, sem aumento vertical do modal. Desktop V7.65 preservado. -->
 <!-- V7.63 TESTE: modal de mídia responsivo no desktop: informações e vídeo em duas colunas,
      tamanho do vídeo equilibrado, altura limitada à tela e rolagem acessível somente em telas baixas;
@@ -13542,4 +13542,91 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  new MutationObserver(update).observe(history,{attributes:true,attributeFilter:['hidden']});
 })();
 </script>
+
+<style id="v773-safe-metronome-aside">
+/* V7.73: NENHUM elemento é movido no DOM. Quando o metrônomo expandido
+   precisa de espaço em desktop baixo, o próprio painel é posicionado na
+   coluna esquerda, mantendo sua referência original para o JS do metrônomo. */
+@media (min-width:960px) and (max-height:820px){
+  #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) #hdMetronome{
+    overflow:visible!important;
+  }
+  #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) #hdMetronomePanel{
+    position:absolute!important;
+    left:var(--ga-v773-left)!important;
+    top:var(--ga-v773-top)!important;
+    width:var(--ga-v773-width)!important;
+    max-width:calc(100% - 34px)!important;
+    margin:0!important;
+    z-index:15!important;
+    border:1px solid #dfd2b7!important;
+    border-radius:12px!important;
+    background:#fffaf0!important;
+    box-shadow:0 5px 15px rgba(60,44,22,.10)!important;
+  }
+}
+@media (min-width:960px) and (max-height:710px){
+  /* Evita ultrapassar a altura útil sem afetar o vídeo em desktops altos.
+     385px em 16:9 corresponde a aproximadamente 217px de altura. */
+  #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) #hdYoutube iframe{
+    width:min(100%,385px)!important;
+    max-width:385px!important;
+    aspect-ratio:16/9!important;
+    height:auto!important;
+  }
+}
+</style>
+<script id="v773-safe-metronome-aside">
+(function(){
+ 'use strict';
+ const d=document.getElementById('hymnDetail');
+ const card=d?.querySelector('.hd-card');
+ const area=document.getElementById('hdMediaArea');
+ const secondary=d?.querySelector('.hd-secondary-actions');
+ if(!d||!card||!area||!secondary)return;
+ const mediaQuery=window.matchMedia('(min-width:960px) and (max-height:820px)');
+ const CLASS='ga-v773-metro-aside';
+ let scheduled=false;
+ function positionPanel(){
+   scheduled=false;
+   d.classList.remove(CLASS);
+   const panel=area.querySelector('#hdMetronomePanel');
+   if(!mediaQuery.matches||!d.classList.contains('open')||
+      !d.classList.contains('media-open')||d.classList.contains('ga-video-floating')||
+      !panel||panel.hidden)return;
+   const cr=card.getBoundingClientRect();
+   const sr=secondary.getBoundingClientRect();
+   const top=sr.bottom-cr.top+7;
+   const left=sr.left-cr.left;
+   const available=cr.height-top-10;
+   if(available<80||sr.width<250)return;
+   d.style.setProperty('--ga-v773-top',top.toFixed(2)+'px');
+   d.style.setProperty('--ga-v773-left',left.toFixed(2)+'px');
+   d.style.setProperty('--ga-v773-width',sr.width.toFixed(2)+'px');
+   d.classList.add(CLASS);
+   // O painel não pertence ao fluxo da coluna de mídia. Caso seja muito
+   // alto para o espaço da esquerda, usamos o fluxo normal com rolagem segura.
+   const panelH=panel.getBoundingClientRect().height;
+   if(panelH>available)d.classList.remove(CLASS);
+ }
+ function schedule(){
+   if(scheduled)return;
+   scheduled=true;
+   requestAnimationFrame(positionPanel);
+ }
+ d.addEventListener('click',e=>{
+   if(e.target.closest('#hdMetronomeToggle'))schedule();
+ });
+ new MutationObserver(ms=>{
+   const relevant=ms.some(m=>
+     (m.type==='attributes'&&m.target.id==='hdMetronomePanel')||
+     (m.type==='childList'&&[...m.addedNodes,...m.removedNodes].some(n=>
+       n.nodeType===1&&(n.id==='hdMetronome'||n.querySelector?.('#hdMetronome')))));
+   if(relevant)schedule();
+ }).observe(area,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
+ window.addEventListener('resize',schedule,{passive:true});
+ schedule();
+})();
+</script>
+
 </body></html>
