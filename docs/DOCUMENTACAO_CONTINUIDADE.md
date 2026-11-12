@@ -1,0 +1,166 @@
+# Guia do Hinário nº 5 — Dossiê de continuidade
+
+**Revisão:** 04 — 12/11/2026 (padrão MP3 único, Hino 61 V4.1 aprovado)  
+**Finalidade:** preservar as decisões aprovadas, o código existente e o contexto do projeto entre conversas.  
+**Situação:** desenvolvimento em ambiente de teste; produção preservada.  
+**Base técnica preparada:** `teste-multimidia.html` V7.77 (V7.76 preservada, somente versão de cache do MP3 61 atualizada).  
+**Referência musical atual aprovada:** Hino 61 **V4.1**, mantendo sonoridade natural da V4, graves da V3 e correções de ligaduras. Um MP3 por hino em `audio/hino-N.mp3`; os anteriores ficam como backup histórico.
+
+> **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
+
+## DECISÕES ATUAIS — REV04 (12/11/2026)
+1. **Um único MP3 por hino.** Caminho `audio/hino-N.mp3`, sem nova biblioteca completa `audio/orquestral/` e sem adicionar opções extras ao modal. A pasta experimental antiga pode permanecer como backup e não deve orientar a expansão.
+2. **Hino 61 V4.1 aprovado musicalmente.** É a referência sonora para novas cargas: tuba e graves encorpados, orquestra natural, dinâmica equilibrada, ligaduras e fermatas de acordo com cada partitura. A V3 permanece como referência histórica.
+3. **Não refazer automaticamente 1–160.** Corrigir um hino antigo apenas quando o problema estiver identificado e autorizado. Prioridade: Hinos 161 em diante, coros e mais de 300 mídias restantes.
+4. **Teste V7.77 preparado.** Única alteração no HTML V7.76: `audio/hino-61.mp3?v=776` torna-se `audio/hino-61.mp3?v=777`. O arquivo binário aprovado deve ser publicado como `audio/hino-61.mp3`.
+5. **Cuidado com a produção:** atualizar o arquivo `audio/hino-61.mp3` afeta toda página pública que usa esse endereço, mesmo sem mudar `index.html`. Somente a troca da mídia aprovada está autorizada; `index.html` e `sw.js` devem permanecer intocados.
+6. **Separar estados:** aprovado, preparado para envio, enviado ao GitHub e testado no site são coisas diferentes. Não declarar publicação nem compatibilidade em produção sem confirmar.
+7. **Sincronizar documentação:** cada modificação aprovada atualiza DOC, changelog, prompt, checklist, SHA e ZIP.
+**Estas decisões REV04 prevalecem sobre descrições históricas de REV02/REV03 abaixo.** A documentação antiga é preservada como registro, não como instrução vigente.
+
+## 1. Identidade, propósito e ambientes
+
+O **Guia do Hinário nº 5 — CCB** é uma aplicação web/PWA para consulta de hinos por ocasião, estudo musical e reprodução de mídias. Está organizada em HTML/CSS/JavaScript, com arquivos MP3 locais, partituras e links de plataformas externas. O repositório de referência informado para o projeto é [Douphing/guia-hinario5](https://github.com/Douphing/guia-hinario5).
+
+| Ambiente ou artefato | Finalidade | Regra |
+|---|---|---|
+| `index.html` | Produção, página usada pelo público | **Não substituir ou editar sem aprovação explícita**, depois de testar o piloto. |
+| `teste-multimidia.html` | Página principal dos testes | Toda melhoria funcional e visual deve ser aplicada aqui primeiro. |
+| `teste-multimidia-vX.Y-teste.html` | Backup identificado da versão | Gerar cópia antes de mudanças; nunca confundir número e conteúdo. |
+| `audio/hino-N.mp3` | Instrumental local de cada hino | Não sobrescrever os existentes por suposição. |
+| `assets/partituras/` | Imagens das partituras | Preservar nomes, quantidade de páginas e sequência de exibição. |
+| `sw.js`, `manifest.webmanifest` | PWA e atualização/cache | Verificar cache e fluxo de atualização antes de mudar. |
+
+**Inventário confirmado:** no repositório consultado, a pasta `audio` tem os arquivos numerados de **`hino-1.mp3` a `hino-160.mp3`**. O HTML de teste inclui os **Hinos 1–160** e referências a **Coros 1–6**. A completude de cada mídia externa individual deve continuar a ser conferida; a presença do hino no código não prova que todos os seus links estejam corretos.
+
+## 2. Regras invioláveis de preservação
+
+1. **Nunca alterar o conteúdo dos Hinos 1–120** — letras, estrofes, coros, IDs e estrutura aprovados. Para ajustes inevitáveis, solicitar autorização específica e trabalhar com comparação de diferenças.
+2. Preservar os demais hinos existentes (121–160), coros, links, dados e recursos. Corrigir somente itens identificados e aprovados, sem regressões.
+3. **Não substituir `index.html` com uma versão experimental.** Sequência: arquivo de teste → validação no celular e desktop → aprovação → eventual promoção autorizada para produção.
+4. Não eliminar nem migrar automaticamente **favoritos, hinos chamados, observações, registros e dados locais**. Alterações em localStorage exigem plano de compatibilidade e teste de migração.
+5. Não quebrar **mídias MP3, YouTube, YouTube Music, Spotify, metronomo, partituras, visualização de letras, compartilhar, pesquisa, navegação, favoritos, registros ou PWA**.
+6. Fazer mudanças cirúrgicas e rastreáveis; evitar acumular camadas de CSS conflitantes, duplicar nós, deslocar controles ou trocar a arquitetura do modal sem necessidade.
+7. **Não inventar mídias ou letras.** Validar URL, hino correto, número da estrofe, coro e ordem musical com a fonte apropriada.
+8. Não afirmar que um teste de sintaxe ou iframe simulado confirma execução real no celular; testar a aplicação publicada quando dependente de APIs externas, reprodução e cache.
+9. **Nunca prometer reprodução garantida com navegador fechado ou em segundo plano.** Restrições do Android, WebView, API YouTube e políticas de autoplay variam.
+10. Não limpar comentários históricos do HTML em massa antes de estabelecer documentação e backup. Mudanças de limpeza têm de ser uma etapa distinta e reversível.
+11. **Toda mudança aprovada exige documentação sincronizada na própria entrega:** atualizar `DOCUMENTACAO_CONTINUIDADE.md`, `CHANGELOG.md`, `CHECKLIST_VALIDACAO.md` quando pertinente, `PROMPT_DE_RETOMADA.md`, número/revisão e manifesto de integridade do pacote. Nenhuma aprovação deve ficar registrada apenas na conversa.
+12. **Separar estados:** proposta → teste → aprovação musical/visual/funcional → integração na página de teste → publicação autorizada. Aprovar um MP3 não equivale a publicá-lo nem a alterar o HTML.
+
+## 3. Funcionalidades que precisam ser preservadas
+
+**Consulta e organização:** índice e ocasiões; pesquisa; cartões dos hinos; favoritos; hinos chamados; observações; histórico/registros por hino e lista geral; compartilhabilidade de hino; letra; dificuldade de estudo; navegação Anterior/Próximo; dispositivos móveis e desktop.
+
+**Mídias e estudo:** MP3 instrumental; links ou embeds Spotify, YouTube, YouTube Music; visualização de partituras com múltiplas páginas; zoom/rotação conforme implementado; metronomo de estudo com BPM, pulsação e volume; mini-player e vídeo flutuante; botões de próximo/anterior, reproduzir/pausar, parar, fechar só a mídia, minimizar/maximizar; modos ao terminar (Parar, Próximo, Repetir quando compatível, Aleatório).
+
+**Regras de UI aprovadas:** controles de reprodução **monocromáticos e compactos numa única linha**, fundo claro/navy e realce apenas no ativo; rótulo pequeno no botão selecionado (por exemplo, Pausar ou Próximo); **Fechar mídia** separado de **Fechar modal do hino**; ação de **Maximizar ↗** e de minimizar legível; botão **Registros** ao lado de **Letra/Compartilhar** quando houver dados; notificação de registros; distribuição proporcional sem criar rolagem evitável; clave de sol e linhas sem tocar botões; setas separadas mesmo quando somente uma está habilitada.
+
+**Comportamento dos registros (correção V7.75):** abrir Registros de um hino filtra somente aquele hino; ao acessar depois **Hinos chamados** pelo menu, a lista **geral** não pode herdar esse filtro do último hino (`__historyHymn`). Caso de regressão: Hino 44 → Registros → fechar → Hinos chamados geral → todos devem aparecer.
+
+**Apresentação:** no desktop, usar a altura disponível e duas colunas nos contextos já aprovados; ao expandir o metrônomo em desktop baixo, não deixar cabeçalho e setas flutuarem nem cortar vídeo. No celular, não prolongar verticalmente a interface sem necessidade nem perder cabeçalho/rodapé ao abrir vídeos.
+
+## 4. Estado atual e distinções importantes
+
+| Item | Estado conhecido em 12/11/2026 | Conduta |
+|---|---|---|
+| Interface web de teste | **V7.76**, baseada em V7.75; `teste-multimidia.html` deste pacote | **Base atual de referência**, conferir antes de qualquer edição. |
+| Hinos já montados no HTML | 1–160 e coros existentes | Preservar; verificar links e áudio caso a caso. |
+| MP3 do Hino 61 integrado na V7.76 | `audio/hino-61.mp3?v=776` (renderização linear corrigida) | Já há vínculo no HTML, mas não é a nova orquestra V2. |
+| Hino 61 — Orquestra V2 | Aprovada anteriormente; preservada para comparação e MIDI-base | **Não é mais a referência final de mixagem**, não integrada. |
+| Hino 61 — Orquestra V3 Tuba Grave | **Aprovada em 12/11/2026**, grave mais presente e contraste orquestral agradável | **Nova referência sonora; MP3 separado, sem substituição na aplicação.** |
+| Demais orquestrais | Não construídos em lote | Próxima frente paralela, após fonte musical e aprovação por etapas. |
+| Próximos hinos | **A partir do 161**, expansão prevista | Carregar letra, mídias, partitura e dados usando fonte verificada. |
+| Produção | `index.html` do repositório público | **Não foi atualizado nesta organização.** Conferir versão antes de publicar. |
+
+**Integridade do backup de teste:** `SHA-256 = d75a3228d6d9a852753961a2e1a7b05fc3829fa943630372403239043077450c`.  
+**Integridade do Hino 61 Orquestra V3:** `SHA-256 = 80e74b6af7d7a46c79fd4fe359dd8fef392cdd21849bc48136844cec68faa141`.  
+**Integridade do Hino 61 Orquestra V2:** `SHA-256 = 3fb962ba39ea36028c817da05084cc71ab51a5a7e8ecfbdd96915d6a13525d23`.  
+Essas impressões digitais servem para confirmar que um arquivo recebido em outro chat é exatamente a mesma cópia; **não indicam que o arquivo do GitHub atual seja idêntico**.
+
+## 5. Padrão musical aprovado e Hino 61
+
+O **Hino 61 — “A minha alma deseja ver-Te”** é especial, com três estrofes, retornos e terminações diferentes. O padrão aprovado de orquestra é agora a **V3 — Tuba Grave**, derivada do arranjo V2 de cerca de 13 timbres virtuais. A V3 conserva a linha musical e privilegia uma mixagem com **tuba e baixo mais perceptíveis**, mantendo a definição dos demais naipes:
+
+- **Metais:** trompete, trombone, trompa e tuba;
+- **Madeiras:** flauta, clarinete e oboé;
+- **Cordas:** violinos, viola, violoncelo e contrabaixo;
+- **Acompanhamento:** textura de cordas e órgão suave.
+
+**Critérios de execução:** preservar notas, ritmo, vozes, ligaduras e indicações da partitura; evitar rearticulação indevida de notas ligadas; **fermatas moderadas**, sustentadas de modo musical, sem pausas longas desproporcionais; respeitar diferentes finais, repetição da primeira e segunda estrofes e final da terceira; não criar introduções ou reprises não previstas.
+
+**Referências dentro do pacote:** `musica_aprovada/Hino_61_Orquestra_V3_Tuba_Grave.mp3` (**nova referência auditiva aprovada**); `musica_aprovada/Hino_61_Orquestra_V2.mp3` (histórico); `musica_aprovada/hino-61-orquestra-encorpada-v2.mid`, `fonte_musical/hino-61-linear-completo.mscx`; além de `audio_referencia/hino-61-corrigido.mp3`, que corresponde ao áudio linear usado no teste web.
+
+**Regra musical aprovada para as próximas cargas (revisão 03):** o timbre/arranjo orquestral **Hino 61 V3 — Tuba Grave** é o **modelo sonoro padrão** para os novos instrumentais orquestrais, salvo decisão diferente para algum hino. O objetivo é orquestra expressiva e equilibrada, com metais/cordas/madeiras audíveis e melodia destacada. **Não copiar literalmente as repetições, fermatas, ligaduras, finais nem o tempo do Hino 61 para outro hino**; essas características pertencem à partitura individual. Fermatas moderadas, notas ligadas sem reataques artificiais, finais naturais, dinâmica coerente e sem instrumentação que encubra a melodia. Gerar **versão orquestral separada**, preservar MP3 atual e exigir comparação auditiva antes de integrar.
+
+**Aprovação musical V3 (12/11/2026):** o usuário confirmou que o reforço da tuba na versão V3 deixou o campo harmônico mais agradável e destacou o contraste entre os naipes. **A V3 é a referência de MIXAGEM, não um novo arquivo de partitura**: o MIDI-base preservado permanece o da V2. Para novas cargas, a tuba deve reforçar os graves segundo a partitura de cada hino, evitando mascaramento e distorções.
+
+**Para os outros hinos:** MP3 atual é referência auditiva, **não partitura separada por instrumentos**. Preferir os arquivos MusicXML/MuseScore ou MIDI originais (por exemplo, o pacote `ccb-hinario-5-do-master.zip`, se disponibilizado). Produzir grupos pequenos, conferir ligaduras/fermatas/retornos por hino, comparar a orquestra ao instrumental existente e só integrar depois de aprovação. Manter as duas versões em caminhos diferentes.
+
+## 6. Próximas frentes e ordem de trabalho
+
+**Regra de carga integrada:** ao construir os próximos hinos, **preparar o MP3 novo já com o modelo sonoro orquestral aprovado (Hino 61 V3 — Tuba Grave)** quando houver partitura/MIDI suficiente, verificando as regras musicais daquele hino. Isso **não autoriza substituir os MP3 1–160 automaticamente** nem integrar arquivos não revisados. Se faltar partitura ou validação, registrar “áudio orquestral pendente” e manter o instrumental existente.
+
+**Frente A — Prioritária: construção de hinos e mídias.** Continuar a partir do Hino 161, em lotes controlados. Para cada um: número e título; letra/estrofes/coro; andamento, tonalidade e compasso; partitura por páginas; arquivo MP3 completo; Spotify, YouTube, YouTube Music validados; tags por ocasião, dificuldade quando fundamentada; registro da procedência e status de cada mídia. Sem tocar no conteúdo de 1–160 fora de reparos autorizados.
+
+**Frente B — Paralela: orquestra virtual.** Adotar o timbre V3 do Hino 61 como referência, com arranjo apropriado a cada hino. Gerar novo áudio fora da produção e manter comparação A/B. Não converter automaticamente todos os MP3 por simples duplicação de timbres ou algoritmos sem partitura.
+
+**Frente C — Organização do código.** Depois de salvar backup, reduzir comentários históricos redundantes no HTML e passar o histórico para `CHANGELOG.md`. Manter no topo do HTML apenas um comentário curto de versão. Documentar módulos e regras em `DOCUMENTACAO_CONTINUIDADE.md`. Não realizar a limpeza junto com uma mudança funcional.
+
+**Frente D — Analytics (independente do HTML até validação):** acompanhar acessos e eventos; preservar a exploração “Registro de Estados” recuperada com dimensão Região; criar **uma exploração separada** para Idade/Gênero, sujeita a limites demográficos do GA4; revisar nome antigo do fluxo Web em Administrador → Fluxos de dados; comparar números sempre no mesmo período e métrica (633 em últimos 28 dias não equivale necessariamente a 785 num período maior). Não alterar coleta/ID de medição sem diagnóstico.
+
+## 7. Procedimento obrigatório para qualquer nova versão
+
+1. **Receber a fonte real:** `teste-multimidia.html` vigente e, quando envolver áudio/imagem, as respectivas pastas/arquivos. Ler este documento e comparar datas, versões e SHA; não construir código a partir da conversa somente.
+2. **Identificar precisamente o defeito:** reproduzir em versão anterior e definir o comportamento esperado. Salvar cópia numerada (`teste-multimidia-vX.Y-teste.html`).
+3. **Fazer uma alteração delimitada:** sem renomear IDs, apagar dados embutidos, recriar modais ou CSS conflitante por conveniência. Atualizar apenas o trecho necessário.
+4. **Testar a mesma sequência:** cenário normal, cenário problemático e regressões em celular e desktop. Conferir **sem/ com registros**, **mídia aberta/fechada**, **metrônomo aberto/fechado**, **primeiro/último hino**, **navegação**, **PWA/cache**.
+5. **Testes técnicos e visuais:** extrair scripts e checar sintaxe; verificar console; capturas em pelo menos 320×700, 390×844, 1000×600, 1080×550 e 1366×768; testar vídeos externos na página hospedada quando necessário. **Sem rolagem desnecessária**, mas não esconder conteúdo quando a altura for realmente insuficiente.
+6. **Comparar conteúdo:** garantir que todos os hinos e funcionalidades já existentes permaneçam intactos; se for expansão, comparar o inventário original e o novo.
+7. **Entregar os artefatos com identificação correta:** arquivo versionado, cópia nomeada `teste-multimidia.html` e, quando houver mídia nova, pacote com pastas relativas; indicar exatamente os arquivos modificados, testes e limitações.
+8. **Aguardar aprovação expressa:** somente depois disso promover o teste para produção, se o usuário solicitar. Não subir automaticamente ao GitHub.
+
+## 8. Testes de regressão prioritários
+
+| Cenário | O que confirmar |
+|---|---|
+| Hino 1 e Hino 160 | Quando existe uma única seta de navegação, ela não fica sobre a clave. |
+| Hino 44 | Registros individuais não filtram “Hinos chamados” geral após fechar. |
+| Hino 61 | Três estrofes e final especial; MP3 linear no HTML V7.76, mix orquestral V2 histórica e mix V3 aprovada e separada — não confundir. |
+| Hino 103 | Marcação e observação: badge Registros, três botões proporcionais, sem linha extra. |
+| Hino 159 | Mídia externa + metrônomo expandido; no desktop baixo, sem cabeçalho cortado nem rolagem indesejada. |
+| Coro 5 | Páginas da partitura sem separação artificial; leitura contínua no celular. |
+| Modal em 320/390 px | Cabeçalho/rodapé acessíveis, controles compactos e vídeo dentro da tela. |
+| Vídeo minimizado | Janela única arrastável, controls próprios, Maximizar/Fechar claros e sem atraso perceptível. |
+| Hinos chamados e favoritos | Persistência preservada após trocar de hino, atualizar página e reabrir. |
+| YouTube/YouTube Music/Spotify | Links corretos do hino e limitações de autoplay/encerramento respeitadas. |
+
+## 9. Incidentes que não devem se repetir
+
+- **V7.72 — regressão grave:** ícone de registros solto, setas agrupadas, cabeçalho/rolagem prejudicados e metrônomo deslocando a interface. A versão foi descartada; **não usar como base**.
+- Mudanças que acrescentaram linhas separadas de histórico empurravam o vídeo; a solução desejada é **Registros integrado** aos botões secundários, com badge sem duplicar contagens.
+- **V7.75 — bug de filtro:** consulta de registros de um hino não pode contaminar a listagem geral subsequente.
+- Arquivo distribuído com **número de versão antigo** criou confusão. Não atualizar o mesmo nome versionado com mudanças novas.
+- Reprodução em segundo plano de vídeo incorporado **não deve ser prometida** fora das possibilidades autorizadas pelo navegador e APIs.
+
+## 10. Como retomar em outro chat ou com outra ferramenta
+
+1. Anexar **este dossiê** e o **arquivo real `teste-multimidia.html`** do pacote (ou versão mais recente aprovada).
+2. Se o trabalho for musical, anexar também os MP3/MIDI/MuseScore de referência.
+3. Colar o texto de `PROMPT_DE_RETOMADA.md`.
+4. Pedir primeiro um **inventário resumido** e a conferência do estado atual; depois autorizar a alteração específica.
+5. Exigir apresentação das diferenças, testes, arquivo final e ausência de edição da produção.
+
+## 11. Protocolo obrigatório para atualizar a documentação após cada aprovação
+
+**Gatilho:** o usuário aprova uma correção, mídia, hino novo, recurso de interface, regra musical ou promoção de versão. **Na mesma entrega ou imediatamente após a aprovação, atualizar e redistribuir o pacote**; não depender da memória ou do histórico do chat.
+
+1. Registrar o que foi aprovado, data, versão do artefato, arquivo(s), objetivo, condições e ressalvas. Não confundir “aprovado para testes” com “integrado” ou “publicado”.
+2. Atualizar `DOCUMENTACAO_CONTINUIDADE.md` (estado e regras), `CHANGELOG.md` (marco, riscos, versão), `PROMPT_DE_RETOMADA.md` (última base e próximo passo), `CHECKLIST_VALIDACAO.md` se surgirem novos casos e `README_PRIMEIRO.md` se os arquivos mudarem.
+3. Atualizar cópias de trabalho pertinentes (HTML de teste, áudio, partitura) **apenas se houve implementação real**. Os backups anteriores permanecem imutáveis; nunca substituir `index.html` sem autorização expressa.
+4. Recalcular `SHA256SUMS.txt`, conferir conteúdo do ZIP e **emitir pacote de revisão identificada**. A versão do Guia (`V7.xx`) e a revisão do dossiê (`REV02` etc.) são independentes.
+5. Na retomada de outro chat, identificar a última revisão do pacote e comparar com a versão do arquivo técnico. Se houver divergência, interromper a edição e esclarecer qual arquivo está realmente aprovado.
+
+**Decisão aprovada em 12/11/2026 (REV03):** usar o padrão orquestral do Hino 61 **V3 — Tuba Grave** nas próximas cargas com partituras disponíveis e fermatas/ligaduras específicas de cada hino; manter a construção de letras, partituras e mídias externas na prioridade principal. **O HTML de teste segue V7.76 e a orquestra V3 permanece separada até integração autorizada; V2 também foi preservada.**
+
+**O documento é uma fotografia datada, não uma substituição da base técnica.** Sempre atualizar a revisão e o manifesto ao aprovar novas versões, sem apagar os incidentes e regras que protegem o projeto.
