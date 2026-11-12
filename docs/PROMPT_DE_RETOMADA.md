@@ -1,10 +1,16 @@
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
-**Revisão do dossiê: REV06 — 12/11/2026.**
+**Revisão do dossiê: REV07 — 12/11/2026.**
 
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+## ESTADO ATUAL — REV07
+- Usuário **aplicou a V7.78.3** do `teste-multimidia.html` (correção da ordem de abertura do metrônomo/vídeo no desktop). Continuar observando eventuais regressões; nunca alterar a produção sem aprovação.
+- **MP3 171–180 gerados em teste**, não aprovados, não publicados. Base instrumental V4.1; +4,5% BPM relativo ao original, a validar musicalmente. Conferir fermatas, ligaduras, rall./poco rall. e tercinas em cada partitura. Não confundir testes locais com publicação.
+- Prioridade é a avaliação auditiva de 171–180; depois enviar apenas os aprovados para `audio/`, integrar letras/partituras/mídias no HTML de testes e atualizar docs ao aprovar.
+- Um único arquivo `audio/hino-N.mp3` por hino. Hinos 1–170 não devem ser modificados sem correção autorizada.
+
 ## MARCO MAIS RECENTE — REV06 (12/11/2026)
 - MP3 e partituras JPG dos Hinos 161–170 já confirmados no GitHub, pasta `audio/` e `assets/partituras/`.
 - **HTML V7.78.2 EM TESTES**: Hino 162 tem **Final** (não Coro); navegação Anterior/Próximo do modal agora funciona após o 160; MP3 ganhou ajuste `Vol.` com slider compacto.

@@ -1,5 +1,16 @@
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
+## REV07 — V7.78.3 aplicada e MP3 171–180 em avaliação
+- [x] Usuário informou aplicação da V7.78.3; correção ordem metrônomo/vídeo foi testada localmente.
+- [ ] Testar novamente no dispositivo real caso surja comportamento diferente.
+- [x] Dez MP3 171–180 gerados, nomes `hino-N.mp3`, áudio estéreo válido.
+- [ ] Usuário aprovar a interpretação musical/andamento (+4,5% BPM experimental) antes de qualquer publicação.
+- [ ] Conferir ligaduras em 171 e 177; fermatas em 171,172,174,179,180.
+- [ ] Inspecionar visualmente sinais `rall.`, `poco rall.`, tercinas e compassos de cada partitura antes da integração definitiva.
+- [ ] Enviar MP3 171–180 somente depois de aprovados, sem sobrescrever 1–170.
+- [ ] Preparar e testar o HTML dos Hinos 171–180 com partituras, letras, metronomo, mídias e sequência.
+- [ ] `index.html` de produção não modificado.
+
 ## REV06 — checklist específico do HTML de teste V7.78.2
 - [x] Hino 162: seção **Final**, sem rotular como Coro.
 - [x] Hino 162: manter as três estrofes, 1ª/2ª casas e 3ª terminação conforme partitura.

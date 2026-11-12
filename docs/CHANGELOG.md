@@ -1,6 +1,6 @@
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
-**Atualizado:** 12/11/2026 — revisão documental REV06. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
+**Atualizado:** 12/11/2026 — revisão documental REV07. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
 
 | Versão | Marco relevante | Estado / cuidado |
 |---|---|---|
@@ -53,3 +53,10 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - Regras futuras: revisar `rall.`, `poco rall.`, tercinas, ligaduras e fermatas para cada novo MP3; andamento mais vivo apenas quando adequado.
 - Confirmada no repositório a publicação dos dez MP3 e das dez partituras 161–170.
 - Testes locais: JS sintaxe OK, Chrome 320/390/1280, Hino 162 Final, navegação, slider; aguardando aprovação no dispositivo real.
+
+
+## REV07 — 12/11/2026
+- **V7.78.3 aplicada** no repositório de testes conforme confirmação do usuário: reflow consistente com metrônomo + mídia, independentemente da ordem de abertura. Continuar observando eventuais falhas em dispositivo real.
+- MP3 171–180 **gerados e validados tecnicamente, pendentes de aprovação auditiva e upload**. +4,5% de andamento como proposta experimental para uma execução um pouco mais viva.
+- Ligaduras de prolongamento nos Hinos 171/177; fermatas no 171/172/174/179/180 tratadas discretamente. Conferir musicalmente e não assumir ausência de tercinas/rall. sem inspeção visual.
+- `index.html` de produção e Hinos 1–170 preservados. A próxima integração ao HTML de testes depende da aprovação musical do lote.

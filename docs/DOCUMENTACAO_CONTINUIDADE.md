@@ -1,12 +1,22 @@
 # Guia do Hinário nº 5 — Dossiê de continuidade
 
-**Revisão:** 06 — 12/11/2026 (Hino 162 Final, navegação modal, volume MP3 e regras musicais)  
+**Revisão:** 07 — 12/11/2026 (V7.78.3 aplicada; MP3 171–180 em avaliação)
 **Finalidade:** preservar as decisões aprovadas, o código existente e o contexto do projeto entre conversas.  
 **Situação:** desenvolvimento em ambiente de teste; produção preservada.  
 **Base técnica preparada:** `teste-multimidia.html` V7.77 (V7.76 preservada, somente versão de cache do MP3 61 atualizada).  
 **Referência musical atual aprovada:** Hino 61 **V4.1**, mantendo sonoridade natural da V4, graves da V3 e correções de ligaduras. Um MP3 por hino em `audio/hino-N.mp3`; os anteriores ficam como backup histórico.
 
 > **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
+
+## REV07 — 12/11/2026 — V7.78.3 aplicada; MP3 171–180 em avaliação
+- **V7.78.3**: usuário confirmou que aplicou a correção de reflow do metrônomo e das mídias no desktop, e optou por seguir o projeto. A possibilidade de regressão em aparelho real permanece sujeita a novo relato. O `index.html` continua protegido; a versão de testes atual é V7.78.3.
+- **Correção V7.78.3**: metrônomo à esquerda e mídia à direita em desktop quando ambos abertos, independentemente da ordem (metrônomo primeiro ou mídia primeiro), evitando barra de rolagem interna induzida por ordem de cliques.
+- **Nova carga MP3 171–180 GERADA, MAS NÃO APROVADA nem publicada.** Arquivos: `hino-171.mp3`…`hino-180.mp3`, um por hino no caminho final `audio/`. Não confundir áudio gerado, validado tecnicamente, aprovado musicalmente e publicado no GitHub.
+- **Andamento experimental:** BPM da partitura × **1,045** (+4,5%) para teste; somente manter se o usuário aprovar e se o caráter de cada hino permitir. Não alterar notas, ritornelos, coro ou finalizações.
+- **Verificações de partitura 171–180:** Hinos 171 e 177 contêm ligaduras de prolongamento na fonte; Hinos 171, 172, 174, 179 e 180 contêm fermatas como `Articulation/fermata`, tratadas com sustentação adicional discreta (~0,24 s por ponto). Não foram localizados objetos `Tuplet` nem comandos textuais estruturados de `rall.`/`poco rall.` nas MSCX examinadas. **Isso não equivale a validação visual nem musical final** — conferir sempre a partitura e a audição.
+- **Padrão mantido:** MP3 único por hino em `audio/hino-N.mp3`, instrumentação de referência Hino 61 V4.1; sem segunda biblioteca orquestral. Hinos 1–170 e produção não devem ser sobrescritos para incluir 171–180.
+- **Próximas etapas:** (1) usuário ouve e aprova/revisa 171–180, (2) sobe MP3 aprovados, (3) prepara Hinos 171–180 com letras, imagens e mídias na próxima versão do HTML de testes, (4) testa e só então considera promoção a produção.
+**REV07 prevalece sobre o estado descrito nas revisões anteriores.**
 
 ## REV06 — 12/11/2026 — V7.78.2 EM TESTES (ainda não publicada)
 **Estado confirmado:** MP3 161–170 e partituras `assets/partituras/hino-N-p1.jpg` 161–170 JÁ estão no GitHub. O HTML V7.78.2 está preparado localmente, aguardando aprovação e upload na página de TESTES. `index.html` permanece protegido.
