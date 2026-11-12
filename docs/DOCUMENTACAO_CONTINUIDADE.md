@@ -1,12 +1,32 @@
 # Guia do Hinário nº 5 — Dossiê de continuidade
 
-**Revisão:** 08 — 12/11/2026 (lote MP3 V3.1 171–180 construído para avaliação)
+**Revisão:** 09 — 12/11/2026 (V7.79 de teste com Hinos 171–180; sustain natural para futuras cargas)
 **Finalidade:** preservar as decisões aprovadas, o código existente e o contexto do projeto entre conversas.  
 **Situação:** desenvolvimento em ambiente de teste; produção preservada.  
 **Base técnica preparada:** `teste-multimidia.html` V7.77 (V7.76 preservada, somente versão de cache do MP3 61 atualizada).  
 **Referência musical atual aprovada:** Hino 61 **V4.1**, mantendo sonoridade natural da V4, graves da V3 e correções de ligaduras. Um MP3 por hino em `audio/hino-N.mp3`; os anteriores ficam como backup histórico.
 
 > **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
+
+## REV09 — 12/11/2026 — V7.79 preparada com Hinos 171–180
+
+**Decisão musical:** o usuário percebeu um efeito de volume aumentando e diminuindo na Orquestra V3.1. Decidiu **manter a carga atual 171–180 como está**, sem refazer, e **para os próximos lotes usar somente sustain natural**, sem pulsação artificial do volume nem vibrato acentuado. Preservar soprano equilibrado, tenor da clave de fá, tuba e contrabaixo grave; andamento um pouco mais vivo somente quando a partitura permitir. A Sonatina NÃO foi instalada; os MP3 atuais continuam com timbres virtuais básicos.
+
+**Estado técnico:** `teste-multimidia-v7.79-teste.html` preparado localmente **mas NÃO publicado nem aprovado no GitHub**. Base exata V7.78.3, incluindo correção de reflow metrônomo/mídia, volume MP3, navegação dinâmica, modos Parar/Próximo/Aleatório/Repetir e registros. Foram inseridos isoladamente os registros de `MULTIMIDIA` e `LETRAS` dos Hinos 171–180 e comentário de versão. A remoção dessas 3 inserções devolve o HTML V7.78.3 byte a byte. `index.html` e Hinos 1–170 estão protegidos.
+
+**Novos recursos:**
+- Dez letras com 3 estrofes. Coro quando a partitura o apresenta; **Hino 172 NÃO possui coro**.
+- Um MP3 V3.1 existente por hino no caminho `audio/hino-N.mp3`, n=171–180; arquivos mantidos sem alterar sonoridade.
+- **12 JPG** em `assets/partituras/`: Hinos **171 e 177 com duas páginas** (`-p1.jpg` e `-p2.jpg`); os demais com `-p1.jpg`. PDFs originais 171–172 e 177–178 compartilhavam página; os arquivos foram cuidadosamente separados por hino para evitar misturas.
+- Dados de metrônomo de compasso/tonalidade/BPM a partir das partituras fornecidas. 177 em 9/8 usa colcheia como unidade, 120–150 de referência.
+- YouTube Music: capítulos individuais da coletânea **CCB Vozes do Campo 171–180**, https://www.youtube.com/watch?v=0AS9FwjZnL4, tempos em segundos: 171=0, 172=195, 173=350, 174=543, 175=738, 176=1028, 177=1228, 178=1468, 179=1686, 180=1908. Spotify e vídeo individual YouTube permanecem **pendentes** por falta de vínculo específico verificado.
+- Testes locais de sintaxe JavaScript, modal, letras, referências MP3/partituras e responsividade 320/390/1280/1536 px. Desktop metrônomo→mídia e mídia→metrônomo sem rolagem interna induzida pela ordem dos cliques. Reprodução externa real e arquivos servidos pelo GitHub ainda requerem teste após upload.
+
+**Status dos arquivos:** pacote de testes disponível para o usuário enviar `teste-multimidia.html` à raiz (somente testes), dez MP3 à pasta `audio/` e 12 JPG à pasta `assets/partituras/`. Não alegar upload/publicação de nenhum desses arquivos sem checagem posterior.
+
+**Próximo passo:** usuário publicar e validar V7.79 em desktop/celular, conferir letras/partituras e sequência, aprovar; só então iniciar próximo lote de MP3 com sustain natural e sem a oscilação de volume. A documentação deve ser novamente atualizada depois da aprovação.
+
+**REV09 prevalece sobre estados anteriores conflitantes.**
 
 ## REV08 — 12/11/2026 — Hinos 171–180 V3.1 gerados para avaliação
 - **Amostras 171 e 177 V3.1**: usuário gostou do soprano mais médio, do vibrato discreto e do equilíbrio entre tenor e baixos, e autorizou continuar a construção da carga.

@@ -1,5 +1,17 @@
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
+## REV09 — V7.79 (TESTE, pendente de publicação e aprovação)
+- [x] Dez registros de `MULTIMIDIA` e `LETRAS` integrados para Hinos 171–180 sem alterar 1–170.
+- [x] Hino 172 sem coro; os outros incluem coro quando presente na partitura.
+- [x] 12 JPG: `171-p1/p2`, `177-p1/p2`, demais `-p1`; verificar visualmente PDF original compartilhado.
+- [x] YouTube Music capítulo correspondente; início e término definidos para 171–179, 180 começa em 1908s.
+- [x] Sintaxe JS validada; Chromium 320/390/1280/1536; ordem metrônomo/mídia sem rolagem em desktop.
+- [ ] Enviar MP3 171–180 ao GitHub, sem sobrescrever anteriores; testar execução no navegador.
+- [ ] Enviar 12 imagens a `assets/partituras/`, testar ambas as páginas do 171 e 177.
+- [ ] Enviar APENAS `teste-multimidia.html`, não `index.html`; testar links YouTube Music e navegação 170→171.
+- [ ] Revisar em celular real e coletar aprovação do usuário antes de promover produção.
+- [ ] Na próxima geração musical: sustain natural sem vibrato/volume periódicos, e fidelidade às articulações originais.
+
 ## REV08 — dez MP3 V3.1 aguardam aprovação musical
 - [x] Hinos 171–180 gerados com nomes `hino-N.mp3`, estéreo e duração verificada.
 - [x] 171/177 preservados exatamente como as amostras V3.1.

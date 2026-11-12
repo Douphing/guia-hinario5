@@ -1,10 +1,19 @@
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
-**Revisão do dossiê: REV08 — 12/11/2026.**
+**Revisão do dossiê: REV09 — 12/11/2026.**
 
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+## ESTADO ATUAL — REV09
+- Usuário decidiu **manter os MP3 Orquestra V3.1 dos Hinos 171–180 sem alterações**, apesar da percepção de oscilações de volume. Para os PRÓXIMOS LOTES, empregar apenas **sustain natural**, com transições ligadas, evitando modulação artificial de amplitude/vibrato.
+- A nova base **V7.79 de TESTE** foi preparada para 171–180 (letras, MP3, metrônomo, partituras e YouTube Music). Não foi publicada/aprovada nesta conversa.
+- **Partituras JPG: 12 arquivos**, porque os Hinos 171 e 177 ocupam DUAS páginas; os originais 171/172 e 177/178 partilhavam folha, já separadas corretamente.
+- **Hino 172 sem coro**. Dados do metrônomo seguem a partitura, não a velocidade arbitrária do áudio.
+- YouTube Music usa `0AS9FwjZnL4` com início individual por capítulo. Spotify e YouTube individual pendentes de confirmação específica.
+- O HTML V7.79 deriva por 3 inserções isoladas da V7.78.3; preservar os 170 anteriores, a ordem de abertura do metrônomo/vídeo, `index.html` produção e `sw.js`.
+- Após upload: conferir funcionamento real e obter aprovação; atualizar docs/manifesto, depois continuar a próxima carga.
+
 ## ESTADO ATUAL — REV08
 - **MP3 171–180 V3.1 foram GERADOS, mas ainda não APROVADOS como lote.** Hinos 171 e 177 usam amostras V3.1 já apreciadas, 172–176/178–180 usam o mesmo arranjo.
 - Vibrato discreto e soprano médio, cordas e madeiras equilibradas, tenor da clave de fá e tuba/contrabaixo graves presentes; andamento do lote anterior preservado.

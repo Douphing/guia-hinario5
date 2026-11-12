@@ -1,6 +1,6 @@
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
-**Atualizado:** 12/11/2026 — revisão documental REV08. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
+**Atualizado:** 12/11/2026 — revisão documental REV09. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
 
 | Versão | Marco relevante | Estado / cuidado |
 |---|---|---|
@@ -66,3 +66,10 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - Preservados sem recodificação os MP3 171 e 177 da V3.1; novos MP3 172–176,178–180 produzidos para avaliação musical.
 - Vibrato sutil, soprano médio, tenor/baixo presentes e andamento da carga anterior mantido.
 - Som produzido com TimGM6mb; Sonatina não instalada. Arquivos ZIP preparados, mas MP3 **não enviados ao GitHub**, sem integração ao HTML nem promoção a produção.
+
+## REV09 — 12/11/2026 — Base V7.79 preparada para TESTES
+- MP3 V3.1 171–180 mantidos sem refação. Para o lote seguinte: sustain natural, sem oscilação de volume.
+- HTML de teste V7.79 construído com letras/coros, MP3, metrônomo, 12 partituras JPG e YouTube Music por capítulos.
+- Hinos 171 e 177 possuem duas páginas; 172 e 178 foram recortados corretamente dos PDFs compartilhados; Hino 172 sem coro.
+- Vínculos individuais Spotify/YouTube ainda não verificados; não inventar URLs.
+- Sintaxe e testes locais Chromium em 320/390/1280/1536px concluídos. GitHub teste e produção não alterados nesta entrega, aguardando upload e aprovação.
