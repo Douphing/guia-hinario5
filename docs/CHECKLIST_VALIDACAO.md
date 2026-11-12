@@ -1,5 +1,11 @@
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
+## REV05 — expansão dos MP3
+- [ ] Verificar no GitHub se `audio/hino-161.mp3` a `audio/hino-170.mp3` foram enviados (aprovados localmente, ainda pendentes de publicação).
+- [ ] Não modificar os 160 MP3 existentes nem `index.html` sem aprovação explícita.
+- [ ] Integrar hinos, letras e mídias externas inicialmente no HTML de testes.
+- [ ] Na próxima carga, definir andamento um pouco mais vivo apenas quando fiel à partitura e ao caráter do hino.
+
 ## Integridade da base
 - [ ] Confirmar o arquivo-fonte real, versão, tamanho e SHA-256; gerar backup imutável.
 - [ ] Comparar dados dos Hinos 1–120 (regra absoluta de preservação) e demais existentes.

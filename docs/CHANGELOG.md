@@ -1,6 +1,6 @@
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
-**Atualizado:** 12/11/2026 — revisão documental REV04. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
+**Atualizado:** 12/11/2026 — revisão documental REV05. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
 
 | Versão | Marco relevante | Estado / cuidado |
 |---|---|---|
@@ -38,3 +38,9 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - **HTML V7.77 preparado:** cache-bust do MP3 Hino 61 `?v=777`; nenhuma outra funcionalidade/estilo modificado.
 - Próximas cargas: Hinos 161+, coros, letras/partituras e mídias; preservar 1–160 fora de correções autorizadas.
 - Produção `index.html` preservada; a troca do arquivo MP3 em `audio/` afeta o site público que já utiliza esse endereço.
+
+## REV05 — 12/11/2026 — MP3 161–170
+- Usuário aprovou a primeira geração dos dez MP3 dos Hinos 161–170, já disponíveis como pacote local de teste.
+- **Andamento para futuras cargas:** ligeiramente mais vivo, quando musicalmente adequado e compatível com a partitura; respeitar caráter, ligaduras e fermatas.
+- Os dez MP3 ainda **não estavam** na pasta `audio/` do GitHub nesta verificação. Publicação e integração ao HTML continuam como próximos passos distintos.
+- Manter um MP3 em `audio/hino-N.mp3`, preservar hinos 1–160, `index.html` e sem novo botão de orquestral no modal.

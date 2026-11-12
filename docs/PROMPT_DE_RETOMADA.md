@@ -1,10 +1,16 @@
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
-**Revisão do dossiê: REV04 — 12/11/2026.**
+**Revisão do dossiê: REV05 — 12/11/2026.**
 
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+## MARCO MAIS RECENTE — REV05 (12/11/2026)
+- O usuário **aprovou os dez MP3 Hinos 161–170**. Conferir upload em `audio/` antes de alegar publicação; na última checagem ainda não estavam no GitHub.
+- Próximo passo: integrar Hinos 161–170 no `teste-multimidia.html` com letras e mídias, preservando a produção.
+- **Para os MP3 171–180 e próximos:** buscar andamentos um pouco acima da média da faixa indicada, **somente quando o caráter e a partitura permitirem**; não alterar ligaduras, fermatas ou finalizações.
+- Continuar com um único `audio/hino-N.mp3`, referência timbrística Hino 61 V4.1. Atualizar documentação/prompt/changelog a cada aprovação.
+
 ## REGRAS ATUAIS REV04 — sobrepõem recomendações históricas de versões anteriores
 - **Hino 61 V4.1 aprovado** como referência musical: orquestra mais natural, tuba grave presente, ligaduras revistas, fermatas moderadas; a V3 fica em backup.
 - **Um único MP3 por hino** sob `audio/hino-N.mp3`. **Não criar** segunda biblioteca em `audio/orquestral/` nem inserir escolha extra no modal. Manter a pasta experimental apenas para arquivo histórico até remoção autorizada.

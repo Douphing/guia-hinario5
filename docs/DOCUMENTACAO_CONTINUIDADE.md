@@ -1,12 +1,24 @@
 # Guia do Hinário nº 5 — Dossiê de continuidade
 
-**Revisão:** 04 — 12/11/2026 (padrão MP3 único, Hino 61 V4.1 aprovado)  
+**Revisão:** 05 — 12/11/2026 (MP3 161–170 aprovados; novo critério de andamento)  
 **Finalidade:** preservar as decisões aprovadas, o código existente e o contexto do projeto entre conversas.  
 **Situação:** desenvolvimento em ambiente de teste; produção preservada.  
 **Base técnica preparada:** `teste-multimidia.html` V7.77 (V7.76 preservada, somente versão de cache do MP3 61 atualizada).  
 **Referência musical atual aprovada:** Hino 61 **V4.1**, mantendo sonoridade natural da V4, graves da V3 e correções de ligaduras. Um MP3 por hino em `audio/hino-N.mp3`; os anteriores ficam como backup histórico.
 
 > **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
+
+## MARCO REV05 — Hinos 161–170 aprovados (12/11/2026)
+
+**Estado:** os dez MP3 `hino-161.mp3` a `hino-170.mp3` foram gerados, testados e aprovados pelo usuário. **Ainda não estavam presentes na pasta `audio/` do GitHub no momento desta revisão.** Não declarar publicação ou integração em HTML antes de verificar o repositório.
+
+**Andamento para próximas cargas:** buscar andamento discretamente mais vivo, de preferência ligeiramente acima da média **quando a indicação musical permitir**; nunca acelerar arbitrariamente, alterar fórmula de compasso, ligaduras, fermatas, ritornelos ou descaracterizar hinos solenes. Avaliar o BPM conforme a partitura de cada hino e validar auditivamente antes de aprovar.
+
+**Padrão de arquivos:** `audio/hino-N.mp3`, um único MP3 por hino, com a sonoridade referencial Hino 61 V4.1. Os Hinos 1–160 e a produção `index.html` permanecem protegidos.
+
+**Ordem de execução:** 1) enviar os dez MP3 para `audio/` sem substituir os anteriores; 2) integrar Hinos 161–170 com letras, dados de metrônomo, ocasião, partituras e mídias **apenas no `teste-multimidia.html`**; 3) validar responsividade, integridade e mídias; 4) solicitar aprovação antes de promover para `index.html`; 5) somente então iniciar os MP3 171–180 com o novo critério de andamento.
+
+**Estas instruções REV05 prevalecem sobre descrições anteriores de status.**
 
 ## DECISÕES ATUAIS — REV04 (12/11/2026)
 1. **Um único MP3 por hino.** Caminho `audio/hino-N.mp3`, sem nova biblioteca completa `audio/orquestral/` e sem adicionar opções extras ao modal. A pasta experimental antiga pode permanecer como backup e não deve orientar a expansão.
