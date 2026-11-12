@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.78.2 TESTE: Hino 162 Final (não Coro); navegação até 170; volume MP3 acessível; REV06 pendente de validação. -->
 <!-- V7.78 TESTE: acrescenta Hinos 161–170 com letras, MP3 único, metrônomo, partituras e trechos verificados do YouTube Music. Base V7.77 preservada, sem promover à produção. -->
 <!-- V7.77 TESTE: Hino 61 com MP3 V4.1 aprovado em audio/hino-61.mp3; somente parâmetro de cache atualizado. Base V7.76 preservada. -->
 <!-- V7.76 TESTE: apenas áudio local do Hino 61; referência de arquivo com atualização de cache. Base V7.75 preservada. -->
@@ -8749,9 +8750,9 @@ const LETRAS={
   "titulo": "Cristo salvou-me",
   "estrutura": [
     "estrofe-1",
-    "coro",
     "estrofe-2",
-    "estrofe-3"
+    "estrofe-3",
+    "final"
   ],
   "estrofes": [
     [
@@ -8773,7 +8774,7 @@ const LETRAS={
       "Que me conduz ao lar de esplendor."
     ]
   ],
-  "coro": [
+  "final": [
     "Oh! Que doçura, sinto a virtude",
     "Que tão alegre me faz viver;",
     "Sei que, de Cristo, a plenitude",
@@ -9627,7 +9628,34 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
    const a=document.createElement('audio');
    a.controls=true;a.preload='auto';a.src=media.audio;a.setAttribute('playsinline','');
-   au.appendChild(a);
+   // V7.78.2: controles nativos móveis costumam ocultar o slider de volume.
+   // Slider complementar em popover: sem nova linha e sem afetar vídeos externos.
+   const mp3Row=document.createElement('div');mp3Row.className='hd-mp3-controls-row';
+   const volumeBox=document.createElement('div');volumeBox.className='hd-mp3-volume-box';
+   const volumeBtn=document.createElement('button');volumeBtn.type='button';
+   volumeBtn.className='hd-mp3-volume-btn';volumeBtn.title='Ajustar volume do MP3';
+   volumeBtn.setAttribute('aria-label','Ajustar volume do MP3');volumeBtn.setAttribute('aria-expanded','false');
+   volumeBtn.textContent='Vol.';
+   const volumePanel=document.createElement('div');volumePanel.className='hd-mp3-volume-panel';volumePanel.hidden=true;
+   const volumeRange=document.createElement('input');volumeRange.type='range';
+   volumeRange.min='0';volumeRange.max='100';volumeRange.step='1';
+   volumeRange.setAttribute('aria-label','Volume do MP3');
+   const volumeValue=document.createElement('span');volumeValue.className='hd-mp3-volume-value';
+   const initialVolume=Number(window.__guiaMp3Volume);
+   const normalizedVolume=Number.isFinite(initialVolume)&&initialVolume>=0&&initialVolume<=100 ? initialVolume : 100;
+   const updateMp3Volume=(v)=>{
+     const n=Math.min(100,Math.max(0,Number(v)||0));
+     volumeRange.value=String(n);volumeValue.textContent=n+'%';
+     a.volume=n/100;a.muted=n===0;window.__guiaMp3Volume=n;
+   };
+   updateMp3Volume(normalizedVolume);
+   volumeRange.addEventListener('input',()=>updateMp3Volume(volumeRange.value));
+   volumeBtn.addEventListener('click',()=>{
+     volumePanel.hidden=!volumePanel.hidden;
+     volumeBtn.setAttribute('aria-expanded',String(!volumePanel.hidden));
+   });
+   volumePanel.append(volumeRange,volumeValue);volumeBox.append(volumeBtn,volumePanel);
+   mp3Row.append(a,volumeBox);au.appendChild(mp3Row);
    novoAudio=a;
    au.appendChild(status);
    a.addEventListener('error',()=>{
@@ -11922,9 +11950,13 @@ body:not(.index-mode):not(.welcome-mode){
 
   window.buildHymnNavHtml=function(h){
     const n=Number(h&&h.num);
-    if(!Number.isFinite(n)||n<1||n>160)return '';
-    const prev=n>1?n-1:null;
-    const next=n<160?n+1:null;
+    // V7.78.2: navegar somente pelos hinos cadastrados, inclusive cargas futuras.
+    const nums=allUniqueHymns().map(x=>Number(x.num))
+      .filter(x=>Number.isInteger(x)&&x>0).sort((a,b)=>a-b);
+    const idx=nums.indexOf(n);
+    if(idx<0)return '';
+    const prev=idx>0?nums[idx-1]:null;
+    const next=idx<nums.length-1?nums[idx+1]:null;
     return `
       <div class="hd-hymn-nav" aria-label="Navegação entre hinos">
         <button type="button" id="hdPrevHymn"
@@ -14471,4 +14503,16 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 </style>
 
+
+<style id="v7782-audio-volume">
+#hymnDetail #hdAudio .hd-mp3-controls-row{display:flex;align-items:center;gap:5px;position:relative;width:100%;min-width:0}
+#hymnDetail #hdAudio .hd-mp3-controls-row>audio{width:1px!important;min-width:0!important;flex:1 1 0!important;max-width:none!important;height:40px}
+#hymnDetail #hdAudio .hd-mp3-volume-box{flex:0 0 35px;position:relative;align-self:center;z-index:3}
+#hymnDetail #hdAudio .hd-mp3-volume-btn{display:flex;align-items:center;justify-content:center;width:35px;height:35px;min-width:35px;padding:0!important;margin:0!important;border:1px solid #d3bf96!important;border-radius:10px!important;background:#fffaf1!important;color:#263746!important;font:800 11px/1 Arial,sans-serif!important;cursor:pointer}
+#hymnDetail #hdAudio .hd-mp3-volume-btn[aria-expanded="true"]{background:#263746!important;color:#fff!important}
+#hymnDetail #hdAudio .hd-mp3-volume-panel{position:absolute;right:0;bottom:calc(100% + 8px);z-index:12;display:flex;align-items:center;gap:7px;padding:9px 10px;min-width:170px;border:1px solid #cfb987;border-radius:12px;background:#fffdf7;box-shadow:0 8px 24px rgba(23,38,52,.22)}
+#hymnDetail #hdAudio .hd-mp3-volume-panel[hidden]{display:none!important}
+#hymnDetail #hdAudio .hd-mp3-volume-panel input[type="range"]{display:block;flex:1;min-width:100px;width:116px;accent-color:#b18438;touch-action:pan-x}
+#hymnDetail #hdAudio .hd-mp3-volume-value{min-width:32px;color:#263746;font:700 11px Arial,sans-serif}
+</style>
 </body></html>
