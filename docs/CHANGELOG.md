@@ -1,6 +1,6 @@
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
-**Atualizado:** 12/11/2026 — revisão documental REV05. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
+**Atualizado:** 12/11/2026 — revisão documental REV06. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
 
 | Versão | Marco relevante | Estado / cuidado |
 |---|---|---|
@@ -44,3 +44,12 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - **Andamento para futuras cargas:** ligeiramente mais vivo, quando musicalmente adequado e compatível com a partitura; respeitar caráter, ligaduras e fermatas.
 - Os dez MP3 ainda **não estavam** na pasta `audio/` do GitHub nesta verificação. Publicação e integração ao HTML continuam como próximos passos distintos.
 - Manter um MP3 em `audio/hino-N.mp3`, preservar hinos 1–160, `index.html` e sem novo botão de orquestral no modal.
+
+
+## REV06 — 12/11/2026 — Correções V7.78.2 (não aprovada/publicada)
+- Hino 162: etiqueta `Final` no lugar de `Coro`, conforme a partitura e a 3ª terminação; conteúdo preservado.
+- Navegação modal após 160: retirado segundo limite fixo, distinto da sequência automática V7.78.1.
+- Instrumental MP3: botão compacto `Vol.` com slider popover, sem nova linha ou rolagem horizontal.
+- Regras futuras: revisar `rall.`, `poco rall.`, tercinas, ligaduras e fermatas para cada novo MP3; andamento mais vivo apenas quando adequado.
+- Confirmada no repositório a publicação dos dez MP3 e das dez partituras 161–170.
+- Testes locais: JS sintaxe OK, Chrome 320/390/1280, Hino 162 Final, navegação, slider; aguardando aprovação no dispositivo real.

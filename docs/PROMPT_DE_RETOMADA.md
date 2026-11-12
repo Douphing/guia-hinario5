@@ -1,10 +1,17 @@
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
-**Revisão do dossiê: REV05 — 12/11/2026.**
+**Revisão do dossiê: REV06 — 12/11/2026.**
 
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+## MARCO MAIS RECENTE — REV06 (12/11/2026)
+- MP3 e partituras JPG dos Hinos 161–170 já confirmados no GitHub, pasta `audio/` e `assets/partituras/`.
+- **HTML V7.78.2 EM TESTES**: Hino 162 tem **Final** (não Coro); navegação Anterior/Próximo do modal agora funciona após o 160; MP3 ganhou ajuste `Vol.` com slider compacto.
+- **Não publicar V7.78.2 nem modificar `index.html` sem aprovação de teste em aparelho real.**
+- Nas próximas partituras, identificar e reproduzir `rall.`, `poco rall.`, tercinas/quiálteras, ligaduras, fermatas, casas e finais. Executar cada hino com fidelidade, mesmo buscando andamento ligeiramente mais vivo.
+- Ao retomar, usar o pacote REV06 e confrontar hashes do repositório; um único MP3 por hino em `audio/`.
+
 ## MARCO MAIS RECENTE — REV05 (12/11/2026)
 - O usuário **aprovou os dez MP3 Hinos 161–170**. Conferir upload em `audio/` antes de alegar publicação; na última checagem ainda não estavam no GitHub.
 - Próximo passo: integrar Hinos 161–170 no `teste-multimidia.html` com letras e mídias, preservando a produção.

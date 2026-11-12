@@ -1,5 +1,15 @@
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
+## REV06 — checklist específico do HTML de teste V7.78.2
+- [x] Hino 162: seção **Final**, sem rotular como Coro.
+- [x] Hino 162: manter as três estrofes, 1ª/2ª casas e 3ª terminação conforme partitura.
+- [x] Modal Anterior/Próximo: 160→161, 161→162, 169→170 e retorno.
+- [x] MP3: slider `Vol.` presente em 320/390/1280px sem rolagem horizontal adicional.
+- [ ] Verificar volume em celular real (iOS pode exigir botões físicos).
+- [ ] Conferir que os modos Parar/Próximo/Aleatório/Repetir funcionam após 160.
+- [ ] Validar V7.78.2 no GitHub de **testes** antes de qualquer promoção a produção.
+- [ ] Futuras cargas: verificar `rall.`, `poco rall.`, tercinas/quiálteras, ligaduras, fermatas e finais na partitura original.
+
 ## REV05 — expansão dos MP3
 - [ ] Verificar no GitHub se `audio/hino-161.mp3` a `audio/hino-170.mp3` foram enviados (aprovados localmente, ainda pendentes de publicação).
 - [ ] Não modificar os 160 MP3 existentes nem `index.html` sem aprovação explícita.
