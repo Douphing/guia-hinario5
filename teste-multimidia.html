@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.78.3 TESTE: metrônomo expandido e mídia em desktop baixo ficam na mesma disposição, independentemente da ordem de abertura. Correção isolada à observação de mudança de estado do modal; V7.78.2 preservada. -->
 <!-- V7.78.2 TESTE: Hino 162 Final (não Coro); navegação até 170; volume MP3 acessível; REV06 pendente de validação. -->
 <!-- V7.78 TESTE: acrescenta Hinos 161–170 com letras, MP3 único, metrônomo, partituras e trechos verificados do YouTube Music. Base V7.77 preservada, sem promover à produção. -->
 <!-- V7.77 TESTE: Hino 61 com MP3 V4.1 aprovado em audio/hino-61.mp3; somente parâmetro de cache atualizado. Base V7.76 preservada. -->
@@ -14295,6 +14296,23 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
        n.nodeType===1&&(n.id==='hdMetronome'||n.querySelector?.('#hdMetronome')))));
    if(relevant)schedule();
  }).observe(area,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
+ // V7.78.3: a mídia pode abrir DEPOIS do metrônomo. Nesse caso o estado
+ // 'media-open' muda no modal, sem alterar o atributo hidden do painel;
+ // a versão antiga nunca recalculava a posição na coluna esquerda.
+ // Observa só as transições de estado relevantes; mudanças na nossa própria
+ // classe de posicionamento NÃO agendam novamente (evita loops e atraso).
+ let lastModalState = [d.classList.contains('open'),
+   d.classList.contains('media-open'),
+   d.classList.contains('ga-video-floating')].join('|');
+ new MutationObserver(()=>{
+   const currentState = [d.classList.contains('open'),
+     d.classList.contains('media-open'),
+     d.classList.contains('ga-video-floating')].join('|');
+   if(currentState!==lastModalState){
+     lastModalState=currentState;
+     schedule();
+   }
+ }).observe(d,{attributes:true,attributeFilter:['class']});
  window.addEventListener('resize',schedule,{passive:true});
  schedule();
 })();
