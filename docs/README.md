@@ -14,3 +14,5 @@ Decisão atual: **um MP3 definitivo por hino em `audio/hino-N.mp3`; Hino 61 V4.1
 **REV08:** lote MP3 Hinos 171–180 V3.1 gerado para avaliação auditiva; sem publicação ou integração automática. Ver dossiê e histórico.
 
 **REV09:** V7.79 preparada para teste de 171–180 (10 MP3, 12 partituras JPG, letras/metrônomo e capítulos externos), não publicada. A próxima carga musical deverá priorizar sustain natural, sem oscilações artificiais de volume.
+
+**Conferência posterior REV09:** MP3 171–180 já publicados e idênticos aos arquivos V3.1; pendentes somente HTML V7.79 e 12 JPG de partituras.

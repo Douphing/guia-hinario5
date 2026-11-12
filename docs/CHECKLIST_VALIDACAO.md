@@ -6,7 +6,7 @@
 - [x] 12 JPG: `171-p1/p2`, `177-p1/p2`, demais `-p1`; verificar visualmente PDF original compartilhado.
 - [x] YouTube Music capítulo correspondente; início e término definidos para 171–179, 180 começa em 1908s.
 - [x] Sintaxe JS validada; Chromium 320/390/1280/1536; ordem metrônomo/mídia sem rolagem em desktop.
-- [ ] Enviar MP3 171–180 ao GitHub, sem sobrescrever anteriores; testar execução no navegador.
+- [x] MP3 171–180 enviados ao GitHub, SHA correspondente aos dez arquivos locais V3.1 (10/10).
 - [ ] Enviar 12 imagens a `assets/partituras/`, testar ambas as páginas do 171 e 177.
 - [ ] Enviar APENAS `teste-multimidia.html`, não `index.html`; testar links YouTube Music e navegação 170→171.
 - [ ] Revisar em celular real e coletar aprovação do usuário antes de promover produção.

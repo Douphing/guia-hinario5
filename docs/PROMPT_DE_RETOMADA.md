@@ -5,6 +5,10 @@
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+### Verificação posterior de publicação — 12/11/2026 (REV09)
+
+**MP3 171–180 já estão publicados no GitHub em `audio/` e tiveram seus SHA Git comparados aos bytes exatos dos dez MP3 V3.1 locais: 10/10 idênticos. NÃO reenviar esses áudios nem substituí-los.** O HTML **V7.79** e as **12 imagens de partitura** ainda não estavam no repositório na consulta posterior: `teste-multimidia.html` ainda é V7.78.3 e `assets/partituras` não tem arquivos 171–180. Próxima tarefa: subir apenas HTML de teste + 12 JPG, testar em aparelho real; `index.html` continua protegido. Este estado prevalece sobre instruções da REV09 escritas antes da checagem.
+
 ## ESTADO ATUAL — REV09
 - Usuário decidiu **manter os MP3 Orquestra V3.1 dos Hinos 171–180 sem alterações**, apesar da percepção de oscilações de volume. Para os PRÓXIMOS LOTES, empregar apenas **sustain natural**, com transições ligadas, evitando modulação artificial de amplitude/vibrato.
 - A nova base **V7.79 de TESTE** foi preparada para 171–180 (letras, MP3, metrônomo, partituras e YouTube Music). Não foi publicada/aprovada nesta conversa.

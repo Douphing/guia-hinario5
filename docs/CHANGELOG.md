@@ -73,3 +73,5 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - Hinos 171 e 177 possuem duas páginas; 172 e 178 foram recortados corretamente dos PDFs compartilhados; Hino 172 sem coro.
 - Vínculos individuais Spotify/YouTube ainda não verificados; não inventar URLs.
 - Sintaxe e testes locais Chromium em 320/390/1280/1536px concluídos. GitHub teste e produção não alterados nesta entrega, aguardando upload e aprovação.
+
+**Correção de estado (REV09):** os 10 MP3 171–180 V3.1 já estavam publicados no GitHub, hashes exatos 10/10. Somente HTML de teste V7.79 e 12 JPG de partituras permanecem pendentes, sem mudança na produção.

@@ -8,6 +8,10 @@
 
 > **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
 
+### Verificação posterior de publicação — 12/11/2026 (REV09)
+
+**MP3 171–180 já estão publicados no GitHub em `audio/` e tiveram seus SHA Git comparados aos bytes exatos dos dez MP3 V3.1 locais: 10/10 idênticos. NÃO reenviar esses áudios nem substituí-los.** O HTML **V7.79** e as **12 imagens de partitura** ainda não estavam no repositório na consulta posterior: `teste-multimidia.html` ainda é V7.78.3 e `assets/partituras` não tem arquivos 171–180. Próxima tarefa: subir apenas HTML de teste + 12 JPG, testar em aparelho real; `index.html` continua protegido. Este estado prevalece sobre instruções da REV09 escritas antes da checagem.
+
 ## REV09 — 12/11/2026 — V7.79 preparada com Hinos 171–180
 
 **Decisão musical:** o usuário percebeu um efeito de volume aumentando e diminuindo na Orquestra V3.1. Decidiu **manter a carga atual 171–180 como está**, sem refazer, e **para os próximos lotes usar somente sustain natural**, sem pulsação artificial do volume nem vibrato acentuado. Preservar soprano equilibrado, tenor da clave de fá, tuba e contrabaixo grave; andamento um pouco mais vivo somente quando a partitura permitir. A Sonatina NÃO foi instalada; os MP3 atuais continuam com timbres virtuais básicos.
