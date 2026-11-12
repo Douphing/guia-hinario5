@@ -12902,8 +12902,12 @@ body:not(.index-mode):not(.welcome-mode){
  function getNext(kind,h){
    const value=String(h?.num||'');
    const coro=/^Coro\s+([1-6])$/.exec(value);
+   // V7.78.1: sequência acompanha automaticamente os hinos cadastrados.
+   // Não limitar a 160: preserva os antigos e inclui as futuras cargas.
    const keys=coro?Array.from({length:6},(_,i)=>'Coro '+(i+1)):
-     Array.from({length:160},(_,i)=>String(i+1));
+     allUniqueHymns().map(h=>String(h.num))
+       .filter(k=>/^\d+$/.test(k))
+       .sort((a,b)=>Number(a)-Number(b));
    const possible=keys.filter(k=>k!==value&&eligible(kind,k));
    if(!possible.length)return null;
    if(st.mode==='random')return possible[Math.floor(Math.random()*possible.length)];
