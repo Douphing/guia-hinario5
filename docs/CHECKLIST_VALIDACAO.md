@@ -1,5 +1,14 @@
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
+## REV08 — dez MP3 V3.1 aguardam aprovação musical
+- [x] Hinos 171–180 gerados com nomes `hino-N.mp3`, estéreo e duração verificada.
+- [x] 171/177 preservados exatamente como as amostras V3.1.
+- [x] Vibrato atenuado, soprano em registro tímbrico médio, tenor e tuba/contrabaixo preservados.
+- [ ] Conferir auditivamente os dez hinos e aprovar a sonoridade.
+- [ ] Revisar partituras caso haja divergências de fraseado, fermata, rall. ou tercinas.
+- [ ] Somente após aprovação, publicar dez MP3 em `audio/` e integrar HTML 171–180.
+- [ ] `index.html` permanece inalterado.
+
 ## REV07 — V7.78.3 aplicada e MP3 171–180 em avaliação
 - [x] Usuário informou aplicação da V7.78.3; correção ordem metrônomo/vídeo foi testada localmente.
 - [ ] Testar novamente no dispositivo real caso surja comportamento diferente.

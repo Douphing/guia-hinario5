@@ -1,4 +1,4 @@
-# Guia do Hinário nº 5 — Continuidade REV07
+# Guia do Hinário nº 5 — Continuidade REV08
 
 Documentação para retomar o trabalho sem perder a base do projeto. Leia [o dossiê](DOCUMENTACAO_CONTINUIDADE.md), [o prompt de retomada](PROMPT_DE_RETOMADA.md), [o histórico](CHANGELOG.md) e [o checklist](CHECKLIST_VALIDACAO.md).
 
@@ -10,3 +10,5 @@ Decisão atual: **um MP3 definitivo por hino em `audio/hino-N.mp3`; Hino 61 V4.1
 **Atualização REV06:** a V7.78.2 do `teste-multimidia.html` corrige o Final do Hino 162, a navegação do modal após 160 e acrescenta ajuste compacto de volume MP3. Ainda não publicada; testar antes. Ver [regras e verificações da REV06](REV06_CORRECOES.md).
 
 **REV07:** V7.78.3 aplicada pelo usuário. MP3 171–180 gerados com BPM experimental +4,5%, aguardando aprovação auditiva e upload. Consulte `DOCUMENTACAO_CONTINUIDADE.md` para as regras de proteção.
+
+**REV08:** lote MP3 Hinos 171–180 V3.1 gerado para avaliação auditiva; sem publicação ou integração automática. Ver dossiê e histórico.

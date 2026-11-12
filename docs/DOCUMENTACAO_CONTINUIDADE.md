@@ -1,12 +1,22 @@
 # Guia do Hinário nº 5 — Dossiê de continuidade
 
-**Revisão:** 07 — 12/11/2026 (V7.78.3 aplicada; MP3 171–180 em avaliação)
+**Revisão:** 08 — 12/11/2026 (lote MP3 V3.1 171–180 construído para avaliação)
 **Finalidade:** preservar as decisões aprovadas, o código existente e o contexto do projeto entre conversas.  
 **Situação:** desenvolvimento em ambiente de teste; produção preservada.  
 **Base técnica preparada:** `teste-multimidia.html` V7.77 (V7.76 preservada, somente versão de cache do MP3 61 atualizada).  
 **Referência musical atual aprovada:** Hino 61 **V4.1**, mantendo sonoridade natural da V4, graves da V3 e correções de ligaduras. Um MP3 por hino em `audio/hino-N.mp3`; os anteriores ficam como backup histórico.
 
 > **Regra central:** nenhum novo chat deve reconstruir, reescrever ou substituir o projeto com base apenas neste documento. É obrigatório abrir o HTML original anexado, comparar alterações e preservar as estruturas e os dados já existentes. Este documento orienta a continuidade; o HTML fornecido é a base técnica concreta.
+
+## REV08 — 12/11/2026 — Hinos 171–180 V3.1 gerados para avaliação
+- **Amostras 171 e 177 V3.1**: usuário gostou do soprano mais médio, do vibrato discreto e do equilíbrio entre tenor e baixos, e autorizou continuar a construção da carga.
+- **Lote produzido:** `hino-171.mp3` a `hino-180.mp3`, em `audio/` dentro do ZIP de avaliação. Hinos 171 e 177 reproduzem exatamente os arquivos das amostras V3.1, sem alteração/recodificação; 172–176 e 178–180 foram produzidos com o mesmo roteiro instrumental.
+- **Critério sonoro:** vibrato suave e gradual apenas em notas longas, redução do destaque da flauta/oboé no soprano, violinos e viola em timbre médio, ligaduras de frase, sustentação discreta, contrabaixo subgrave e tuba, tenor sustentado por violoncelo, trombone e fagote; andamento aprovado do lote anterior, sem aumento adicional.
+- **Biblioteca efetivamente usada:** `TimGM6mb.sf2`. A Sonatina Symphonic Orchestra ainda NÃO foi instalada nem utilizada. Não afirmar timbres de amostras profissionais nesta versão.
+- **Estado:** lote de MP3 tecnicamente verificado, **AINDA AGUARDA APROVAÇÃO AUDITIVA do usuário e não está publicado no GitHub**. Nenhum arquivo da pasta `audio/` nem `teste-multimidia.html` foi modificado na preparação deste lote.
+- **Próximo passo:** ouvir a nova carga e aprovar ou pedir refinamentos; somente depois subir os dez arquivos à pasta `audio/`, incluir os Hinos 171–180 e as partituras na próxima versão de TESTE do HTML, testar e atualizar documentação. Nunca alterar `index.html` sem autorização.
+- **Atenção musical:** preservar ligaduras de prolongamento, de expressão, fermatas, `rall.`, `poco rall.`, tercinas, finais e demais sinais segundo cada partitura. Verificação técnica do MP3 não substitui aprovação musical.
+**REV08 prevalece sobre instruções históricas conflitantes.**
 
 ## REV07 — 12/11/2026 — V7.78.3 aplicada; MP3 171–180 em avaliação
 - **V7.78.3**: usuário confirmou que aplicou a correção de reflow do metrônomo e das mídias no desktop, e optou por seguir o projeto. A possibilidade de regressão em aparelho real permanece sujeita a novo relato. O `index.html` continua protegido; a versão de testes atual é V7.78.3.

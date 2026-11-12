@@ -1,6 +1,6 @@
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
-**Atualizado:** 12/11/2026 — revisão documental REV07. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
+**Atualizado:** 12/11/2026 — revisão documental REV08. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
 
 | Versão | Marco relevante | Estado / cuidado |
 |---|---|---|
@@ -60,3 +60,9 @@ Cada entrega aprovada deve adicionar: data, número **novo**, objetivo, arquivos
 - MP3 171–180 **gerados e validados tecnicamente, pendentes de aprovação auditiva e upload**. +4,5% de andamento como proposta experimental para uma execução um pouco mais viva.
 - Ligaduras de prolongamento nos Hinos 171/177; fermatas no 171/172/174/179/180 tratadas discretamente. Conferir musicalmente e não assumir ausência de tercinas/rall. sem inspeção visual.
 - `index.html` de produção e Hinos 1–170 preservados. A próxima integração ao HTML de testes depende da aprovação musical do lote.
+
+## REV08 — 12/11/2026 — Lote musical V3.1 para avaliação
+- Aprovada a direção sonora das amostras 171/177 V3.1; construída a carga completa MP3 171–180 usando a mesma instrumentação virtual.
+- Preservados sem recodificação os MP3 171 e 177 da V3.1; novos MP3 172–176,178–180 produzidos para avaliação musical.
+- Vibrato sutil, soprano médio, tenor/baixo presentes e andamento da carga anterior mantido.
+- Som produzido com TimGM6mb; Sonatina não instalada. Arquivos ZIP preparados, mas MP3 **não enviados ao GitHub**, sem integração ao HTML nem promoção a produção.

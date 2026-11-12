@@ -1,10 +1,17 @@
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
-**Revisão do dossiê: REV07 — 12/11/2026.**
+**Revisão do dossiê: REV08 — 12/11/2026.**
 
 Use este texto ao iniciar um novo chat e **anexe também** `DOCUMENTACAO_CONTINUIDADE.md` e o `teste-multimidia.html` da última versão de teste aprovada. Para trabalho de áudio, anexe partituras/MIDI e o MP3 aprovado.
 
 ---
+## ESTADO ATUAL — REV08
+- **MP3 171–180 V3.1 foram GERADOS, mas ainda não APROVADOS como lote.** Hinos 171 e 177 usam amostras V3.1 já apreciadas, 172–176/178–180 usam o mesmo arranjo.
+- Vibrato discreto e soprano médio, cordas e madeiras equilibradas, tenor da clave de fá e tuba/contrabaixo graves presentes; andamento do lote anterior preservado.
+- Banco disponível: `TimGM6mb.sf2`. **Sonatina ainda não instalada**, portanto não prometer sonoridade de biblioteca profissional.
+- Próximo passo: avaliação dos dez MP3, aprovação musical, envio para `audio/` e só então integração de letras/partituras/mídias no HTML de teste. Não substituir o `index.html`.
+- Manter a integridade das ligaduras, fermatas, ralentandos e tercinas segundo a partitura de cada hino.
+
 ## ESTADO ATUAL — REV07
 - Usuário **aplicou a V7.78.3** do `teste-multimidia.html` (correção da ordem de abertura do metrônomo/vídeo no desktop). Continuar observando eventuais regressões; nunca alterar a produção sem aprovação.
 - **MP3 171–180 gerados em teste**, não aprovados, não publicados. Base instrumental V4.1; +4,5% BPM relativo ao original, a validar musicalmente. Conferir fermatas, ligaduras, rall./poco rall. e tercinas em cada partitura. Não confundir testes locais com publicação.
