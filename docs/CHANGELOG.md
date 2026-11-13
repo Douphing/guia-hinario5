@@ -1,3 +1,12 @@
+## REV10.9 — 13/11/2026 — V7.81.7 TESTE: controles à mostra
+- O usuário rejeitou o expansor "Sequência" da V7.81.6 com botões distribuídos em duas linhas. V7.81.7 exibe **dez botões em uma única faixa compacta**, sem necessidade de expandir.
+- Preservados transportes, quatro modos ao terminar, minimizar e fechar somente mídia, ícones monocromáticos, player MP3 nativo, mute reversível e masterização +4,3 dB já gerada.
+- Alteração cirúrgica somente do markup/listener do expansor e CSS específico de visibilidade. Não altera dados de hinos 1–200, Coros 1–6, links, partituras, MP3, letras, registros e produção.
+- Chromium: **320/390/768/1280 px**, dez botões em uma linha, sem overflow e sem erros JS. 33 scripts válidos; simulação de mute preservou 37% na transição Hino 199→200. Execução real em HTTPS ainda pendente.
+- HTML V7.81.7 entregue em pacote para TESTES, **não** promovido a produção. Ver [norma REV10.9](BOTOES_VISIVEIS_REV10_9.md).
+
+---
+
 ## REV10.8 — 13/11/2026 — V7.81.6 TESTE (player nativo e ganho)
 - A pedido do usuário, removidos botões próprios `Vol.`, `⋮` e seus painéis. MP3 utiliza **apenas a barra nativa** (play/pausa, posição, alto-falante e opções conforme navegador).
 - Reduzido espaço visual: comandos anteriores/próximos, modos de término, minimizar e fechar foram **mantidos**, porém barra de sequência fica **recolhida até tocar Sequência**; Minimizar e Fechar continuam visíveis.
