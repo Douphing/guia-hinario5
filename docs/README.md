@@ -1,3 +1,8 @@
+# REV10.6 — URLs YouTube 191–200 vinculadas em V7.81.4 de TESTES
+Recebida a correspondência explícita dos Hinos 192, 193, 194, 196, 197, 198, 199 e 200. Gerado HTML V7.81.4 mantendo 191/195 e todos os outros serviços e dados. Hino 199 tem dois vídeos: `kEbHExWm-Sk` primário para teste e `8GDPODmDoTk` alternativa não integrada. URLs sem parâmetros do Rádio. **Número do hino informado pelo usuário, mas canais e instrumentação ainda não auditados automaticamente.** Ver [mapa e cautelas REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md). Produção protegida.
+
+---
+
 # REV10.5 — links de vídeos recebidos (13/11/2026)
 Recebidos 9 links para a continuidade dos Hinos 191–200. **Um já se refere à fonte do Hino 200; os demais aguardam conferência individual de número, título, canal e estilo musical**, sem associação por ordem de envio. Registro em [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md). Nenhum HTML foi alterado por esta atualização documental.
 
