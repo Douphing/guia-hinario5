@@ -5,6 +5,10 @@
 
 **Estado real de publicação:** V7.81.1 é arquivo de teste **local para avaliação**, com 1–190/Coros 1–6 preservados e MP3 V4.4 intactos. Produção `index.html` e `sw.js` NÃO alterados; teste remoto GitHub ainda V7.80. Ainda testar visual/reprodução, Spotify buscas e cortes de coletâneas em celular e desktop; sem aprovação/promover produção.
 
+
+
+**Verificação final de publicação (13/11/2026):** o arquivo remoto `teste-multimidia.html` já corresponde exatamente à base local **V7.81**, SHA Git `b3df54ec10ea65853a298b8ca2d541ae11ef51a1`; ainda **não** contém os metadados novos da **V7.81.1**. Somente a documentação REV10.1 foi publicada nesta etapa; a produção `index.html` continua intacta. Nas notas anteriores, o status V7.80 refere-se a uma consulta anterior e está superado.
+
 ---
 
 # Estado vigente — REV10 (13/11/2026)
