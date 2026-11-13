@@ -1,3 +1,19 @@
+# Checklist REV11 — Hinos 201–210 / V7.81.8 TESTE
+- [x] Fontes MSCX de 201–210 recuperadas; 10 MP3 V4.5 gerados, 10 JPG isolados.
+- [x] Hinos 1–200/Coros 1–6 preservados em MULTIMIDIA e LETRAS; 33 scripts sem erro de sintaxe.
+- [x] Metrônomos na unidade correta; 205 semínima pontuada, 206 colcheia, 208 mínima.
+- [x] Modal 210 abre em 390/1280px por Chromium de testes sem erro JS; teste HTTP local bloqueado por política.
+- [x] Som médio −16,2 a −15,5 dBFS sem saturação digital.
+- [ ] Validar letras/coros e detalhes de partituras de 201–210 no celular/desktop.
+- [ ] Ouvir os dez MP3 e conferir andamento, fermatas, naipes, sustain e finais.
+- [ ] Testar 200→201→210, botões sempre visíveis, modo próximo/repetir/aleatório, mute e volume.
+- [ ] Confirmar gravação YouTube 209 e Spotify 208 na plataforma; localizar somente links das fontes permitidas, em especial Vozes do Campo para canto no YouTube Music.
+- [ ] Publicar arquivo de testes e novos MP3/partituras após backup, SEM `index.html` de produção.
+- [ ] Obter aprovação expressa antes de promoção.
+Ver [REV11](CARGA_HINOS_201_A_210_REV11.md).
+
+---
+
 # Checklist REV10.9 — V7.81.7: dez botões à mostra
 - [x] Expansor "Sequência" retirado; dez controles aparecendo de imediato em **uma linha**.
 - [x] Chromium testou 320, 390, 768 e 1280 px: **10 botões, 1 linha, sem overflow**.
