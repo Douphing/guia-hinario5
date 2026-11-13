@@ -1,3 +1,7 @@
+> **ATENÇÃO — INVENTÁRIO HISTÓRICO REV10.1, NÃO APROVAÇÃO DE MÍDIAS.** A política **REV10.3** prevalece sobre qualquer instrução abaixo que permita fontes complementares não autorizadas ou reutilização de instrumental do YouTube como vocal do YouTube Music. **YouTube deve ser instrumental, de Orquestra Sacra/Orquestra Paulista/Orquestra Hymns/Antony Andrey; YouTube Music deve ser cantado em fonte CCB aprovada; Spotify só fontes previamente autorizadas.** Não confundir número do volume com número do hino. O mapa contém Spotify de artistas não aprovados, Hino 194 YouTube de Orquestra Expressiff (não aprovada) e vídeos reaproveitados de YouTube em YouTube Music sem comprovação de canto; esses itens **devem ser substituídos/auditados na próxima versão de teste**. O registro abaixo documenta o que constava na V7.81.1, não o que deve ser mantido. Ver [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 # Fontes externas 191–200 — REV10.1 / teste V7.81.1
 Data: 13/11/2026. Documento de auditoria das mídias integradas no arquivo local de teste, ainda não publicado.
 
