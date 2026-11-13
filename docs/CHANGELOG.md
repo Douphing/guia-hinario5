@@ -1,3 +1,13 @@
+## REV10.8 — 13/11/2026 — V7.81.6 TESTE (player nativo e ganho)
+- A pedido do usuário, removidos botões próprios `Vol.`, `⋮` e seus painéis. MP3 utiliza **apenas a barra nativa** (play/pausa, posição, alto-falante e opções conforme navegador).
+- Reduzido espaço visual: comandos anteriores/próximos, modos de término, minimizar e fechar foram **mantidos**, porém barra de sequência fica **recolhida até tocar Sequência**; Minimizar e Fechar continuam visíveis.
+- Mute e volume persistente corrigidos inclusive para alterações rápidas (32% → mute → próximo hino → desmute volta a 32%). Velocidade nativa pode persistir por `ratechange`.
+- Masterizados MP3 **191–200**, novo lote somente de TESTE, **+4,3 dB**, picos −2,7 a −1,1 dBFS; preservar versões V4.4 e não tocar MP3 1–190. **É necessário enviar esses 10 arquivos** para a melhoria sonora ser ouvida.
+- Conferências: objetos `MULTIMIDIA` e `LETRAS` idênticos à V7.81.5; **33 scripts JS válidos**; Chromium 390px abriu modal, confirmou player nativo e sequência recolhida, manteve mute 199→200, sem erros. **Reprodução de áudio real não verificada** no browser isolado.
+- Nenhum `index.html` de produção nem `sw.js` modificado; V7.81.6 é pacote local para testes e não implica publicação. [Norma REV10.8](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
+
+---
+
 ## REV10.7 — 13/11/2026 — V7.81.5 TESTE: controles MP3 e mute
 - Corrigidas quatro pendências reportadas com imagens: (1) removida tarja informativa redundante sob MP3, mantendo alerta de arquivo ausente; (2) criado botão **⋮ próprio do Guia**, com velocidade 0,75×/1×/1,25×/1,5×/2× e **Baixar MP3**; (3) mute não apaga último nível audível, e é reversível após navegação, incluindo botão `Vol. → Ativar som`; (4) ocultada no botão YouTube a legenda interna “Fonte enviada pelo usuário”.
 - Velocidade MP3 preservada entre hinos, preferencialmente por `localStorage`. Último volume audível registrado separadamente do estado silenciado, evitando que o áudio seguinte permaneça em 0 após desmutar.
