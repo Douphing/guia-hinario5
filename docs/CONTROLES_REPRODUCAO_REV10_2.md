@@ -1,3 +1,7 @@
+> **Regra adicional REV10.3:** a compatibilidade técnica dos botões de reprodução **não autoriza mudar a identidade da fonte**. YouTube só aceita links **instrumentais das quatro fontes aprovadas**; YouTube Music exige **versão cantada** de fonte CCB autorizada; Spotify segue fontes aprovadas. Um vídeo instrumental do YouTube não deve ser utilizado como link de YouTube Music cantado. O inventário 191–200 da REV10.1 é histórico e precisa de nova curadoria. Ver [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 # Controles de reprodução e volume — REV10.2 (13/11/2026)
 
 ## Estado, versão e escopo
