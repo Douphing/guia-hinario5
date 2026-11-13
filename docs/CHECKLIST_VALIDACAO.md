@@ -1,3 +1,17 @@
+# Checklist REV10.6 — mapeamento YouTube fornecido pelo usuário
+- [x] Números 192, 193, 194, 196, 197, 198, 199 e 200 mapeados de acordo com o usuário.
+- [x] Hino 200 preservado com mesmo ID, Hinos 191 e 195 intactos.
+- [x] Hino 199: primeira opção integrada e segunda opção registrada sem descartar.
+- [x] URLs limpas, sem parâmetros de Rádio do YouTube.
+- [x] Integridade verificada: 200 hinos, 6 coros, 33 scripts e dados de outras plataformas intactos.
+- [ ] Verificar canal/intérprete dos sete vídeos novos: **Orquestra Sacra, Orquestra Paulista, Orquestra Hymns ou Antony Andrey instrumental**.
+- [ ] Ouvir os Hinos 192/193/194/196/197/198/199 e confirmar número/título e execução instrumental; comparar os dois links de 199.
+- [ ] Testar iframe YouTube por HTTPS, autoplay, anterior/próximo, repetir, aleatório, volume, celular e desktop.
+- [ ] Obter aceite explícito antes de promover ao `index.html`.
+Ver [LINKS_YOUTUBE_191_A_200_REV10_6.md](LINKS_YOUTUBE_191_A_200_REV10_6.md). Não declarar revisão auditivamente aprovada antes desses testes.
+
+---
+
 # Pendência específica REV10.5 — vídeos fornecidos pelo usuário
 - [x] Nove IDs de vídeo recebidos e registrados, sem inventar associação de número de hino.
 - [x] Vídeo `OgNlZz43BEw` reconhecido como o já vinculado ao Hino 200 na V7.81.3; evitar duplicação.
