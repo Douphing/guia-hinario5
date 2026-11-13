@@ -1,3 +1,7 @@
+> **ATUALIZAÇÃO REV10.4:** o inventário REV10.1 abaixo mantém os IDs *históricos* para auditoria, mas **não deve ser usado em novas versões**: continha artistas não autorizados e vídeo instrumental reutilizado como canto. O mapa novo e coerente com a política está em [CURADORIA_MIDIAS_191_200_REV10_4.md](CURADORIA_MIDIAS_191_200_REV10_4.md). Não confundir gravações candidatas de Vozes do Campo (canto ainda a confirmar) com faixas definitivamente aprovadas.
+
+---
+
 > **Atualização de curadoria REV10.3.1:** no **YouTube Music**, a fonte **Vozes do Campo — Hinos CCB deve ser pesquisada primeiro** para gravações cantadas. No **YouTube**, só instrumental de Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey; Spotify prioriza Orquestra Sacra e fontes alternativas já autorizadas. O inventário histórico abaixo não representa aprovação dos links, e os vídeos instrumentais reaproveitados no YTM devem ser substituídos por versões cantadas verificadas. Não confundir volume/álbum com número do hino. Ver [política vigente](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
 
 ---
