@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- V7.81.6 TESTE: interface MP3 nativa, sequência recolhida, mute reversível; MP3 191-200 passam por masterização +4.3dB no pacote completo. Base V7.81.5 preservada. -->
 <!-- V7.81.5 TESTE: remove tarja de execução redundante; menu próprio Velocidade/Baixar MP3; último volume audível recuperável após mute e navegação; oculta legenda Fonte enviada pelo usuário. Sem modificar MP3, partitura, letra, fontes ou produção. -->
 <!-- V7.81 TESTE: integração aditiva Hinos 191–200 (MP3 V4.4 aprovado, letras/partituras/metrônomo). Hinos 1–190, Coros 1–6 e fontes externas preexistentes preservados. Mídias externas novas aguardam verificação; NÃO publicar em index.html sem aprovação. --><html lang="pt-BR"><head>
 <!-- V7.79.7 TESTE: mídias alternativas autorizadas: Antony Andrey para 161/182 YouTube e 161/187 Spotify; artista visível no botão. Orquestra Sacra prioritária; Vozes do Campo exclusivo no YouTube Music; produção intacta. -->
@@ -11575,6 +11576,7 @@ function openHymnDetail(h,cat){
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
      '<div class="hd-sequence" id="hdSequence" aria-label="Controles da mídia" hidden>'+
+       '<button type="button" id="hdSequenceDisclosure" class="hd-sequence-disclosure" aria-expanded="false" aria-label="Mostrar controles de sequência, anterior, próximo, repetir e aleatório">Sequência <span aria-hidden="true">⌄</span></button>'+
        '<div class="hd-sequence-transport" role="group" aria-label="Controles de reprodução">'+
          '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">'+guiaControleSvg('previous')+'<small class="ga-ctl-name">Anterior</small></button>'+
          '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">'+guiaControleSvg('play')+'<small class="ga-ctl-name">Tocar</small></button>'+
@@ -11606,6 +11608,14 @@ function openHymnDetail(h,cat){
      }
    }));
    area.querySelectorAll('.hd-play[data-kind]:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   // A barra de modos segue disponível, mas recolhida por padrão no celular.
+   const hdSequenceDisclosure=area.querySelector('#hdSequenceDisclosure');
+   hdSequenceDisclosure?.addEventListener('click',()=>{
+     const bar=area.querySelector('#hdSequence');
+     const expanded=bar.classList.toggle('is-expanded');
+     hdSequenceDisclosure.setAttribute('aria-expanded',String(expanded));
+     hdSequenceDisclosure.innerHTML=expanded?'Sequência <span aria-hidden="true">⌃</span>':'Sequência <span aria-hidden="true">⌄</span>';
+   });
    window.GuiaReproducaoContinua?.bind();
    if(media.metronomo) initHymnMetronomeUI(media.metronomo);
    initHymnNav(h);
@@ -11684,131 +11694,45 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
    const a=document.createElement('audio');
    a.controls=true;a.preload='auto';a.src=media.audio;a.setAttribute('playsinline','');
-   // V7.78.2: controles nativos móveis costumam ocultar o slider de volume.
-   // Slider complementar em popover: sem nova linha e sem afetar vídeos externos.
-   const mp3Row=document.createElement('div');mp3Row.className='hd-mp3-controls-row';
-   const volumeBox=document.createElement('div');volumeBox.className='hd-mp3-volume-box';
-   const volumeBtn=document.createElement('button');volumeBtn.type='button';
-   volumeBtn.className='hd-mp3-volume-btn';volumeBtn.title='Ajustar volume do MP3';
-   volumeBtn.setAttribute('aria-label','Ajustar volume do MP3');volumeBtn.setAttribute('aria-expanded','false');
-   volumeBtn.textContent='Vol.';
-   const volumePanel=document.createElement('div');volumePanel.className='hd-mp3-volume-panel';volumePanel.hidden=true;
-   const volumeRange=document.createElement('input');volumeRange.type='range';
-   volumeRange.min='0';volumeRange.max='100';volumeRange.step='1';
-   volumeRange.setAttribute('aria-label','Volume do MP3');
-   const volumeValue=document.createElement('span');volumeValue.className='hd-mp3-volume-value';
-   const initialVolume=window.GuiaVolumePersistente?.get()??window.__guiaMp3Volume??50;
-   const normalizedVolume=Number.isFinite(Number(initialVolume)) ? Math.max(0,Math.min(100,Number(initialVolume))) : 50;
-   const unmuteBtn=document.createElement('button');
-   unmuteBtn.type='button';unmuteBtn.className='hd-mp3-unmute';
-   unmuteBtn.setAttribute('aria-label','Ativar som e restaurar volume anterior');
-   const paintVolume=(v)=>{
-     const n=Math.min(100,Math.max(0,Math.round(Number(v)||0)));
-     volumeRange.value=String(n);volumeValue.textContent=n+'%';
-     unmuteBtn.hidden=n!==0;
-     unmuteBtn.textContent='Ativar som ('+(window.GuiaVolumePersistente?.getAudible()??50)+'%)';
-   };
-   const updateMp3Volume=(v)=>{
-     const n=Math.min(100,Math.max(0,Number(v)||0));
-     // Quando silenciado, audio.volume permanece positivo para permitir desmutar
-     // no controle NATIVO, inclusive depois de Anterior, Próximo ou Aleatório.
-     const last=window.GuiaVolumePersistente?.getAudible()??50;
-     a.volume=(n===0?last:n)/100;
-     a.muted=n===0;
-     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(n)??n;
-     paintVolume(n);
-   };
-   updateMp3Volume(normalizedVolume);
-   // O botão MUTE nativo altera audio.muted, não necessariamente audio.volume.
-   // Nunca sobrescrever o último volume audível com zero.
+   // V7.81.6 — somente controles nativos do navegador no MP3.
+   // Download e velocidade ficam no menu NATIVO quando o browser disponibiliza.
+   // Preserva volume escolhido e mute reversível após mudar de hino.
+   const mp3Row=document.createElement('div');
+   mp3Row.className='hd-mp3-controls-row';
+   mp3Row.appendChild(a);
+   au.appendChild(mp3Row);
+   const storedVolume=window.GuiaVolumePersistente?.get()??window.__guiaMp3Volume??50;
+   const lastAudible=window.GuiaVolumePersistente?.getAudible()??50;
+   const requestedVolume=Math.max(0,Math.min(100,Number(storedVolume)||0));
+   a.volume=(requestedVolume===0?lastAudible:requestedVolume)/100;
+   a.muted=requestedVolume===0;
    a.addEventListener('volumechange',()=>{
+     // O botão nativo pode mudar .muted e .volume separadamente.
+     // Se o navegador desmutar com slider em zero, restaurar o último nível.
      if(!a.muted && a.volume===0){
-       // Alguns navegadores desmutam sem restaurar a posição do slider.
        a.volume=(window.GuiaVolumePersistente?.getAudible()??50)/100;
        return;
      }
-     const nativeValue=a.muted?0:Math.round(a.volume*100);
-     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(nativeValue)??nativeValue;
-     paintVolume(nativeValue);
+     const audible=Math.round(a.volume*100);
+     // Um deslize de volume e mute rápido podem gerar um só evento:
+     // guardar o valor audível mesmo nessa situação antes de registrar mute.
+     if(a.muted && audible>0 && audible!==window.GuiaVolumePersistente?.getAudible()){
+       window.GuiaVolumePersistente?.set(audible);
+     }
+     const actual=a.muted?0:audible;
+     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(actual)??actual;
    });
-   volumeRange.addEventListener('input',()=>updateMp3Volume(volumeRange.value));
-   unmuteBtn.addEventListener('click',()=>updateMp3Volume(window.GuiaVolumePersistente?.getAudible()??50));
-   volumeBtn.addEventListener('click',()=>{
-     volumePanel.hidden=!volumePanel.hidden;
-     volumeBtn.setAttribute('aria-expanded',String(!volumePanel.hidden));
-   });
-   volumePanel.append(volumeRange,volumeValue,unmuteBtn);volumeBox.append(volumeBtn,volumePanel);
-
-   // V7.81.5: menu próprio, pois o ⋮ nativo do navegador não garante baixar/velocidade.
-   const moreBox=document.createElement('div');moreBox.className='hd-mp3-more-box';
-   const moreBtn=document.createElement('button');moreBtn.type='button';
-   moreBtn.className='hd-mp3-more-btn';moreBtn.textContent='⋮';
-   moreBtn.title='Velocidade e baixar MP3';moreBtn.setAttribute('aria-label','Mais opções do MP3: velocidade e baixar');
-   moreBtn.setAttribute('aria-haspopup','true');moreBtn.setAttribute('aria-expanded','false');
-   const morePanel=document.createElement('div');morePanel.className='hd-mp3-more-panel';morePanel.hidden=true;
-   morePanel.setAttribute('role','group');morePanel.setAttribute('aria-label','Opções de reprodução do MP3');
-   const speedLabel=document.createElement('strong');speedLabel.className='hd-mp3-speed-title';
-   speedLabel.textContent='Velocidade de reprodução';
-   const speedRow=document.createElement('div');speedRow.className='hd-mp3-speed-options';
+   // A velocidade selecionada via menu nativo pode ser reaplicada no próximo MP3.
    const SPEED_KEY='guia-hinario5-velocidade-mp3-v1';
-   const speeds=[.75,1,1.25,1.5,2];
-   let storedSpeed=Number(window.__guiaMp3Speed)||1;
-   try{storedSpeed=Number(localStorage.getItem(SPEED_KEY))||storedSpeed}catch(e){}
-   if(!speeds.includes(storedSpeed))storedSpeed=1;
-   const setSpeed=(speed)=>{
-     a.playbackRate=speed;
-     a.defaultPlaybackRate=speed;
-     window.__guiaMp3Speed=speed;
-     try{localStorage.setItem(SPEED_KEY,String(speed))}catch(e){}
-     speedRow.querySelectorAll('button').forEach(b=>{
-       const selected=Number(b.dataset.speed)===speed;
-       b.setAttribute('aria-pressed',String(selected));
-       b.classList.toggle('is-active',selected);
-     });
-   };
-   speeds.forEach(speed=>{
-     const btn=document.createElement('button');btn.type='button';
-     btn.dataset.speed=String(speed);btn.textContent=speed+'×';
-     btn.setAttribute('aria-label','Velocidade '+speed+' vezes');
-     btn.addEventListener('click',()=>{
-       setSpeed(speed);morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');
-     });
-     speedRow.appendChild(btn);
+   let savedSpeed=Number(window.__guiaMp3Speed)||1;
+   try{const v=Number(localStorage.getItem(SPEED_KEY));if(Number.isFinite(v)&&v>=.5&&v<=3)savedSpeed=v}catch(e){}
+   a.playbackRate=savedSpeed;
+   a.addEventListener('ratechange',()=>{
+     const value=Number(a.playbackRate);
+     if(!Number.isFinite(value)||value<.5||value>3)return;
+     window.__guiaMp3Speed=value;
+     try{localStorage.setItem(SPEED_KEY,String(value))}catch(e){}
    });
-   const download=document.createElement('a');download.className='hd-mp3-download';
-   download.href=media.audio;
-   const mediaFilename=String(media.audio||'').split(/[?#]/)[0].split('/').pop()||'hino.mp3';
-   download.download=mediaFilename;
-   download.textContent='↓ Baixar MP3';
-   download.setAttribute('aria-label','Baixar '+mediaFilename);
-   morePanel.append(speedLabel,speedRow,download);moreBox.append(moreBtn,morePanel);
-   const closeMenus=()=>{
-     morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');
-     volumePanel.hidden=true;volumeBtn.setAttribute('aria-expanded','false');
-   };
-   moreBtn.addEventListener('click',()=>{
-     const open=morePanel.hidden;
-     closeMenus();morePanel.hidden=!open;
-     moreBtn.setAttribute('aria-expanded',String(open));
-   });
-   volumeBtn.addEventListener('click',()=>{morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');});
-   // Esc e clique fora fecham o menu sem interferir na sequência de hinos.
-   // O controlador anterior é removido quando um novo hino abre.
-   window.GuiaPlayerMenuCleanup?.();
-   const outside=e=>{if(!mp3Row.contains(e.target))closeMenus();};
-   const onEscape=e=>{if(e.key==='Escape' && (!morePanel.hidden||!volumePanel.hidden)){
-     closeMenus();moreBtn.focus();e.stopPropagation();
-   }};
-   document.addEventListener('pointerdown',outside);
-   document.addEventListener('keydown',onEscape);
-   window.GuiaPlayerMenuCleanup=()=>{
-     document.removeEventListener('pointerdown',outside);
-     document.removeEventListener('keydown',onEscape);
-     closeMenus();
-     window.GuiaPlayerMenuCleanup=null;
-   };
-   mp3Row.append(a,volumeBox,moreBox);au.appendChild(mp3Row);
-   setSpeed(storedSpeed);
    novoAudio=a;
    au.appendChild(status);
    a.addEventListener('error',()=>{
@@ -16754,26 +16678,28 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 #hymnDetail #hdAudio .hd-mp3-volume-value{min-width:32px;color:#263746;font:700 11px Arial,sans-serif}
 </style>
 
-<style id="v7815-mp3-cleanup-and-options">
-/* V7.81.5: retirar tira de progresso redundante, exibir só erros reais. */
+<style id="v7816-native-clean-player">
+/* V7.81.6: o navegador concentra áudio, volume, velocidade e baixar no player NATIVO. */
 #hymnDetail #hdAudio .hd-audio-progress[hidden]{display:none!important}
-/* Os controles continuam compactos no celular. */
-#hymnDetail #hdAudio .hd-mp3-more-box{position:relative;flex:0 0 35px;align-self:center;z-index:14}
-#hymnDetail #hdAudio .hd-mp3-more-btn{display:grid!important;place-items:center!important;width:35px!important;height:35px!important;min-width:35px!important;padding:0!important;margin:0!important;border:1px solid #d3bf96!important;border-radius:10px!important;background:#fffaf1!important;color:#263746!important;font:800 23px/1 Arial,sans-serif!important;cursor:pointer}
-#hymnDetail #hdAudio .hd-mp3-more-btn[aria-expanded="true"]{background:#263746!important;color:white!important}
-#hymnDetail #hdAudio .hd-mp3-more-panel{position:absolute;right:0;bottom:calc(100% + 8px);width:min(255px,calc(100vw - 35px));padding:12px;display:grid;gap:10px;background:#fffdf7;border:1px solid #cfb987;border-radius:12px;box-shadow:0 8px 24px rgba(23,38,52,.22);z-index:20;font:700 12px Arial,sans-serif;color:#263746}
-#hymnDetail #hdAudio .hd-mp3-more-panel[hidden]{display:none!important}
-#hymnDetail #hdAudio .hd-mp3-speed-options{display:flex;flex-wrap:wrap;gap:4px}
-#hymnDetail #hdAudio .hd-mp3-speed-options button{font:700 12px/1 Arial,sans-serif!important;border:1px solid #d7c7a6!important;background:#fff!important;color:#263746!important;border-radius:8px!important;min-height:34px!important;padding:6px 8px!important;cursor:pointer!important}
-#hymnDetail #hdAudio .hd-mp3-speed-options button.is-active{background:#263746!important;color:#fff!important;border-color:#263746!important}
-#hymnDetail #hdAudio .hd-mp3-download{display:block!important;padding:10px;border-radius:8px;background:#f7eddb;color:#714d19!important;text-align:center;text-decoration:none!important;font:800 12px/1.1 Arial,sans-serif}
-#hymnDetail #hdAudio .hd-mp3-unmute{font:700 10px Arial,sans-serif!important;min-height:28px!important;border:1px solid #ba9c61!important;border-radius:7px!important;padding:5px!important;white-space:nowrap!important;background:#263746!important;color:white!important;cursor:pointer}
-#hymnDetail #hdAudio .hd-mp3-unmute[hidden]{display:none!important}
-#hymnDetail #hdAudio .hd-mp3-volume-panel{flex-wrap:wrap;right:-40px;max-width:min(230px,calc(100vw - 25px))}
-#hymnDetail #hdAudio .hd-mp3-volume-box{z-index:15}
-@media(max-width:400px){#hymnDetail #hdAudio .hd-mp3-controls-row{gap:4px}
- #hymnDetail #hdAudio .hd-mp3-volume-box,#hymnDetail #hdAudio .hd-mp3-more-box{flex-basis:32px}
- #hymnDetail #hdAudio .hd-mp3-volume-btn,#hymnDetail #hdAudio .hd-mp3-more-btn{width:32px!important;min-width:32px!important;height:34px!important}
- #hymnDetail #hdAudio .hd-mp3-more-panel{right:-2px}}
+#hymnDetail #hdAudio .hd-mp3-controls-row{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important}
+#hymnDetail #hdAudio .hd-mp3-controls-row>audio{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;flex:none!important;height:42px!important}
+#hymnDetail #hdAudio .hd-mp3-volume-box,#hymnDetail #hdAudio .hd-mp3-more-box{display:none!important}
+/* Sequência é opcional, sem perder anterior/próximo, repetir, aleatório, minimizar e fechar mídia. */
+#hymnDetail #hdSequence[hidden]{display:none!important}
+#hymnDetail #hdSequence:not([hidden]){display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;min-height:32px!important;max-width:100%!important;margin:4px 0!important;padding:0!important;position:relative!important}
+#hymnDetail #hdSequence .hd-sequence-disclosure{order:-3!important;display:inline-flex!important;align-items:center!important;gap:5px!important;margin-right:auto!important;padding:6px 11px!important;width:auto!important;height:32px!important;min-height:32px!important;border:1px solid #d4c5a9!important;border-radius:9px!important;background:#faf7f0!important;color:#263746!important;font:700 12px/1 Arial,sans-serif!important;box-shadow:none!important;cursor:pointer}
+#hymnDetail #hdSequence #gaMinimizeInline{order:-2!important;width:32px!important;min-width:32px!important;max-width:32px!important;height:32px!important;min-height:32px!important;max-height:32px!important;display:flex!important;padding:2px!important}
+#hymnDetail #hdSequence .ga-close-media{order:-1!important;width:32px!important;min-width:32px!important;max-width:32px!important;height:32px!important;min-height:32px!important;max-height:32px!important;padding:2px!important}
+#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-transport,
+#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-ending,
+#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-modes{display:none!important}
+#hymnDetail #hdSequence.is-expanded .hd-sequence-transport{order:1!important;display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:4px!important;width:100%!important}
+#hymnDetail #hdSequence.is-expanded .hd-sequence-ending{order:2!important;display:block!important;width:100%!important}
+#hymnDetail #hdSequence.is-expanded .hd-sequence-modes{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:4px!important}
+#hymnDetail #hdSequence.is-expanded .hd-sequence-transport button,
+#hymnDetail #hdSequence.is-expanded .hd-sequence-modes button{display:flex!important;flex:1 1 36px!important;width:auto!important;min-width:36px!important;max-width:75px!important;height:34px!important;min-height:34px!important;max-height:34px!important}
+/* O texto pequeno dos ícones é acessível mas oculto para conservar espaço. */
+#hymnDetail #hdSequence #gaMinimizeInline small,#hymnDetail #hdSequence .ga-close-media small{display:none!important}
+@media(max-width:430px){#hymnDetail #hdSequence{gap:4px!important}#hymnDetail #hdSequence .hd-sequence-disclosure{font-size:11px!important}}
 </style>
 </body></html>
