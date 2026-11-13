@@ -1,3 +1,15 @@
+# Critérios de aceite REV10.3 — identidade de cada plataforma (13/11/2026)
+- [x] **Documentada** a regra permanente YouTube instrumental de Orquestra Sacra / Orquestra Paulista / Orquestra Hymns / Antony Andrey; YouTube Music vocal CCB; Spotify de fontes autorizadas.
+- [x] **Documentada** a proibição de confundir volume/álbum, ordem da faixa ou edição de hinário com número+título do Hino nº 5.
+- [ ] **Hinos 191–200 — YouTube:** reauditar todos os dez vídeos, eliminar referências a intérpretes não aprovados (ex.: Orquestra Expressiff Hino 194) e confirmar que são instrumentais, sem canto dominante.
+- [ ] **Hinos 191–200 — YouTube Music:** encontrar gravação **cantada** em fontes aprovadas para cada hino; não utilizar automaticamente os oito vídeos compartilhados do YouTube. Conferir coletâneas, intervalos e voz nas referências 191/200.
+- [ ] **Hinos 191–200 — Spotify:** substituir artistas não autorizados do inventário REV10.1 (O Canto dos Fiéis, DioCarv, Douglas Alves, Gustavo Bueno, Encontro dos Amigos) por fontes aprovadas; resolver buscas diretas apenas com IDs confirmados.
+- [ ] Validar número, título, edição, fonte e caráter vocal/instrumental para **cada link**; não marcar link sem fonte correta como resolvido.
+- [ ] Entregar nova versão de teste corrigida, com auditoria de dados 1–190/Coros e sem modificar `index.html`.
+Ver [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md). O status de testes REV10.2 do player não equivale à aprovação de curadoria das fontes.
+
+---
+
 # Checklist complementar REV10.2 — controles de mídia e volume
 - [x] MP3 completo toca apenas uma vez quando `modoReproducao='partitura'`.
 - [x] Anterior/Próximo, repetir, aleatório, parar ao terminar e volume entre MP3s: **12/12 testes de navegador isolado**.
