@@ -1,3 +1,8 @@
+# REV10.9 — V7.81.7 (TESTE): botões à mostra em linha única
+O usuário preferiu os comandos visíveis ao invés do expansor "Sequência" da V7.81.6. A V7.81.7 restaura **dez botões em uma linha compacta**, mantendo player MP3 nativo e os dez áudios 191–200 masterizados +4,3 dB sem modificação adicional. Validado em 320/390/768/1280 px e 33 scripts. **Somente teste local**, produção intacta. Leia [REV10.9](BOTOES_VISIVEIS_REV10_9.md).
+
+---
+
 # REV10.8 — V7.81.6 TESTE: player nativo e MP3 mais altos
 Interface MP3 simplificada: **um player nativo** sem botões extras `Vol.`/`⋮`, funções de sequência preservadas mas recolhidas por padrão; mute reversível. Dez MP3 de Hinos 191–200 masterizados com **+4,3 dB**, sem alterar composição ou os áudios antigos. **Para ouvir aumento, enviar também os 10 MP3 de teste**; só substituir HTML não aumenta sonoridade. Produção protegida. [Detalhes](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
 
