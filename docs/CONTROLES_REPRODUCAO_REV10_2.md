@@ -1,3 +1,7 @@
+> **Atualização de UI REV10.8:** a experiência V7.81.5 com botões adicionais `Vol.`/`⋮` foi substituída na V7.81.6 por **player MP3 nativo**, conforme preferência do usuário. Sequência/Anterior/Próximo/Repetir/Aleatório permanecem no painel **Sequência** recolhido por padrão. Mantém mute reversível e último volume audível. Aumentar som exige **MP3 191–200 masterizados +4,3 dB**, que precisam ser publicados no ambiente de testes; não é apenas ajuste HTML. Ver [PLAYER_NATIVO_MASTERIZACAO_REV10_8.md](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
+
+---
+
 > **Complemento REV10.7 (V7.81.5):** quando o usuário muta, `0%` não deve apagar seu último volume audível. Guardar o último valor maior que zero em chave separada para restaurar ao desmutar, mesmo após Próximo/Anterior/Repetir/Aleatório. Ações **Velocidade 0,75×–2×** e **Baixar MP3** devem existir em menu `⋮` do próprio Guia, independente do menu nativo do navegador. Não exibir tarja de execução redundante nem o texto interno “Fonte enviada pelo usuário” nos botões de mídia. Ver [norma REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
 
 ---
