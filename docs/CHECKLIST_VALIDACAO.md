@@ -1,3 +1,18 @@
+# Checklist REV10.4 — curadoria 191–200 / HTML V7.81.3 TESTE
+- [x] Links externos não aprovados removidos apenas da nova versão de teste.
+- [x] YouTube: 4 vídeos individuais instrumentais de fontes aprovadas; 6 buscas rotuladas.
+- [x] Spotify: 3 URLs de faixas individuais de fontes aprovadas; 7 buscas rotuladas.
+- [x] YouTube Music: 4 candidatos Vozes do Campo com números e tempos de corte; 6 sem canto validado; nenhum instrumental do YouTube reutilizado indiscriminadamente.
+- [x] 200 hinos, 6 coros, 33 scripts válidos; letras 1–200, metronômicos, MP3 191–200 e dados multimídia 1–190 sem alteração de valores.
+- [ ] **Ouvir Vozes do Campo 191, 193, 199, 200** e comprovar que cada trecho é cantado (não instrumental/playback).
+- [ ] Substituir buscas YouTube/Spotify por IDs individuais SOMENTE de fontes autorizadas.
+- [ ] Buscar vídeos/áudios realmente **cantados** em fontes autorizadas para os seis hinos sem YouTube Music validado.
+- [ ] Testar links externos, início/fim das coletâneas, volume e comandos em navegador HTTPS, celular/desktop.
+- [ ] Obter aprovação explícita antes de publicar em `index.html`.
+**Não marcar V7.81.3 como concluída em mídias externas até resolver estes itens.** Ver [auditoria](CURADORIA_MIDIAS_191_200_REV10_4.md).
+
+---
+
 # Checklist REV10.3.1 — curadoria por plataforma
 - [x] Política escrita: YouTube somente instrumental de Orquestra Sacra, Orquestra Paulista, Orquestra Hymns ou Antony Andrey.
 - [x] Política escrita: YouTube Music cantado, pesquisar PRIMEIRO **Vozes do Campo — Hinos CCB**; outras fontes vocais somente as já aprovadas.
