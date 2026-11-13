@@ -1,3 +1,17 @@
+# Checklist complementar REV10.2 — controles de mídia e volume
+- [x] MP3 completo toca apenas uma vez quando `modoReproducao='partitura'`.
+- [x] Anterior/Próximo, repetir, aleatório, parar ao terminar e volume entre MP3s: **12/12 testes de navegador isolado**.
+- [x] YouTube volume: API simulada 3/3, iniciando no volume salvo, capturando ajuste no player e levando ao próximo hino.
+- [x] Spotify: navegação anterior/próximo possível, controles automáticos indisponíveis desabilitados e aviso explícito.
+- [x] Dados antigos e links 1–200 e Coros 1–6 sem regressão; scripts sintaticamente válidos.
+- [ ] Validar navegador real em HTTPS: MP3, YT, YTM, Spotify (limitações), mini-player e vídeo flutuante.
+- [ ] Verificar retenção do volume após reload e com restrições de armazenamento; teste em 320px/390px/1280px.
+- [ ] Garantir que o YouTube não permita vídeo diferente da faixa desejada na transição.
+- [ ] Obter aprovação explícita antes de promover ao `index.html`.
+Ver [documento de regressão REV10.2](CONTROLES_REPRODUCAO_REV10_2.md).
+
+---
+
 # Adendo REV10.1 — mídias dos Hinos 191–200
 - [x] Auditoria de numeração: título **e** número de cada hino no Hinário nº 5 conferidos; não usar número de volume, posição no álbum ou Hinário nº 4.
 - [x] Fontes prioritárias e alternativas pesquisadas antes de declarar mídia indisponível.
