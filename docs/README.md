@@ -1,3 +1,8 @@
+# Atualização REV10.1 — 13/11/2026
+**Mídias externas dos Hinos 191–200 integradas em arquivo de teste local V7.81.1.** Validação visual pendente; produção e teste remoto sem alterações. Ver [mapa de fontes e regra de numeração](FONTES_EXTERNAS_191_A_200_REV10_1.md). **Nunca confundir número do hino do Hinário nº 5 com número de volume/álbum, posição de faixa ou outra edição.**
+
+---
+
 # Guia do Hinário nº 5 — Continuidade REV10 (13/11/2026)
 
 **Estado vigente:** HTML de testes **V7.81 preparado**, usando V7.80 do GitHub como base. Hinos 191–200 integrados localmente com letras, partituras, metrônomo e MP3 **Orquestra V4.4**. **O arquivo `index.html` não foi alterado.** A V7.81 e os dez MP3 ainda precisam ser enviados e validados na página de testes; sua existência no GitHub não deve ser presumida.
