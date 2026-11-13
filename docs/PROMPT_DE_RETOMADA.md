@@ -1,3 +1,13 @@
+# Prompt atual — REV10 / V7.81 preparada para TESTE
+
+Retomar o **Guia do Hinário nº 5 – CCB** a partir do `teste-multimidia.html` mais recente **efetivamente verificado e aprovado**. A base confirmada no GitHub em 13/11/2026 era V7.80; um pacote local V7.81 adicionou os Hinos 191–200 com MP3 orquestra V4.4, letras, partituras e metrônomo. Antes de modificar, compare com GitHub; **não presumir que V7.81 esteja publicada** e **não tocar `index.html` sem autorização**.
+
+Preservar 1–190, Coros 1–6, registros, favoritos, PWA, layout responsivo e todos os controles do modal e metrônomo. Manter só `audio/hino-N.mp3`, sem segunda biblioteca. Fazer cada nova música pela fonte MSCX/MusicXML/MIDI original, respeitando fermatas, ligaduras, ritornelos, figuras, finais e andamento musical próximo do limite indicado. Soprano em cordas menos sintéticas, tenor distinto e presença de tuba/contrabaixo; TimGM6mb foi usado na V4.4, com limitações. Não inventar links externos.
+
+**Passos imediatos:** (1) testar V7.81 em celular e desktop; (2) confirmar navegação de 190 a 191, 198 e 200, partituras em múltiplas páginas, áudio e metrônomo; (3) auditar estrofes/coros e links de mídias externas 191–200; (4) obter aprovação antes de qualquer promoção a produção; (5) registrar nova versão, REV11, changelog, checklist e pacote após aceite. Os arquivos do GitHub e o pacote de teste sempre têm status independente.
+
+---
+
 # Prompt de retomada — Guia do Hinário nº 5 (CCB)
 
 **Revisão do dossiê: REV09 — 12/11/2026.**
