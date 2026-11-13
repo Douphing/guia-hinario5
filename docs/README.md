@@ -1,3 +1,8 @@
+# REV11 — V7.81.8 TESTE: carga de Hinos 201–210
+Novos MP3 Orquestra V4.5, letras, 10 partituras e metrônomos. **210 hinos e 6 coros** no arquivo local de testes. Base 1–200 imutável, player V7.81.7 preservado, 33 scripts válidos. **Mídias externas ainda não totalmente verificadas; teste auditivo pendente**. Consultar [REV11](CARGA_HINOS_201_A_210_REV11.md). A documentação não publica o HTML de testes nem altera `index.html`.
+
+---
+
 # REV10.9 — V7.81.7 (TESTE): botões à mostra em linha única
 O usuário preferiu os comandos visíveis ao invés do expansor "Sequência" da V7.81.6. A V7.81.7 restaura **dez botões em uma linha compacta**, mantendo player MP3 nativo e os dez áudios 191–200 masterizados +4,3 dB sem modificação adicional. Validado em 320/390/768/1280 px e 33 scripts. **Somente teste local**, produção intacta. Leia [REV10.9](BOTOES_VISIVEIS_REV10_9.md).
 
