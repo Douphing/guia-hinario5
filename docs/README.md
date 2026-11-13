@@ -1,3 +1,8 @@
+# REV10.8 — V7.81.6 TESTE: player nativo e MP3 mais altos
+Interface MP3 simplificada: **um player nativo** sem botões extras `Vol.`/`⋮`, funções de sequência preservadas mas recolhidas por padrão; mute reversível. Dez MP3 de Hinos 191–200 masterizados com **+4,3 dB**, sem alterar composição ou os áudios antigos. **Para ouvir aumento, enviar também os 10 MP3 de teste**; só substituir HTML não aumenta sonoridade. Produção protegida. [Detalhes](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
+
+---
+
 # REV10.7 — Teste V7.81.5: MP3 sem tarja, opções e mute corrigido
 Nova versão de teste V7.81.5 preparada sem alterar a produção. Removida a tarja “Reprodução conforme a partitura”; menu próprio do MP3 para **Velocidade (0,75×–2×)** e **Baixar**; mute guarda último volume audível e permite desmutar após Próximo/Anterior; texto “Fonte enviada pelo usuário” não aparece no botão YouTube. Dados, 200 hinos, seis coros, links e MP3 inalterados. **17/17 testes isolados** e 33 scripts válidos; teste real em HTTPS/celular pendente. Ver [regras e checklist REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
 
