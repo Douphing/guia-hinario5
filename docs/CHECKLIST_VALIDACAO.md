@@ -1,3 +1,16 @@
+# REV10.8 — Checklist player nativo e masterização 191–200
+- [x] Removidos botões e popovers extras de volume e opções, preservando áudio HTML5 nativo.
+- [x] Comandos de sequência disponíveis por expansão, sem barra extensa ao abrir o MP3.
+- [x] Mute nativo e último volume: teste Chromium 390px 32%→mute→próximo→desmute→32%.
+- [x] MP3 191–200 produzidos com +4,3 dB, checagem de pico/média, sem alterar música/andamento.
+- [x] Objetos de mídia e letras idênticos à V7.81.5; 33 scripts JS válidos.
+- [ ] Substituir `teste-multimidia.html` **em testes** e enviar **também os 10 MP3 masterizados**; guardar cópia dos V4.4.
+- [ ] Avaliar som real, possíveis distorções, menu nativo, velocidade/download, modo de sequência e reprodução em Android/desktop.
+- [ ] Confirmar demais links, metrônomo, partituras, favoritos/registros, modal e PWA sem regressões.
+- [ ] Não publicar em `index.html` sem consentimento. Ver [REV10.8](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
+
+---
+
 # Checklist REV10.7 — correções do player MP3 V7.81.5
 - [x] Tarja textual redundante removida da apresentação do MP3; erros reais permanecem informativos.
 - [x] Menu `⋮` próprio com velocidade (0,75×, 1×, 1,25×, 1,5×, 2×) e Baixar MP3; velocidade preservada em navegação.
