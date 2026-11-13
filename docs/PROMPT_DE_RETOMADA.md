@@ -1,3 +1,8 @@
+# Adendo REV10.1 — regra de mídia externa e auditoria de volume
+A continuação V7.81.1 local acrescentou as mídias externas dos Hinos 191–200, **sem alterar** Hinos 1–190, Coros 1–6, MP3 Orquestra V4.4 ou `index.html`. Confirmar primeiro o estado efetivo dos arquivos no GitHub: o teste remoto segue V7.80 até publicação. Antes de declarar novo lote concluído, buscar por **todos os serviços (Spotify, YouTube, YouTube Music)** em todas as fontes aprovadas e conferir cada gravação por **número e título do Hinário nº 5**. Não confundir **número do álbum/volume, ordem da faixa ou outra edição** com o número do hino; nunca inventar ID. Tratar busca `Spotify Pesquisar` como busca e vídeo compartilhado YT/YTM como origem comum, não faixa independente. Documentar IDs, intérpretes, limites de coletâneas e pendências. Consultar [fontes e mapa 191–200](FONTES_EXTERNAS_191_A_200_REV10_1.md). Fazer testes em celular e desktop antes da publicação/aceite. Preservar integralmente toda a base aprovada.
+
+---
+
 # Prompt atual — REV10 / V7.81 preparada para TESTE
 
 Retomar o **Guia do Hinário nº 5 – CCB** a partir do `teste-multimidia.html` mais recente **efetivamente verificado e aprovado**. A base confirmada no GitHub em 13/11/2026 era V7.80; um pacote local V7.81 adicionou os Hinos 191–200 com MP3 orquestra V4.4, letras, partituras e metrônomo. Antes de modificar, compare com GitHub; **não presumir que V7.81 esteja publicada** e **não tocar `index.html` sem autorização**.
