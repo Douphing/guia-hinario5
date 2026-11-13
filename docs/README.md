@@ -1,3 +1,8 @@
+# REV10.4 — Curadoria corrigida de fontes externas 191–200 (13/11/2026)
+A V7.81.3 foi preparada **para testes locais**, removendo intérpretes não autorizados, separando YouTube **instrumental**, YouTube Music **cantado — Vozes do Campo prioritária** e Spotify nas fontes aprovadas. Há links válidos, buscas claramente identificadas e pendências vocal/ID. **Não declarar o lote como completo.** Consultar [CURADORIA_MIDIAS_191_200_REV10_4.md](CURADORIA_MIDIAS_191_200_REV10_4.md). O HTML remoto e o `index.html` de produção não foram modificados por esta atualização documental.
+
+---
+
 # REV10.3.1 — fontes por plataforma (13/11/2026)
 **YouTube:** instrumental (Orquestra Sacra, Orquestra Paulista, Orquestra Hymns, Antony Andrey). **YouTube Music:** cantado, **Vozes do Campo — Hinos CCB como fonte prioritária**; alternativas somente vocais e previamente aprovadas. **Spotify:** Orquestra Sacra prioritária, apenas alternativas já autorizadas. Nenhum intérprete novo; volume/álbum não é número do hino. Ver [política permanente](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
 
