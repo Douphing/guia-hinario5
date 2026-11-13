@@ -1,3 +1,26 @@
+# Verificação específica REV10 — V7.81 / MP3 V4.4
+
+- [x] HTML V7.80 identificado como base, preservando Hinos 1–190 e Coros 1–6.
+- [x] Extensão V7.81 contém 200 hinos numéricos contínuos.
+- [x] Dez MP3 191–200 comparados com a V4.4 por SHA-256, sem recodificação.
+- [x] 12 JPG das partituras 191–200; duas páginas para 198 e 200.
+- [x] Pulsação do metrônomo em colcheia para 191–193 e semínima para 194–200.
+- [x] Links externos novos não inventados.
+- [x] Sintaxe dos 32 scripts executáveis verificada.
+- [ ] Abrir 190 → 191 e retornar 191 → 190, sem sobrepor setas/clave.
+- [ ] Abrir 198 e 200 com duas páginas e testar zoom, rotação, navegação.
+- [ ] Testar Hino 200 como limite superior e sequência próximo/aleatório.
+- [ ] Validar em celulares 320/390 px e desktop 1280/1536 px, inclusive metrônomo e mídia em ordens de abertura diferentes.
+- [ ] Conferir letras, coros e MP3 V4.4 contra a partitura original.
+- [ ] Testar favoritos/registros e filtro geral (caso Hino 44).
+- [ ] Após upload, verificar acessibilidade de cada MP3 e JPG e comportamento de cache/PWA.
+- [ ] Obter URLs individuais verificadas para Spotify, YouTube e YouTube Music de 191–200, sem trocar arquivos de hinos existentes.
+- [ ] Solicitar aprovação explícita antes de modificar `index.html`.
+
+**Obs.:** navegador automatizado do ambiente bloqueou acesso local; verificações visuais estão pendentes, não aprovadas.
+
+---
+
 # Checklist de validação do Guia — antes de entregar HTML ou MP3
 
 ## REV09 — V7.79 (TESTE, pendente de publicação e aprovação)
