@@ -1,3 +1,7 @@
+> **REV10.8 SUBSTITUI A INTERFACE DESTA VERSÃO:** os botões personalizados `Vol.`/`⋮` introduzidos na V7.81.5 foram retirados da V7.81.6, a pedido do usuário. O **navegador usa menu nativo**, e a sequência fica recolhida. Os critérios de mute reversível e preservação de dados continuam vigentes. Aumento de sonoridade: dez MP3 masterizados +4,3 dB em pacote de teste. Ver [documento REV10.8](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
+
+---
+
 # Player MP3 V7.81.5 — REV10.7 (13/11/2026)
 
 ## Regra vigente
