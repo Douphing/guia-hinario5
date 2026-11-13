@@ -1,3 +1,7 @@
+> **ATUALIZAÇÃO REV10.9:** o recolhimento "Sequência" descrito na V7.81.6 não foi aceito pelo usuário. A V7.81.7 **restaura todos os dez comandos em uma linha permanentemente visível**; mantém intactos o player MP3 nativo e os áudios 191–200 +4,3 dB da V7.81.6. Ver [REV10.9](BOTOES_VISIVEIS_REV10_9.md).
+
+---
+
 # V7.81.6 — Player nativo e sonoridade MP3 — REV10.8 (13/11/2026)
 
 **Estado:** versão local preparada SOMENTE para TESTES. Não publicar em `index.html` sem aprovação expressa. Esta revisão consolida a preferência do usuário por uma interface limpa e o pedido de aumentar a intensidade sonora dos MP3 sem perder a orquestração aprovada.
