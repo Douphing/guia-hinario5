@@ -13,6 +13,10 @@
 - [ ] Aprovação expressa antes de qualquer promoção a `index.html`.
 Ver [mapa e critérios](FONTES_EXTERNAS_191_A_200_REV10_1.md).
 
+
+
+**Verificação final de publicação (13/11/2026):** o arquivo remoto `teste-multimidia.html` já corresponde exatamente à base local **V7.81**, SHA Git `b3df54ec10ea65853a298b8ca2d541ae11ef51a1`; ainda **não** contém os metadados novos da **V7.81.1**. Somente a documentação REV10.1 foi publicada nesta etapa; a produção `index.html` continua intacta. Nas notas anteriores, o status V7.80 refere-se a uma consulta anterior e está superado.
+
 ---
 
 # Verificação específica REV10 — V7.81 / MP3 V4.4
