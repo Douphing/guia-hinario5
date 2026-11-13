@@ -1,3 +1,4 @@
+<!-- V7.81.7 TESTE: controles de reprodução e sequência SEMPRE visíveis em uma única linha compacta; MP3 nativo e masterização V7.81.6 preservados, produção intacta. -->
 <!doctype html>
 <!-- V7.81.6 TESTE: interface MP3 nativa, sequência recolhida, mute reversível; MP3 191-200 passam por masterização +4.3dB no pacote completo. Base V7.81.5 preservada. -->
 <!-- V7.81.5 TESTE: remove tarja de execução redundante; menu próprio Velocidade/Baixar MP3; último volume audível recuperável após mute e navegação; oculta legenda Fonte enviada pelo usuário. Sem modificar MP3, partitura, letra, fontes ou produção. -->
@@ -11576,7 +11577,6 @@ function openHymnDetail(h,cat){
      '<div class="hd-media-instrumental">'+instrumentalBtn+'</div>'+
      '<div class="hd-media hd-media-platforms">'+platformBtns.join('')+'</div>'+
      '<div class="hd-sequence" id="hdSequence" aria-label="Controles da mídia" hidden>'+
-       '<button type="button" id="hdSequenceDisclosure" class="hd-sequence-disclosure" aria-expanded="false" aria-label="Mostrar controles de sequência, anterior, próximo, repetir e aleatório">Sequência <span aria-hidden="true">⌄</span></button>'+
        '<div class="hd-sequence-transport" role="group" aria-label="Controles de reprodução">'+
          '<button type="button" data-media-action="previous" title="Hino anterior" aria-label="Reproduzir hino anterior">'+guiaControleSvg('previous')+'<small class="ga-ctl-name">Anterior</small></button>'+
          '<button type="button" id="hdPlaybackToggle" data-media-action="play" title="Reproduzir ou pausar" aria-label="Reproduzir ou pausar">'+guiaControleSvg('play')+'<small class="ga-ctl-name">Tocar</small></button>'+
@@ -11608,14 +11608,7 @@ function openHymnDetail(h,cat){
      }
    }));
    area.querySelectorAll('.hd-play[data-kind]:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
-   // A barra de modos segue disponível, mas recolhida por padrão no celular.
-   const hdSequenceDisclosure=area.querySelector('#hdSequenceDisclosure');
-   hdSequenceDisclosure?.addEventListener('click',()=>{
-     const bar=area.querySelector('#hdSequence');
-     const expanded=bar.classList.toggle('is-expanded');
-     hdSequenceDisclosure.setAttribute('aria-expanded',String(expanded));
-     hdSequenceDisclosure.innerHTML=expanded?'Sequência <span aria-hidden="true">⌃</span>':'Sequência <span aria-hidden="true">⌄</span>';
-   });
+   // V7.81.7: os controles ficam visíveis em uma única linha, sem expansor.
    window.GuiaReproducaoContinua?.bind();
    if(media.metronomo) initHymnMetronomeUI(media.metronomo);
    initHymnNav(h);
@@ -16684,22 +16677,8 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 #hymnDetail #hdAudio .hd-mp3-controls-row{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important}
 #hymnDetail #hdAudio .hd-mp3-controls-row>audio{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;flex:none!important;height:42px!important}
 #hymnDetail #hdAudio .hd-mp3-volume-box,#hymnDetail #hdAudio .hd-mp3-more-box{display:none!important}
-/* Sequência é opcional, sem perder anterior/próximo, repetir, aleatório, minimizar e fechar mídia. */
-#hymnDetail #hdSequence[hidden]{display:none!important}
-#hymnDetail #hdSequence:not([hidden]){display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;min-height:32px!important;max-width:100%!important;margin:4px 0!important;padding:0!important;position:relative!important}
-#hymnDetail #hdSequence .hd-sequence-disclosure{order:-3!important;display:inline-flex!important;align-items:center!important;gap:5px!important;margin-right:auto!important;padding:6px 11px!important;width:auto!important;height:32px!important;min-height:32px!important;border:1px solid #d4c5a9!important;border-radius:9px!important;background:#faf7f0!important;color:#263746!important;font:700 12px/1 Arial,sans-serif!important;box-shadow:none!important;cursor:pointer}
-#hymnDetail #hdSequence #gaMinimizeInline{order:-2!important;width:32px!important;min-width:32px!important;max-width:32px!important;height:32px!important;min-height:32px!important;max-height:32px!important;display:flex!important;padding:2px!important}
-#hymnDetail #hdSequence .ga-close-media{order:-1!important;width:32px!important;min-width:32px!important;max-width:32px!important;height:32px!important;min-height:32px!important;max-height:32px!important;padding:2px!important}
-#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-transport,
-#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-ending,
-#hymnDetail #hdSequence:not(.is-expanded) .hd-sequence-modes{display:none!important}
-#hymnDetail #hdSequence.is-expanded .hd-sequence-transport{order:1!important;display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:4px!important;width:100%!important}
-#hymnDetail #hdSequence.is-expanded .hd-sequence-ending{order:2!important;display:block!important;width:100%!important}
-#hymnDetail #hdSequence.is-expanded .hd-sequence-modes{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:4px!important}
-#hymnDetail #hdSequence.is-expanded .hd-sequence-transport button,
-#hymnDetail #hdSequence.is-expanded .hd-sequence-modes button{display:flex!important;flex:1 1 36px!important;width:auto!important;min-width:36px!important;max-width:75px!important;height:34px!important;min-height:34px!important;max-height:34px!important}
-/* O texto pequeno dos ícones é acessível mas oculto para conservar espaço. */
-#hymnDetail #hdSequence #gaMinimizeInline small,#hymnDetail #hdSequence .ga-close-media small{display:none!important}
-@media(max-width:430px){#hymnDetail #hdSequence{gap:4px!important}#hymnDetail #hdSequence .hd-sequence-disclosure{font-size:11px!important}}
+/* V7.81.7: mantém a barra histórica V7.61/63 com DEZ botões em UMA linha.
+   A expansão criada em V7.81.6 foi retirada: nenhum botão fica escondido
+   atrás de “Sequência”. O player nativo continua abaixo da barra. */
 </style>
 </body></html>
