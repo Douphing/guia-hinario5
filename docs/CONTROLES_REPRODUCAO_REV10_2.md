@@ -1,3 +1,7 @@
+> **Complemento REV10.7 (V7.81.5):** quando o usuário muta, `0%` não deve apagar seu último volume audível. Guardar o último valor maior que zero em chave separada para restaurar ao desmutar, mesmo após Próximo/Anterior/Repetir/Aleatório. Ações **Velocidade 0,75×–2×** e **Baixar MP3** devem existir em menu `⋮` do próprio Guia, independente do menu nativo do navegador. Não exibir tarja de execução redundante nem o texto interno “Fonte enviada pelo usuário” nos botões de mídia. Ver [norma REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
+
+---
+
 > **Regra adicional REV10.3:** a compatibilidade técnica dos botões de reprodução **não autoriza mudar a identidade da fonte**. YouTube só aceita links **instrumentais das quatro fontes aprovadas**; YouTube Music exige **versão cantada** de fonte CCB autorizada; Spotify segue fontes aprovadas. Um vídeo instrumental do YouTube não deve ser utilizado como link de YouTube Music cantado. O inventário 191–200 da REV10.1 é histórico e precisa de nova curadoria. Ver [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
 
 ---
