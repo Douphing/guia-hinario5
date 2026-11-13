@@ -1,3 +1,9 @@
+# Adendo REV10.2 — execução sequencial e volume (13/11/2026)
+**V7.81.2 TESTE LOCAL** corrige anterior/próximo, modos ao terminar e volume escolhido ao navegar; detecta volume de MP3 também pelo controle HTML nativo, usa preferência `guia-hinario5-volume-midia-v1`, propaga aos players YouTube/YTM por API e não reinicia em 100%. MP3 `modoReproducao:'partitura'` já é o hino completo: execução única, sem repetir conforme as estrofes. Spotify tem somente navegação manual anterior/próximo entre embeds; não dispõe de autoplay, troca contínua, volume ou evento de término controlados pelo Guia. **Os demais controles do Spotify ficam desabilitados**, com aviso explícito.
+**Validação:** testes isolados 12/12 e mock de volume YouTube 3/3; navegador integral e plataformas reais ainda aguardam testes. Hinos 1–200, seis coros, partituras e MP3 preservados. Não trocar `index.html` de produção ou `sw.js`. O teste remoto pode estar em versão anterior à V7.81.2; verificar SHA antes de qualquer envio. Ler [documento técnico e checklist](CONTROLES_REPRODUCAO_REV10_2.md).
+
+---
+
 # Correção aditiva REV10.1 — V7.81.1 MÍDIAS EXTERNAS (13/11/2026)
 **Atenção: substitui apenas a afirmação histórica de REV10 de que os links externos 191–200 estavam totalmente pendentes.** A versão de testes V7.81.1 possui agora 10 vídeos YouTube confirmados por hino, 7 faixas Spotify individuais + 3 buscas específicas claramente identificadas e 2 coletâneas YouTube Music temporizadas + 8 vídeos YouTube compartilhados com a interface de YouTube Music. Não há alegação de 30 gravações independentes.
 
