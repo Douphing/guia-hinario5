@@ -1,3 +1,7 @@
+> **SUPERADO PARCIALMENTE PELA REV10.6:** o inventário YouTube abaixo descreve a V7.81.3. Na V7.81.4, foram aplicados os links informados expressamente pelo usuário para 192/193/194/196/197/198/199; 200 manteve seu vídeo, 191/195 ficaram intactos. Confira [mapa atualizado REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md). Links fornecidos são candidatos para teste, não confirmação independente de autoria/execução instrumental. **Spotify e YouTube Music permanecem com os estados da REV10.4.**
+
+---
+
 # Curadoria de mídias 191–200 — REV10.4 / teste V7.81.3
 Data: 13/11/2026. Este é o registro canônico da correção de fontes. **HTML V7.81.3 foi preparado em pacote para TESTES; a publicação da documentação não publica o HTML.** `index.html` de produção e `sw.js` não foram modificados.
 
