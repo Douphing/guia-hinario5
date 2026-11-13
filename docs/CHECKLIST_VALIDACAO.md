@@ -1,3 +1,13 @@
+# Checklist REV10.3.1 — curadoria por plataforma
+- [x] Política escrita: YouTube somente instrumental de Orquestra Sacra, Orquestra Paulista, Orquestra Hymns ou Antony Andrey.
+- [x] Política escrita: YouTube Music cantado, pesquisar PRIMEIRO **Vozes do Campo — Hinos CCB**; outras fontes vocais somente as já aprovadas.
+- [x] Política escrita: Spotify com Orquestra Sacra prioritária e sem artistas não autorizados.
+- [ ] Corrigir na próxima versão de teste todos os links 191–200 incompatíveis com a política, inclusive instrumentais reutilizados em YouTube Music.
+- [ ] Conferir para cada link: Hinário nº 5, número, título, intérprete, tipo de música e trecho quando for coletânea. O volume do álbum não é o hino.
+- [ ] Testar reprodução real, botões e manutenção de volume; preservar hinos e produção.
+
+---
+
 # Critérios de aceite REV10.3 — identidade de cada plataforma (13/11/2026)
 - [x] **Documentada** a regra permanente YouTube instrumental de Orquestra Sacra / Orquestra Paulista / Orquestra Hymns / Antony Andrey; YouTube Music vocal CCB; Spotify de fontes autorizadas.
 - [x] **Documentada** a proibição de confundir volume/álbum, ordem da faixa ou edição de hinário com número+título do Hino nº 5.
