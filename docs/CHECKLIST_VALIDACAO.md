@@ -1,3 +1,20 @@
+# Adendo REV10.1 — mídias dos Hinos 191–200
+- [x] Auditoria de numeração: título **e** número de cada hino no Hinário nº 5 conferidos; não usar número de volume, posição no álbum ou Hinário nº 4.
+- [x] Fontes prioritárias e alternativas pesquisadas antes de declarar mídia indisponível.
+- [x] YouTube: 10 vídeos individuais com número/título de 191–200.
+- [x] Spotify: 7 IDs de faixa e 3 pesquisas **explicitamente identificadas** (195, 196, 198). Nenhuma pesquisa rotulada como faixa confirmada.
+- [x] YouTube Music: 2 coletâneas temporizadas (191 e 200) e 8 compartilhamentos de vídeo do YouTube identificados como fallback, não catálogo independente.
+- [x] V7.81.1 gerada localmente com metadados externos apenas em 191–200.
+- [x] Integridade: dados MULTIMIDIA 1–190/Coros preservados, LETRAS 1–200/Coros preservadas; 32 scripts sintaticamente válidos.
+- [ ] Conferir em navegador real todos os botões Spotify, YouTube e YouTube Music; validar o fim das coletâneas 191 e 200.
+- [ ] Substituir as buscas Spotify 195, 196 e 198 **somente depois** de confirmar IDs exatos de faixa.
+- [ ] Identificar, se possível, oito faixas exclusivas do catálogo YouTube Music, no lugar de vídeos compartilhados.
+- [ ] Testar visualmente celular/desktop e funcionamento de mídia sem afetar metrônomo, registros e favoritos.
+- [ ] Aprovação expressa antes de qualquer promoção a `index.html`.
+Ver [mapa e critérios](FONTES_EXTERNAS_191_A_200_REV10_1.md).
+
+---
+
 # Verificação específica REV10 — V7.81 / MP3 V4.4
 
 - [x] HTML V7.80 identificado como base, preservando Hinos 1–190 e Coros 1–6.
