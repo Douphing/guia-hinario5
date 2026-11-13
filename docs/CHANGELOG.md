@@ -1,3 +1,16 @@
+## REV10 — 13/11/2026 — HTML V7.81 e MP3 191–200 V4.4 (preparados para TESTES)
+
+- **Base técnica:** `teste-multimidia.html` V7.80 verificada no GitHub; novo HTML **V7.81** gerado como extensão aditiva para Hinos 191–200. Nenhuma mudança nos objetos de letras e mídias dos Hinos 1–190 e dos Coros 1–6.
+- **MP3:** dez arquivos `audio/hino-191.mp3` a `audio/hino-200.mp3` idênticos por SHA-256 à Orquestra V4.4 aprovada para integração no teste. Soprano mais próximo de cordas, tenor reforçado, tuba/contrabaixo mais perceptíveis, sustain e fermatas mais audíveis; conserva-se a limitação de timbre sintético TimGM6mb. Um MP3 por hino.
+- **Partituras:** 12 JPG extraídos dos PDFs originais; Hinos 198 e 200 têm duas páginas, hino 191 foi recortado de PDF compartilhado. Não há mistura de pautas de outros hinos.
+- **Letras e metrônomo:** três estrofes por hino, coros segundo a partitura; pulsação **♪** nos Hinos 191–193, **♩** nos Hinos 194–200, com faixas individuais e BPM equivalentes aos áudios aprovados.
+- **Links externos:** Spotify, YouTube e YouTube Music para 191–200 NÃO foram inventados; integração pendente de URLs verificadas. Os vínculos anteriores (1–190) foram preservados.
+- **Validações:** 200 chaves consecutivas em `MULTIMIDIA` e `LETRAS`; 1–190 e Coros 1–6 sem mudanças; 32 scripts executáveis com sintaxe válida; hashes dos 10 MP3 iguais aos V4.4. Navegador local bloqueado por política (`ERR_BLOCKED_BY_ADMINISTRATOR`): testes de tela em celular/desktop e execução online ainda pendentes.
+- **Publicação:** nenhum `index.html`, `sw.js`, áudio 1–190, ou página de teste do GitHub foi substituído nesta entrega. **V7.81 permanece arquivo de teste para envio e avaliação**, não versão promovida a produção.
+- **Próximo passo:** conferir 190→191, 198/200 multipágina, último Hino 200, controles/rolagem, MP3, registros/favoritos e links externos em dispositivo real; após aceite, emitir REV11/V7.82 para mudanças posteriores.
+
+---
+
 # Guia do Hinário nº 5 — Histórico de versões (curado)
 
 **Atualizado:** 12/11/2026 — revisão documental REV09. Lista de marcos relevantes, não um changelog completo linha a linha. As versões intermediárias e detalhes devem ser confrontados com os respectivos arquivos de teste.
