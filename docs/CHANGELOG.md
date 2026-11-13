@@ -1,3 +1,13 @@
+## REV10.6 — 13/11/2026 — V7.81.4 TESTE: mapeamento de vídeos fornecido pelo usuário
+- Integrados ao arquivo **local de testes V7.81.4** os vídeos informados para 192 (`qlDVRkAZvAM`), 193 (`kzKgpHuYboU`), 194 (`DmQEpuRVPCg`), 196 (`WaGmOAuiYxg`), 197 (`A12O86QYxt4`), 198 (`4W8dPu7NM7k`) e 199 (`kEbHExWm-Sk`). Hino 200 manteve `OgNlZz43BEw`; 191 e 195 foram preservados.
+- Hino **199 tem segundo candidato** `8GDPODmDoTk`, registrado para comparação **sem sobrescrever a opção principal**.
+- Links canônicos `watch?v=ID` sem parâmetros `list=RD...` ou `start_radio=1`, preservando a sequência sob controle do Guia.
+- **Associação por número informada pelo usuário; autoria do canal e execução instrumental ainda pendentes de auditoria audiovisual.** Não marcar fontes como aprovadas apenas pela existência do URL.
+- 200 hinos, 6 coros, 33 scripts válidos; MP3, partituras, letras, Spotify, YouTube Music, controles e volume inalterados; ZIPs testados. O navegador automatizado não completou a reprodução de todos os vídeos.
+- **Somente arquivos de teste e documentação.** Nenhuma mudança no `index.html` de produção. [Inventário REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md).
+
+---
+
 ## REV10.5 — 13/11/2026 — Nove URLs fornecidas para conferência (documentação, NÃO integração)
 - Recebidos 9 IDs de vídeo YouTube para suprir mídias 191–200, listados em [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md).
 - `OgNlZz43BEw` já estava associado ao Hino 200 na V7.81.3. Os outros 8 IDs não puderam ser auditados quanto a número/título/canal e caráter instrumental ou vocal devido à indisponibilidade da consulta de metadados do YouTube neste ambiente.
