@@ -1,3 +1,8 @@
+# Instrução REV10.6 — vídeos do usuário no lote 191–200
+Último arquivo local: **V7.81.4**, derivado da V7.81.3. Aplicado o mapeamento explícito dos 7 novos vídeos do YouTube para 192/193/194/196/197/198/199; 200 já tinha o vídeo correto, 191/195 preservados. A REV10.5 não sabia os números; consulte o [mapa REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md). **Hino 199: 2 IDs, `kEbHExWm-Sk` primário em teste e `8GDPODmDoTk` alternativo não integrado até conferência.** Confirmar canal, número/título do Hinário 5 e natureza instrumental de TODOS os links indicados; não afirmar que foram auditados só porque o usuário forneceu correspondência. URLs sem Rádio (`list=RD`/`start_radio=1`). Não mudar Spotify, YTM, letras, MP3, partituras, controles/volume, Hinos 1–190/Coros ou `index.html` de produção. O HTML de TESTE deve ser publicado/validado separadamente da documentação.
+
+---
+
 # REV10.5 — nove URLs recebidas ainda não atribuídas
 Antes de pesquisar novamente ou inventar links para 191–200, consultar [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md). O usuário forneceu 9 IDs de YouTube: 1 já consta para o Hino 200 (`OgNlZz43BEw`), 8 aguardam número+título, canal e instrumental/cantado conferidos. Nunca atribuir hinos de acordo com a ordem dos URLs na conversa. Ao incorporar vídeo correto, ignorar `list=RD...` e `start_radio=1` para evitar Rádio auto-selecionar outro hino. Respeitar a identidade YouTube instrumental, YouTube Music cantado (Vozes do Campo prioritária) e Spotify Orquestra Sacra; não mudar `index.html` sem aprovação.
 
