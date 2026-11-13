@@ -1,3 +1,8 @@
+# Regra permanente REV10.3 — identidade instrumental e vocal das mídias (13/11/2026)
+**YouTube é instrumental**, com somente Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey; **YouTube Music é cantado**, com canais vocais CCB aprovados; **Spotify segue a prioridade Orquestra Sacra e as alternativas já autorizadas**. Número de volume/álbum não é número do hino. Não incluir intérprete fora das fontes solicitadas. Links 191–200 das versões V7.81.1/V7.81.2 precisam ser reavaliados por essa regra antes da aprovação. Leia [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 # Estado REV10.2 — 13/11/2026
 Correção de comandos de reprodução e volume persistente na versão **V7.81.2 de teste local**. Detalhes em [Controles de reprodução REV10.2](CONTROLES_REPRODUCAO_REV10_2.md). O histórico REV10.1 de mídias 191–200 continua válido. Publicação de HTML é etapa distinta; produção intocada.
 
