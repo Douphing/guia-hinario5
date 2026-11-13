@@ -1,3 +1,12 @@
+## REV10.1 — 13/11/2026 — Correção V7.81.1: Spotify, YouTube e YouTube Music (testes)
+- Foram pesquisadas as fontes prioritárias **Orquestra Sacra, Orquestra Sacra Paulista, Vozes do Campo CCB, Orquestra Hymns e Antony Andrey**, com utilização complementar de gravações individualmente conferidas pelo número/título do **Hinário nº 5**.
+- **Ligações 191–200:** YouTube 10 vídeos individuais; Spotify 7 IDs de faixa individuais e 3 buscas direcionadas rotuladas **Pesquisar** (195, 196, 198); YouTube Music 2 coletâneas temporizadas (191 0–208 s e 200 253–483 s) e 8 vídeos compartilhados com YouTube — estes não são faixas independentes verificadas no catálogo YTM.
+- **Regra obrigatória:** número de **volume/álbum**, posição sequencial em um álbum e numeração em outros hinários **não identificam o número do Hino no Hinário nº 5**. Cruzar número e título exatos, identificar intérprete e não apontar para faixa diferente ou álbum como se fosse áudio individual.
+- V7.81.1 foi preparada **localmente**, acrescentando exclusivamente campos externos de `MULTIMIDIA` para 191–200; não altera MP3 Orquestra V4.4, letras, partituras, metronômicos ou layout, nem 1–190/Coros 1–6. Igualdade dos dados antigos e sintaxe dos 32 scripts verificadas.
+- Sem teste funcional visual nem publicação do HTML no GitHub. **`index.html` e `sw.js` intocados; `teste-multimidia.html` remoto permanece V7.80**. Consulte [FONTES_EXTERNAS_191_A_200_REV10_1.md](FONTES_EXTERNAS_191_A_200_REV10_1.md) para IDs, artistas e estados. Não interpretar correção como aprovação final.
+
+---
+
 ## REV10 — 13/11/2026 — HTML V7.81 e MP3 191–200 V4.4 (preparados para TESTES)
 
 - **Base técnica:** `teste-multimidia.html` V7.80 verificada no GitHub; novo HTML **V7.81** gerado como extensão aditiva para Hinos 191–200. Nenhuma mudança nos objetos de letras e mídias dos Hinos 1–190 e dos Coros 1–6.
