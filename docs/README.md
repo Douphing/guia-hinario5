@@ -1,3 +1,8 @@
+# REV10.7 — Teste V7.81.5: MP3 sem tarja, opções e mute corrigido
+Nova versão de teste V7.81.5 preparada sem alterar a produção. Removida a tarja “Reprodução conforme a partitura”; menu próprio do MP3 para **Velocidade (0,75×–2×)** e **Baixar**; mute guarda último volume audível e permite desmutar após Próximo/Anterior; texto “Fonte enviada pelo usuário” não aparece no botão YouTube. Dados, 200 hinos, seis coros, links e MP3 inalterados. **17/17 testes isolados** e 33 scripts válidos; teste real em HTTPS/celular pendente. Ver [regras e checklist REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
+
+---
+
 # REV10.6 — URLs YouTube 191–200 vinculadas em V7.81.4 de TESTES
 Recebida a correspondência explícita dos Hinos 192, 193, 194, 196, 197, 198, 199 e 200. Gerado HTML V7.81.4 mantendo 191/195 e todos os outros serviços e dados. Hino 199 tem dois vídeos: `kEbHExWm-Sk` primário para teste e `8GDPODmDoTk` alternativa não integrada. URLs sem parâmetros do Rádio. **Número do hino informado pelo usuário, mas canais e instrumentação ainda não auditados automaticamente.** Ver [mapa e cautelas REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md). Produção protegida.
 
