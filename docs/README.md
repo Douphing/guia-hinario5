@@ -1,3 +1,11 @@
+# Guia do Hinário nº 5 — Continuidade REV10 (13/11/2026)
+
+**Estado vigente:** HTML de testes **V7.81 preparado**, usando V7.80 do GitHub como base. Hinos 191–200 integrados localmente com letras, partituras, metrônomo e MP3 **Orquestra V4.4**. **O arquivo `index.html` não foi alterado.** A V7.81 e os dez MP3 ainda precisam ser enviados e validados na página de testes; sua existência no GitHub não deve ser presumida.
+
+Mídias externas dos Hinos 191–200: links individuais pendentes de validação. Ver os documentos abaixo e o checklist antes de publicar.
+
+---
+
 # Guia do Hinário nº 5 — Continuidade REV09
 
 Documentação para retomar o trabalho sem perder a base do projeto. Leia [o dossiê](DOCUMENTACAO_CONTINUIDADE.md), [o prompt de retomada](PROMPT_DE_RETOMADA.md), [o histórico](CHANGELOG.md) e [o checklist](CHECKLIST_VALIDACAO.md).
