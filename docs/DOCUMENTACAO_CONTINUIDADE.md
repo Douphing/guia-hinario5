@@ -1,3 +1,14 @@
+# Norma vigente REV10.3 — identidade de mídia por plataforma (13/11/2026)
+**Esta decisão prevalece sobre toda regra anterior que permita qualquer intérprete complementar ou o compartilhamento indiferenciado de links YouTube/YouTube Music.**
+- **YouTube:** somente **execuções instrumentais orquestrais** de **Orquestra Sacra, Orquestra Paulista, Orquestra Hymns ou Antony Andrey** (este último somente quando realmente instrumental). **Não usar canto como faixa principal**.
+- **YouTube Music:** somente **versões cantadas** de canais vocais CCB aprovados (referências anteriores do canal Music, Hinos CCB Cantados e Tocados em faixas cantadas, CCB – Vozes do Campo quando cantado). Não reutilizar vídeo instrumental do YouTube para preencher YouTube Music.
+- **Spotify:** priorizar Orquestra Sacra e restringir alternativas aos nomes previamente aprovados. Não incluir outros artistas apenas para evitar pendências.
+- Conferir **Hinário nº 5 + número do hino + título + intérprete + estilo vocal/instrumental**. Volume de álbum, ordem da faixa e Hinário nº 4 **não** identificam o número do hino. Faixas em coletâneas exigem recorte exato e teste de reprodução.
+- **Atenção aos Hinos 191–200:** lista histórica REV10.1 de links foi montada antes dessa confirmação do usuário, contém artistas não autorizados e vídeos compartilhados sem prova de canto. **Não considerar V7.81.2 aprovada no critério de curadoria de fontes**. A correção dos links ainda precisa ser feita em nova versão de teste; esta atualização altera **somente documentação**, não o HTML do GitHub.
+Ver o documento canônico [Política de fontes e identidade REV10.3](POLITICA_FONTES_MULTIMIDIA_REV10_3.md) e o inventário histórico [REV10.1](FONTES_EXTERNAS_191_A_200_REV10_1.md). **Não alterar `index.html` de produção sem aprovação**.
+
+---
+
 # Adendo REV10.2 — execução sequencial e volume (13/11/2026)
 **V7.81.2 TESTE LOCAL** corrige anterior/próximo, modos ao terminar e volume escolhido ao navegar; detecta volume de MP3 também pelo controle HTML nativo, usa preferência `guia-hinario5-volume-midia-v1`, propaga aos players YouTube/YTM por API e não reinicia em 100%. MP3 `modoReproducao:'partitura'` já é o hino completo: execução única, sem repetir conforme as estrofes. Spotify tem somente navegação manual anterior/próximo entre embeds; não dispõe de autoplay, troca contínua, volume ou evento de término controlados pelo Guia. **Os demais controles do Spotify ficam desabilitados**, com aviso explícito.
 **Validação:** testes isolados 12/12 e mock de volume YouTube 3/3; navegador integral e plataformas reais ainda aguardam testes. Hinos 1–200, seis coros, partituras e MP3 preservados. Não trocar `index.html` de produção ou `sw.js`. O teste remoto pode estar em versão anterior à V7.81.2; verificar SHA antes de qualquer envio. Ler [documento técnico e checklist](CONTROLES_REPRODUCAO_REV10_2.md).
