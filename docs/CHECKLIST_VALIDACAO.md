@@ -1,3 +1,14 @@
+# Pendência específica REV10.5 — vídeos fornecidos pelo usuário
+- [x] Nove IDs de vídeo recebidos e registrados, sem inventar associação de número de hino.
+- [x] Vídeo `OgNlZz43BEw` reconhecido como o já vinculado ao Hino 200 na V7.81.3; evitar duplicação.
+- [ ] Verificar no YouTube os 8 demais IDs quanto a número, título, intérprete e se são instrumentais; só então aplicá-los em versão nova de TESTES.
+- [ ] Separar vídeos cantados (candidatos ao YouTube Music) dos instrumentais (candidatos ao YouTube), respeitando as fontes autorizadas.
+- [ ] Inserir apenas links individuais com o `v=ID`, sem parâmetros `list=RD...` e `start_radio=1`; testar controles de sequência e volume.
+- [ ] Auditar integridade dos dados e obter aprovação antes de qualquer promoção à produção.
+Ver [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md).
+
+---
+
 # Checklist REV10.4 — curadoria 191–200 / HTML V7.81.3 TESTE
 - [x] Links externos não aprovados removidos apenas da nova versão de teste.
 - [x] YouTube: 4 vídeos individuais instrumentais de fontes aprovadas; 6 buscas rotuladas.
