@@ -1,3 +1,7 @@
+> **Regra visual vigente REV10.9:** botões do transporte e dos modos sempre **à mostra em uma única linha**; não usar expansão "Sequência", que foi recusada pelo usuário. Manter player MP3 nativo da V7.81.6, mute reversível e sequência/volume sem regressão. Ver [BOTOES_VISIVEIS_REV10_9.md](BOTOES_VISIVEIS_REV10_9.md).
+
+---
+
 > **Atualização de UI REV10.8:** a experiência V7.81.5 com botões adicionais `Vol.`/`⋮` foi substituída na V7.81.6 por **player MP3 nativo**, conforme preferência do usuário. Sequência/Anterior/Próximo/Repetir/Aleatório permanecem no painel **Sequência** recolhido por padrão. Mantém mute reversível e último volume audível. Aumentar som exige **MP3 191–200 masterizados +4,3 dB**, que precisam ser publicados no ambiente de testes; não é apenas ajuste HTML. Ver [PLAYER_NATIVO_MASTERIZACAO_REV10_8.md](PLAYER_NATIVO_MASTERIZACAO_REV10_8.md).
 
 ---
