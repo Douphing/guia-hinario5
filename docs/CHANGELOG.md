@@ -1,3 +1,14 @@
+## REV10.4 — 13/11/2026 — V7.81.3 TESTE: fontes 191–200 conforme política
+- Corrigida a curadoria dos Hinos 191–200 no **HTML de teste entregue separadamente**, preservando o código de player/volume da V7.81.2 e todos os MP3 V4.4, letras, partituras, 1–190 e Coros.
+- **YouTube instrumental**: 4 vídeos das fontes permitidas (191 Orquestra Sacra, 194 Orquestra Hymns, 195 e 200 Orquestra Sacra), 6 buscas explícitas em fontes autorizadas. Não reutilizar gravações cantadas nem artistas não aprovados.
+- **Spotify**: 3 faixas individuais de fonte autorizada (191 Antony Andrey, 193 e 199 Orquestra Sacra) e 7 pesquisas rotuladas, não faixas falsas.
+- **YouTube Music cantado**: 4 coletâneas candidatas Vozes do Campo (191, 193, 199, 200) com intervalo marcado e **confirmação auditiva de canto pendente**; 6 sem link vocal comprovado. Removido o uso indiscriminado de vídeo instrumental do YouTube.
+- Excluídos IDs anteriores de artistas não autorizados. Conformidade numérica **Hinário nº 5 + número + título**; não confundir volume do álbum com hino.
+- 200 hinos, 6 coros e 33 scripts válidos. Preservação dos dados e letras anteriores verificada. Testes reais das plataformas e do volume/autoplay externos ainda pendentes.
+- **V7.81.3 é teste incompleto para validação**, não publicação em produção. GitHub recebeu documentação REV10.4, **não o HTML**. Ver [mapa e pendências](CURADORIA_MIDIAS_191_200_REV10_4.md).
+
+---
+
 ## REV10.3.1 — 13/11/2026 — Esclarecimento de fontes (somente documentação)
 - **YouTube:** instrumental/orquestral; somente Orquestra Sacra, Orquestra Paulista, Orquestra Hymns, Antony Andrey.
 - **YouTube Music:** cantado/vocal, com **Vozes do Campo — Hinos CCB como fonte expressamente prioritária**; alternativas somente as vozes já autorizadas.
