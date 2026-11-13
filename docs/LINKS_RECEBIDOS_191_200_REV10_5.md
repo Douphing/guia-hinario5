@@ -1,3 +1,7 @@
+> **ATUALIZAÇÃO REV10.6:** o usuário já informou a correspondência explícita dos vídeos com os números 192/193/194/196/197/198/199/200. O antigo status “não identificado” abaixo é histórico e foi superado pelo [MAPA V7.81.4 / REV10.6](LINKS_YOUTUBE_191_A_200_REV10_6.md). O vídeo `8GDPODmDoTk` foi indicado como **segunda opção do Hino 199**, não de outro hino. A associação é conhecida, mas o canal e a execução instrumental ainda requerem verificação audiovisual antes da aprovação.
+
+---
+
 # Links fornecidos para conferência 191–200 — REV10.5 (13/11/2026)
 
 **Status: candidato, não aprovado por mera URL.** O usuário enviou nove endereços YouTube. A consulta direta de títulos e canais não funcionou neste ambiente; portanto **não atribuir número de hino pela ordem das mensagens**. O ID `OgNlZz43BEw` já consta como referência instrumental do Hino 200 na V7.81.3 e não deve ser duplicado.
