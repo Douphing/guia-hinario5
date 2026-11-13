@@ -1,3 +1,14 @@
+## REV10.2 — 13/11/2026 — V7.81.2 Controles e volume (TESTE)
+- Próximo/Anterior imediatos; Parar/Próximo/Repetir/Aleatório ao término; modos preservados ao mudar de hino.
+- **Correção:** MP3 integral `modoReproducao='partitura'` deve tocar uma única vez, independentemente da quantidade de estrofes. Isso evita repetir a gravação inteira antes de avançar.
+- Volume de MP3 persistido a partir do slider nativo ou popover `Vol.` (inicial 50%); compartilhado entre hinos e com players YouTube/YouTube Music por API, salvando preferência em `localStorage` quando disponível.
+- YouTube/YTM: aplicar volume no player pronto, capturar mudanças nativas via consulta periódica, preservar último volume antes de navegar; autoplay depende das políticas do navegador.
+- Spotify: Anterior/Próximo trocam a faixa e exigem toque em reproduzir no Spotify; controles automáticos, volume e término ficam desabilitados por não haver API confiável no iframe. **Não declarar continuidade automática no Spotify.**
+- Testes: 12/12 no player isolado e 3/3 de volume YouTube com API simulada, sem erros JS. Dados 1–200 e Coros 1–6 preservados; scripts com sintaxe válida. Testes end-to-end em plataformas reais e mobile/desktop ainda pendentes.
+- HTML V7.81.2 disponibilizado para upload **no ambiente de testes**. Nenhum `index.html`, `sw.js`, áudio ou partitura foi alterado. Ver [regras e checklist REV10.2](CONTROLES_REPRODUCAO_REV10_2.md).
+
+---
+
 ## REV10.1 — 13/11/2026 — Correção V7.81.1: Spotify, YouTube e YouTube Music (testes)
 - Foram pesquisadas as fontes prioritárias **Orquestra Sacra, Orquestra Sacra Paulista, Vozes do Campo CCB, Orquestra Hymns e Antony Andrey**, com utilização complementar de gravações individualmente conferidas pelo número/título do **Hinário nº 5**.
 - **Ligações 191–200:** YouTube 10 vídeos individuais; Spotify 7 IDs de faixa individuais e 3 buscas direcionadas rotuladas **Pesquisar** (195, 196, 198); YouTube Music 2 coletâneas temporizadas (191 0–208 s e 200 253–483 s) e 8 vídeos compartilhados com YouTube — estes não são faixas independentes verificadas no catálogo YTM.
