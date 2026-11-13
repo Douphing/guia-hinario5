@@ -1,3 +1,8 @@
+# REV10.3.1 — fontes por plataforma (13/11/2026)
+**YouTube:** instrumental (Orquestra Sacra, Orquestra Paulista, Orquestra Hymns, Antony Andrey). **YouTube Music:** cantado, **Vozes do Campo — Hinos CCB como fonte prioritária**; alternativas somente vocais e previamente aprovadas. **Spotify:** Orquestra Sacra prioritária, apenas alternativas já autorizadas. Nenhum intérprete novo; volume/álbum não é número do hino. Ver [política permanente](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 # Regra permanente REV10.3 — identidade instrumental e vocal das mídias (13/11/2026)
 **YouTube é instrumental**, com somente Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey; **YouTube Music é cantado**, com canais vocais CCB aprovados; **Spotify segue a prioridade Orquestra Sacra e as alternativas já autorizadas**. Número de volume/álbum não é número do hino. Não incluir intérprete fora das fontes solicitadas. Links 191–200 das versões V7.81.1/V7.81.2 precisam ser reavaliados por essa regra antes da aprovação. Leia [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
 
