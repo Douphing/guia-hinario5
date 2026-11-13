@@ -1,3 +1,8 @@
+# REV10.5 — links de vídeos recebidos (13/11/2026)
+Recebidos 9 links para a continuidade dos Hinos 191–200. **Um já se refere à fonte do Hino 200; os demais aguardam conferência individual de número, título, canal e estilo musical**, sem associação por ordem de envio. Registro em [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md). Nenhum HTML foi alterado por esta atualização documental.
+
+---
+
 # REV10.4 — Curadoria corrigida de fontes externas 191–200 (13/11/2026)
 A V7.81.3 foi preparada **para testes locais**, removendo intérpretes não autorizados, separando YouTube **instrumental**, YouTube Music **cantado — Vozes do Campo prioritária** e Spotify nas fontes aprovadas. Há links válidos, buscas claramente identificadas e pendências vocal/ID. **Não declarar o lote como completo.** Consultar [CURADORIA_MIDIAS_191_200_REV10_4.md](CURADORIA_MIDIAS_191_200_REV10_4.md). O HTML remoto e o `index.html` de produção não foram modificados por esta atualização documental.
 
