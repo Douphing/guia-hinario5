@@ -1,3 +1,13 @@
+## REV10.3 — 13/11/2026 — Política de identidade multimídia (somente DOCUMENTAÇÃO)
+- Formalizada a regra permanente do usuário: **YouTube = instrumental orquestral** somente de **Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey**; **YouTube Music = cantado/vocal** de fontes CCB já indicadas; Spotify prioriza Orquestra Sacra e apenas alternativas musicais autorizadas.
+- **Não** adicionar intérpretes externos à lista aprovada nem reutilizar vídeos instrumentais do YouTube para preencher YouTube Music. Metadados corretos de número/título não bastam se a mídia tiver caráter musical errado.
+- Auditoria obrigatória: número **e** título do Hinário nº 5, edição, artista e modo vocal/instrumental. Número do **volume** de álbum, ordem da faixa ou Hinário nº 4 não é número do hino.
+- O inventário de mídia 191–200 da **REV10.1** contém fontes não aprovadas (ex.: Spotify O Canto dos Fiéis/DioCarv/Douglas Alves/Gustavo Bueno/Encontro dos Amigos; YouTube Hino 194 Orquestra Expressiff) e vídeo do YouTube reutilizado em YouTube Music sem prova de canto. Esses links são **pendências de adequação** e **não devem ser tratados como aprovação**.
+- REV10.3 **atualiza os documentos GitHub**, não o `teste-multimidia.html` nem `index.html`; corrigir as mídias em uma nova V7.81.x de TESTE com fontes auditadas. Permanecem válidas as regras de controles, sequência e volume da REV10.2.
+- Documento canônico: [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 ## REV10.2 — 13/11/2026 — V7.81.2 Controles e volume (TESTE)
 - Próximo/Anterior imediatos; Parar/Próximo/Repetir/Aleatório ao término; modos preservados ao mudar de hino.
 - **Correção:** MP3 integral `modoReproducao='partitura'` deve tocar uma única vez, independentemente da quantidade de estrofes. Isso evita repetir a gravação inteira antes de avançar.
