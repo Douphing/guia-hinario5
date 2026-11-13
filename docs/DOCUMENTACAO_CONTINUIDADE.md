@@ -1,3 +1,21 @@
+# Estado vigente — REV10 (13/11/2026)
+
+Esta nota **prevalece sobre os estados históricos** descritos abaixo e **não apaga o dossiê REV09**.
+
+**HTML:** V7.80 foi confirmado como `teste-multimidia.html` no GitHub em 13/11/2026. A versão **V7.81**, construída aditivamente com Hinos 191–200, foi preparada e empacotada para testes, **sem envio automático ao GitHub**. Produção `index.html` e `sw.js` permanecem intactos. A V7.81 só será promovida após verificação visual e aprovação expressa.
+
+**MP3:** Aprovado o caráter orquestral melhorado da **V4.4** dos Hinos 191–200; os dez MP3 foram copiados integralmente, sem reprocessamento, como `audio/hino-N.mp3`. A V4.3 teve seu andamento considerado bom, mas o soprano eletrônico, falta de presença do tenor e graves, sustain e fermatas motivaram a V4.4. A biblioteca de síntese TimGM6mb ainda não equivale a instrumentos acústicos gravados. Não criar segundo acervo `audio/orquestral/` nem refazer os MP3 1–190.
+
+**Conteúdo:** Hinos 1–190 e Coros 1–6 preservados integralmente nos objetos `MULTIMIDIA` e `LETRAS`. Hinos 191–200 acrescentados com títulos, letras, estrofes e coros conforme partituras originais, MP3, dados próprios de metrônomo, 12 JPG das partituras (198 e 200 com duas páginas). Nos Hinos 191–193 o pulso impresso é a **colcheia** (BPM exibido 122, 124 e 142), equivalente ao BPM em semínima dos MP3 (61, 62 e 71); 194–200 usam semínima. A estrutura do componente de metrônomo, modais responsivos, reprodução, favoritos, registros e compartilhamento não foi reescrita.
+
+**Mídias externas:** nenhum link novo de Spotify/YouTube/YouTube Music foi incluído nos Hinos 191–200 por falta de URLs individuais verificadas. Preservar os links já implementados de 1–190 e aplicar, após conferência, a ordem de fontes Orquestra Sacra, Orquestra Paulista, Vozes do Campo CCB, Orchestra Hymns e Antony Andrey. Não associar uma faixa de outro hino.
+
+**Auditoria:** 200 números consecutivos de hino, mais seis coros; igualdade de dados de 1–190 e Coros 1–6; 32 scripts executáveis sintaticamente válidos; 10 MP3 V4.4 idênticos aos manifestos SHA-256. O navegador automatizado disponível bloqueou a navegação local (`ERR_BLOCKED_BY_ADMINISTRATOR`); **não declarar teste visual/funcional como concluído**. Confirmar 190→191, 200 último hino, 198/200 multipágina, letra, áudio, metrônomo, mídias e registros em celular e desktop após upload.
+
+**Continuidade:** próxima revisão documental **REV11** quando houver aprovação e publicação do teste. A próxima carga 201–210 só poderá ser produzida com fontes verificadas e sem alterar produções anteriores por suposição.
+
+---
+
 # Guia do Hinário nº 5 — Dossiê de continuidade
 
 **Revisão:** 09 — 12/11/2026 (V7.79 de teste com Hinos 171–180; sustain natural para futuras cargas)
