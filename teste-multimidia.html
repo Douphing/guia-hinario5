@@ -1,4 +1,5 @@
 <!doctype html><html lang="pt-BR"><head>
+<!-- V7.79.7 TESTE: mídias alternativas autorizadas: Antony Andrey para 161/182 YouTube e 161/187 Spotify; artista visível no botão. Orquestra Sacra prioritária; Vozes do Campo exclusivo no YouTube Music; produção intacta. -->
 <!-- V7.79.6 TESTE: links Orquestra Sacra hinos 187-190; 186 já estava correto; Spotify 187 (Antony Andrey) não incorporado. YouTube Music e produção preservados. -->
 <!-- V7.79.5 TESTE: inclusão de 18 URLs YouTube e 16 URLs Spotify fornecidas pelo usuário; 161–190, sem alterar YouTube Music, MP3, letras, partituras, metronomo ou index.html. -->
 <!-- V7.79.4 TESTE: Hino 186 com YouTube e Spotify individuais Orquestra Sacra, preservados os capítulos YouTube Music Vozes do Campo. Sem alteração de MP3 ou produção. -->
@@ -6425,14 +6426,20 @@ const MULTIMIDIA={
 
 /* V7.78: novos Hinos 161–170; vínculos externos pendentes explicitados. */
  "161":{
-  "spotifySearch": "https://open.spotify.com/search/161%20Cristo%20quer%20salvar%20Orquestra%20Sacra",
-  "spotifyPending": true,
+  "spotifyArtista": "Antony Andrey",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2LqMROaPYrzAHofTlvG2JS",
+  "spotifyType": "track",
+  "spotify": "2LqMROaPYrzAHofTlvG2JS",
+  "youtubeArtista": "Antony Andrey",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=ksmT3qBvPAg",
+  "youtube": "ksmT3qBvPAg",
   "audio": "audio/hino-161.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 0,
   "youtubeMusicEnd": 167,
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=0s",
-  "fonteExterna": "Spotify: pesquisa Orquestra Sacra · YouTube: pesquisa Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "fonteExterna": "Spotify: Antony Andrey · YouTube: Antony Andrey · YouTube Music: CCB - Vozes do Campo",
   "metronomo": {
     "bpm": 76,
     "min": 69,
@@ -6450,8 +6457,7 @@ const MULTIMIDIA={
     "partituraTitulo": "Hino 161 — Cristo quer salvar"
   },
   "repeticoes": 1,
-  "modoReproducao": "partitura",
-  "youtubeSearch": "https://www.youtube.com/results?search_query=Hino%20161%20Cristo%20quer%20salvar%20Orquestra%20Sacra"
+  "modoReproducao": "partitura"
 },
  "162":{
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2StAIoCYt3sl1xIToZsble",
@@ -7075,6 +7081,10 @@ const MULTIMIDIA={
   "modoReproducao": "partitura"
 },
  "182":{
+  "youtubeArtista": "Antony Andrey",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=c-zWuJfzWBI",
+  "youtube": "c-zWuJfzWBI",
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2NZaUx1bkV7q3V5Mh9qapE",
   "spotifyType": "track",
   "spotify": "2NZaUx1bkV7q3V5Mh9qapE",
@@ -7082,9 +7092,8 @@ const MULTIMIDIA={
   "youtubeMusicStart": 207,
   "youtubeMusicEnd": 383,
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=207s",
-  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: pesquisa Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
-  "modoReproducao": "partitura",
-  "youtubeSearch": "https://www.youtube.com/results?search_query=Hino%20182%20Brevemente%20retornar%C3%A1%20Jesus%20Cristo%20Orquestra%20Sacra"
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Antony Andrey · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura"
 },
  "183":{
   "youtubeOriginType": "video-individual",
@@ -7143,16 +7152,18 @@ const MULTIMIDIA={
   "modoReproducao": "partitura"
 },
  "187":{
+  "spotifyArtista": "Antony Andrey",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/4NgvoXbYaEZkpnIXNUAO3n",
+  "spotifyType": "track",
+  "spotify": "4NgvoXbYaEZkpnIXNUAO3n",
   "youtubeOriginType": "video-individual",
   "youtubeOrigin": "https://www.youtube.com/watch?v=RbjoI272qqo",
   "youtube": "RbjoI272qqo",
-  "spotifySearch": "https://open.spotify.com/search/187%20Jesus%20Cristo%20habita%20em%20n%C3%B3s%20Orquestra%20Sacra",
-  "spotifyPending": true,
   "youtubeMusic": "Uu9L8bQzaTc",
   "youtubeMusicStart": 1168,
   "youtubeMusicEnd": 1374,
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1168s",
-  "fonteExterna": "Spotify: pesquisa Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "fonteExterna": "Spotify: Antony Andrey · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura"
 },
  "188":{
@@ -10372,13 +10383,13 @@ function openHymnDetail(h,cat){
      const searchOnly=!media.spotify&&!!media.spotifySearch;
      const pending=!media.spotify&&!searchOnly;
      const action=searchOnly?'data-search-url="'+esc(media.spotifySearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no Spotify"':'data-kind="spotify"';
-     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':''))+'</span><b>›</b></button>');
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.spotifyArtista?'<small>'+esc(media.spotifyArtista)+'</small>':'')))+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtube||media.youtubeSearch||media.youtubePending){
      const searchOnly=!media.youtube&&!!media.youtubeSearch;
      const pending=!media.youtube&&!searchOnly;
      const action=searchOnly?'data-search-url="'+esc(media.youtubeSearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no YouTube"':'data-kind="youtube"';
-     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':'')))+'</span><b>›</b></button>');
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeArtista?'<small>'+esc(media.youtubeArtista)+'</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':''))))+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
      const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
