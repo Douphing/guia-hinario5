@@ -1,3 +1,15 @@
+## Ratificação REV10.3.1 — identidade e prioridades (13/11/2026)
+
+| Mídia | Identidade musical | Fontes autorizadas |
+|---|---|---|
+| **YouTube** | **Instrumental e orquestral**; instrumentos em evidência e não o canto | **Orquestra Sacra**, **Orquestra Paulista**, **Orquestra Hymns** e **Antony Andrey** (somente gravações instrumentais) |
+| **YouTube Music** | **Hinos cantados**, com vozes em evidência | **Fonte principal e prioritária: Vozes do Campo — Hinos CCB**. Outras fontes vocais somente quando **já aprovadas anteriormente** no projeto e com gravação realmente cantada |
+| **Spotify** | Preferência pelas gravações da **Orquestra Sacra** | Orquestra Sacra em primeiro lugar; somente fontes alternativas **já autorizadas** quando necessário |
+
+**Não inserir intérpretes novos para completar os botões**; não reproduzir vídeo instrumental no YouTube Music como substituto de canto; não confundir número de volume/álbum, posição da faixa ou outra edição com o número do hino. Verificar Hinário nº 5 + número exato + título + intérprete + caráter instrumental/vocal. Esta ratificação prevalece sobre orientações anteriores mais amplas.
+
+---
+
 # Política permanente de identidade das mídias — REV10.3
 **Guia do Hinário nº 5 – CCB | 13/11/2026 | Norma vigente que prevalece sobre orientações conflitantes de REV10.1 e REV10.2.**
 
@@ -9,7 +21,7 @@ O Guia oferece experiências **deliberadamente diferentes** conforme a plataform
 | Plataforma | Conteúdo obrigatório | Fontes aprovadas e prioridades | Não utilizar |
 |---|---|---|---|
 | **YouTube** | **Instrumental / orquestral**; melodia executada por instrumentos, harmonias, metais e cordas; vozes não devem ser o foco | 1. **Orquestra Sacra**; 2. **Orquestra Paulista** (identificar corretamente o artista, incluindo Orquestra Sacra Paulista quando essa for a fonte verificada); 3. **Orquestra Hymns**; 4. **Antony Andrey**, somente quando a faixa/vídeo for efetivamente instrumental | Gravações prioritariamente cantadas, intérpretes fora dessa relação, vídeos de outra edição ou numeração |
-| **YouTube Music** | **Cantado / vocal**; canto audível em destaque, conforme o hino do Hinário 5 | Os canais e intérpretes de canto da CCB previamente indicados, sobretudo `https://music.youtube.com/channel/UCoMaUOomixBuvMhXYHyivwQ`, `https://www.youtube.com/@hinosccbcantadosetocados` **quando a faixa for cantada**, e a fonte **CCB – Vozes do Campo**, desde que a gravação efetivamente apresente canto | Reutilizar o vídeo **instrumental** do YouTube só para preencher o botão YTM; vídeo sem canto; novos intérpretes não autorizados |
+| **YouTube Music** | **Cantado / vocal**, com vozes em destaque conforme Hinário nº 5 | **PRIORIDADE: Vozes do Campo — Hinos CCB**. Outras fontes vocais somente quando previamente aprovadas e efetivamente cantadas. Os canais do histórico são referências de busca, não autorização de novos intérpretes | Vídeos instrumentais reutilizados do YouTube, faixas sem canto, intérpretes não autorizados |
 | **Spotify** | Gravação correspondente ao hino, com preferência pelo caráter orquestral/instrumental já adotado | **Orquestra Sacra** em primeiro lugar, referência `https://open.spotify.com/playlist/5WCtP7Fzon4TzcnuRwBDVi`. Quando faltar, procurar **somente** as alternativas musicais já aprovadas (Orquestra Paulista/Orquestra Hymns/Antony Andrey) com número e título conferidos | Qualquer outra conta/artista adicionado apenas para completar a grade; faixa de hino diferente; álbum genérico apresentado como faixa |
 
 **Importante:** “Orquestra Hymns” é a grafia de referência para a fonte mencionada como “orquestra hyamms”; “Antony Andrey” corresponde à fonte citada como “Anytony Andrey”. Os nomes devem ser conferidos nos próprios canais/artistas antes de validar um link.
@@ -19,7 +31,7 @@ O Guia oferece experiências **deliberadamente diferentes** conforme a plataform
 1. Confirmar **Hinário nº 5 / edição correta + número exato do hino + título correto**. **Número do volume de um álbum, número de faixa, playlist ou numeração do Hinário nº 4 não é o número do hino.**
 2. Identificar **plataforma, intérprete/canal e natureza da gravação (instrumental ou cantada)**. Conferir ouvindo/amostrando o conteúdo sempre que necessário; título e metadados isolados não são prova suficiente.
 3. No **YouTube**, selecionar exclusivamente **instrumental** dentre Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey; confirmar que o vídeo não tem vozes como componente principal.
-4. No **YouTube Music**, selecionar **cantado** em fonte vocal já autorizada. Não reutilizar a gravação instrumental como se fosse canto. Quando um canal contém conteúdos mistos, selecionar apenas sua faixa vocal.
+4. No **YouTube Music**, pesquisar **primeiro Vozes do Campo — Hinos CCB** e selecionar somente gravação **cantada**. Se não houver faixa exata, procurar somente outras fontes vocais já aprovadas. Nunca reutilizar instrumental como canto. Em canais mistos, escolher apenas a faixa vocal.
 5. No **Spotify**, pesquisar a playlist Orquestra Sacra e os artistas alternativos já permitidos, sem inserir intérpretes novos por conveniência. Preferir URL individual da faixa; uma busca de catálogo não equivale a link verificado.
 6. Se houver coletânea, conferir a **faixa e o intervalo inicial/final corretos**; nunca fazer o botão cair em outro hino, inclusive na troca automática por Próximo, Repetir ou Aleatório.
 7. Se não houver gravação compatível, **continuar a pesquisa nas fontes aprovadas e registrar como pendente de autorização/validação**. Não inventar endereço, não apontar para outro hino, não usar gênero oposto e não adicionar intérprete não solicitado para evitar botão vazio.
