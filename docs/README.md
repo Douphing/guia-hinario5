@@ -1,3 +1,8 @@
+# Estado REV10.2 — 13/11/2026
+Correção de comandos de reprodução e volume persistente na versão **V7.81.2 de teste local**. Detalhes em [Controles de reprodução REV10.2](CONTROLES_REPRODUCAO_REV10_2.md). O histórico REV10.1 de mídias 191–200 continua válido. Publicação de HTML é etapa distinta; produção intocada.
+
+---
+
 # Atualização REV10.1 — 13/11/2026
 **Mídias externas dos Hinos 191–200 integradas em arquivo de teste local V7.81.1.** Validação visual pendente; produção e teste remoto sem alterações. Ver [mapa de fontes e regra de numeração](FONTES_EXTERNAS_191_A_200_REV10_1.md). **Nunca confundir número do hino do Hinário nº 5 com número de volume/álbum, posição de faixa ou outra edição.**
 
