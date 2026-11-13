@@ -1,6 +1,10 @@
 # Atualização REV10.1 — 13/11/2026
 **Mídias externas dos Hinos 191–200 integradas em arquivo de teste local V7.81.1.** Validação visual pendente; produção e teste remoto sem alterações. Ver [mapa de fontes e regra de numeração](FONTES_EXTERNAS_191_A_200_REV10_1.md). **Nunca confundir número do hino do Hinário nº 5 com número de volume/álbum, posição de faixa ou outra edição.**
 
+
+
+**Verificação final de publicação (13/11/2026):** o arquivo remoto `teste-multimidia.html` já corresponde exatamente à base local **V7.81**, SHA Git `b3df54ec10ea65853a298b8ca2d541ae11ef51a1`; ainda **não** contém os metadados novos da **V7.81.1**. Somente a documentação REV10.1 foi publicada nesta etapa; a produção `index.html` continua intacta. Nas notas anteriores, o status V7.80 refere-se a uma consulta anterior e está superado.
+
 ---
 
 # Guia do Hinário nº 5 — Continuidade REV10 (13/11/2026)
