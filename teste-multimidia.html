@@ -11673,7 +11673,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
  if(kind==='instrumental'){
    const h=window.__gaCurrentHymn||{};
-   const total=calcularRepeticoesAudio(h,media);
+   const total=(media&&media.modoReproducao==='partitura')?1:calcularRepeticoesAudio(h,media);
    let ciclo=1;
 
    const status=document.createElement('div');
@@ -11705,14 +11705,23 @@ function loadHymnMedia(kind,media,button,automatico=false){
    volumeRange.min='0';volumeRange.max='100';volumeRange.step='1';
    volumeRange.setAttribute('aria-label','Volume do MP3');
    const volumeValue=document.createElement('span');volumeValue.className='hd-mp3-volume-value';
-   const initialVolume=Number(window.__guiaMp3Volume);
-   const normalizedVolume=Number.isFinite(initialVolume)&&initialVolume>=0&&initialVolume<=100 ? initialVolume : 100;
+   const initialVolume=window.GuiaVolumePersistente?.get()??window.__guiaMp3Volume??50;
+   const normalizedVolume=Number.isFinite(Number(initialVolume)) ? Math.max(0,Math.min(100,Number(initialVolume))) : 50;
    const updateMp3Volume=(v)=>{
      const n=Math.min(100,Math.max(0,Number(v)||0));
      volumeRange.value=String(n);volumeValue.textContent=n+'%';
-     a.volume=n/100;a.muted=n===0;window.__guiaMp3Volume=n;
+     a.volume=n/100;a.muted=n===0;
+     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(n)??n;
    };
    updateMp3Volume(normalizedVolume);
+   // Controles de volume NATIVOS também atualizam a preferência do Guia.
+   // Sem esse listener, mudar no player nativo não acompanha o próximo hino.
+   a.addEventListener('volumechange',()=>{
+     const nativeValue=a.muted?0:Math.round(a.volume*100);
+     volumeRange.value=String(nativeValue);
+     volumeValue.textContent=nativeValue+'%';
+     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(nativeValue)??nativeValue;
+   });
    volumeRange.addEventListener('input',()=>updateMp3Volume(volumeRange.value));
    volumeBtn.addEventListener('click',()=>{
      volumePanel.hidden=!volumePanel.hidden;
@@ -14868,11 +14877,35 @@ body:not(.index-mode):not(.welcome-mode){
 @media(max-width:340px){#hymnDetail .hd-sequence{flex-wrap:wrap;row-gap:4px}}
 </style>
 
+<script id="v7812-volume-persistente">
+/* V7.81.2 — preferência única de volume. Nunca depender apenas do slider nativo.
+   Volume Spotify permanece no aplicativo do Spotify por restrições da plataforma. */
+(function(){
+ 'use strict';
+ const KEY='guia-hinario5-volume-midia-v1';
+ const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v))));
+ let value=50;
+ try{
+   const saved=localStorage.getItem(KEY);
+   if(saved!==null&&saved!==''&&Number.isFinite(Number(saved)))value=clamp(saved);
+   else if(Number.isFinite(Number(window.__guiaMp3Volume))&&window.__guiaMp3Volume!==undefined)value=clamp(window.__guiaMp3Volume);
+ }catch(e){}
+ function set(v){
+   if(!Number.isFinite(Number(v)))return value;
+   value=clamp(v);window.__guiaMp3Volume=value;
+   try{localStorage.setItem(KEY,String(value))}catch(e){}
+   return value;
+ }
+ set(value);
+ window.GuiaVolumePersistente={get:()=>value,set};
+})();
+</script>
+
 <script id="v751-reproducao-continua">
 (function(){
  'use strict';
  const st={mode:'next',kind:null,audio:null,iframe:null,end:0,player:null,
-   poll:null,revision:0,complete:false,connecting:false,playing:false};
+   poll:null,volumePoll:null,revision:0,complete:false,connecting:false,playing:false};
  let ytPromise=null;
  const el=id=>document.getElementById(id);
  const isYT=kind=>kind==='youtube'||kind==='youtubeMusic';
@@ -14900,6 +14933,7 @@ body:not(.index-mode):not(.welcome-mode){
  function refreshPlayback(){
    const b=el('hdPlaybackToggle');if(!b)return;
    const active=!!st.kind && st.kind!=='spotify';
+   const hasMedium=!!st.kind;
    b.disabled=!active;
    b.innerHTML=guiaControleSvg(st.playing?'pause':'play')+'<small class="ga-ctl-name">'+(st.playing?'Pausar':'Tocar')+'</small>';
    b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
@@ -14909,9 +14943,9 @@ body:not(.index-mode):not(.welcome-mode){
    b.dataset.playback=active?(st.playing?'playing':'ready'):'inactive';
    b.setAttribute('aria-pressed',String(active&&st.playing));
    const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
-   if(prev)prev.disabled=!active||!hasPrevious();
+   if(prev)prev.disabled=!hasMedium||!hasPrevious();
    const next=el('hdSequence')?.querySelector('[data-media-action="next"]');
-   if(next)next.disabled=!active;
+   if(next)next.disabled=!hasMedium||!getNext(st.kind,window.__gaCurrentHymn);
  }
  // Parar interrompe a reprodução, mas preserva o elemento de mídia para retomar.
  function stopNow(){
@@ -14961,6 +14995,12 @@ body:not(.index-mode):not(.welcome-mode){
    window.GuiaPlayerPersistente?.beforeStop();
    ++st.revision;
    if(st.poll){clearInterval(st.poll);st.poll=null}
+   if(st.volumePoll){clearInterval(st.volumePoll);st.volumePoll=null}
+   try{if(st.audio)window.GuiaVolumePersistente?.set(st.audio.muted?0:Math.round(st.audio.volume*100))}catch(e){}
+   try{if(st.player&&typeof st.player.getVolume==='function'){
+     const pv=st.player.isMuted()?0:st.player.getVolume();
+     if(Number.isFinite(pv))window.GuiaVolumePersistente?.set(pv);
+   }}catch(e){}
    try{st.audio?.pause()}catch(e){}
    try{st.player?.destroy()}catch(e){}
    // Se não há controlador (ou no Spotify), remover o iframe realmente interrompe o som.
@@ -14972,14 +15012,14 @@ body:not(.index-mode):not(.welcome-mode){
  function cleanup(){stopInternal();}
  function getActive(){return {kind:st.kind,audio:st.audio,iframe:st.iframe,player:st.player,mode:st.mode};}
  function advanceNow(){
-   if(!st.kind||st.kind==='spotify')return;
+   if(!st.kind)return;
    const old=st.mode;
    st.mode='next';st.complete=false;
    finish(st.kind,window.__gaCurrentHymn);
    st.mode=old;refresh();
  }
  function retreatNow(){
-   if(!st.kind||st.kind==='spotify')return;
+   if(!st.kind)return;
    const old=st.mode;
    st.mode='previous';st.complete=false;
    finish(st.kind,window.__gaCurrentHymn);
@@ -14991,6 +15031,7 @@ body:not(.index-mode):not(.welcome-mode){
    if(kind==='instrumental')return !!m.audio;
    if(kind==='youtube')return !!m.youtube;
    if(kind==='youtubeMusic')return !!m.youtubeMusic;
+   if(kind==='spotify')return !!m.spotify;
    return false;
  }
  function getNext(kind,h){
@@ -15012,6 +15053,7 @@ body:not(.index-mode):not(.welcome-mode){
  }
  function finish(kind,h){
    if(st.mode==='stop'||st.complete||kind!==st.kind)return;
+   // Spotify não envia evento ended nem permite iniciar/faixa ajustar volume pelo iframe.
    st.complete=true;
    if(st.mode==='repeat'){
      const key=String(h?.num||'');
@@ -15038,10 +15080,11 @@ body:not(.index-mode):not(.welcome-mode){
      if(!button||button.disabled){note('Escolha outra mídia para continuar.');return}
      loadHymnMedia(kind,nextMedia,button,true);
      window.GuiaPlayerPersistente?.hideForSequence(estavaRecolhido);
+     if(kind==='spotify')note('O Spotify exige iniciar a nova faixa no próprio player. Volume e repetição automática são controlados pelo Spotify.');
    }catch(e){note('Não foi possível avançar automaticamente. Abra o próximo hino manualmente.');}
  }
  function hasPrevious(){
-   if(!st.kind||st.kind==='spotify')return false;
+   if(!st.kind)return false;
    const old=st.mode;st.mode='previous';
    const result=!!getNext(st.kind,window.__gaCurrentHymn);
    st.mode=old;return result;
@@ -15075,6 +15118,21 @@ body:not(.index-mode):not(.welcome-mode){
          onReady:e=>{
            if(revision!==st.revision)return;
            refreshPlayback();
+           try{
+             const v=window.GuiaVolumePersistente?.get()??50;
+             e.target.setVolume(v);
+             if(v===0)e.target.mute();else e.target.unMute();
+           }catch(err){}
+           if(st.volumePoll)clearInterval(st.volumePoll);
+           // O YouTube não emite evento de alteração do slider nativo do iframe.
+           // Ler o volume de forma leve, sem sobrescrever escolhas posteriores do usuário.
+           st.volumePoll=setInterval(()=>{
+             if(revision!==st.revision||!st.player)return;
+             try{
+               const v=st.player.isMuted()?0:st.player.getVolume();
+               if(Number.isFinite(v))window.GuiaVolumePersistente?.set(v);
+             }catch(err){}
+           },800);
            if(automatico){
              try{e.target.playVideo()}catch(err){note('O navegador pode exigir início manual do próximo vídeo.');}
            }
@@ -15112,7 +15170,11 @@ body:not(.index-mode):not(.welcome-mode){
    const seq=el('hdSequence');
    // Mostra o modo de sequência apenas com mídia aberta e compatível.
    // Spotify continua manual: evita sugerir uma troca automática inexistente.
-   if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind));
+   if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind)||kind==='spotify');
+   if(seq){
+     seq.querySelectorAll('[data-sequence]').forEach(b=>{b.disabled=kind==='spotify';b.title=kind==='spotify'?'O Spotify não informa o fim da faixa ao Guia; use os controles do Spotify':b.getAttribute('data-sequence')==='repeat'?'Repetir esta mídia ao terminar':b.dataset.sequence;});
+     const stop=seq.querySelector('[data-media-action="stop"]');if(stop)stop.disabled=kind==='spotify';
+   }
    refresh();
    st.playing=!!st.audio&&!st.audio.paused;
    if(st.audio){
@@ -15130,6 +15192,7 @@ body:not(.index-mode):not(.welcome-mode){
      });
    }
    if(isYT(kind)&&st.iframe)connectYT(!!options.automatico);
+   if(kind==='spotify')note('Spotify: anterior/próximo trocam a faixa; toque em reproduzir no player. Demais controles são do Spotify.');
  }
  function bind(){
    document.querySelectorAll('#hdSequence [data-media-action]').forEach(b=>{
@@ -15168,7 +15231,7 @@ body:not(.index-mode):not(.welcome-mode){
  },true);
  window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,retreatNow,hasPrevious,stopNow,closeMediaNow,playPauseNow,
    // Apenas para verificação local da implementação; não altera o projeto.
-   getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe})};
+   getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe,volume:window.GuiaVolumePersistente?.get()??null})};
 })();
 </script>
 
