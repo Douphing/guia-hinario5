@@ -1,3 +1,11 @@
+## REV10.5 — 13/11/2026 — Nove URLs fornecidas para conferência (documentação, NÃO integração)
+- Recebidos 9 IDs de vídeo YouTube para suprir mídias 191–200, listados em [LINKS_RECEBIDOS_191_200_REV10_5.md](LINKS_RECEBIDOS_191_200_REV10_5.md).
+- `OgNlZz43BEw` já estava associado ao Hino 200 na V7.81.3. Os outros 8 IDs não puderam ser auditados quanto a número/título/canal e caráter instrumental ou vocal devido à indisponibilidade da consulta de metadados do YouTube neste ambiente.
+- Retirados os parâmetros de Rádio (`list=RD...`, `start_radio=1`) **no registro de URLs canônicas**, para não confundir vídeos seguintes com hinos do Guia; nenhum link foi atribuído ao hino errado apenas para preencher o botão.
+- **Não houve alteração no HTML de testes nem em `index.html` por esta anotação.** Curadoria REV10.4 permanece pendente de aprovação dos IDs.
+
+---
+
 ## REV10.4 — 13/11/2026 — V7.81.3 TESTE: fontes 191–200 conforme política
 - Corrigida a curadoria dos Hinos 191–200 no **HTML de teste entregue separadamente**, preservando o código de player/volume da V7.81.2 e todos os MP3 V4.4, letras, partituras, 1–190 e Coros.
 - **YouTube instrumental**: 4 vídeos das fontes permitidas (191 Orquestra Sacra, 194 Orquestra Hymns, 195 e 200 Orquestra Sacra), 6 buscas explícitas em fontes autorizadas. Não reutilizar gravações cantadas nem artistas não aprovados.
