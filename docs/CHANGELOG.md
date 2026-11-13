@@ -5,6 +5,10 @@
 - V7.81.1 foi preparada **localmente**, acrescentando exclusivamente campos externos de `MULTIMIDIA` para 191–200; não altera MP3 Orquestra V4.4, letras, partituras, metronômicos ou layout, nem 1–190/Coros 1–6. Igualdade dos dados antigos e sintaxe dos 32 scripts verificadas.
 - Sem teste funcional visual nem publicação do HTML no GitHub. **`index.html` e `sw.js` intocados; `teste-multimidia.html` remoto permanece V7.80**. Consulte [FONTES_EXTERNAS_191_A_200_REV10_1.md](FONTES_EXTERNAS_191_A_200_REV10_1.md) para IDs, artistas e estados. Não interpretar correção como aprovação final.
 
+
+
+**Verificação final de publicação (13/11/2026):** o arquivo remoto `teste-multimidia.html` já corresponde exatamente à base local **V7.81**, SHA Git `b3df54ec10ea65853a298b8ca2d541ae11ef51a1`; ainda **não** contém os metadados novos da **V7.81.1**. Somente a documentação REV10.1 foi publicada nesta etapa; a produção `index.html` continua intacta. Nas notas anteriores, o status V7.80 refere-se a uma consulta anterior e está superado.
+
 ---
 
 ## REV10 — 13/11/2026 — HTML V7.81 e MP3 191–200 V4.4 (preparados para TESTES)
