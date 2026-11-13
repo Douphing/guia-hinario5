@@ -1,3 +1,14 @@
+## REV11 — 13/11/2026 — V7.81.8 TESTE: Hinos 201–210 / Orquestra V4.5
+- Extensão aditiva do `teste-multimidia` V7.81.7 com dez novos hinos, letras/coros, partituras JPG, metrônomos e 10 MP3 `audio/hino-201.mp3`…`audio/hino-210.mp3`, renderizados das fontes MSCX.
+- Instrumentação orquestral V4.5 sintética TimGM6mb, soprano em cordas, tenor e graves reforçados, ligaduras/fermatas; BPM individual perto do máximo, conforme score. Hinos 205 (♩. = 54, áudio ♩ = 81), 206 (♪ = 134, áudio ♩ = 67) e 208 (𝅗𝅥 = 53, áudio ♩ = 106) exigem unidade de pulso distinta.
+- Dez imagens de partitura, incluindo recorte exclusivo Hino 201 da folha compartilhada 200–201.
+- YouTube 209 Orquestra Sacra Paulista individual; Spotify 208 Orquestra Sacra Paulista identificado em catálogo. Demais fontes 201–210 ficam como buscas rotuladas/pendentes, não gravações inventadas. Política de identidade REV10.3.1 intacta.
+- **Integridade:** `MULTIMIDIA` e `LETRAS` 1–200 / 6 Coros idênticos à V7.81.7; 33 scripts válidos, modal 210 aberto em 390/1280 px sem JS error. Testes de reprodução real/qualidade auditiva ainda pendentes.
+- Repositório verificado antes da entrega: `index.html` e `teste-multimidia.html` ambos V7.81.7, blob `75e029955ec02787253ea6453849cf8712d45c8e`. **Nenhum HTML remoto, MP3 remoto ou produção foi alterado por esta entrega.**
+- Documentação completa: [CARGA_HINOS_201_A_210_REV11.md](CARGA_HINOS_201_A_210_REV11.md).
+
+---
+
 ## REV10.9 — 13/11/2026 — V7.81.7 TESTE: controles à mostra
 - O usuário rejeitou o expansor "Sequência" da V7.81.6 com botões distribuídos em duas linhas. V7.81.7 exibe **dez botões em uma única faixa compacta**, sem necessidade de expandir.
 - Preservados transportes, quatro modos ao terminar, minimizar e fechar somente mídia, ícones monocromáticos, player MP3 nativo, mute reversível e masterização +4,3 dB já gerada.
