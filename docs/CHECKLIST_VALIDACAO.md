@@ -1,3 +1,15 @@
+# Checklist REV10.9 — V7.81.7: dez botões à mostra
+- [x] Expansor "Sequência" retirado; dez controles aparecendo de imediato em **uma linha**.
+- [x] Chromium testou 320, 390, 768 e 1280 px: **10 botões, 1 linha, sem overflow**.
+- [x] 33 scripts sem erro de sintaxe; player MP3 nativo presente; volume/mute entre Hinos 199→200 preservado no teste de estado.
+- [x] HTML não altera links, letras, partituras e MP3 em comparação à V7.81.6; pacote completo repete os mesmos MP3 com ganho da V7.81.6.
+- [ ] Testar em celular Android e desktop após publicar SOMENTE arquivo de teste, incluindo troca de hinos, reprodução real e controles.
+- [ ] Verificar YouTube/YTM/Spotify, mini-player, controles desabilitados quando a API não oferece suporte, e demais funções.
+- [ ] Não editar `index.html` de produção sem aprovação.
+Ver [norma REV10.9](BOTOES_VISIVEIS_REV10_9.md).
+
+---
+
 # REV10.8 — Checklist player nativo e masterização 191–200
 - [x] Removidos botões e popovers extras de volume e opções, preservando áudio HTML5 nativo.
 - [x] Comandos de sequência disponíveis por expansão, sem barra extensa ao abrir o MP3.
