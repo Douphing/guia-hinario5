@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- V7.81.5 TESTE: remove tarja de execução redundante; menu próprio Velocidade/Baixar MP3; último volume audível recuperável após mute e navegação; oculta legenda Fonte enviada pelo usuário. Sem modificar MP3, partitura, letra, fontes ou produção. -->
 <!-- V7.81 TESTE: integração aditiva Hinos 191–200 (MP3 V4.4 aprovado, letras/partituras/metrônomo). Hinos 1–190, Coros 1–6 e fontes externas preexistentes preservados. Mídias externas novas aguardam verificação; NÃO publicar em index.html sem aprovação. --><html lang="pt-BR"><head>
 <!-- V7.79.7 TESTE: mídias alternativas autorizadas: Antony Andrey para 161/182 YouTube e 161/187 Spotify; artista visível no botão. Orquestra Sacra prioritária; Vozes do Campo exclusivo no YouTube Music; produção intacta. -->
 <!-- V7.79.6 TESTE: links Orquestra Sacra hinos 187-190; 186 já estava correto; Spotify 187 (Antony Andrey) não incorporado. YouTube Music e produção preservados. -->
@@ -11559,7 +11560,7 @@ function openHymnDetail(h,cat){
      const searchOnly=!media.youtube&&!!media.youtubeSearch;
      const pending=!media.youtube&&!searchOnly;
      const action=searchOnly?'data-search-url="'+esc(media.youtubeSearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no YouTube"':'data-kind="youtube"';
-     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeArtista?'<small>'+esc(media.youtubeArtista)+'</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':''))))+'</span><b>›</b></button>');
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeArtista && String(media.youtubeArtista).trim().toLowerCase()!=='fonte enviada pelo usuário'?'<small>'+esc(media.youtubeArtista)+'</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':''))))+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
      const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
@@ -11648,6 +11649,7 @@ function calcularRepeticoesAudio(h,media){
 }
 
 function loadHymnMedia(kind,media,button,automatico=false){
+ window.GuiaPlayerMenuCleanup?.();
  window.GuiaReproducaoContinua?.cleanup();
  let novoAudio=null,novoIframe=null,fimTrecho=0;
  const au=document.getElementById('hdAudio'),sp=document.getElementById('hdSpotify'),yt=document.getElementById('hdYoutube'),links=document.getElementById('hdLinks');
@@ -11677,6 +11679,8 @@ function loadHymnMedia(kind,media,button,automatico=false){
      status.classList.toggle('is-done',done);
    };
    atualizarStatus(false);
+   // V7.81.5: o texto da execução não ocupa mais espaço no modal; manter estado interno.
+   status.hidden=true;
 
    const a=document.createElement('audio');
    a.controls=true;a.preload='auto';a.src=media.audio;a.setAttribute('playsinline','');
@@ -11695,31 +11699,120 @@ function loadHymnMedia(kind,media,button,automatico=false){
    const volumeValue=document.createElement('span');volumeValue.className='hd-mp3-volume-value';
    const initialVolume=window.GuiaVolumePersistente?.get()??window.__guiaMp3Volume??50;
    const normalizedVolume=Number.isFinite(Number(initialVolume)) ? Math.max(0,Math.min(100,Number(initialVolume))) : 50;
+   const unmuteBtn=document.createElement('button');
+   unmuteBtn.type='button';unmuteBtn.className='hd-mp3-unmute';
+   unmuteBtn.setAttribute('aria-label','Ativar som e restaurar volume anterior');
+   const paintVolume=(v)=>{
+     const n=Math.min(100,Math.max(0,Math.round(Number(v)||0)));
+     volumeRange.value=String(n);volumeValue.textContent=n+'%';
+     unmuteBtn.hidden=n!==0;
+     unmuteBtn.textContent='Ativar som ('+(window.GuiaVolumePersistente?.getAudible()??50)+'%)';
+   };
    const updateMp3Volume=(v)=>{
      const n=Math.min(100,Math.max(0,Number(v)||0));
-     volumeRange.value=String(n);volumeValue.textContent=n+'%';
-     a.volume=n/100;a.muted=n===0;
+     // Quando silenciado, audio.volume permanece positivo para permitir desmutar
+     // no controle NATIVO, inclusive depois de Anterior, Próximo ou Aleatório.
+     const last=window.GuiaVolumePersistente?.getAudible()??50;
+     a.volume=(n===0?last:n)/100;
+     a.muted=n===0;
      window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(n)??n;
+     paintVolume(n);
    };
    updateMp3Volume(normalizedVolume);
-   // Controles de volume NATIVOS também atualizam a preferência do Guia.
-   // Sem esse listener, mudar no player nativo não acompanha o próximo hino.
+   // O botão MUTE nativo altera audio.muted, não necessariamente audio.volume.
+   // Nunca sobrescrever o último volume audível com zero.
    a.addEventListener('volumechange',()=>{
+     if(!a.muted && a.volume===0){
+       // Alguns navegadores desmutam sem restaurar a posição do slider.
+       a.volume=(window.GuiaVolumePersistente?.getAudible()??50)/100;
+       return;
+     }
      const nativeValue=a.muted?0:Math.round(a.volume*100);
-     volumeRange.value=String(nativeValue);
-     volumeValue.textContent=nativeValue+'%';
      window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(nativeValue)??nativeValue;
+     paintVolume(nativeValue);
    });
    volumeRange.addEventListener('input',()=>updateMp3Volume(volumeRange.value));
+   unmuteBtn.addEventListener('click',()=>updateMp3Volume(window.GuiaVolumePersistente?.getAudible()??50));
    volumeBtn.addEventListener('click',()=>{
      volumePanel.hidden=!volumePanel.hidden;
      volumeBtn.setAttribute('aria-expanded',String(!volumePanel.hidden));
    });
-   volumePanel.append(volumeRange,volumeValue);volumeBox.append(volumeBtn,volumePanel);
-   mp3Row.append(a,volumeBox);au.appendChild(mp3Row);
+   volumePanel.append(volumeRange,volumeValue,unmuteBtn);volumeBox.append(volumeBtn,volumePanel);
+
+   // V7.81.5: menu próprio, pois o ⋮ nativo do navegador não garante baixar/velocidade.
+   const moreBox=document.createElement('div');moreBox.className='hd-mp3-more-box';
+   const moreBtn=document.createElement('button');moreBtn.type='button';
+   moreBtn.className='hd-mp3-more-btn';moreBtn.textContent='⋮';
+   moreBtn.title='Velocidade e baixar MP3';moreBtn.setAttribute('aria-label','Mais opções do MP3: velocidade e baixar');
+   moreBtn.setAttribute('aria-haspopup','true');moreBtn.setAttribute('aria-expanded','false');
+   const morePanel=document.createElement('div');morePanel.className='hd-mp3-more-panel';morePanel.hidden=true;
+   morePanel.setAttribute('role','group');morePanel.setAttribute('aria-label','Opções de reprodução do MP3');
+   const speedLabel=document.createElement('strong');speedLabel.className='hd-mp3-speed-title';
+   speedLabel.textContent='Velocidade de reprodução';
+   const speedRow=document.createElement('div');speedRow.className='hd-mp3-speed-options';
+   const SPEED_KEY='guia-hinario5-velocidade-mp3-v1';
+   const speeds=[.75,1,1.25,1.5,2];
+   let storedSpeed=Number(window.__guiaMp3Speed)||1;
+   try{storedSpeed=Number(localStorage.getItem(SPEED_KEY))||storedSpeed}catch(e){}
+   if(!speeds.includes(storedSpeed))storedSpeed=1;
+   const setSpeed=(speed)=>{
+     a.playbackRate=speed;
+     a.defaultPlaybackRate=speed;
+     window.__guiaMp3Speed=speed;
+     try{localStorage.setItem(SPEED_KEY,String(speed))}catch(e){}
+     speedRow.querySelectorAll('button').forEach(b=>{
+       const selected=Number(b.dataset.speed)===speed;
+       b.setAttribute('aria-pressed',String(selected));
+       b.classList.toggle('is-active',selected);
+     });
+   };
+   speeds.forEach(speed=>{
+     const btn=document.createElement('button');btn.type='button';
+     btn.dataset.speed=String(speed);btn.textContent=speed+'×';
+     btn.setAttribute('aria-label','Velocidade '+speed+' vezes');
+     btn.addEventListener('click',()=>{
+       setSpeed(speed);morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');
+     });
+     speedRow.appendChild(btn);
+   });
+   const download=document.createElement('a');download.className='hd-mp3-download';
+   download.href=media.audio;
+   const mediaFilename=String(media.audio||'').split(/[?#]/)[0].split('/').pop()||'hino.mp3';
+   download.download=mediaFilename;
+   download.textContent='↓ Baixar MP3';
+   download.setAttribute('aria-label','Baixar '+mediaFilename);
+   morePanel.append(speedLabel,speedRow,download);moreBox.append(moreBtn,morePanel);
+   const closeMenus=()=>{
+     morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');
+     volumePanel.hidden=true;volumeBtn.setAttribute('aria-expanded','false');
+   };
+   moreBtn.addEventListener('click',()=>{
+     const open=morePanel.hidden;
+     closeMenus();morePanel.hidden=!open;
+     moreBtn.setAttribute('aria-expanded',String(open));
+   });
+   volumeBtn.addEventListener('click',()=>{morePanel.hidden=true;moreBtn.setAttribute('aria-expanded','false');});
+   // Esc e clique fora fecham o menu sem interferir na sequência de hinos.
+   // O controlador anterior é removido quando um novo hino abre.
+   window.GuiaPlayerMenuCleanup?.();
+   const outside=e=>{if(!mp3Row.contains(e.target))closeMenus();};
+   const onEscape=e=>{if(e.key==='Escape' && (!morePanel.hidden||!volumePanel.hidden)){
+     closeMenus();moreBtn.focus();e.stopPropagation();
+   }};
+   document.addEventListener('pointerdown',outside);
+   document.addEventListener('keydown',onEscape);
+   window.GuiaPlayerMenuCleanup=()=>{
+     document.removeEventListener('pointerdown',outside);
+     document.removeEventListener('keydown',onEscape);
+     closeMenus();
+     window.GuiaPlayerMenuCleanup=null;
+   };
+   mp3Row.append(a,volumeBox,moreBox);au.appendChild(mp3Row);
+   setSpeed(storedSpeed);
    novoAudio=a;
    au.appendChild(status);
    a.addEventListener('error',()=>{
+     status.hidden=false; // informar apenas erro real de áudio, sem faixa informativa permanente
      status.classList.remove('is-done');
      status.innerHTML='<span>Áudio</span><strong>Arquivo não encontrado</strong>';
    });
@@ -14871,21 +14964,35 @@ body:not(.index-mode):not(.welcome-mode){
 (function(){
  'use strict';
  const KEY='guia-hinario5-volume-midia-v1';
+ const AUDIBLE_KEY='guia-hinario5-ultimo-volume-audivel-v1';
  const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v))));
- let value=50;
+ let value=50,lastAudible=50;
  try{
    const saved=localStorage.getItem(KEY);
    if(saved!==null&&saved!==''&&Number.isFinite(Number(saved)))value=clamp(saved);
    else if(Number.isFinite(Number(window.__guiaMp3Volume))&&window.__guiaMp3Volume!==undefined)value=clamp(window.__guiaMp3Volume);
- }catch(e){}
+   const storedAudible=localStorage.getItem(AUDIBLE_KEY);
+   if(storedAudible!==null&&Number(storedAudible)>0&&Number.isFinite(Number(storedAudible)))lastAudible=clamp(storedAudible);
+   else if(value>0)lastAudible=value;
+ }catch(e){if(value>0)lastAudible=value;}
+ // A preferência 0 é MUTE. Nunca perder o volume anterior ao silenciar.
  function set(v){
    if(!Number.isFinite(Number(v)))return value;
-   value=clamp(v);window.__guiaMp3Volume=value;
-   try{localStorage.setItem(KEY,String(value))}catch(e){}
+   value=clamp(v);if(value>0)lastAudible=value;
+   window.__guiaMp3Volume=value;
+   try{
+     localStorage.setItem(KEY,String(value));
+     localStorage.setItem(AUDIBLE_KEY,String(lastAudible));
+   }catch(e){}
    return value;
  }
  set(value);
- window.GuiaVolumePersistente={get:()=>value,set};
+ window.GuiaVolumePersistente={
+   get:()=>value,set,
+   getAudible:()=>Math.max(1,lastAudible),
+   restore:()=>set(Math.max(1,lastAudible)),
+   isMuted:()=>value===0
+ };
 })();
 </script>
 
@@ -14980,6 +15087,7 @@ body:not(.index-mode):not(.welcome-mode){
    }
  }
  function stopInternal(){
+   window.GuiaPlayerMenuCleanup?.();
    window.GuiaPlayerPersistente?.beforeStop();
    ++st.revision;
    if(st.poll){clearInterval(st.poll);st.poll=null}
@@ -15108,7 +15216,7 @@ body:not(.index-mode):not(.welcome-mode){
            refreshPlayback();
            try{
              const v=window.GuiaVolumePersistente?.get()??50;
-             e.target.setVolume(v);
+             e.target.setVolume(v===0?(window.GuiaVolumePersistente?.getAudible()??50):v);
              if(v===0)e.target.mute();else e.target.unMute();
            }catch(err){}
            if(st.volumePoll)clearInterval(st.volumePoll);
@@ -16644,5 +16752,28 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 #hymnDetail #hdAudio .hd-mp3-volume-panel[hidden]{display:none!important}
 #hymnDetail #hdAudio .hd-mp3-volume-panel input[type="range"]{display:block;flex:1;min-width:100px;width:116px;accent-color:#b18438;touch-action:pan-x}
 #hymnDetail #hdAudio .hd-mp3-volume-value{min-width:32px;color:#263746;font:700 11px Arial,sans-serif}
+</style>
+
+<style id="v7815-mp3-cleanup-and-options">
+/* V7.81.5: retirar tira de progresso redundante, exibir só erros reais. */
+#hymnDetail #hdAudio .hd-audio-progress[hidden]{display:none!important}
+/* Os controles continuam compactos no celular. */
+#hymnDetail #hdAudio .hd-mp3-more-box{position:relative;flex:0 0 35px;align-self:center;z-index:14}
+#hymnDetail #hdAudio .hd-mp3-more-btn{display:grid!important;place-items:center!important;width:35px!important;height:35px!important;min-width:35px!important;padding:0!important;margin:0!important;border:1px solid #d3bf96!important;border-radius:10px!important;background:#fffaf1!important;color:#263746!important;font:800 23px/1 Arial,sans-serif!important;cursor:pointer}
+#hymnDetail #hdAudio .hd-mp3-more-btn[aria-expanded="true"]{background:#263746!important;color:white!important}
+#hymnDetail #hdAudio .hd-mp3-more-panel{position:absolute;right:0;bottom:calc(100% + 8px);width:min(255px,calc(100vw - 35px));padding:12px;display:grid;gap:10px;background:#fffdf7;border:1px solid #cfb987;border-radius:12px;box-shadow:0 8px 24px rgba(23,38,52,.22);z-index:20;font:700 12px Arial,sans-serif;color:#263746}
+#hymnDetail #hdAudio .hd-mp3-more-panel[hidden]{display:none!important}
+#hymnDetail #hdAudio .hd-mp3-speed-options{display:flex;flex-wrap:wrap;gap:4px}
+#hymnDetail #hdAudio .hd-mp3-speed-options button{font:700 12px/1 Arial,sans-serif!important;border:1px solid #d7c7a6!important;background:#fff!important;color:#263746!important;border-radius:8px!important;min-height:34px!important;padding:6px 8px!important;cursor:pointer!important}
+#hymnDetail #hdAudio .hd-mp3-speed-options button.is-active{background:#263746!important;color:#fff!important;border-color:#263746!important}
+#hymnDetail #hdAudio .hd-mp3-download{display:block!important;padding:10px;border-radius:8px;background:#f7eddb;color:#714d19!important;text-align:center;text-decoration:none!important;font:800 12px/1.1 Arial,sans-serif}
+#hymnDetail #hdAudio .hd-mp3-unmute{font:700 10px Arial,sans-serif!important;min-height:28px!important;border:1px solid #ba9c61!important;border-radius:7px!important;padding:5px!important;white-space:nowrap!important;background:#263746!important;color:white!important;cursor:pointer}
+#hymnDetail #hdAudio .hd-mp3-unmute[hidden]{display:none!important}
+#hymnDetail #hdAudio .hd-mp3-volume-panel{flex-wrap:wrap;right:-40px;max-width:min(230px,calc(100vw - 25px))}
+#hymnDetail #hdAudio .hd-mp3-volume-box{z-index:15}
+@media(max-width:400px){#hymnDetail #hdAudio .hd-mp3-controls-row{gap:4px}
+ #hymnDetail #hdAudio .hd-mp3-volume-box,#hymnDetail #hdAudio .hd-mp3-more-box{flex-basis:32px}
+ #hymnDetail #hdAudio .hd-mp3-volume-btn,#hymnDetail #hdAudio .hd-mp3-more-btn{width:32px!important;min-width:32px!important;height:34px!important}
+ #hymnDetail #hdAudio .hd-mp3-more-panel{right:-2px}}
 </style>
 </body></html>
