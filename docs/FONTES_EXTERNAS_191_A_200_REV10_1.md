@@ -29,3 +29,5 @@ Formato de links: Spotify `https://open.spotify.com/track/<ID>`; YouTube `https:
 
 ## REGRAS DE CONTINUIDADE
 V7.81.1 foi feita aditivamente sobre V7.81, apenas acrescentando metadados de mídias para Hinos 191–200, sem alterar letras, metrônomos, MP3 V4.4, partituras ou dados 1–190/Coros 1–6. A validação de objetos e sintaxe (32 scripts) passou; testes visuais/de reprodução no navegador real seguem pendentes. O arquivo `index.html` e `sw.js` **não foram modificados**, e o `teste-multimidia.html` remoto ainda é V7.80 até envio autorizado. A documentação REV10.1 é uma correção aditiva da REV10 e não aprovação de produção.
+
+**Verificação final de publicação (13/11/2026):** o arquivo remoto `teste-multimidia.html` já corresponde exatamente à base local **V7.81**, SHA Git `b3df54ec10ea65853a298b8ca2d541ae11ef51a1`; ainda **não** contém os metadados novos da **V7.81.1**. Somente a documentação REV10.1 foi publicada nesta etapa; a produção `index.html` continua intacta. Nas notas anteriores, o status V7.80 refere-se a uma consulta anterior e está superado.
