@@ -1,3 +1,12 @@
+## REV10.3.1 — 13/11/2026 — Esclarecimento de fontes (somente documentação)
+- **YouTube:** instrumental/orquestral; somente Orquestra Sacra, Orquestra Paulista, Orquestra Hymns, Antony Andrey.
+- **YouTube Music:** cantado/vocal, com **Vozes do Campo — Hinos CCB como fonte expressamente prioritária**; alternativas somente as vozes já autorizadas.
+- **Spotify:** Orquestra Sacra prioritária; demais fontes somente se previamente autorizadas.
+- Reafirmada proibição de intérpretes extras para completar botões e confusão de volume/álbum com número de hino.
+- **Não houve alteração de HTML, MP3 ou dados de produção** nesta ratificação. Os links externos dos Hinos 191–200 na versão de teste ainda precisam ser revisados.
+
+---
+
 ## REV10.3 — 13/11/2026 — Política de identidade multimídia (somente DOCUMENTAÇÃO)
 - Formalizada a regra permanente do usuário: **YouTube = instrumental orquestral** somente de **Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey**; **YouTube Music = cantado/vocal** de fontes CCB já indicadas; Spotify prioriza Orquestra Sacra e apenas alternativas musicais autorizadas.
 - **Não** adicionar intérpretes externos à lista aprovada nem reutilizar vídeos instrumentais do YouTube para preencher YouTube Music. Metadados corretos de número/título não bastam se a mídia tiver caráter musical errado.
