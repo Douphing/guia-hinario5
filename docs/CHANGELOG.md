@@ -1,3 +1,12 @@
+## REV10.7 — 13/11/2026 — V7.81.5 TESTE: controles MP3 e mute
+- Corrigidas quatro pendências reportadas com imagens: (1) removida tarja informativa redundante sob MP3, mantendo alerta de arquivo ausente; (2) criado botão **⋮ próprio do Guia**, com velocidade 0,75×/1×/1,25×/1,5×/2× e **Baixar MP3**; (3) mute não apaga último nível audível, e é reversível após navegação, incluindo botão `Vol. → Ativar som`; (4) ocultada no botão YouTube a legenda interna “Fonte enviada pelo usuário”.
+- Velocidade MP3 preservada entre hinos, preferencialmente por `localStorage`. Último volume audível registrado separadamente do estado silenciado, evitando que o áudio seguinte permaneça em 0 após desmutar.
+- Sem alterações nos metadados dos Hinos 1–200/Coros, nas letras, links musicais, MP3 V4.4, partituras, registros/favoritos, controles de sequência ou metrônomo.
+- **Validação técnica:** 33 scripts sem erro de sintaxe, dados estáticos preservados e **17 de 17** testes em navegador isolado aprovados. Execução real do HTML integral e testes em celular/desktop continuam pendentes; não confundir testes isolados com aprovação funcional.
+- Gerada apenas **V7.81.5 para TESTE**. `index.html` e `sw.js` protegidos; HTML remoto de testes deve ser conferido antes de substituir. [Detalhes REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
+
+---
+
 ## REV10.6 — 13/11/2026 — V7.81.4 TESTE: mapeamento de vídeos fornecido pelo usuário
 - Integrados ao arquivo **local de testes V7.81.4** os vídeos informados para 192 (`qlDVRkAZvAM`), 193 (`kzKgpHuYboU`), 194 (`DmQEpuRVPCg`), 196 (`WaGmOAuiYxg`), 197 (`A12O86QYxt4`), 198 (`4W8dPu7NM7k`) e 199 (`kEbHExWm-Sk`). Hino 200 manteve `OgNlZz43BEw`; 191 e 195 foram preservados.
 - Hino **199 tem segundo candidato** `8GDPODmDoTk`, registrado para comparação **sem sobrescrever a opção principal**.
