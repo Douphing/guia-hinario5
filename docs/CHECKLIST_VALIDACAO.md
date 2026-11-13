@@ -1,3 +1,17 @@
+# Checklist REV10.7 — correções do player MP3 V7.81.5
+- [x] Tarja textual redundante removida da apresentação do MP3; erros reais permanecem informativos.
+- [x] Menu `⋮` próprio com velocidade (0,75×, 1×, 1,25×, 1,5×, 2×) e Baixar MP3; velocidade preservada em navegação.
+- [x] Último volume audível separado do mute; nativo e `Vol. → Ativar som` restauram intensidade após Próximo/Anterior.
+- [x] Legenda “Fonte enviada pelo usuário” não aparece nos botões YouTube, permanecendo como metadado de curadoria.
+- [x] **17/17 testes em navegador isolado**, **33 scripts sintaticamente válidos**, dados musicais e letras estáticos sem mudanças.
+- [ ] Validar no navegador real em HTTPS o MP3 e download, menu móvel 320/390px, desktop e mini-player.
+- [ ] Verificar 37% → mute → próximo → desmute → 37%, tanto pelo nativo quanto pelo botão próprio e após recarregar.
+- [ ] Conferir modos de término, YouTube/YouTube Music, Spotify com limitações de API, favoritos e registros.
+- [ ] Publicar apenas HTML de testes após conferência do SHA remoto; **não alterar `index.html`** sem aprovação.
+Ver [REV10.7](MELHORIAS_PLAYER_MP3_REV10_7.md).
+
+---
+
 # Checklist REV10.6 — mapeamento YouTube fornecido pelo usuário
 - [x] Números 192, 193, 194, 196, 197, 198, 199 e 200 mapeados de acordo com o usuário.
 - [x] Hino 200 preservado com mesmo ID, Hinos 191 e 195 intactos.
