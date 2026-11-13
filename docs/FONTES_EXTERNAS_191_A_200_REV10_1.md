@@ -1,3 +1,7 @@
+> **Atualização de curadoria REV10.3.1:** no **YouTube Music**, a fonte **Vozes do Campo — Hinos CCB deve ser pesquisada primeiro** para gravações cantadas. No **YouTube**, só instrumental de Orquestra Sacra, Orquestra Paulista, Orquestra Hymns e Antony Andrey; Spotify prioriza Orquestra Sacra e fontes alternativas já autorizadas. O inventário histórico abaixo não representa aprovação dos links, e os vídeos instrumentais reaproveitados no YTM devem ser substituídos por versões cantadas verificadas. Não confundir volume/álbum com número do hino. Ver [política vigente](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
+
+---
+
 > **ATENÇÃO — INVENTÁRIO HISTÓRICO REV10.1, NÃO APROVAÇÃO DE MÍDIAS.** A política **REV10.3** prevalece sobre qualquer instrução abaixo que permita fontes complementares não autorizadas ou reutilização de instrumental do YouTube como vocal do YouTube Music. **YouTube deve ser instrumental, de Orquestra Sacra/Orquestra Paulista/Orquestra Hymns/Antony Andrey; YouTube Music deve ser cantado em fonte CCB aprovada; Spotify só fontes previamente autorizadas.** Não confundir número do volume com número do hino. O mapa contém Spotify de artistas não aprovados, Hino 194 YouTube de Orquestra Expressiff (não aprovada) e vídeos reaproveitados de YouTube em YouTube Music sem comprovação de canto; esses itens **devem ser substituídos/auditados na próxima versão de teste**. O registro abaixo documenta o que constava na V7.81.1, não o que deve ser mantido. Ver [POLITICA_FONTES_MULTIMIDIA_REV10_3.md](POLITICA_FONTES_MULTIMIDIA_REV10_3.md).
 
 ---
