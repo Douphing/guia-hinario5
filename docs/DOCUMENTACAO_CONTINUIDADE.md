@@ -1,3 +1,12 @@
+# Correção aditiva REV10.1 — V7.81.1 MÍDIAS EXTERNAS (13/11/2026)
+**Atenção: substitui apenas a afirmação histórica de REV10 de que os links externos 191–200 estavam totalmente pendentes.** A versão de testes V7.81.1 possui agora 10 vídeos YouTube confirmados por hino, 7 faixas Spotify individuais + 3 buscas específicas claramente identificadas e 2 coletâneas YouTube Music temporizadas + 8 vídeos YouTube compartilhados com a interface de YouTube Music. Não há alegação de 30 gravações independentes.
+
+**Regra obrigatória de auditoria:** comparar o **número E título exatos no Hinário nº 5** antes de adicionar cada link; nunca substituir pelo número do volume de álbum, pela posição da faixa em um disco nem pelo número em Hinário nº 4 ou outra edição. Pesquisar todas as fontes prioritárias e alternativas aprovadas: Orquestra Sacra, Orquestra Sacra Paulista, CCB - Vozes do Campo, Orquestra Hymns, Antony Andrey. Fontes complementares só com correspondência número+título verificada e artista indicado. Caso Spotify sem ID, exibir `Pesquisar` em vez de `Indisponível` ou ID falso; YTM com vídeo compartilhado **não é faixa de catálogo verificada**. Ler [mapa detalhado com IDs](FONTES_EXTERNAS_191_A_200_REV10_1.md).
+
+**Estado real de publicação:** V7.81.1 é arquivo de teste **local para avaliação**, com 1–190/Coros 1–6 preservados e MP3 V4.4 intactos. Produção `index.html` e `sw.js` NÃO alterados; teste remoto GitHub ainda V7.80. Ainda testar visual/reprodução, Spotify buscas e cortes de coletâneas em celular e desktop; sem aprovação/promover produção.
+
+---
+
 # Estado vigente — REV10 (13/11/2026)
 
 Esta nota **prevalece sobre os estados históricos** descritos abaixo e **não apaga o dossiê REV09**.
