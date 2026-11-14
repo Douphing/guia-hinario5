@@ -1,3 +1,16 @@
+# Checklist antirregressão REV11.2 — V7.81.10
+- [x] Modal desktop com MP3 e metrônomo aberto ampliado até 1450px, duas colunas; Ocasiões/Apropriação lado a lado.
+- [x] Chromium com MP3 e JPG reais da carga: 1027×392, 1024×500, 1280×590, 1280×720 e 1600×900 **sem scroll interno do MP3**.
+- [x] 1027×392: antes rolagem 80px, depois 0px; miniatura da partitura e controles visíveis.
+- [x] Mobile 390×844 com mesmas posições e overflow da V7.81.9.
+- [x] Apenas CSS adicionado; 33 JS sem erros de sintaxe; nenhum dado musical/partitura/MP3/link alterado.
+- [ ] Testar no GitHub Pages/HTTPS com zoom real 100%/125%/150% e metrônomo aberto, inclusive duração longa e fim do áudio.
+- [ ] Conferir partitura ampliada, player externo YouTube/YouTube Music/Spotify, botões em linha, favoritos/registros e dispositivos Android/desktop.
+- [ ] Não publicar em `index.html` de produção sem aprovação explícita.
+Ver [REV11.2](MODAL_DESKTOP_SEM_ROLAGEM_REV11_2.md).
+
+---
+
 # Checklist REV11.1 — vínculos e apresentação 201–210
 - [x] HTML V7.81.9 mostra os botões Spotify/YouTube/YouTube Music sem subtítulos de canal e sem "Pesquisar"; mídia sem faixa válida tem botão desabilitado.
 - [x] Seis vídeos YouTube das fontes instrumentais, três IDs Spotify de fontes autorizadas, dois trechos candidatos da Vozes do Campo.
