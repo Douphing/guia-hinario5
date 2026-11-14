@@ -1,3 +1,13 @@
+## REV11.5 — 14/11/2026 — Hino 74 Orquestra V3 / V7.81.13 TESTE
+- Usuário relatou que a V2 ainda apresentava corte/reataque na fermata e precisava de mais graves, e esclareceu que andamento deve ser **um pouco acima da média**, não necessariamente o máximo.
+- Refiz **Hino 74 diretamente do MSCX**, ♩=**83 BPM** dentro de 72–88 (média 80), dividindo corretamente 1ª/2ª terminações (fermatas) e 3ª terminação/Final. A semibreve é sustentada sem edição de trechos de MP3: ~3,68s de arco contínuo e ~0,15s de respiro antes da nova estrofe. Tuba, contrabaixo e naipes graves reforçados.
+- Novo áudio 44,1kHz estéreo 256kbps, 166,37s, RMS ≈−17dBFS e pico ≈−3,9dBFS, sem saturação digital detectada. TimGM6mb continua síntese General MIDI; confirmação auditiva pendente.
+- **Teste V7.81.13** modifica só BPM do metrônomo 74 (84→83) nos objetos de mídia e implementa checkbox **MP3 acompanha BPM**, piloto somente 74. `playbackRate=BPM/83` com preservação de altura conforme navegador; desativação devolve velocidade original do player.
+- **Não confundir ligação de velocidade com fase exata dos cliques**. Nenhuma mudança em outros hinos, letras, mídias, partituras, controls/volume, `index.html` ou `sw.js`.
+- Teste Chromium em memória validou BPM77/83/85 e checkbox, sem JS errors; 34 scripts válidos. Reprodução real no HTTPS e aprovação musical ainda pendentes. [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
+
+---
+
 ## REV11.4 — 14/11/2026 — Hino 74 V2 a ♩ = 84 BPM (TESTE)
 - A indicação verdadeira da partitura MSCX é **♩ = 72–88 BPM**; a V1 usou 72, extremo mínimo, contrariando a preferência musical já definida de **andamentos na metade superior da faixa**. A V2 adota **84 BPM**.
 - Preservadas as duas fermatas expressivas, mais curtas (aprox. 3,57 s) e as demais notas/timbres por ajuste de tempo sem transposição. MP3 teste 164,08 s, comparado com V1 191,43 s.
