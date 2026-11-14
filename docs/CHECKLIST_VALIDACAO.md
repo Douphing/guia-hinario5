@@ -1,3 +1,13 @@
+# REV11.6 — Hino 74 BPM inicial 84
+- [x] Partitura Hino 74 min72 max88, valor inicial aprovado **84**, independentemente de média matemática80.
+- [x] Resumo do metrônomo, campo, slider e botão Padrão iniciam/restauram 84.
+- [x] Slider permite 72–88 e atualiza também indicação de playbackRate antes do MP3.
+- [x] MP3 V3 preservado e 34 scripts válidos; Chromium validou 84 inicial/reset, 88 após slider.
+- [ ] Validar taxa de áudio real, altura tonal e som no HTTPS; só publicar após aceite.
+[REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
+
+---
+
 # REV11.5 — Checklist Hino 74 / V7.81.13
 - [x] Lida partitura original: semínima 72–88; seleção **83 BPM** um pouco acima da média80.
 - [x] Audio V3 regenerado da partitura MSCX, sem cortes/crossfades, fermatas m16 1ª/2ª terminações sustentadas ~3,68s e respiração ~0,15s; 3ª terminação preservada.
