@@ -1,3 +1,8 @@
+# REV11.2 — V7.81.10: modal de desktop ampliado sem rolagem
+A nova versão local de TESTE V7.81.10 corrige a regressão de rolagem da V7.81.9. Ao abrir MP3 com metrônomo, desktop ganha modal até 1450px, cartões de Ocasiões/Apropriação em linha, controles sempre visíveis e miniatura da partitura sem corte. Celular inalterado. **33 scripts válidos; mudança apenas CSS.** Ver [REV11.2](MODAL_DESKTOP_SEM_ROLAGEM_REV11_2.md). Nenhum HTML do GitHub/produção foi atualizado por esta revisão documental.
+
+---
+
 # REV11.1 — V7.81.9 TESTE: botões sem pesquisas e sem nomes de canais
 Corrigida a carga 201–210: os três botões exibem somente Spotify / YouTube / YouTube Music e não abrem pesquisas nem páginas de canal. Há 6 vídeos YouTube, 3 IDs Spotify e 2 coletâneas Vozes do Campo candidatas; as 19 opções sem gravação individual comprovada ficam desabilitadas. 210 hinos, 6 coros e 33 scripts preservados; teste real de reprodução pendente. Ver [REV11.1](CORRECAO_MIDIAS_201_A_210_REV11_1.md). `index.html` não alterado.
 
