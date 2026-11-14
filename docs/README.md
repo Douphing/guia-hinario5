@@ -1,3 +1,8 @@
+# REV11.6 — Hino 74: padrão 84 BPM no metrônomo (V7.81.15 TESTE)
+Valor inicial e do botão Padrão do Hino 74 ajustado para **84 BPM**, faixa do slider **72–88**. A média matemática é 80, mas a preferência musical expressa é 84. Gravação V3 continua em 83 BPM, sincronizada proporcionalmente pelo player. HTML apenas local; produção intacta. [Detalhes REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
+
+---
+
 # REV11.5 — Hino 74 V3 Orquestra / HTML V7.81.13 TESTE (14/11/2026)
 Nova síntese do Hino 74 diretamente da partitura **83 BPM**, fermatas sustentadas sem emendas, graves de tuba/contrabaixo reforçados. **Piloto opcional `MP3 acompanha BPM`** na área de metrônomo do Hino 74: modifica a velocidade sem alterar os outros arquivos, tenta preservar o tom, não sincroniza exatamente os cliques. HTML de testes e MP3 separados para aprovação, sem publicação no GitHub; 34 scripts válidos. [Detalhes REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
 
