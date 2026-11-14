@@ -1,3 +1,16 @@
+# REV11.5 — Checklist Hino 74 / V7.81.13
+- [x] Lida partitura original: semínima 72–88; seleção **83 BPM** um pouco acima da média80.
+- [x] Audio V3 regenerado da partitura MSCX, sem cortes/crossfades, fermatas m16 1ª/2ª terminações sustentadas ~3,68s e respiração ~0,15s; 3ª terminação preservada.
+- [x] Tuba, contrabaixo, subgrave e tenor mais presentes, sem clipping detectado, duração ~2min46s.
+- [x] Piloto HTML só Hino 74: checkbox MP3 acompanha BPM, testes 77→0,93×, 83→1×, 85→1,02×, desligar→velocidade manual.
+- [x] 34 scripts válidos; dados LETRAS e MULTIMIDIA de 1–210/Coros preservados, exceto BPM 74 (84→83).
+- [ ] Testar audio real em celular/desktop HTTPS e confirmar sustain, timbre e articulação nos BPM 72, 77, 83, 85, 88.
+- [ ] Validar retomada de volume, mute, anterior/próximo/repetir/aleatório, partitura e layout sem rolagem.
+- [ ] Aprovação musical antes de substituir áudio de produção; HTML de produção só com autorização separada.
+Ver [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
+
+---
+
 # REV11.4 — testes do Hino 74 V2 84 BPM
 - [x] MSCX confirmado: **♩ = 72–88 BPM**; opção de TESTE 84 BPM (metade superior).
 - [x] MP3 V2 de 164,08s criado com transposição nominal zero, fermatas menores preservadas.
