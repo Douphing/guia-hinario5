@@ -1,3 +1,7 @@
+> **ATUALIZAÇÃO REV11.1:** a V7.81.9 corrige links de pesquisa e nomes de canal inseridos na V7.81.8. O mapa de fontes e estados vigente está em [CORRECAO_MIDIAS_201_A_210_REV11_1.md](CORRECAO_MIDIAS_201_A_210_REV11_1.md). Contagem atual: 6 vídeos YouTube, 3 IDs Spotify, 2 candidatos Vozes do Campo (canto ainda a conferir); 19 opções pendentes. Os três botões exibem só nomes das plataformas e ficam desabilitados sem faixa válida. **V7.81.8 abaixo é histórico, não o estado mais recente.**
+
+---
+
 # Continuidade REV11 — Hinos 201–210 / TESTE V7.81.8
 **13/11/2026 — carga preparada para avaliação, não aprovada para produção.**
 
