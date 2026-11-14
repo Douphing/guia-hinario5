@@ -1,3 +1,7 @@
+> **REV11.5 corrige o estado de teste anterior:** a V2 a 84 BPM não eliminou a emenda da fermata; a **V3** foi reconstruída da partitura em **83 BPM**, com acorde cadencial sem interrupções e graves reforçados. O novo HTML V7.81.13 permite, opcionalmente no Hino 74, o MP3 acompanhar o BPM escolhido no metrônomo. **Nenhum arquivo de produção foi substituído**. Detalhes em [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
+
+---
+
 # REV11.4 — Hino 74: andamento 84 BPM, fermatas ajustadas — V7.81.12 TESTE
 Data: 14/11/2026.
 
