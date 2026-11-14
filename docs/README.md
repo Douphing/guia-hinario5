@@ -1,3 +1,8 @@
+# REV11.1 — V7.81.9 TESTE: botões sem pesquisas e sem nomes de canais
+Corrigida a carga 201–210: os três botões exibem somente Spotify / YouTube / YouTube Music e não abrem pesquisas nem páginas de canal. Há 6 vídeos YouTube, 3 IDs Spotify e 2 coletâneas Vozes do Campo candidatas; as 19 opções sem gravação individual comprovada ficam desabilitadas. 210 hinos, 6 coros e 33 scripts preservados; teste real de reprodução pendente. Ver [REV11.1](CORRECAO_MIDIAS_201_A_210_REV11_1.md). `index.html` não alterado.
+
+---
+
 # REV11 — V7.81.8 TESTE: carga de Hinos 201–210
 Novos MP3 Orquestra V4.5, letras, 10 partituras e metrônomos. **210 hinos e 6 coros** no arquivo local de testes. Base 1–200 imutável, player V7.81.7 preservado, 33 scripts válidos. **Mídias externas ainda não totalmente verificadas; teste auditivo pendente**. Consultar [REV11](CARGA_HINOS_201_A_210_REV11.md). A documentação não publica o HTML de testes nem altera `index.html`.
 
