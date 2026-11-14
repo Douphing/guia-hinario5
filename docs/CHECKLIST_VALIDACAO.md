@@ -1,3 +1,16 @@
+# Checklist REV11.7 — V7.81.16 cabeçalho tonalidade + andamento
+- [x] Tonalidade e Andamento juntos no cabeçalho de cada metrônomo, com unidade de pulso correta.
+- [x] Hino 74 mostra 84 BPM inicialmente e após Padrão; slider 72–88, taxa do MP3 atualizada (88 → 1,06×).
+- [x] Hinos 205 (♩.) e 208 (𝅗𝅥) respeitam a indicação da partitura e seu BPM já cadastrado.
+- [x] Sem overflow do texto em 320/390px; CSS compacto preserva geometria de rolagem da V7.81.15, sem adicionar nova fila de botões.
+- [x] 35 scripts válidos, comparação de bytes da base comprovou alterações apenas de apresentação.
+- [ ] Conferir os modais em HTTPS com MP3 e metrônomo juntos, em desktop e celular.
+- [ ] Testar MP3 segue BPM, mute, volume, partitura, minimizar e comandos anteriores/próximos.
+- [ ] Obter aprovação antes de atualizar `index.html` produção.
+Ver [REV11.7](LAYOUT_TONALIDADE_ANDAMENTO_REV11_7.md).
+
+---
+
 # REV11.6 — Hino 74 BPM inicial 84
 - [x] Partitura Hino 74 min72 max88, valor inicial aprovado **84**, independentemente de média matemática80.
 - [x] Resumo do metrônomo, campo, slider e botão Padrão iniciam/restauram 84.
