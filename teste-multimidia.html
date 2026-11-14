@@ -12310,7 +12310,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
  if(kind==='instrumental'){
    const h=window.__gaCurrentHymn||{};
-   const total=(media&&media.modoReproducao==='partitura')?1:calcularRepeticoesAudio(h,media);
+   const total=(media&&String(media.modoReproducao||'').startsWith('partitura'))?1:calcularRepeticoesAudio(h,media);
    let ciclo=1;
 
    const status=document.createElement('div');
@@ -12318,7 +12318,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
    const atualizarStatus=(done=false)=>{
      if(String(h.num).startsWith('Coro ')){
        status.innerHTML='<span>Coro</span><strong>'+(done?'Execução concluída':'Execução única')+'</strong>';
-     }else if(media && media.modoReproducao==='partitura'){
+     }else if(media && String(media.modoReproducao||'').startsWith('partitura')){
        status.innerHTML='<span>Reprodução conforme a partitura</span><strong>'+(done?'Execução completa concluída':'MP3 único · execução completa do hino')+'</strong>';
      }else{
        status.innerHTML='<span>Reprodução conforme as estrofes</span><strong>'+(done?('Concluído · '+total+' de '+total):('Estrofe '+ciclo+' de '+total))+'</strong>';
@@ -15557,7 +15557,7 @@ body:not(.index-mode):not(.welcome-mode){
 })();
 </script>
 
-<script id="v751-reproducao-continua">
+<script id="v751-reproducao-continua" data-revision="v7.81.11-sequencia-circular">
 (function(){
  'use strict';
  const st={mode:'next',kind:null,audio:null,iframe:null,end:0,player:null,
@@ -15705,8 +15705,14 @@ body:not(.index-mode):not(.welcome-mode){
    if(st.mode==='random')return possible[Math.floor(Math.random()*possible.length)];
    const from=keys.indexOf(value);
    if(from<0)return null;
-   if(st.mode==='previous')return keys.slice(0,from).reverse().find(k=>eligible(kind,k))||null;
-   return keys.slice(from+1).find(k=>eligible(kind,k))||null;
+   // V7.81.11: a sequência é circular. A última mídia elegível volta
+   // à primeira (210 → 1, Coro 6 → Coro 1); Anterior também contorna
+   // o início. Ignorar hinos sem faixa nesta mesma plataforma.
+   // A opção "Parar" permanece sem navegação; "Repetir" conserva o modal.
+   const ordered=st.mode==='previous'
+     ? keys.slice(0,from).reverse().concat(keys.slice(from+1).reverse())
+     : keys.slice(from+1).concat(keys.slice(0,from));
+   return ordered.find(k=>eligible(kind,k))||null;
  }
  function finish(kind,h){
    if(st.mode==='stop'||st.complete||kind!==st.kind)return;
@@ -15887,6 +15893,13 @@ body:not(.index-mode):not(.welcome-mode){
    }
  },true);
  window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,retreatNow,hasPrevious,stopNow,closeMediaNow,playPauseNow,
+   // V7.81.11 — chave pública somente para auditoria e regressão.
+   // A navegação real usa a função privada getNext e preserva st.mode.
+   getNextForTest:(kind,key,mode)=>{
+     const old=st.mode;
+     try{st.mode=mode||st.mode;return getNext(kind,{num:key});}
+     finally{st.mode=old;}
+   },
    // Apenas para verificação local da implementação; não altera o projeto.
    getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe,volume:window.GuiaVolumePersistente?.get()??null})};
 })();
