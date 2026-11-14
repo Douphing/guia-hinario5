@@ -1,3 +1,7 @@
+> **REV11.3 — preservação do layout:** a V7.81.11 altera só dois scripts de sequência. O CSS da V7.81.10 foi preservado integralmente: modal desktop sem rolagem para MP3, dez botões de reprodução em uma única linha e miniatura da partitura visível. Ver [SEQUENCIA_ENTRE_MODAIS_REV11_3.md](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
+
+---
+
 # V7.81.10 / REV11.2 — modal desktop ampliado e sem rolagem do MP3
 **13/11/2026 — DOCUMENTAÇÃO; HTML preparado separadamente para TESTES.**
 
