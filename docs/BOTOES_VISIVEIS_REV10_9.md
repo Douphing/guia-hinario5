@@ -1,3 +1,7 @@
+> **Complemento REV11.2:** botões em linha única continuam obrigatórios. A V7.81.10 corrige regressão de rolagem do desktop com MP3, ampliando modal até 1450px, cartões lado a lado e sem esconder partitura ou botões. Não alterar mobile. [REV11.2](MODAL_DESKTOP_SEM_ROLAGEM_REV11_2.md).
+
+---
+
 # REV10.9 — V7.81.7: controles sempre visíveis em uma linha
 **13/11/2026 — alteração pontual na versão local de TESTES.** A V7.81.6 mostrou o botão expansor "Sequência" e, ao abrir, os comandos ficavam distribuídos em duas linhas. O usuário rejeitou esse resultado e aprovou a orientação **"prefiro com os botões à mostra"**. **Regra vigente: todos os dez comandos visíveis numa única linha compacta, sem disclosure, expansor, menu ou segunda fila.**
 
