@@ -1,3 +1,13 @@
+## REV11.3 — 13/11/2026 — V7.81.11 TESTE: modos entre modais e sequência circular
+- Corrigido `getNext`: após Hino 210, **Próximo abre o Hino 1**, respeitando a mesma mídia; Anterior no Hino 1 retorna ao 210. Coros também contornam fim/início.
+- **Repetir** reinicia a mesma mídia no mesmo modal; **Aleatório** escolhe outro hino elegível; **Parar** não navega. O controlador preserva a plataforma e o volume.
+- Hino **21** (`partitura-especial`) não exige tocar o MP3 inteiro por estrofe antes de avançar.
+- YouTube/YTM obedecem ao término sinalizado pela API e ao fim de trecho de coletânea, com ressalva de bloqueios de autoplay. Spotify: anterior/próximo manuais, sequência automática não garantida no iframe atual.
+- **Validação:** 23/23 testes de navegação e 10/10 testes YT/YTM com API simulada; Hino 21 testado, 33 scripts válidos, sem erros JS. Testes de plataformas reais ainda pendentes.
+- **Mudanças restritas a 2 scripts**; nenhum dado musical, CSS, partitura, MP3, metrônomo, favorito, registro, mídia externa, `index.html` ou `sw.js` alterado. Versão local de TESTE ainda não homologada. [Detalhes REV11.3](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
+
+---
+
 ## REV11.2 — 13/11/2026 — V7.81.10 TESTE: corrigir rolagem do modal desktop
 - Identificada regressão na V7.81.9: `overflow-y:auto` no desktop permitia rolagem interna, deslocando botões e ocultando parte da partitura. Havia espaço horizontal suficiente para melhorar a distribuição.
 - **CSS aditivo somente**: modal de mídias até 1450px no desktop, duas colunas mais largas, Ocasiões/Apropriação lado a lado, painel de metrônomo e partitura preservados, rolagem do MP3 eliminada; celular e vídeo flutuante intocados.
