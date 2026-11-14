@@ -1,3 +1,8 @@
+# REGRA VISUAL REV11.7 — informações musicais organizadas
+Última versão HTML de TESTE preparada: **V7.81.16**, derivada da V7.81.15. Mostrar **Tonalidade e Andamento juntos, lado a lado, no cabeçalho compacto do metrônomo**. Exibir BPM cadastrado de cada hino na figura da sua pulsação, sem números arbitrários. No Hino 74 manter **84 BPM ao iniciar/Padrão** (faixa 72–88; média matemática80 é diferente da escolha musical84). Preservar dentro do metrônomo os ajustes de BPM/pulso/volume e checkbox do piloto `MP3 acompanha o andamento` somente do Hino74; velocidade MP3 de referência 83. Não adicionar barras redundantes, nem perder partitura, dez botões visíveis, desktop sem rolagem adicional, links, volume, registros, favoritos, coros ou 210 hinos. **Nenhum MP3, letra ou dado do usuário é alterado por essa revisão.** Validar desktop/celular e reprodução real antes de aprovar. Não publicar `index.html` produção sem autorização; consultar [REV11.7](LAYOUT_TONALIDADE_ANDAMENTO_REV11_7.md).
+
+---
+
 # Regra explícita REV11.6 — início do Hino 74 é 84 BPM, NÃO 80
 Se construir a partir do HTML local V7.81.15, **Hino 74 deve mostrar 84 BPM ao abrir e ao tocar ↺ Padrão**, mantendo min72 max88 e slider passo1. Embora o ponto médio matemático seja 80, a escolha musical aprovada pelo usuário é **84**; não substituir por uma média automática nem 83 da gravação. **MP3 físico V3 mantém andamento de referência 83 BPM** e, se vínculo ativado, `playbackRate=BPM/83` (em 84 → 1,012×), preservando a altura quando disponível. UI deve atualizar taxa indicada mesmo sem MP3 aberto. Todas as outras notas, hinos, links, partituras, coros, controles, CSS e produção intocados; aprovação necessária para publicação. Ver [REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
 
