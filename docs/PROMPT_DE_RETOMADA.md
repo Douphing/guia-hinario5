@@ -1,3 +1,8 @@
+# Regra explícita REV11.6 — início do Hino 74 é 84 BPM, NÃO 80
+Se construir a partir do HTML local V7.81.15, **Hino 74 deve mostrar 84 BPM ao abrir e ao tocar ↺ Padrão**, mantendo min72 max88 e slider passo1. Embora o ponto médio matemático seja 80, a escolha musical aprovada pelo usuário é **84**; não substituir por uma média automática nem 83 da gravação. **MP3 físico V3 mantém andamento de referência 83 BPM** e, se vínculo ativado, `playbackRate=BPM/83` (em 84 → 1,012×), preservando a altura quando disponível. UI deve atualizar taxa indicada mesmo sem MP3 aberto. Todas as outras notas, hinos, links, partituras, coros, controles, CSS e produção intocados; aprovação necessária para publicação. Ver [REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
+
+---
+
 # NOVA REGRA REV11.5 — Fermata orgânica, graves e BPM→MP3
 Para Hino 74, teste V3 de 83 BPM na faixa ♩72–88, **acima da média80 e abaixo de88**. Não acelerar MP3 cortado como V1/V2. Em correções de fermata, **recriar notas da partitura**, sustentando integralmente a semibreve e prolongamento expressivo, liberando naturalmente antes do próximo ataque sem emendas ou reataque durante o acorde. Reforçar graves com tuba/contrabaixo/subgrave e voz de tenor audível, evitando distorção. HTML TESTE V7.81.13 incorpora checkbox **MP3 acompanha BPM** somente para Hino 74, com `playbackRate=BPM/83` e `preservesPitch` quando disponível. Não chamar isso de sincronização exata dos cliques. Preservar fonte individual/links já aprovados, MP3/partituras/letras 1–210/6 coros, volume/mute, botões em linha única, modal desktop amplo, Spotify/YouTube/YTM e produção. Não promover áudio ou HTML sem teste auditivo e aprovação. Ver [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
 
