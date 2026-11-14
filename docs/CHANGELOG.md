@@ -1,3 +1,11 @@
+## REV11.4 — 14/11/2026 — Hino 74 V2 a ♩ = 84 BPM (TESTE)
+- A indicação verdadeira da partitura MSCX é **♩ = 72–88 BPM**; a V1 usou 72, extremo mínimo, contrariando a preferência musical já definida de **andamentos na metade superior da faixa**. A V2 adota **84 BPM**.
+- Preservadas as duas fermatas expressivas, mais curtas (aprox. 3,57 s) e as demais notas/timbres por ajuste de tempo sem transposição. MP3 teste 164,08 s, comparado com V1 191,43 s.
+- Preparado HTML V7.81.12 TESTE mudando somente `metronomo.bpm` do Hino 74 de 80 para 84, sem alterar outros hinos, letras, mídias ou layout; 33 scripts válidos. Áudio e HTML ainda exigem aprovação auditiva; não publicados em produção.
+- **Regra permanente:** para cada hino, respeitar a unidade de pulso e escolher tempo entre a média e a máxima da faixa impressa, nunca o mínimo automaticamente. Ver [REV11.4](ANDAMENTO_HINO_74_REV11_4.md).
+
+---
+
 ## REV11.3 — 13/11/2026 — V7.81.11 TESTE: modos entre modais e sequência circular
 - Corrigido `getNext`: após Hino 210, **Próximo abre o Hino 1**, respeitando a mesma mídia; Anterior no Hino 1 retorna ao 210. Coros também contornam fim/início.
 - **Repetir** reinicia a mesma mídia no mesmo modal; **Aleatório** escolhe outro hino elegível; **Parar** não navega. O controlador preserva a plataforma e o volume.
