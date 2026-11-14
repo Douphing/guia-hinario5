@@ -1,3 +1,12 @@
+## REV11.7 — 14/11/2026 — V7.81.16 TESTE: cabeçalho musical organizado
+- Aplicado o layout aprovado: **Tonalidade** ao lado de **Andamento** no cabeçalho do metrônomo, com indicação clara do BPM já cadastrado para cada hino e unidade de pulsação preservada (♩, ♪, ♩., 𝅗𝅥).
+- Hino 74 inicia em **84 BPM**, slider 72–88, reset/Padrão 84; MP3 de referência V3 em 83 BPM continua com ajuste de velocidade opcional `playbackRate=BPM/83`.
+- Mantidos controles BPM/pulso/volume e a opção de sincronização *dentro* do metrônomo, sem painel informativo duplicado.
+- Mudança restrita à apresentação: um CSS, um script e comentário aditivos; todos os dados musicais e recursos anteriores preservados. **35 scripts JS sem erros**, tela testada em 320/390px e vários tamanhos desktop, sem overflow do cabeçalho.
+- A nova versão é **HTML local para testes**; reprodução real HTTPS continua pendente. `index.html` e `sw.js` de produção não alterados. [Regras REV11.7](LAYOUT_TONALIDADE_ANDAMENTO_REV11_7.md).
+
+---
+
 ## REV11.6 — 14/11/2026 — V7.81.15 TESTE: início e Padrão em 84 BPM
 - A V7.81.14 recalculava o padrão como ponto médio matemático 80 BPM. O usuário definiu expressamente o início do Hino 74 em **84 BPM**; corrigidos resumo, campo, slider e ação ↺ Padrão para este valor, mantendo faixa 72–88.
 - **80 é a média matemática, 84 é a preferência de estudo acima da média**, não uma nova média calculada.
