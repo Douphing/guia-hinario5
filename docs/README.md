@@ -1,3 +1,8 @@
+# REV11.4 — Hino 74 em 84 BPM (V2 TESTE)
+A partitura informa **♩ = 72–88**: 72 é o mínimo; a preferência aprovada é andamento **da média para a máxima**. O MP3 Hino 74 V2 foi preparado a **84 BPM**, com fermatas menores; HTML V7.81.12 de teste alinha o metrônomo do hino. Não publicados em produção. Ver [regras e auditoria](ANDAMENTO_HINO_74_REV11_4.md).
+
+---
+
 # REV11.3 — V7.81.11 TESTE: sequência entre modais
 Corrigida a parada indevida ao terminar o Hino 210: **Próximo 210→1**, Anterior 1→210, Repetir no mesmo modal, Aleatório em outro hino, Parar sem mudança; Coros circulares. MP3 `partitura-especial` (Hino 21) toca uma única vez. 33 scripts válidos; 23/23 testes do controlador e 10/10 simulados YouTube/YTM. Spotify ainda manual. Sem alterar layout, letras, links ou produção. Ver [REV11.3](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
 
