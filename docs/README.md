@@ -1,3 +1,8 @@
+# REV11.7 — V7.81.16: tonalidade e andamento lado a lado (TESTE)
+A interface do metrônomo passa a mostrar **Tonalidade** e **Andamento** juntos no cabeçalho, usando o BPM e a unidade musical existentes de cada hino. Hino 74 mantém padrão **84 BPM** (acima do ponto médio matemático 80 de 72–88) e o piloto `MP3 acompanha o andamento`. Alteração aditiva apenas de apresentação, **35 scripts válidos**, dados 1–210/Coros e mídia preservados. [Documento REV11.7](LAYOUT_TONALIDADE_ANDAMENTO_REV11_7.md). HTML de produção intacto.
+
+---
+
 # REV11.6 — Hino 74: padrão 84 BPM no metrônomo (V7.81.15 TESTE)
 Valor inicial e do botão Padrão do Hino 74 ajustado para **84 BPM**, faixa do slider **72–88**. A média matemática é 80, mas a preferência musical expressa é 84. Gravação V3 continua em 83 BPM, sincronizada proporcionalmente pelo player. HTML apenas local; produção intacta. [Detalhes REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
 
