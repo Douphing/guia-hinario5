@@ -1,3 +1,8 @@
+# Estado REV11.6 — Hino 74 V7.81.15 TESTE, padrão 84 BPM
+Na V7.81.14 o metrônomo do Hino 74 passou para a média matemática 80 BPM, mas o usuário quer **84 BPM como valor inicial/padrão**. Corrigida **V7.81.15**: Hino 74 abre/reset em **84 BPM**, slider 72–88 passo1, MP3 V3 permanece gravado a 83 BPM com `playbackRate=84/83` enquanto vinculado. Mostrar o valor selecionado também antes de abrir áudio. Não chamar 84 de média aritmética; é **escolha musical acima da média 80**. Outros hinos, letras, fontes, player, partituras, modal desktop e produção protegidos. 34 scripts válidos, teste de estado Chromium passou; som real pendente. [Detalhes](HINO74_BPM_INICIAL_84_REV11_6.md).
+
+---
+
 # Estado REV11.5 — Hino 74 V3, teste de metrônomo vinculado a MP3
 **Último pacote de teste musical proposto:** áudio Hino 74 **V3 a 83 BPM** e HTML **V7.81.13**. O áudio anterior V1/V2 editava/esticava MP3 e deixou emendas de fermata; esta versão refaz pelo MSCX (semibreves sustentadas ~3,68s, fim natural e respiro ~0,15s) e reforça tuba/contrabaixos/tenor. Andamento **na metade superior da faixa, um pouco além da média**, sem ir automaticamente ao teto (MSCX H74 ♩72–88, média80, V3 83). **Metrônomo e MP3 agora podem ter andamento vinculado**, por checkbox no painel do Hino 74, com `playbackRate=BPM/83` e tentativa de preservação de pitch. Só sincroniza velocidade, não a fase dos cliques; YouTube/YTM/Spotify e demais hinos não foram alterados. 210 hinos, 6 coros, letras, links, partituras, controles em linha, desktop sem scroll e PWA preservados. Teste Chromium de estado aprovado; MP3 real no navegador e musicalidade exigem avaliação. HTML V7.81.13 e MP3 V3 **não foram publicados**; `index.html` protegido. Detalhes: [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
 
