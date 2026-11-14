@@ -1,3 +1,8 @@
+# REV11.5 — Hino 74 V3 Orquestra / HTML V7.81.13 TESTE (14/11/2026)
+Nova síntese do Hino 74 diretamente da partitura **83 BPM**, fermatas sustentadas sem emendas, graves de tuba/contrabaixo reforçados. **Piloto opcional `MP3 acompanha BPM`** na área de metrônomo do Hino 74: modifica a velocidade sem alterar os outros arquivos, tenta preservar o tom, não sincroniza exatamente os cliques. HTML de testes e MP3 separados para aprovação, sem publicação no GitHub; 34 scripts válidos. [Detalhes REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
+
+---
+
 # REV11.4 — Hino 74 em 84 BPM (V2 TESTE)
 A partitura informa **♩ = 72–88**: 72 é o mínimo; a preferência aprovada é andamento **da média para a máxima**. O MP3 Hino 74 V2 foi preparado a **84 BPM**, com fermatas menores; HTML V7.81.12 de teste alinha o metrônomo do hino. Não publicados em produção. Ver [regras e auditoria](ANDAMENTO_HINO_74_REV11_4.md).
 
