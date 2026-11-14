@@ -1,3 +1,8 @@
+# REV11.3 — V7.81.11 TESTE: sequência entre modais
+Corrigida a parada indevida ao terminar o Hino 210: **Próximo 210→1**, Anterior 1→210, Repetir no mesmo modal, Aleatório em outro hino, Parar sem mudança; Coros circulares. MP3 `partitura-especial` (Hino 21) toca uma única vez. 33 scripts válidos; 23/23 testes do controlador e 10/10 simulados YouTube/YTM. Spotify ainda manual. Sem alterar layout, letras, links ou produção. Ver [REV11.3](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
+
+---
+
 # REV11.2 — V7.81.10: modal de desktop ampliado sem rolagem
 A nova versão local de TESTE V7.81.10 corrige a regressão de rolagem da V7.81.9. Ao abrir MP3 com metrônomo, desktop ganha modal até 1450px, cartões de Ocasiões/Apropriação em linha, controles sempre visíveis e miniatura da partitura sem corte. Celular inalterado. **33 scripts válidos; mudança apenas CSS.** Ver [REV11.2](MODAL_DESKTOP_SEM_ROLAGEM_REV11_2.md). Nenhum HTML do GitHub/produção foi atualizado por esta revisão documental.
 
