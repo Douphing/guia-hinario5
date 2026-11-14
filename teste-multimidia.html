@@ -1,3 +1,4 @@
+<!-- V7.81.13 TESTE: Hino 74 Orquestra V3 83 BPM, fermatas sem cortes, graves reforçados e MP3 acompanha BPM opcional; produção intacta. -->
 <!-- V7.81.9 TESTE: links individuais confirmados de 201–210, três rótulos fixos sem buscas/nomes de canais; ausência de faixa não abre busca ou catálogo. Hinos 1–200 inalterados. -->
 <!-- V7.81.8 TESTE — carga 201-210. Player V7.81.7 preservado, MP3 Orquestra V4.5, novas letras, partituras e metronomos; mídias externas não verificadas usam busca declarada. Produção intacta. -->
 <!-- V7.81.7 TESTE: controles de reprodução e sequência SEMPRE visíveis em uma única linha compacta; MP3 nativo e masterização V7.81.6 preservados, produção intacta. -->
@@ -4042,7 +4043,7 @@ const MULTIMIDIA={
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=b-AQL9MZA0c&t=596s",
   fonteExterna:"YouTube Music: CCB - Vozes do Campo",
   metronomo:{
-    bpm:80,
+    bpm:83,
     min:72,
     max:88,
     unidade:"semínima",
@@ -12367,10 +12368,14 @@ function loadHymnMedia(kind,media,button,automatico=false){
    a.addEventListener('ratechange',()=>{
      const value=Number(a.playbackRate);
      if(!Number.isFinite(value)||value<.5||value>3)return;
+      // REV11.5: ajuste ligado ao BPM do Hino 74 não deve substituir a velocidade manual persistente.
+      if(window.GuiaMetronomeMp3Sync?.isLinked(h.num))return;
      window.__guiaMp3Speed=value;
      try{localStorage.setItem(SPEED_KEY,String(value))}catch(e){}
    });
    novoAudio=a;
+   // Sincronização opcional e reversível entre o BPM da partitura e a velocidade do MP3.
+   window.GuiaMetronomeMp3Sync?.attach(a,h.num);
    au.appendChild(status);
    a.addEventListener('error',()=>{
      status.hidden=false; // informar apenas erro real de áudio, sem faixa informativa permanente
@@ -17437,4 +17442,76 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   }
 }
 </style>
+<style id="v78113-hino74-metro-mp3-sync">
+/* Somente Hino 74 em TESTES: pequeno checkbox, sem nova faixa no modal. */
+#hymnDetail .hd-mp3-bpm-sync{display:flex;align-items:center;gap:5px;min-height:21px;
+ font:600 11px/1.25 Arial,sans-serif;color:#374b5c;cursor:pointer;margin:0 0 2px;padding:2px 0;}
+#hymnDetail .hd-mp3-bpm-sync input{width:14px;height:14px;accent-color:#b18438;cursor:pointer;flex:0 0 14px;}
+#hymnDetail .hd-mp3-bpm-sync small{margin-left:auto;font-size:10px;font-weight:500;color:#6a7783;white-space:nowrap;}
+@media (max-width:470px){#hymnDetail .hd-mp3-bpm-sync{font-size:10px;gap:4px;}}
+</style>
+<script id="v78113-hino74-metro-mp3-sync">
+(function(){
+  'use strict';
+  const HINO='74', BASE_BPM=83;
+  let linked=false, bpm=BASE_BPM, audio=null, originalRate=1;
+  const getHino=()=>String(window.__gaCurrentHymn?.num||'');
+  const rateDisplay=()=>document.getElementById('hdMp3BpmRate');
+  function apply(){
+    if(!audio || getHino()!==HINO || !audio.isConnected)return;
+    const target=linked ? Math.max(0.5,Math.min(2,bpm/BASE_BPM)) : originalRate;
+    // Chrome, Firefox e Safari modernos preservam o tom durante playbackRate;
+    // quando a plataforma não oferece essa propriedade, o efeito pode variar.
+    try{if('preservesPitch' in audio)audio.preservesPitch=true;}catch(e){}
+    try{if('webkitPreservesPitch' in audio)audio.webkitPreservesPitch=true;}catch(e){}
+    if(Math.abs(audio.playbackRate-target)>0.0005)audio.playbackRate=target;
+    const info=rateDisplay();if(info)info.textContent=linked ? `${bpm} BPM · ${target.toFixed(2).replace('.',',')}×` : 'velocidade livre';
+  }
+  window.GuiaMetronomeMp3Sync={
+    isLinked(num){return getHino()===HINO && String(num)===HINO && linked;},
+    attach(element,num){
+      if(String(num)!==HINO){audio=null;return;}
+      audio=element;
+      originalRate=Number(window.__guiaMp3Speed)||1;
+      if(!Number.isFinite(originalRate)||originalRate<0.5||originalRate>3)originalRate=1;
+      try{const s=Number(localStorage.getItem('guia-hinario5-velocidade-mp3-v1'));
+        if(Number.isFinite(s)&&s>=0.5&&s<=3)originalRate=s;}catch(e){}
+      apply();
+    }
+  };
+  const previousInit=window.initHymnMetronomeUI;
+  window.initHymnMetronomeUI=function(cfg){
+    linked=getHino()===HINO;
+    bpm=Math.round(Number(cfg?.bpm)||BASE_BPM);
+    audio=null;
+    if(typeof previousInit==='function')previousInit.apply(this,arguments);
+    if(getHino()!==HINO)return;
+    const box=document.querySelector('#hdMetronomePanel .hd-v728-tertiary');
+    if(!box)return;
+    // O ajuste fica no painel existente, sem criar controles duplicados na mídia.
+    const label=document.createElement('label');label.className='hd-mp3-bpm-sync';
+    label.innerHTML='<input id="hdSyncMp3Bpm" type="checkbox" checked aria-label="MP3 segue andamento do metrônomo">'+
+      '<span>MP3 acompanha BPM</span><small id="hdMp3BpmRate">83 BPM · 1,00×</small>';
+    box.prepend(label);
+    label.querySelector('input').addEventListener('change',function(){
+      linked=this.checked;
+      apply();
+    });
+    const update=()=>{
+      if(getHino()!==HINO)return;
+      const value=Number(document.getElementById('hdMetronomeSummaryBpm')?.textContent);
+      if(Number.isFinite(value)&&value>=Number(cfg.min)&&value<=Number(cfg.max))bpm=value;
+      apply();
+    };
+    // Os handlers antigos rodam primeiro. No próximo quadro, ler o BPM já atualizado.
+    ['hdMetroMinus','hdMetroPlus','hdMetroReset'].forEach(id=>{
+      document.getElementById(id)?.addEventListener('click',()=>requestAnimationFrame(update));
+    });
+    const input=document.getElementById('hdMetroBpmInput');
+    input?.addEventListener('change',()=>requestAnimationFrame(update));
+    input?.addEventListener('keydown',e=>{if(e.key==='Enter')requestAnimationFrame(update);});
+    update();
+  };
+})();
+</script>
 </body></html>
