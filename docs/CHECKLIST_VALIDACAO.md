@@ -1,3 +1,14 @@
+# REV11.4 — testes do Hino 74 V2 84 BPM
+- [x] MSCX confirmado: **♩ = 72–88 BPM**; opção de TESTE 84 BPM (metade superior).
+- [x] MP3 V2 de 164,08s criado com transposição nominal zero, fermatas menores preservadas.
+- [x] Metrônomo do Hino 74 na V7.81.12 TESTE alterado 80→84 BPM; 33 scripts válidos; sem alteração de outros dados.
+- [ ] Aprovação auditiva de fermatas, fraseado e ganho em dispositivo real.
+- [ ] Testar HTML + MP3 juntos em ambiente de testes, após backup.
+- [ ] Não substituir index.html de produção sem aprovação.
+**Norma permanente:** andamento da faixa média→máxima da partitura na unidade correta. Ver [REV11.4](ANDAMENTO_HINO_74_REV11_4.md).
+
+---
+
 # Checklist REV11.3 — sequência de mídia V7.81.11
 - [x] Próximo MP3 210→1; Anterior 1→210; coros 6→1.
 - [x] MP3 Repetir, Parar, Aleatório testados; Hino 21 com `partitura-especial` executado uma vez antes de avançar.
