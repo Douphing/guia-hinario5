@@ -1,3 +1,12 @@
+## REV11.2 — 13/11/2026 — V7.81.10 TESTE: corrigir rolagem do modal desktop
+- Identificada regressão na V7.81.9: `overflow-y:auto` no desktop permitia rolagem interna, deslocando botões e ocultando parte da partitura. Havia espaço horizontal suficiente para melhorar a distribuição.
+- **CSS aditivo somente**: modal de mídias até 1450px no desktop, duas colunas mais largas, Ocasiões/Apropriação lado a lado, painel de metrônomo e partitura preservados, rolagem do MP3 eliminada; celular e vídeo flutuante intocados.
+- **Teste com MP3/partitura reais em Chromium:** 1027×392 caiu de 80px de conteúdo rolável para zero; 1024×500, 1280×590, 1280×720 e 1600×900 sem rolagem no MP3; mobile 390×844 idêntico na geometria.
+- **33 scripts válidos e arquivo HTML V7.81.9 original idêntico byte a byte após retirar o novo CSS.** Nenhum hino 1–210, coro, MP3, partitura, letra, fonte, metrônomo, botão, registro, favorito ou produção alterado.
+- V7.81.10 entregue **somente como pacote de TESTE**, sem upload do HTML no GitHub; validar no Windows/Android e zoom 125%/150% antes de aprovação. [Documento REV11.2](MODAL_DESKTOP_SEM_ROLAGEM_REV11_2.md).
+
+---
+
 ## REV11.1 — 13/11/2026 — V7.81.9 TESTE: botões de mídia 201–210 sem links de pesquisa
 - A V7.81.8 apresentava pesquisas e subtítulos de canais nos botões; V7.81.9 mantém somente as marcas **Spotify, YouTube e YouTube Music**.
 - Removidos links de buscas e canais genéricos em 201–210; botões sem faixa adequada permanecem **desabilitados** em vez de associar música errada.
