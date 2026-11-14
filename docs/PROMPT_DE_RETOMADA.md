@@ -1,3 +1,8 @@
+# CORREÇÃO DE ANDAMENTO REV11.4 — Hino 74 / regra permanente
+A partitura MSCX do Hino 74 marca **♩ = 72–88 BPM**. A escolha **72 BPM** da V1 era o mínimo e não segue a preferência aprovada. Versão local V2 de TESTE: **84 BPM**, duas fermatas corrigidas com sustain aproximadamente 3,57s; HTML de teste **V7.81.12** altera só metronomo.bpm do Hino 74 de 80 para 84. Não publicar sem aprovação. **Para TODOS os hinos, o andamento deve ficar entre o ponto médio e o máximo da faixa**, respeitando a figura do pulso e a composição; nunca escolher a mínima por padrão. Preservar origem, dados, controles, volume, letras, modalidades e `index.html`. Ver [REV11.4](ANDAMENTO_HINO_74_REV11_4.md).
+
+---
+
 # Regra obrigatória REV11.3 — modo de término e próximo modal
 A base de testes mais recente preparada é **V7.81.11**. A V7.81.10 não circulava no fim (Hino 210 → sequência encerrada); agora **Próximo percorre hinos disponíveis na mídia e retorna ao primeiro**, Anterior retorna ao último, Repetir permanece no mesmo modal, Aleatório escolhe outro, Parar não abre outro. Cuidar dos Coros 1–6 separadamente. **Um MP3 `partitura` ou `partitura-especial` já é a execução completa, não repetir por estrofes**. Validar modo em MP3, YouTube/YTM por evento da API e trechos de coletâneas, preservando volume; autoplay real pode exigir toque. Spotify usa navegação **manual**, sem sequência automática garantida. Preservar modal desktop sem rolagem, dez controles visíveis em linha, fontes autorizadas, Hinos 1–210, letras, partituras, MP3, metrônomo, registros e `index.html`. Testar Hino 210→1 e Repetir/Aleatório no navegador real antes do aceite. Ver [REV11.3](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
 
