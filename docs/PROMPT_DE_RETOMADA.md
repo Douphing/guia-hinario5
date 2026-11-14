@@ -1,3 +1,8 @@
+# NOVA REGRA REV11.5 — Fermata orgânica, graves e BPM→MP3
+Para Hino 74, teste V3 de 83 BPM na faixa ♩72–88, **acima da média80 e abaixo de88**. Não acelerar MP3 cortado como V1/V2. Em correções de fermata, **recriar notas da partitura**, sustentando integralmente a semibreve e prolongamento expressivo, liberando naturalmente antes do próximo ataque sem emendas ou reataque durante o acorde. Reforçar graves com tuba/contrabaixo/subgrave e voz de tenor audível, evitando distorção. HTML TESTE V7.81.13 incorpora checkbox **MP3 acompanha BPM** somente para Hino 74, com `playbackRate=BPM/83` e `preservesPitch` quando disponível. Não chamar isso de sincronização exata dos cliques. Preservar fonte individual/links já aprovados, MP3/partituras/letras 1–210/6 coros, volume/mute, botões em linha única, modal desktop amplo, Spotify/YouTube/YTM e produção. Não promover áudio ou HTML sem teste auditivo e aprovação. Ver [REV11.5](HINO74_ORQUESTRA_SINCRONIA_REV11_5.md).
+
+---
+
 # CORREÇÃO DE ANDAMENTO REV11.4 — Hino 74 / regra permanente
 A partitura MSCX do Hino 74 marca **♩ = 72–88 BPM**. A escolha **72 BPM** da V1 era o mínimo e não segue a preferência aprovada. Versão local V2 de TESTE: **84 BPM**, duas fermatas corrigidas com sustain aproximadamente 3,57s; HTML de teste **V7.81.12** altera só metronomo.bpm do Hino 74 de 80 para 84. Não publicar sem aprovação. **Para TODOS os hinos, o andamento deve ficar entre o ponto médio e o máximo da faixa**, respeitando a figura do pulso e a composição; nunca escolher a mínima por padrão. Preservar origem, dados, controles, volume, letras, modalidades e `index.html`. Ver [REV11.4](ANDAMENTO_HINO_74_REV11_4.md).
 
