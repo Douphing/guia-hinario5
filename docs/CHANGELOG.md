@@ -1,3 +1,12 @@
+## REV11.1 — 13/11/2026 — V7.81.9 TESTE: botões de mídia 201–210 sem links de pesquisa
+- A V7.81.8 apresentava pesquisas e subtítulos de canais nos botões; V7.81.9 mantém somente as marcas **Spotify, YouTube e YouTube Music**.
+- Removidos links de buscas e canais genéricos em 201–210; botões sem faixa adequada permanecem **desabilitados** em vez de associar música errada.
+- Incluídos 6 vídeos instrumentais das fontes aprovadas (201, 204, 205, 207, 208, 209), 3 IDs individuais do Spotify Orquestra Sacra (205, 206, 208; os dois primeiros obtidos de catálogo de terceiros) e 2 trechos de coletânea do Vozes do Campo (201/210) **ainda não confirmados auditivamente como canto**. Cobertura 11 de 30 opções, 19 permanecem pendentes.
+- Confirmado em Chromium 390px nos modais 201/202/205/207/208/209/210; 33 scripts sintaticamente válidos; 210 hinos, seis coros e dados 1–200 preservados. MP3, partituras, controles em linha única e volume inalterados.
+- HTML V7.81.9 preparado para teste, **não promovido a produção**. [Relatório REV11.1](CORRECAO_MIDIAS_201_A_210_REV11_1.md).
+
+---
+
 ## REV11 — 13/11/2026 — V7.81.8 TESTE: Hinos 201–210 / Orquestra V4.5
 - Extensão aditiva do `teste-multimidia` V7.81.7 com dez novos hinos, letras/coros, partituras JPG, metrônomos e 10 MP3 `audio/hino-201.mp3`…`audio/hino-210.mp3`, renderizados das fontes MSCX.
 - Instrumentação orquestral V4.5 sintética TimGM6mb, soprano em cordas, tenor e graves reforçados, ligaduras/fermatas; BPM individual perto do máximo, conforme score. Hinos 205 (♩. = 54, áudio ♩ = 81), 206 (♪ = 134, áudio ♩ = 67) e 208 (𝅗𝅥 = 53, áudio ♩ = 106) exigem unidade de pulso distinta.
