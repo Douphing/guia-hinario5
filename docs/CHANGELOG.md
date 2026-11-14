@@ -1,3 +1,12 @@
+## REV11.6 — 14/11/2026 — V7.81.15 TESTE: início e Padrão em 84 BPM
+- A V7.81.14 recalculava o padrão como ponto médio matemático 80 BPM. O usuário definiu expressamente o início do Hino 74 em **84 BPM**; corrigidos resumo, campo, slider e ação ↺ Padrão para este valor, mantendo faixa 72–88.
+- **80 é a média matemática, 84 é a preferência de estudo acima da média**, não uma nova média calculada.
+- Ao mover o slider, indicador de velocidade/BPM atualiza mesmo antes da abertura do áudio. MP3 V3 físico de 83 BPM não alterado; taxa de reprodução quando vinculado começa em 84/83.
+- 34 scripts válidos; Chromium confirmou 84 inicial, 84 após reset e 88 após slider. Dados de 1–210/Coros, fontes musicais, outros BPM e layout intocados.
+- Alteração preparada somente no HTML de TESTE; não publica `index.html` nem substitui `teste-multimidia.html` no GitHub. [REV11.6](HINO74_BPM_INICIAL_84_REV11_6.md).
+
+---
+
 ## REV11.5 — 14/11/2026 — Hino 74 Orquestra V3 / V7.81.13 TESTE
 - Usuário relatou que a V2 ainda apresentava corte/reataque na fermata e precisava de mais graves, e esclareceu que andamento deve ser **um pouco acima da média**, não necessariamente o máximo.
 - Refiz **Hino 74 diretamente do MSCX**, ♩=**83 BPM** dentro de 72–88 (média 80), dividindo corretamente 1ª/2ª terminações (fermatas) e 3ª terminação/Final. A semibreve é sustentada sem edição de trechos de MP3: ~3,68s de arco contínuo e ~0,15s de respiro antes da nova estrofe. Tuba, contrabaixo e naipes graves reforçados.
