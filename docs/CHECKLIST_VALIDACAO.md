@@ -1,3 +1,17 @@
+# Checklist REV11.1 — vínculos e apresentação 201–210
+- [x] HTML V7.81.9 mostra os botões Spotify/YouTube/YouTube Music sem subtítulos de canal e sem "Pesquisar"; mídia sem faixa válida tem botão desabilitado.
+- [x] Seis vídeos YouTube das fontes instrumentais, três IDs Spotify de fontes autorizadas, dois trechos candidatos da Vozes do Campo.
+- [x] 210 hinos, 6 coros, 33 scripts válidos; dados 1–200 e MP3/partituras preservados.
+- [x] Testes Chromium 390px nos modais 201, 202, 205, 207, 208, 209, 210, sem JS errors.
+- [ ] Ouvir os dois trechos Vozes do Campo e comprovar **canto**, não playback instrumental.
+- [ ] Testar Spotify 205/206/208 e vídeos YouTube em HTTPS, conferir número+título/edição/fonte exatos.
+- [ ] Pesquisar as 19 opções ausentes somente nas fontes autorizadas. Não inserir links genéricos nem artista não solicitado.
+- [ ] Testar controles em linha única, sequência/volume/mute, responsividade, MP3, metrônomo, registros e favoritos.
+- [ ] Publicar somente `teste-multimidia.html` após backup, nunca `index.html` de produção sem aprovação.
+Ver [REV11.1](CORRECAO_MIDIAS_201_A_210_REV11_1.md).
+
+---
+
 # Checklist REV11 — Hinos 201–210 / V7.81.8 TESTE
 - [x] Fontes MSCX de 201–210 recuperadas; 10 MP3 V4.5 gerados, 10 JPG isolados.
 - [x] Hinos 1–200/Coros 1–6 preservados em MULTIMIDIA e LETRAS; 33 scripts sem erro de sintaxe.
