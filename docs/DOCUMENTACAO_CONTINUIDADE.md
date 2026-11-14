@@ -1,3 +1,8 @@
+# Estado REV11.7 — interface musical V7.81.16 para testes (14/11/2026)
+A V7.81.16 é extensão de interface da V7.81.15, trazendo **Tonalidade e Andamento juntos no cabeçalho compacto do metrônomo**. Mostrar BPM **efetivamente configurado** para cada hino, sem inventar média/arredondamento. Hino 74 inicia e restaura em **84 BPM** dentro de 72–88, escolha acima da média matemática 80; gravação V3 permanece 83 BPM e o piloto `MP3 acompanha o andamento` mantém proporção correta. Todas as figuras de pulso (♩, ♪, ♩., 𝅗𝅥) devem permanecer as da partitura. Apenas CSS/script de apresentação; 35 JS válidos, 210 hinos, seis coros, letras, links, áudio, partituras, registros, favoritos e player intocados. Sem nova rolagem em relação à base nas resoluções testadas. HTML para TESTE não promovido; produção protegida. Ver [REV11.7](LAYOUT_TONALIDADE_ANDAMENTO_REV11_7.md).
+
+---
+
 # Estado REV11.6 — Hino 74 V7.81.15 TESTE, padrão 84 BPM
 Na V7.81.14 o metrônomo do Hino 74 passou para a média matemática 80 BPM, mas o usuário quer **84 BPM como valor inicial/padrão**. Corrigida **V7.81.15**: Hino 74 abre/reset em **84 BPM**, slider 72–88 passo1, MP3 V3 permanece gravado a 83 BPM com `playbackRate=84/83` enquanto vinculado. Mostrar o valor selecionado também antes de abrir áudio. Não chamar 84 de média aritmética; é **escolha musical acima da média 80**. Outros hinos, letras, fontes, player, partituras, modal desktop e produção protegidos. 34 scripts válidos, teste de estado Chromium passou; som real pendente. [Detalhes](HINO74_BPM_INICIAL_84_REV11_6.md).
 
