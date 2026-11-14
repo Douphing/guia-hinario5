@@ -1,3 +1,16 @@
+# Checklist REV11.3 — sequência de mídia V7.81.11
+- [x] Próximo MP3 210→1; Anterior 1→210; coros 6→1.
+- [x] MP3 Repetir, Parar, Aleatório testados; Hino 21 com `partitura-especial` executado uma vez antes de avançar.
+- [x] YouTube e YouTube Music: 10 testes com API IFrame simulada, inclusive fim de trecho temporizado; próximo modal abre conforme modo.
+- [x] 23 testes de controlador passaram, 33 scripts JS válidos, apenas dois scripts alterados; dados, CSS e mídias preservados.
+- [ ] Testar em HTTPS playback real MP3 210→1 e YouTube/YTM, autoplay e faixa de coletânea.
+- [ ] Verificar Spotify anterior/próximo manual e avisos de limitação; não declarar sequência automática garantida.
+- [ ] Confirmar modal sem rolagem em desktop, botões sempre visíveis, mini-player, partitura, metrônomo, volume/mute e registros.
+- [ ] Publicar somente HTML de testes após backup, sem promover `index.html` sem aprovação.
+Ver [REV11.3](SEQUENCIA_ENTRE_MODAIS_REV11_3.md).
+
+---
+
 # Checklist antirregressão REV11.2 — V7.81.10
 - [x] Modal desktop com MP3 e metrônomo aberto ampliado até 1450px, duas colunas; Ocasiões/Apropriação lado a lado.
 - [x] Chromium com MP3 e JPG reais da carga: 1027×392, 1024×500, 1280×590, 1280×720 e 1600×900 **sem scroll interno do MP3**.
