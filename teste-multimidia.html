@@ -17568,6 +17568,10 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
       // O player já carregou a preferência de velocidade manual do usuário.
       state.manualRate=savedRate();
       apply();
+    },
+    calibrateBase(num,audio,bpm){
+      if(String(num)!==state.num||state.audio!==audio)return;
+      if(Number.isFinite(bpm)&&bpm>0){state.baseBpm=bpm;apply()}
     }
   };
   const originalInit=window.initHymnMetronomeUI;
@@ -18226,7 +18230,14 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 
       // Ajuste fino da batida, guardado por hino e independente do BPM.
       const correction=Number(window.GuiaMetroFineOffset?.get(active.hymn))||0;
-      const mediaTime=Math.max(0,a.currentTime-active.offset-correction);
+      // V7.81.25: cada retorno de estrofe reinicia o compasso a partir da
+      // entrada musical real, em vez de usar o relógio contínuo do arquivo.
+      const stanzaAnchor=Number(window.GuiaMetroVerseSync?.anchorAt(active.hymn,a))||0;
+      const mediaTime=Math.max(0,a.currentTime-stanzaAnchor-active.offset-correction);
+      if(stanzaAnchor!==active.stanzaAnchor){
+        active.stanzaAnchor=stanzaAnchor;
+        stepIndex=null;previousTime=null;
+      }
       // Na trilha original o pulso avança a "base" por minuto;
       // o fator dos compassos compostos é herdado do engine ativo.
       const beatFactor=tempo/bpm;
@@ -18250,7 +18261,8 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
       while(scheduled<3){
         const delay=(stepIndex-progress)*beatPeriod;
         if(delay>look)break;
-        if(delay>=-.04){
+        const suspend=window.GuiaMetroVerseSync?.suspendFromBeat(active.hymn,a,stanzaAnchor,tempo/bpm);
+        if(delay>=-.04 && !(Number.isFinite(suspend)&&stepIndex>=suspend)){
           const index=((stepIndex%beats)+beats)%beats;
           const accent=index===0?2:(accentEvery>0&&index%accentEvery===0?1:0);
           const at=Math.max(ctx.currentTime+.006,ctx.currentTime+delay);
@@ -18520,4 +18532,186 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  });
 })();
 </script>
+
+<!-- V7.81.25 TESTE — reconhecer o início de cada estrofe no MP3 local,
+     reiniciar a fase e o primeiro tempo forte sem alterar o layout. -->
+<script id="v78125-auto-retorno-estrofes">
+(function(){
+ 'use strict';
+ const SYNC=window.GuiaMetronomeMp3Sync;
+ if(!SYNC)return;
+ const SCORE_QUARTERS={"1":40.0,"2":64.0,"3":56.0,"4":96.0,"5":51.0,"6":83.0,"7":96.0,"8":48.0,"9":48.0,"10":64.0,"11":72.0,"12":48.0,"13":96.0,"14":72.0,"15":48.0,"16":96.0,"17":60.0,"18":96.0,"19":64.0,"20":64.0,"21":98.5,"22":48.0,"23":96.0,"24":96.0,"25":60.0,"26":64.0,"27":48.0,"28":64.0,"29":64.0,"30":48.0,"31":152.0,"32":32.0,"33":84.0,"34":24.0,"35":48.0,"36":96.0,"37":64.0,"38":32.0,"39":66.0,"40":64.0,"41":74.5,"42":100.0,"43":48.0,"44":72.0,"45":99.0,"46":48.0,"47":98.5,"48":48.0,"49":96.0,"50":99.0,"51":64.0,"52":54.0,"53":64.0,"54":64.0,"55":108.0,"56":100.0,"57":64.0,"58":64.0,"59":48.0,"60":48.0,"61":75.0,"62":42.0,"63":111.0,"64":48.0,"65":96.0,"66":48.0,"67":98.5,"68":48.0,"69":64.0,"70":64.0,"71":56.0,"72":64.0,"73":64.0,"74":64.0,"75":39.0,"76":96.0,"77":48.0,"78":60.0,"79":72.0,"80":64.0,"81":48.0,"82":52.0,"83":102.0,"84":64.0,"85":64.0,"86":96.0,"87":64.0,"88":64.0,"89":64.0,"90":48.0,"91":96.0,"92":99.0,"93":36.0,"94":80.0,"95":64.0,"96":48.0,"97":99.0,"98":96.0,"99":64.0,"100":64.0,"101":32.0,"102":99.0,"103":96.0,"104":48.0,"105":102.0,"106":42.0,"107":72.0,"108":32.0,"109":48.0,"110":64.0,"111":48.0,"112":48.0,"113":64.0,"114":64.0,"115":96.0,"116":48.0,"117":96.0,"118":54.0,"119":64.0,"120":96.0,"121":72.0,"122":64.0,"123":48.0,"124":96.0,"125":48.0,"126":64.0,"127":52.0,"128":48.0,"129":64.0,"130":66.0,"131":64.0,"132":48.0,"133":64.0,"134":64.0,"135":64.0,"136":48.0,"137":48.0,"138":98.5,"139":48.0,"140":64.0,"141":48.0,"142":48.0,"143":64.0,"144":48.0,"145":75.0,"146":42.0,"147":96.0,"148":48.0,"149":100.0,"150":32.0,"151":64.0,"152":64.0,"153":64.0,"154":48.0,"155":64.0,"156":64.0,"157":60.0,"158":32.0,"159":64.0,"160":64.0,"161":64.0,"162":36.0,"163":72.0,"164":64.0,"165":48.0,"166":48.0,"167":64.0,"168":48.0,"169":48.0,"170":72.0,"171":64.0,"172":24.0,"173":64.0,"174":68.0,"175":64.0,"176":64.0,"177":72.0,"178":48.0,"179":64.0,"180":80.0,"181":64.0,"182":36.0,"183":72.0,"184":48.0,"185":32.0,"186":72.0,"187":64.0,"188":64.0,"189":64.0,"190":64.0,"191":48.0,"192":48.0,"193":72.0,"194":64.0,"195":48.0,"196":96.0,"197":96.0,"198":96.0,"199":96.0,"200":64.0,"201":64.0,"202":96.0,"203":64.0,"204":64.0,"205":72.5,"206":48.0,"207":64.0,"208":96.0,"209":64.0,"210":64.0};
+ const KNOWN={
+   // Marcas do MIDI aprovado do Hino 74 V3 (83 BPM, áudio de 166,374s).
+   '74':{duration:166.374,starts:[0,47.52,95.05]},
+   // Marcas do MIDI do Hino 76 V1 (120 BPM, áudio de ~149s).
+   '76':{duration:148.94,starts:[0,49.41,98.83]}
+ };
+ const byAudio=new WeakMap();
+ const currentHymn=()=>String(window.__gaCurrentHymn?.num||'');
+ function unitQuarter(cfg){
+   const u=String(cfg?.unidade||'').toLowerCase();
+   if(u.includes('pontuada'))return 1.5;
+   if(u.includes('colcheia'))return 0.5;
+   if(u.includes('mínima')&&!u.includes('semínima'))return 2;
+   return 1;
+ }
+ function configFor(num){
+   try{return typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[num]?.metronomo:null;}catch(e){return null}
+ }
+ function nominalVerseSeconds(num){
+   const cfg=configFor(num),bars=SCORE_QUARTERS[num];
+   const base=Number(cfg?.mp3BaseBpm||(num==='74'?83:cfg?.bpm));
+   return bars>0&&base>0? bars*60/(base*unitQuarter(cfg)):0;
+ }
+ function calcEnvelope(buffer){
+   // RMS por janela de 20ms, mono por mistura amostrada: análise local sem
+   // modificar AudioContext ou MediaElementAudioSource do player em execução.
+   const rate=buffer.sampleRate,n=buffer.length;
+   const hop=Math.max(1,Math.round(rate*.02));
+   const a=buffer.getChannelData(0),b=buffer.numberOfChannels>1?buffer.getChannelData(1):null;
+   const frames=Math.floor(n/hop),env=new Float32Array(frames);
+   for(let k=0;k<frames;k++){
+     let energy=0,count=0;
+     // Amostragem espaçada para reduzir trabalho no celular.
+     const begin=k*hop,end=Math.min(begin+hop,n),stride=Math.max(1,Math.floor(hop/40));
+     for(let j=begin;j<end;j+=stride){
+       const x=b?(a[j]+b[j])*.5:a[j]; energy+=x*x;count++;
+     }
+     env[k]=Math.log1p(Math.sqrt(energy/Math.max(1,count))*50);
+   }
+   return env;
+ }
+ function similarityAt(y,tpl,tplMean,tplNorm,pos){
+   const length=tpl.length;
+   let sum=0,sum2=0,cross=0;
+   for(let i=0;i<length;i++){
+     const v=y[pos+i];sum+=v;sum2+=v*v;cross+=(tpl[i]-tplMean)*v;
+   }
+   const norm=Math.sqrt(Math.max(1e-8,sum2-sum*sum/length))*tplNorm;
+   return norm>1e-8?cross/norm:0;
+ }
+ function searchRepeat(y,template,mean,norm,near,windowSeconds){
+   const L=template.length,max=y.length-L-1;
+   const start=Math.max(0,Math.floor((near-windowSeconds)/.02));
+   const stop=Math.min(max,Math.ceil((near+windowSeconds)/.02));
+   let best={score:-1,frame:0};
+   if(stop<=start)return best;
+   // Busca a cada 20 ms: o início de uma estrofe é um pico muito estreito.
+   for(let i=start;i<=stop;i++){
+     const val=similarityAt(y,template,mean,norm,i);
+     if(val>best.score)best={score:val,frame:i};
+   }
+   const centre=best.frame;
+   for(let i=Math.max(start,centre-5);i<=Math.min(stop,centre+5);i++){
+     const val=similarityAt(y,template,mean,norm,i);
+     if(val>best.score)best={score:val,frame:i};
+   }
+   return best;
+ }
+ function extractStanzaStarts(env,num,duration){
+   if(duration<25||env.length<1250)return [];
+   const seconds=nominalVerseSeconds(num);
+   const average=duration/3;
+   // A partitura informa o tamanho aproximado da estrofe. A gravação pode
+   // incluir fermatas; os picos de semelhança determinam a entrada REAL.
+   const nominal=(seconds>12&&seconds<duration*.57)?seconds:average;
+   const tplLen=Math.min(550,Math.max(280,Math.floor(nominal/.02*.22)));
+   if(env.length<tplLen*2)return [];
+   const tpl=env.subarray(0,tplLen);
+   let sum=0,sum2=0;
+   for(let i=0;i<tpl.length;i++){sum+=tpl[i];sum2+=tpl[i]*tpl[i]}
+   const mean=sum/tpl.length,norm=Math.sqrt(Math.max(1e-9,sum2-sum*sum/tpl.length));
+   const first=searchRepeat(env,tpl,mean,norm,nominal,nominal*.30);
+   if(first.score<.50)return [];
+   const t1=first.frame*.02;
+   // Uma segunda ocorrência consistente evita marcar como estrofe a repetição
+   // de um motivo curto no interior da própria música.
+   const second=searchRepeat(env,tpl,mean,norm,t1*2,Math.max(2.5,nominal*.065));
+   if(second.score<.50)return [];
+   const t2=second.frame*.02;
+   if(Math.abs((t2-t1)-t1)>Math.max(2.5,nominal*.08)||t2>duration-8)return [];
+   return [0,Math.round(t1*100)/100,Math.round(t2*100)/100];
+ }
+ async function analyzeAudio(audio,num,info){
+   if(info.loading||info.ready)return;
+   const known=KNOWN[num];
+   if(known&&Number.isFinite(audio.duration)&&Math.abs(audio.duration-known.duration)<.85){
+     info.anchors=known.starts;info.ready=true;info.verifiedMidi=true;
+     if(num==='76')SYNC.calibrateBase?.(num,audio,120);
+     return;
+   }
+   if(!/^https?:$/.test(location.protocol)){info.ready=true;return;}
+   const src=audio.currentSrc||audio.src;
+   if(!src){info.ready=true;return;}
+   info.loading=true;
+   let context=null;
+   try{
+     const response=await fetch(src,{credentials:'same-origin'});
+     if(!response.ok)throw new Error('Áudio indisponível');
+     const file=await response.arrayBuffer();
+     const AudioCtx=window.AudioContext||window.webkitAudioContext;
+     if(!AudioCtx)throw new Error('Decodificador ausente');
+     context=new AudioCtx();
+     const decoded=await context.decodeAudioData(file);
+     const envelope=calcEnvelope(decoded);
+     info.anchors=extractStanzaStarts(envelope,num,decoded.duration);
+     info.ready=true;
+   }catch(err){
+     info.ready=true;
+     // Quando não é possível reconhecer pontos seguros, fica ativo o
+     // sincronismo original e não são inventadas entradas de estrofe.
+   }finally{
+     info.loading=false;
+     if(context){try{context.close()}catch(e){}}
+   }
+ }
+ function attach(audio,num){
+   if(!audio||!num)return;
+   const data={num,audio,anchors:[],ready:false,loading:false};
+   byAudio.set(audio,data);
+   const trigger=()=>{
+     if(currentHymn()!==num||!document.getElementById('hdSyncMp3Bpm')?.checked)return;
+     if(!audio.isConnected)return;
+     analyzeAudio(audio,num,data);
+   };
+   audio.addEventListener('loadedmetadata',trigger);
+   audio.addEventListener('playing',trigger);
+   // MP3 independente não precisa decodificar duas vezes: só quando houver
+   // sincronização no metrônomo.
+   if(audio.readyState>=1)trigger();
+ }
+ const oldAttach=SYNC.attach;
+ SYNC.attach=function(audio,num){
+   if(typeof oldAttach==='function')oldAttach.apply(this,arguments);
+   attach(audio,String(num));
+ };
+ window.GuiaMetroVerseSync={
+   suspendFromBeat(num,audio,anchor,pulseFactor){
+     const d=byAudio.get(audio);
+     if(!d?.verifiedMidi || !(num==='74'||num==='76'))return null;
+     const next=d.anchors.find(t=>t>anchor+.01);
+     if(!next)return null;
+     const quarters=SCORE_QUARTERS[num],base=num==='74'?83:120;
+     if(!Number.isFinite(quarters)||next-anchor-quarters*60/base<.6)return null;
+     return quarters*pulseFactor;
+   },
+   anchorAt(num,audio){
+     const data=byAudio.get(audio);
+     if(!data||data.num!==num||!data.anchors.length)return 0;
+     const t=Number(audio.currentTime)||0;
+     let anchor=0;
+     for(const stamp of data.anchors){
+       if(t+0.004>=stamp)anchor=stamp;
+       else break;
+     }
+     return anchor;
+   },
+   pointsFor(audio){return (byAudio.get(audio)?.anchors||[]).slice()},
+   // Somente para validação; não altera a configuração do usuário.
+   nominalVerseSeconds
+ };
+})();
+</script>
+
 </body></html>
