@@ -18221,7 +18221,9 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
       if(!Number.isFinite(tempo)||tempo<=0||!Number.isFinite(bpm)||bpm<=0)return true;
       if(!Number.isFinite(a.currentTime))return true;
 
-      const mediaTime=Math.max(0,a.currentTime-active.offset);
+      // Ajuste fino da batida, guardado por hino e independente do BPM.
+      const correction=Number(window.GuiaMetroFineOffset?.get(active.hymn))||0;
+      const mediaTime=Math.max(0,a.currentTime-active.offset-correction);
       // Na trilha original o pulso avança a "base" por minuto;
       // o fator dos compassos compostos é herdado do engine ativo.
       const beatFactor=tempo/bpm;
@@ -18256,6 +18258,134 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
       return true;
     }
   };
+})();
+</script>
+
+<!-- V7.81.23 TESTE — metronomo e instrumental local em um único painel. -->
+<style id="v78123-uniao-mp3-metronomo">
+/* A barra original continua no DOM para preservar seu carregador e seu estado.
+   Só o botão duplicado é ocultado, quando existe metrônomo E MP3 local. */
+#hymnDetail #hdMediaArea.ga-unified-mp3-meter .hd-media-instrumental{display:none!important}
+#hymnDetail #hdMediaArea.ga-unified-mp3-meter #hdMetronome{margin-bottom:5px!important}
+#hymnDetail #hdMediaArea.ga-unified-mp3-meter .hd-v78118-heading{font-size:13px!important;white-space:nowrap!important}
+#hymnDetail .ga-v78123-fine{margin:1px 0 0 0!important;min-width:0!important;
+  font:600 10px/1.2 Arial,sans-serif;color:#435467}
+#hymnDetail .ga-v78123-fine summary{cursor:pointer;color:#6b634f;list-style:none;display:inline-flex;
+  align-items:center;gap:4px;padding:2px 0;user-select:none}
+#hymnDetail .ga-v78123-fine summary::-webkit-details-marker{display:none}
+#hymnDetail .ga-v78123-fine summary::before{content:'▸';font-size:10px}
+#hymnDetail .ga-v78123-fine[open] summary::before{content:'▾'}
+#hymnDetail .ga-v78123-fine-ctrl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px}
+#hymnDetail .ga-v78123-fine-ctrl button{height:25px;min-width:29px;min-height:25px!important;
+  padding:2px 7px!important;border:1px solid #d6c4a0;background:#fffaf0;color:#23394c;
+  border-radius:7px;font:800 13px Arial,sans-serif;cursor:pointer}
+#hymnDetail .ga-v78123-fine-ctrl output{min-width:60px;text-align:center;color:#86601f;font-variant-numeric:tabular-nums}
+#hymnDetail .ga-v78123-fine-note{font-weight:400;color:#6e6c69}
+@media(max-width:700px){
+  #hymnDetail #hdMediaArea.ga-unified-mp3-meter .hd-v78118-heading{font-size:12px!important}
+  #hymnDetail .ga-v78123-fine{font-size:10px}
+}
+</style>
+<script id="v78123-unified-audio-controls">
+(function(){
+  'use strict';
+  const OFFSET_KEY='guia-hinario5-metr-pulse-offset-v1-';
+  const fallbackOffset=Object.create(null);
+  const num=()=>String(window.__gaCurrentHymn?.num||'');
+  const round=n=>Math.round(n*100)/100;
+  const clamp=n=>Math.max(-2,Math.min(2,n));
+  const currentCfg=()=>{try{return typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[num()]:null}catch(e){return null}};
+  function getOffset(hymn){
+    try{const s=localStorage.getItem(OFFSET_KEY+hymn);if(s!==null){const v=Number(s);if(Number.isFinite(v))return clamp(v)}}catch(e){}
+    return fallbackOffset[hymn]??0;
+  }
+  function setOffset(hymn,value){
+    const v=round(clamp(value));
+    fallbackOffset[hymn]=v;
+    try{localStorage.setItem(OFFSET_KEY+hymn,String(v))}catch(e){}
+    window.GuiaMetroPhaseSync?.reset();
+    const out=document.getElementById('gaMetroFineValue');
+    if(out&&num()===hymn){out.textContent=(v>0?'+':'')+Math.round(v*1000)+' ms';out.title=v>0?'Metrônomo atrasado em relação ao MP3':v<0?'Metrônomo adiantado em relação ao MP3':'Sem deslocamento'}
+  }
+  window.GuiaMetroFineOffset={get:getOffset,set:setOffset};
+  function markUI(){
+    const area=document.getElementById('hdMediaArea'),cfg=currentCfg();
+    if(!area)return;
+    const integrated=!!(cfg?.audio&&cfg?.metronomo&&area.querySelector('.hd-play[data-kind="instrumental"]'));
+    area.classList.toggle('ga-unified-mp3-meter',integrated);
+    if(!integrated)return;
+    const heading=area.querySelector('#hdMetronome .hd-v78118-heading');
+    if(heading)heading.textContent='Metrônomo + MP3';
+    const check=area.querySelector('#hdSyncMp3Bpm');
+    if(check){
+      check.setAttribute('aria-label','Reproduzir MP3 e metrônomo juntos e acompanhar o BPM');
+      const label=check.closest('label');
+      const span=label?.querySelector('span');
+      if(span)span.textContent='MP3 junto com o metrônomo';
+    }
+    const row=area.querySelector('#hdMetronomePanel .hd-v728-tertiary');
+    if(row&&!row.querySelector('.ga-v78123-fine')){
+      const d=document.createElement('details');
+      d.className='ga-v78123-fine';
+      d.innerHTML='<summary>Ajuste fino da sincronização</summary>'+
+        '<div class="ga-v78123-fine-ctrl">'+
+        '<span class="ga-v78123-fine-note">Adiantar</span><button type="button" data-fine="-" aria-label="Adiantar o clique do metrônomo em 50 milissegundos">−</button>'+
+        '<output id="gaMetroFineValue" aria-live="polite">0 ms</output>'+
+        '<button type="button" data-fine="+" aria-label="Atrasar o clique do metrônomo em 50 milissegundos">+</button>'+
+        '<span class="ga-v78123-fine-note">Atrasar</span>'+
+        '<button type="button" data-fine="reset" aria-label="Restaurar sincronização original" title="Restaurar ajuste fino">↺</button></div>';
+      row.appendChild(d);
+      const hymn=num();
+      d.querySelectorAll('[data-fine]').forEach(b=>b.addEventListener('click',()=>{
+        if(num()!==hymn)return;
+        const type=b.dataset.fine;
+        setOffset(hymn,type==='reset'?0:getOffset(hymn)+(type==='+'?.05:-.05));
+      }));
+      setOffset(hymn,getOffset(hymn));
+    }
+    const start=area.querySelector('#hdMetroStart');
+    if(start){start.title='Iniciar ou pausar o MP3 com o metrônomo sincronizado; desmarque MP3 junto para estudar só com o metrônomo';
+      start.setAttribute('aria-label','Iniciar ou parar o metrônomo e o MP3, conforme a opção de sincronização');}
+  }
+  // Sem o MP3 junto, o metrônomo permanece solo: pausar áudio anterior.
+  // Ao reativar a opção durante o estudo, a reprodução volta a acompanhar.
+  document.addEventListener('change',function(e){
+    if(e.target?.id!=='hdSyncMp3Bpm')return;
+    const audio=document.querySelector('#hdAudio audio');
+    if(!audio)return;
+    if(!e.target.checked){if(!audio.paused)audio.pause();return;}
+    if(document.getElementById('hdMetroStart')?.classList.contains('is-running')&&audio.paused){
+      const p=audio.play();if(p&&typeof p.catch==='function')p.catch(()=>{});
+    }
+  });
+  const oldInit=window.initHymnMetronomeUI;
+  window.initHymnMetronomeUI=function(cfg){
+    if(typeof oldInit==='function')oldInit.apply(this,arguments);
+    markUI();
+  };
+  // Um clique no único botão de Iniciar carrega o MP3 local quando ele ainda
+  // não foi aberto. Depois disso, a V7.81.22 coordena a reprodução e o pulso.
+  // O botão original de instrumental fica invisível, mas preserva seu carregador.
+  document.addEventListener('click',function(e){
+    const b=e.target?.closest?.('#hdMetroStart');
+    if(!b||!document.getElementById('hdMediaArea')?.classList.contains('ga-unified-mp3-meter'))return;
+    const linked=document.getElementById('hdSyncMp3Bpm')?.checked;
+    if(!linked)return; // Metrônomo solo: mantém mecanismo original.
+    const player=document.querySelector('#hdAudio audio');
+    if(player?.isConnected)return; // A V7.81.22 assume o controle.
+    e.preventDefault();e.stopImmediatePropagation();
+    const button=document.querySelector('#hdMediaArea .hd-play[data-kind="instrumental"]');
+    if(!button)return;
+    button.click();
+    const a=document.querySelector('#hdAudio audio');
+    if(!a)return;
+    // O evento playing inicia o metrônomo pelo relógio real do MP3.
+    const p=a.play();
+    if(p&&typeof p.catch==='function')p.catch(()=>{
+      // Se o navegador bloquear a reprodução, deixe o controle visível.
+      document.getElementById('hdMetronomePanel')?.removeAttribute('hidden');
+    });
+  },true);
 })();
 </script>
 
