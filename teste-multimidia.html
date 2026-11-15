@@ -1,3 +1,4 @@
+<!-- V7.81.24 TESTE: MP3 4ª mídia independente; painel Metrônomo exclusivo com MP3 opcional; base V7.81.23 preservada. -->
 <!-- V7.81.21 TESTE: vídeo maior em 16:9 sem achatamento e cabeçalho do metrônomo mais baixo; preservada V7.81.20 inclusive MP3-sync universal; produção não alterada. -->
 <!-- V7.81.20 TESTE: desktop lateral restaurado, slider BPM dispensado, MP3 segue BPM nos Hinos 1–210 usando referência individual; H74 base 83 BPM; produção intacta. -->
 <!-- V7.81.16 TESTE: tonalidade e andamento exibidos lado a lado no cabeçalho do metrônomo, mantendo o BPM padrão de cada hino. Hino 74: padrão 84 BPM (acima da média aritmética 80 da faixa 72–88); sincronização MP3↔BPM continua restrita ao Hino 74. Somente UI, sem modificar produção. -->
@@ -17545,9 +17546,11 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
     return Number.isFinite(rate)&&rate>=.5&&rate<=3?rate:1;
   };
   function targetRate(){return clamp(state.bpm/state.baseBpm,.5,2);}
+  const metronomeActive=()=>{const panel=document.getElementById('hdMetronomePanel');return !!(panel&&!panel.hidden);};
   function apply(){
     if(!state.num||hymn()!==state.num)return;
-    const factor=(state.linked&&state.baseBpm>0)?targetRate():state.manualRate;
+    const syncActive=state.linked&&metronomeActive();
+    const factor=(syncActive&&state.baseBpm>0)?targetRate():state.manualRate;
     const a=state.audio;
     if(a&&a.isConnected){
       try{if('preservesPitch' in a)a.preservesPitch=true;}catch(e){}
@@ -17555,10 +17558,10 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
       if(Math.abs(a.playbackRate-factor)>.0005)a.playbackRate=factor;
     }
     const info=textRate();
-    if(info)info.textContent=state.linked?`${state.bpm} BPM · ${factor.toFixed(2).replace('.',',')}×`:'velocidade manual';
+    if(info)info.textContent=syncActive?`${state.bpm} BPM · ${factor.toFixed(2).replace('.',',')}×`:'velocidade manual';
   }
   window.GuiaMetronomeMp3Sync={
-    isLinked(num){return String(num)===state.num&&hymn()===state.num&&state.linked;},
+    isLinked(num){return String(num)===state.num&&hymn()===state.num&&state.linked&&metronomeActive();},
     attach(element,num){
       if(String(num)!==state.num){state.audio=null;return;}
       state.audio=element;
@@ -18389,4 +18392,132 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 })();
 </script>
 
+
+<!-- V7.81.24 TESTE — duas áreas sem controles duplicados: mídias (MP3 independente) e metrônomo opcional. -->
+<style id="v78124-modo-midia-ou-metronomo">
+/* O botão de áudio local se torna a quarta fonte, mantendo o mesmo loader e a barra de controles original. */
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-instrumental {display:none!important;}
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms {
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;
+  width:100%!important;min-width:0!important;align-items:stretch!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms>.hd-play{
+  grid-column:auto!important;display:flex!important;justify-content:center!important;align-items:center!important;
+  min-width:0!important;width:100%!important;max-width:none!important;min-height:39px!important;
+  font:800 11px/1.12 Arial,sans-serif!important;padding:6px 3px!important;
+  border-radius:10px!important;gap:4px!important;white-space:normal!important;text-align:center!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms .ga-v78124-mp3{
+  background:linear-gradient(180deg,#153750,#082338)!important;color:#fff!important;
+  border-color:rgba(232,207,158,.4)!important;box-shadow:0 3px 7px #0001!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms .ga-v78124-mp3 .ga-v78124-note{
+  font-size:16px;line-height:1;flex:0 0 auto;
+}
+/* Enquanto o metrônomo estiver expandido, somente ele e a navegação do hino ficam visíveis. */
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only .hd-media-platforms,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only .hd-media-instrumental,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdSequence,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdSequenceNote,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdAudio,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdYoutube,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdSpotify,
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdLinks{
+  display:none!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdMetronome{
+  overflow:hidden!important;margin:4px 0 6px!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready.ga-v78124-metro-only #hdMetronomePanel{
+  position:static!important;inset:auto!important;left:auto!important;top:auto!important;
+  width:100%!important;max-width:100%!important;height:auto!important;
+  margin:0!important;z-index:auto!important;box-sizing:border-box!important;
+  border-radius:0!important;border-width:1px 0 0 0!important;box-shadow:none!important;
+}
+#hymnDetail #hdMediaArea.ga-v78124-ready .hd-v78118-heading{white-space:nowrap!important;}
+@media(max-width:420px){
+ #hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms{gap:4px!important;}
+ #hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms>.hd-play{font-size:9.5px!important;gap:2px!important;min-height:36px!important;padding:5px 2px!important;}
+ #hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms .ga-v78124-mp3 .ga-v78124-note{font-size:13px!important;}
+}
+@media(max-width:340px){
+ #hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+ #hymnDetail #hdMediaArea.ga-v78124-ready .hd-media-platforms>.hd-play{font-size:11px!important;}
+}
+</style>
+<script id="v78124-modo-midia-ou-metronomo">
+(function(){
+ 'use strict';
+ const area=()=>document.getElementById('hdMediaArea');
+ const panel=()=>document.getElementById('hdMetronomePanel');
+ const currentAudio=()=>document.querySelector('#hdAudio audio');
+ const closeMedia=()=>document.querySelector('#hdSequence [data-media-action="close"]');
+ const setMetronomeMode=(open)=>{
+   const a=area();if(!a)return;
+   if(open){
+     // Não permitir mídia externa tocando invisível por trás do metrônomo.
+     if(document.getElementById('hymnDetail')?.classList.contains('media-open')){
+       if(closeMedia() && !closeMedia().hidden) closeMedia().click();
+       else {currentAudio()?.pause();document.querySelectorAll('#hdYoutube iframe,#hdSpotify iframe').forEach(f=>f.remove());}
+     }
+     a.classList.add('ga-v78124-metro-only');
+     // No desktop, manter o modal em duas colunas mesmo sem mídia aberta.
+     if(window.matchMedia('(min-width:960px)').matches) document.getElementById('hymnDetail')?.classList.add('media-open');
+   }else{
+     // Ao sair do metrônomo, não deixar batidas/MP3 de estudo tocando ocultos.
+     try{window.stopHymnMetronome?.()}catch(e){}
+     if(currentAudio()){
+       try{currentAudio().pause()}catch(e){}
+       closeMedia()?.click();
+     }
+     a.classList.remove('ga-v78124-metro-only');
+     if(!document.querySelector('#hdAudio audio,#hdYoutube iframe,#hdSpotify iframe')) document.getElementById('hymnDetail')?.classList.remove('media-open');
+   }
+ };
+ const previousInit=window.initHymnMetronomeUI;
+ window.initHymnMetronomeUI=function(cfg){
+   if(typeof previousInit==='function')previousInit.apply(this,arguments);
+   const a=area();if(!a)return;
+   a.classList.remove('ga-v78124-metro-only');
+   a.classList.add('ga-v78124-ready');
+   // Preserva o botão e o listener de loadHymnMedia: muda somente a posição e o visual.
+   const original=a.querySelector('.hd-media-instrumental .hd-play[data-kind="instrumental"]');
+   const providers=a.querySelector('.hd-media-platforms');
+   if(original&&providers){
+     original.classList.remove('hd-instrumental-main');
+     original.classList.add('hd-platform','ga-v78124-mp3');
+     original.innerHTML='<span class="ga-v78124-note" aria-hidden="true">♫</span><span>MP3</span>';
+     original.setAttribute('aria-label','Reproduzir MP3 local com os controles de mídia');
+     original.title='MP3 local — reprodução independente';
+     providers.appendChild(original);
+   }
+   const heading=a.querySelector('#hdMetronome .hd-v78118-heading');
+   if(heading)heading.textContent='Metrônomo';
+   const check=a.querySelector('#hdSyncMp3Bpm');
+   if(check){
+     check.setAttribute('aria-label','Associar o MP3 local ao metrônomo');
+     const label=check.closest('label');
+     const span=label?.querySelector('span');
+     if(span)span.textContent='Associar MP3 ao metrônomo';
+   }
+   const start=a.querySelector('#hdMetroStart');
+   if(start){
+     start.title='Iniciar ou parar o metrônomo. Se Associar MP3 estiver marcado, toca também o áudio local.';
+     start.setAttribute('aria-label','Iniciar ou parar o metrônomo, com MP3 opcional');
+   }
+ };
+ // Listener depois do próprio toggle: reflete o estado real sem clonar botões.
+ document.addEventListener('click',e=>{
+   if(!e.target?.closest?.('#hdMetronomeToggle'))return;
+   const a=area();if(!a?.classList.contains('ga-v78124-ready'))return;
+   const p=panel();if(!p)return;
+   setMetronomeMode(!p.hidden);
+ });
+ // Se o modal for fechado por outro comando, interromper um estudo em curso.
+ document.addEventListener('click',e=>{
+   if(!e.target?.closest?.('#hdClose'))return;
+   if(area()?.classList.contains('ga-v78124-metro-only'))setMetronomeMode(false);
+ });
+})();
+</script>
 </body></html>
