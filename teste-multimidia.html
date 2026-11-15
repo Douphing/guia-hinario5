@@ -14807,6 +14807,13 @@ body:not(.index-mode):not(.welcome-mode){
   function schedule(){
     if(!state.running||!state.ctx)return;
     const ctx=state.ctx,look=.11;
+    // V7.81.22: MP3 e metrônomo compartilham a fase de reprodução,
+    // em vez de iniciarem duas linhas de tempo independentes.
+    if(window.GuiaMetroPhaseSync?.scheduleBeat({
+      ctx,look,bpm:state.bpm,tempo:effectiveBpm(),
+      beats:beatsPerMeasure(),accentEvery:state.mode==='two'?1:3,
+      click:clickAt
+    }))return;
     while(state.nextTime<ctx.currentTime+look){
       const accent=state.mode==='two'?(state.beat===0?2:1):(state.beat===0?2:(state.beat===3?1:0));
       clickAt(state.nextTime,accent);
@@ -15045,6 +15052,12 @@ body:not(.index-mode):not(.welcome-mode){
   function schedule(){
     if(!st.running||!st.ctx)return;
     const ctx=st.ctx,look=.11,p=currentPulse();
+    // V7.81.22: também vale para os compassos administrados pelo engine genérico.
+    if(window.GuiaMetroPhaseSync?.scheduleBeat({
+      ctx,look,bpm:st.bpm,tempo:effectiveBpm(),
+      beats:beatsPerMeasure(),accentEvery:p.accentEvery,
+      click:clickAt
+    }))return;
     while(st.nextTime<ctx.currentTime+look){
       const accent=st.beat===0?2:((p.accentEvery>0 && st.beat%p.accentEvery===0)?1:0);
       clickAt(st.nextTime,accent);
@@ -18100,4 +18113,150 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 
 </style>
+
+<!-- V7.81.22 TESTE — fase musical do metrônomo ancorada no MP3 local.
+     Não modifica o HTML visual aprovado. Não controla Spotify/YouTube. -->
+<script id="v78122-mp3-metronomo-phase-sync">
+(function(){
+  'use strict';
+  const P=window.GuiaMetronomeMp3Sync;
+  if(!P)return;
+
+  let active=null, stepIndex=null, previousTime=null, previousRate=null;
+  let allowEngineClick=false, revision=0;
+  const currentHymn=()=>String(window.__gaCurrentHymn?.num||'');
+  const startButton=()=>document.getElementById('hdMetroStart');
+  const linked=()=>!!(active && active.audio && active.audio.isConnected &&
+    active.hymn===currentHymn() && P.isLinked(active.hymn));
+  const reset=()=>{stepIndex=null;previousTime=null;previousRate=null;revision++};
+  const running=()=>!!startButton()?.classList.contains('is-running');
+  function engineClick(){
+    const b=startButton();
+    if(!b)return;
+    allowEngineClick=true;
+    try{b.click()}finally{allowEngineClick=false}
+  }
+  function ensureRunning(){if(!running())engineClick()}
+  function ensureStopped(){if(running())engineClick()}
+  function baseFor(cfg,num){
+    const n=Number(cfg?.mp3BaseBpm || (num==='74'?83:cfg?.bpm));
+    return Number.isFinite(n)&&n>0?n:80;
+  }
+  const oldInit=window.initHymnMetronomeUI;
+  window.initHymnMetronomeUI=function(cfg){
+    // init é chamado antes de inserir o MP3 e também quando se troca o hino.
+    active=null;reset();
+    if(typeof oldInit==='function')oldInit.apply(this,arguments);
+    const num=currentHymn();
+    active={hymn:num,audio:null,base:baseFor(cfg,num),
+      // Um deslocamento real do início musical pode ser adicionado à configuração.
+      offset:Number.isFinite(Number(cfg?.mp3BeatOffsetSeconds))?
+        Number(cfg.mp3BeatOffsetSeconds):0};
+  };
+
+  const oldAttach=P.attach;
+  P.attach=function(audio,num){
+    if(typeof oldAttach==='function')oldAttach.apply(this,arguments);
+    if(!active || String(num)!==active.hymn)return;
+    active.audio=audio;reset();
+    const mine=active;
+    function relevant(){return active===mine && mine.audio===audio &&
+      audio.isConnected && mine.hymn===currentHymn()}
+    audio.addEventListener('playing',()=>{
+      if(!relevant()||!linked())return;
+      reset();ensureRunning();
+    });
+    audio.addEventListener('pause',()=>{
+      if(!relevant()||!linked())return;
+      reset();ensureStopped();
+    });
+    audio.addEventListener('ended',()=>{
+      if(!relevant()||!linked())return;
+      reset();ensureStopped();
+    });
+    audio.addEventListener('seeking',()=>{if(relevant())reset()});
+    audio.addEventListener('seeked',()=>{
+      if(!relevant())return;
+      reset();if(linked()&&!audio.paused)ensureRunning();
+    });
+    audio.addEventListener('ratechange',()=>{if(relevant())reset()});
+    audio.addEventListener('waiting',()=>{if(relevant())reset()});
+  };
+
+  // Durante o acoplamento, o botão único inicia/pausa os DOIS reprodutores.
+  // Quando ainda não houver MP3 aberto, mantém o comportamento independente antigo.
+  document.addEventListener('click',function(ev){
+    const b=ev.target?.closest?.('#hdMetroStart');
+    if(!b || allowEngineClick || !linked())return;
+    ev.preventDefault();ev.stopImmediatePropagation();
+    const audio=active.audio;
+    if(!audio.paused && !audio.ended){
+      audio.pause();ensureStopped();reset();return;
+    }
+    // Desbloqueia o AudioContext no gesto direto; os cliques ficam
+    // suspensos até o evento real 'playing' do elemento de áudio.
+    reset();ensureRunning();
+    const p=audio.play();
+    if(p&&typeof p.catch==='function')p.catch(()=>{
+      if(active?.audio===audio){ensureStopped();reset()}
+    });
+  },true);
+
+  document.addEventListener('change',function(ev){
+    if(ev.target?.id!=='hdSyncMp3Bpm')return;
+    reset();
+    if(linked() && active.audio && !active.audio.paused){
+      ensureRunning();
+    }
+  },true);
+
+  // Retorna true se o relógio do MP3 está no comando. O engine antigo
+  // permanece o único gerador dos timbres, pulsos, acentos e volume.
+  window.GuiaMetroPhaseSync={
+    reset,
+    scheduleBeat({ctx,look,bpm,tempo,beats,accentEvery,click}){
+      if(!linked())return false;
+      const a=active.audio;
+      if(a.paused||a.ended||a.seeking||a.readyState<2)return true;
+      if(!Number.isFinite(tempo)||tempo<=0||!Number.isFinite(bpm)||bpm<=0)return true;
+      if(!Number.isFinite(a.currentTime))return true;
+
+      const mediaTime=Math.max(0,a.currentTime-active.offset);
+      // Na trilha original o pulso avança a "base" por minuto;
+      // o fator dos compassos compostos é herdado do engine ativo.
+      const beatFactor=tempo/bpm;
+      const progress=mediaTime*active.base*beatFactor/60;
+      const mediaRate=Number(a.playbackRate)||1;
+      if(previousTime!==null && (
+        mediaTime<previousTime-.06 ||
+        Math.abs(mediaTime-previousTime)>1.5 ||
+        Math.abs(mediaRate-previousRate)>.025))stepIndex=null;
+      previousTime=mediaTime;previousRate=mediaRate;
+      if(stepIndex===null){
+        // Primeiro tempo próximo do zero pode soar junto à entrada do MP3.
+        // Se a faixa começou mais adiante, começa no próximo pulso correto.
+        stepIndex=progress<.18?0:Math.ceil(progress-.025);
+      }
+      const beatPeriod=60/tempo;
+      const minStep=Math.max(0,Math.ceil(progress-.025));
+      if(stepIndex<minStep)stepIndex=minStep;
+      if(stepIndex>progress+Math.max(1,beats)*2)stepIndex=Math.ceil(progress);
+      let scheduled=0;
+      while(scheduled<3){
+        const delay=(stepIndex-progress)*beatPeriod;
+        if(delay>look)break;
+        if(delay>=-.04){
+          const index=((stepIndex%beats)+beats)%beats;
+          const accent=index===0?2:(accentEvery>0&&index%accentEvery===0?1:0);
+          const at=Math.max(ctx.currentTime+.006,ctx.currentTime+delay);
+          click(at,accent);
+        }
+        stepIndex++;scheduled++;
+      }
+      return true;
+    }
+  };
+})();
+</script>
+
 </body></html>
