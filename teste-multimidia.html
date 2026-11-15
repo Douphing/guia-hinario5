@@ -18893,8 +18893,9 @@ function getCtx(){
 }
 function syncUI(){
  const b=button();if(!b)return;
- b.textContent=loading?'Carregando MP3…':playing?'■ Parar':'▶ Iniciar';
+ b.textContent=playing?'■ Parar':'▶ Iniciar';
  b.classList.toggle('is-running',playing);b.disabled=loading;
+ b.setAttribute('aria-busy',loading?'true':'false');
  b.title=pilotError?pilotError:'MP3 e cliques programados no mesmo relógio de áudio (piloto 74/76)';
 }
 function detachBus(){
@@ -19052,6 +19053,120 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{if(e.key==='Escape')stop(false)},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden && (playing||loading))stop(false)});
 window.addEventListener('pagehide',()=>{stop(true)},true);
+})();
+</script>
+
+
+<!-- V7.81.28 TESTE — restauração determinística do BPM, ajuste fino acessível
+     em celulares e status de carregamento sem texto no botão. -->
+<style id="v78128-bpm-modal-refinamentos">
+  /* Evita caracteres fora da faixa no controle numérico. */
+  #hymnDetail #hdMetroBpmInput {font-variant-numeric:tabular-nums;}
+  #hymnDetail #hdMetroStart[aria-busy="true"] {cursor:progress;opacity:.88;}
+  /* Ajuste avançado dentro da área real do modal: nenhuma linha pode escapar. */
+  #hymnDetail .hd-card {overscroll-behavior:contain;}
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine {
+    min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
+    margin-bottom:5px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+    width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+    display:grid!important;grid-template-columns:auto 34px minmax(38px,1fr) 34px auto 34px!important;
+    align-items:center!important;justify-items:center!important;column-gap:5px!important;row-gap:0!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl button{
+    width:34px!important;min-width:0!important;max-width:34px!important;min-height:30px!important;
+    padding:0!important;box-sizing:border-box!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl output{
+    min-width:0!important;width:100%!important;white-space:nowrap!important;text-align:center!important;
+  }
+  @media(max-width:420px){
+    #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+      grid-template-columns:auto 30px minmax(35px,1fr) 30px auto 30px!important;column-gap:3px!important;
+      font-size:10px!important;
+    }
+    #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl button{
+      width:30px!important;max-width:30px!important;min-height:30px!important;height:30px!important;
+    }
+    #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-note{
+      font-size:10px!important;white-space:nowrap!important;
+    }
+  }
+  @media(max-width:350px){
+    #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+      grid-template-columns:auto 28px minmax(32px,1fr) 28px auto 28px!important;column-gap:2px!important;
+    }
+    #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl button{
+      width:28px!important;max-width:28px!important;min-height:28px!important;height:28px!important;
+    }
+  }
+</style>
+<script id="v78128-inicializacao-bpm-e-modal">
+(function(){
+  'use strict';
+  const M=typeof MULTIMIDIA!=='undefined'?MULTIMIDIA:{};
+  // Captura uma vez os dados originais dos hinos, antes das interações.
+  // Uma troca de BPM não se transforma no padrão da próxima abertura.
+  const defaults=new Map(Object.entries(M).filter(([,m])=>m&&m.metronomo).map(([n,m])=>{
+    const c=m.metronomo;return [String(n),{bpm:Number(c.bpm),min:Number(c.min),max:Number(c.max)}];
+  }));
+  const current=()=>String(window.__gaCurrentHymn?.num||'');
+  const clamp=(v,l,h)=>Math.min(h,Math.max(l,v));
+  function stableConfig(cfg){
+    if(!cfg)return cfg;
+    const id=current(),saved=defaults.get(id);
+    const lo=Number.isFinite(saved?.min)?saved.min:Number(cfg.min);
+    const hi=Number.isFinite(saved?.max)?saved.max:Number(cfg.max);
+    const min=Number.isFinite(lo)?lo:40;
+    const max=Number.isFinite(hi)&&hi>=min?hi:180;
+    const original=id==='74'?84:(Number.isFinite(saved?.bpm)?saved.bpm:Number(cfg.bpm));
+    const bpm=clamp(Math.round(Number.isFinite(original)?original:min),min,max);
+    // Não modificar MULTIMIDIA nem o objeto original de cada hino.
+    return {...cfg,bpm,min,max};
+  }
+  const oldBuild=window.buildHymnMetronomeHtml;
+  if(typeof oldBuild==='function'){
+    window.buildHymnMetronomeHtml=function(cfg){return oldBuild.call(this,stableConfig(cfg));};
+  }
+  const oldInit=window.initHymnMetronomeUI;
+  if(typeof oldInit==='function'){
+    window.initHymnMetronomeUI=function(cfg){
+      const safe=stableConfig(cfg);
+      const result=oldInit.call(this,safe);
+      // Protege contra qualquer valor residual de um hino anterior.
+      const field=document.getElementById('hdMetroBpmInput');
+      const summary=document.getElementById('hdMetronomeSummaryBpm');
+      if(field&&safe){
+        field.min=String(safe.min);field.max=String(safe.max);
+        if(Number(field.value)!==safe.bpm)field.value=String(safe.bpm);
+      }
+      if(summary&&safe&&Number(summary.textContent)!==safe.bpm)summary.textContent=String(safe.bpm);
+      return result;
+    };
+  }
+  // O próprio card do modal é o contêiner com rolagem. Revela TODO o ajuste fino
+  // quando ele é expandido, mesmo em telas Android de menor altura.
+  function revealFine(details){
+    if(!details||!details.open||!details.isConnected)return;
+    const card=details.closest('.hd-card');if(!card)return;
+    const end=details.getBoundingClientRect().bottom;
+    const cardEnd=card.getBoundingClientRect().bottom;
+    const delta=Math.ceil(end-(cardEnd-20));
+    if(delta>0)card.scrollTop+=delta;
+  }
+  document.addEventListener('toggle',function(e){
+    const d=e.target;if(!d?.matches?.('#hdMetronomePanel>.ga-v78123-fine')||!d.open)return;
+    requestAnimationFrame(()=>revealFine(d));
+    setTimeout(()=>revealFine(d),130);
+  },true);
+  // Fallback para navegadores que não propagam toggle em captura.
+  document.addEventListener('click',function(e){
+    const s=e.target?.closest?.('#hdMetronomePanel>.ga-v78123-fine summary');
+    if(!s)return;
+    const d=s.parentElement;
+    setTimeout(()=>revealFine(d),80);
+  },true);
 })();
 </script>
 </body></html>
