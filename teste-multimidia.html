@@ -1,3 +1,4 @@
+<!-- V7.81.20 TESTE: desktop lateral restaurado, slider BPM dispensado, MP3 segue BPM nos Hinos 1–210 usando referência individual; H74 base 83 BPM; produção intacta. -->
 <!-- V7.81.16 TESTE: tonalidade e andamento exibidos lado a lado no cabeçalho do metrônomo, mantendo o BPM padrão de cada hino. Hino 74: padrão 84 BPM (acima da média aritmética 80 da faixa 72–88); sincronização MP3↔BPM continua restrita ao Hino 74. Somente UI, sem modificar produção. -->
 <!-- V7.81.14 TESTE: Hino 74 metrônomo inicia na média EXATA (72+88)/2=80 BPM, ajuste por slider entre mínimo e máximo; MP3 orquestral mantém base gravada em 83 BPM e acompanha BPM em velocidade relativa; produção intacta. -->
 <!-- V7.81.13 TESTE: Hino 74 Orquestra V3 83 BPM, fermatas sem cortes, graves reforçados e MP3 acompanha BPM opcional; produção intacta. -->
@@ -17111,7 +17112,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
  const area=document.getElementById('hdMediaArea');
  const secondary=d?.querySelector('.hd-secondary-actions');
  if(!d||!card||!area||!secondary)return;
- const mediaQuery=window.matchMedia('(min-width:960px) and (max-height:820px)');
+ const mediaQuery=window.matchMedia('(min-width:960px)');
  const CLASS='ga-v773-metro-aside';
  let scheduled=false;
  function positionPanel(){
@@ -17506,87 +17507,90 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 #hymnDetail .hd-mp3-bpm-sync small{margin-left:auto;font-size:10px;font-weight:500;color:#6a7783;white-space:nowrap;}
 @media (max-width:470px){#hymnDetail .hd-mp3-bpm-sync{font-size:10px;gap:4px;}}
 </style>
-<script id="v78114-hino74-metro-mp3-sync">
+<script id="v78120-mp3-bpm-sync-universal">
 (function(){
   'use strict';
-  const HINO='74', BASE_BPM=83, DEFAULT_BPM=84;
-  let linked=false, bpm=DEFAULT_BPM, audio=null, originalRate=1;
-  const getHino=()=>String(window.__gaCurrentHymn?.num||'');
-  const rateDisplay=()=>document.getElementById('hdMp3BpmRate');
+  // V7.81.20: MP3 acompanha BPM para todos os hinos com áudio local.
+  // O Hino 74 tem MP3 gerado a 83 BPM e andamento inicial aprovado de 84 BPM.
+  // Os demais utilizam seu BPM cadastrado como andamento-base, salvo
+  // metadado mp3BaseBpm explícito quando disponível.
+  const SPECIAL_BASE={'74':83};
+  const SPECIAL_DEFAULT={'74':84};
+  const KEY='guia-hinario5-velocidade-mp3-v1';
+  let state={num:'',bpm:0,baseBpm:0,linked:false,audio:null,manualRate:1};
+  const hymn=()=>String(window.__gaCurrentHymn?.num||'');
+  const clamp=(value,lo,hi)=>Math.max(lo,Math.min(hi,value));
+  const textRate=()=>document.getElementById('hdMp3BpmRate');
+  const boxCheck=()=>document.getElementById('hdSyncMp3Bpm');
+  const getMedia=num=>{
+    try{return typeof MULTIMIDIA!=='undefined'?MULTIMIDIA[String(num)]:null;}catch(e){return null;}
+  };
+  const savedRate=()=>{
+    let rate=Number(window.__guiaMp3Speed)||1;
+    try{const v=Number(localStorage.getItem(KEY));if(Number.isFinite(v)&&v>=.5&&v<=3)rate=v;}catch(e){}
+    return Number.isFinite(rate)&&rate>=.5&&rate<=3?rate:1;
+  };
+  function targetRate(){return clamp(state.bpm/state.baseBpm,.5,2);}
   function apply(){
-    if(getHino()!==HINO)return;
-    const target=linked ? Math.max(0.5,Math.min(2,bpm/BASE_BPM)) : originalRate;
-    // A indicação visual atualiza mesmo antes de abrir o MP3.
-    if(audio && audio.isConnected){
-      try{if('preservesPitch' in audio)audio.preservesPitch=true;}catch(e){}
-      try{if('webkitPreservesPitch' in audio)audio.webkitPreservesPitch=true;}catch(e){}
-      if(Math.abs(audio.playbackRate-target)>0.0005)audio.playbackRate=target;
+    if(!state.num||hymn()!==state.num)return;
+    const factor=(state.linked&&state.baseBpm>0)?targetRate():state.manualRate;
+    const a=state.audio;
+    if(a&&a.isConnected){
+      try{if('preservesPitch' in a)a.preservesPitch=true;}catch(e){}
+      try{if('webkitPreservesPitch' in a)a.webkitPreservesPitch=true;}catch(e){}
+      if(Math.abs(a.playbackRate-factor)>.0005)a.playbackRate=factor;
     }
-    const info=rateDisplay();if(info)info.textContent=linked ? `${bpm} BPM · ${target.toFixed(2).replace('.',',')}×` : 'velocidade livre';
+    const info=textRate();
+    if(info)info.textContent=state.linked?`${state.bpm} BPM · ${factor.toFixed(2).replace('.',',')}×`:'velocidade manual';
   }
   window.GuiaMetronomeMp3Sync={
-    isLinked(num){return getHino()===HINO && String(num)===HINO && linked;},
+    isLinked(num){return String(num)===state.num&&hymn()===state.num&&state.linked;},
     attach(element,num){
-      if(String(num)!==HINO){audio=null;return;}
-      audio=element;
-      originalRate=Number(window.__guiaMp3Speed)||1;
-      if(!Number.isFinite(originalRate)||originalRate<0.5||originalRate>3)originalRate=1;
-      try{const s=Number(localStorage.getItem('guia-hinario5-velocidade-mp3-v1'));
-        if(Number.isFinite(s)&&s>=0.5&&s<=3)originalRate=s;}catch(e){}
+      if(String(num)!==state.num){state.audio=null;return;}
+      state.audio=element;
+      // O player já carregou a preferência de velocidade manual do usuário.
+      state.manualRate=savedRate();
       apply();
     }
   };
-  const previousInit=window.initHymnMetronomeUI;
+  const originalInit=window.initHymnMetronomeUI;
   window.initHymnMetronomeUI=function(cfg){
-    linked=getHino()===HINO;
-    bpm=(getHino()===HINO) ? DEFAULT_BPM : Math.round(Number(cfg?.bpm)||BASE_BPM);
-    // Preferência musical aprovada: inicia em 84 BPM (acima da média exata 80), dentro de 72–88.
-    if(getHino()===HINO && cfg)cfg.bpm=bpm;
-    audio=null;
-    if(typeof previousInit==='function')previousInit.apply(this,arguments);
-    if(getHino()!==HINO)return;
-    const box=document.querySelector('#hdMetronomePanel .hd-v728-tertiary');
-    if(!box)return;
-    // O ajuste fica no painel existente, sem criar controles duplicados na mídia.
-    const label=document.createElement('label');label.className='hd-mp3-bpm-sync';
-    label.innerHTML='<input id="hdSyncMp3Bpm" type="checkbox" checked aria-label="MP3 segue andamento do metrônomo">'+
-      '<span>MP3 acompanha o andamento</span><small id="hdMp3BpmRate">84 BPM · 1,01×</small>';
-    box.prepend(label);
-    // Barra de andamento: faixa completa 72–88, com valor inicial aprovado 84 BPM.
-    const group=document.querySelector('#hdMetronomePanel .hd-v728-bpm-group');
-    if(group){
-      const rail=document.createElement('label');
-      rail.className='hd-v78114-bpm-slider';
-      rail.title=`Deslize para ajustar: mínimo ${cfg.min}, início ${bpm}, máximo ${cfg.max} BPM`;
-      rail.innerHTML=`<input id="hdMetroStudySlider" type="range" min="${cfg.min}" max="${cfg.max}" step="1" value="${bpm}" aria-label="Andamento do Hino 74 em BPM; deslize entre ${cfg.min} e ${cfg.max}">`;
-      group.appendChild(rail);
-      const slider=rail.querySelector('input');
-      slider.addEventListener('input',()=>{
-        const n=document.getElementById('hdMetroBpmInput');
-        if(n){n.value=slider.value;n.dispatchEvent(new Event('change',{bubbles:true}));}
-        requestAnimationFrame(update);
-      });
-    }
-    label.querySelector('input').addEventListener('change',function(){
-      linked=this.checked;
+    const num=hymn();
+    if(cfg&&SPECIAL_DEFAULT[num])cfg.bpm=SPECIAL_DEFAULT[num];
+    state={
+      num,bpm:Math.round(Number(cfg?.bpm)||108),
+      baseBpm:Number(cfg?.mp3BaseBpm||SPECIAL_BASE[num]||cfg?.bpm)||108,
+      linked:!!getMedia(num)?.audio, audio:null, manualRate:savedRate()
+    };
+    if(typeof originalInit==='function')originalInit.apply(this,arguments);
+    // O botão BPM e os campos numéricos já existem no metrônomo.
+    // Não inserir deslizante adicional de andamento.
+    if(!state.linked)return;
+    const row=document.querySelector('#hdMetronomePanel .hd-v728-tertiary');
+    if(!row)return;
+    const label=document.createElement('label');
+    label.className='hd-mp3-bpm-sync';
+    label.innerHTML='<input id="hdSyncMp3Bpm" type="checkbox" checked aria-label="MP3 acompanha o andamento do metrônomo">'+
+      '<span>MP3 acompanha o andamento</span><small id="hdMp3BpmRate" aria-live="polite"></small>';
+    row.prepend(label);
+    boxCheck()?.addEventListener('change',function(){
+      state.linked=this.checked;
+      if(!state.linked)state.manualRate=savedRate();
       apply();
     });
-    const update=()=>{
-      if(getHino()!==HINO)return;
-      const value=Number(document.getElementById('hdMetronomeSummaryBpm')?.textContent);
-      if(Number.isFinite(value)&&value>=Number(cfg.min)&&value<=Number(cfg.max))bpm=value;
-      const slider=document.getElementById('hdMetroStudySlider');
-      if(slider && slider.value!==String(bpm))slider.value=String(bpm);
+    const syncFromControl=()=>{
+      if(hymn()!==state.num)return;
+      const n=Number(document.getElementById('hdMetronomeSummaryBpm')?.textContent);
+      if(Number.isFinite(n)&&n>0)state.bpm=n;
       apply();
     };
-    // Os handlers antigos rodam primeiro. No próximo quadro, ler o BPM já atualizado.
-    ['hdMetroMinus','hdMetroPlus','hdMetroReset'].forEach(id=>{
-      document.getElementById(id)?.addEventListener('click',()=>requestAnimationFrame(update));
-    });
-    const input=document.getElementById('hdMetroBpmInput');
-    input?.addEventListener('change',()=>requestAnimationFrame(update));
-    input?.addEventListener('keydown',e=>{if(e.key==='Enter')requestAnimationFrame(update);});
-    update();
+    // A biblioteca do metrônomo atualiza o BPM imediatamente no clique.
+    ['hdMetroMinus','hdMetroPlus','hdMetroReset'].forEach(id=>
+      document.getElementById(id)?.addEventListener('click',syncFromControl));
+    const field=document.getElementById('hdMetroBpmInput');
+    field?.addEventListener('change',syncFromControl);
+    field?.addEventListener('keydown',e=>{if(e.key==='Enter')requestAnimationFrame(syncFromControl);});
+    syncFromControl();
   };
 })();
 </script>
@@ -17929,5 +17933,47 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
     margin-right:2px!important;
   }
 }
+</style>
+<style id="v78120-metrônomo-lateral-e-sem-slider">
+
+/* V7.81.20: retornar o painel expandido à coluna livre do desktop.
+   Não mover os nós do DOM nem cobrir ações/registros. */
+#hymnDetail #hdMetronome .hd-v78114-bpm-slider{display:none!important}
+@media(min-width:960px){
+ #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) #hdMetronome{
+   overflow:visible!important;
+ }
+ #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) #hdMetronome #hdMetronomePanel{
+   position:absolute!important;
+   left:var(--ga-v773-left)!important;
+   top:var(--ga-v773-top)!important;
+   width:var(--ga-v773-width)!important;
+   max-width:calc(100% - 34px)!important;
+   height:auto!important;
+   margin:0!important;
+   z-index:16!important;
+   background:#fffaf0!important;
+   border:1px solid #dfd2b7!important;
+   border-radius:11px!important;
+   box-shadow:0 4px 15px rgba(60,44,22,.11)!important;
+   box-sizing:border-box!important;
+ }
+ /* Com o painel na coluna esquerda, o fluxo da mídia volta a ter altura curta. */
+ #hymnDetail.open.media-open.ga-v773-metro-aside:not(.ga-video-floating) > .hd-card{
+   overflow-x:hidden!important;
+   overflow-y:auto!important;
+   scrollbar-width:thin!important;
+ }
+}
+/* Cabeçalho aprovado: título e dados no mesmo eixo à direita do ícone. */
+#hymnDetail #hdMetronome .hd-metronome-toggle{column-gap:8px!important;row-gap:1px!important;padding:5px 9px!important}
+#hymnDetail #hdMetronome .hd-v78118-heading{align-self:end!important;line-height:1.12!important}
+#hymnDetail #hdMetronome .hd-v78118-facts{align-self:start!important;gap:2px 8px!important;line-height:1.12!important}
+#hymnDetail #hdMetronome #hdMetronomeState{align-self:center!important}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .hd-metronome-toggle{padding:5px 7px!important;row-gap:1px!important}
+ #hymnDetail #hdMetronome .hd-v78118-facts{gap:2px 6px!important}
+}
+
 </style>
 </body></html>
