@@ -14718,7 +14718,7 @@ body:not(.index-mode):not(.welcome-mode){
               aria-label="Abrir partitura do Hino 125 em tela cheia"
               title="Toque para ampliar a partitura">
               <img src="${SCORE_THUMB_125}" alt="Miniatura da partitura do Hino 125">
-              <span>Partitura · ampliar</span>
+              <span>Partitura</span>
             </div>
           </div>
         </div>
@@ -15158,7 +15158,7 @@ body:not(.index-mode):not(.welcome-mode){
               aria-label="Abrir ${scoreAttr} em tela cheia"
               title="Toque para ampliar a partitura">
               <img src="${cfg.partituraImagem}" alt="Miniatura da ${scoreAttr}">
-              <span>Partitura${scoreCount>1?' · '+scoreCount+' págs.':''} · ampliar</span>
+              <span class="ga-v78126-thumb-name" aria-hidden="true">Partitura</span>
             </div>` : '';
     const noScoreClass=cfg.partituraImagem?'':' no-score';
 
@@ -17907,7 +17907,7 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
   html=html.replace(/<span class="hd-v78117-heading">[\s\S]*?<span class="hd-metronome-state"/,
   heading+'<span class="hd-metronome-state"');
   // A partitura continua clicável; apenas encurta o texto do atalho.
-  html=html.replace('<span>Partitura · ampliar</span>','<span>Partitura ↗</span>');
+  html=html.replace('<span>Partitura</span>','<span>Partitura ↗</span>');
   return html;
  };
 })();
@@ -18711,6 +18711,155 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    // Somente para validação; não altera a configuração do usuário.
    nominalVerseSeconds
  };
+})();
+</script>
+
+
+<!-- V7.81.26 TESTE — miniatura rotulada só como "Partitura";
+     ajuste fino ocupa toda a largura, abre sem sobrepor controles. -->
+<style id="v78126-miniatura-e-ajuste-fino-responsivo">
+/* Legenda reduzida a "Partitura", sem contagem de páginas ou convite de ampliar.
+   A ação de ampliar permanece no ícone e no aria-label existente. */
+#hymnDetail #hdMetronome .hd-v725-thumb{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  flex-flow:column nowrap!important;position:relative!important;
+  box-sizing:border-box!important;padding:3px!important;gap:0!important;
+  min-height:0!important;max-height:94px!important;
+  width:72px!important;max-width:72px!important;
+  overflow:hidden!important;cursor:zoom-in!important;
+}
+#hymnDetail #hdMetronome .hd-v725-thumb img{
+  display:block!important;width:100%!important;height:62px!important;
+  min-width:0!important;max-height:62px!important;object-fit:contain!important;
+}
+#hymnDetail #hdMetronome .hd-v725-thumb span{
+  display:block!important;
+  margin:2px 0 0!important;
+  padding:0!important;
+  width:100%!important;
+  font:700 9px/1.15 system-ui,Arial,sans-serif!important;
+  color:#6b5941!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  text-overflow:clip!important;
+  overflow:hidden!important;
+}
+/* Reduz a coluna da partitura, devolvendo largura aos controles. */
+#hymnDetail #hdMetronome .hd-v728-grid{
+  grid-template-columns:minmax(0,1fr) 72px!important;
+  gap:8px!important;align-items:start!important;
+}
+#hymnDetail #hdMetronome.no-score .hd-v728-grid{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+/* O ajuste fino é deslocado para fora da grade interna pelo script abaixo.
+   Ele ocupa a largura total do painel e não compete com o volume. */
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine{
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  min-width:0!important;margin:6px 0 0!important;
+  padding:0!important;overflow:visible!important;
+  font:600 11px/1.25 Arial,sans-serif!important;
+  scroll-margin-bottom:14px!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine summary{
+  display:flex!important;align-items:center!important;min-height:25px!important;
+  max-width:max-content!important;color:#685a44!important;
+  cursor:pointer!important;padding:3px 2px!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine[open]{
+  border-top:1px solid #e6d9bf!important;padding-top:4px!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+  display:flex!important;justify-content:flex-start!important;
+  align-items:center!important;flex-wrap:wrap!important;
+  column-gap:8px!important;row-gap:7px!important;
+  margin-top:3px!important;min-width:0!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl button{
+  min-height:30px!important;height:30px!important;min-width:34px!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl output{
+  min-width:52px!important;font-size:12px!important;font-weight:700!important;
+}
+#hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-note{
+  font-size:10px!important;
+}
+/* A expansão pertence ao fluxo do documento, nunca fica sobreposta. */
+#hymnDetail #hdMetronomePanel{
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;
+}
+@media(max-width:700px){
+  #hymnDetail #hdMetronome .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 54px!important;gap:6px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v725-thumb{
+    width:54px!important;max-width:54px!important;
+    height:76px!important;max-height:76px!important;padding:2px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v725-thumb img{
+    height:53px!important;max-height:53px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine{
+    margin-top:3px!important;font-size:10px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+    gap:6px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl button{
+    height:29px!important;min-height:29px!important;min-width:33px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl output{
+    min-width:44px!important;
+  }
+  /* Nunca forçar uma altura fixa quando o ajuste fino é aberto. */
+  #hymnDetail #hdMetronome .hd-metronome-panel{
+    padding-bottom:9px!important;
+  }
+}
+@media(max-width:350px){
+  #hymnDetail #hdMetronome .hd-v725-thumb{
+    width:48px!important;max-width:48px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v725-thumb span{
+    font-size:8px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v728-grid{
+    grid-template-columns:minmax(0,1fr) 48px!important;
+  }
+  #hymnDetail #hdMetronomePanel>.ga-v78123-fine .ga-v78123-fine-ctrl{
+    gap:4px!important;
+  }
+}
+</style>
+<script id="v78126-ajuste-fino-full-width">
+(function(){
+  'use strict';
+  const prior=window.initHymnMetronomeUI;
+  if(typeof prior!=='function')return;
+  window.initHymnMetronomeUI=function(){
+    const result=prior.apply(this,arguments);
+    const panel=document.getElementById('hdMetronomePanel');
+    const d=panel?.querySelector('.ga-v78123-fine');
+    if(d){
+      // Mantém o mesmo elemento, listeners, offset e valores salvos.
+      // Apenas tira o controle avançado da coluna estreita do MP3/volume.
+      panel.appendChild(d);
+      d.open=false;
+      if(!d.dataset.gaV78126Bound){
+        d.dataset.gaV78126Bound='1';
+        d.addEventListener('toggle',function(){
+          if(!this.open)return;
+          requestAnimationFrame(()=>{
+            if(this.isConnected && this.open){
+              try{this.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'})}catch(_e){}
+            }
+          });
+        });
+      }
+    }
+    return result;
+  };
 })();
 </script>
 
