@@ -18863,4 +18863,195 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 })();
 </script>
 
+<script id="v78127-relogio-unico-piloto74-76">
+/* V7.81.27: PILOTO 74/76. Mesma AudioContext para AudioBufferSource e clique.
+   Sem alterar as mídias independentes e sem prometer sincronia para outros hinos.
+   Mapa gerado da partitura MuseScore e dos tempos de respiração/fermatas usados no MP3.
+   AudioBufferSource.playbackRate altera altura tonal; versão de teste musical. */
+(function(){
+'use strict';
+const MAPS={"74":{"baseBpm":83,"duration":166.373878,"sha256":"7251e574b86ace32d2b25322d2a445298be4632303232f395fa9f2059c20962b","beats":[[0.0,2],[0.7229,0],[1.4458,0],[2.1687,0],[2.8916,2],[3.6145,0],[4.3373,0],[5.1252,0],[5.8481,2],[6.571,0],[7.2939,0],[8.0168,0],[8.7397,2],[9.4626,0],[10.1855,0],[10.9084,0],[11.6313,2],[12.3542,0],[13.077,0],[13.7999,0],[14.5228,2],[15.2457,0],[15.9686,0],[16.7565,0],[17.4794,2],[18.2023,0],[18.9252,0],[19.6481,0],[20.371,2],[21.0939,0],[21.8167,0],[22.5396,0],[23.2625,2],[23.9854,0],[24.7083,0],[25.4312,0],[26.1541,2],[26.877,0],[27.5999,0],[28.3228,0],[29.1107,2],[29.8336,0],[30.5564,0],[31.2793,0],[32.0022,2],[32.7251,0],[33.448,0],[34.1709,0],[34.9588,2],[35.6817,0],[36.4046,0],[37.1275,0],[37.8504,2],[38.5733,0],[39.2961,0],[40.084,0],[40.8069,2],[41.5298,0],[42.2527,0],[42.9756,0],[43.6985,2],[44.4214,0],[45.1443,0],[45.8672,0],[47.5301,2],[48.253,0],[48.9758,0],[49.6987,0],[50.4216,2],[51.1445,0],[51.8674,0],[52.6553,0],[53.3782,2],[54.1011,0],[54.824,0],[55.5469,0],[56.2698,2],[56.9927,0],[57.7155,0],[58.4384,0],[59.1613,2],[59.8842,0],[60.6071,0],[61.33,0],[62.0529,2],[62.7758,0],[63.4987,0],[64.2866,0],[65.0095,2],[65.7323,0],[66.4552,0],[67.1781,0],[67.901,2],[68.6239,0],[69.3468,0],[70.0697,0],[70.7926,2],[71.5155,0],[72.2384,0],[72.9613,0],[73.6842,2],[74.407,0],[75.1299,0],[75.8528,0],[76.6407,2],[77.3636,0],[78.0865,0],[78.8094,0],[79.5323,2],[80.2552,0],[80.9781,0],[81.701,0],[82.4889,2],[83.2117,0],[83.9346,0],[84.6575,0],[85.3804,2],[86.1033,0],[86.8262,0],[87.6141,0],[88.337,2],[89.0599,0],[89.7828,0],[90.5057,0],[91.2286,2],[91.9514,0],[92.6743,0],[93.3972,0],[95.0601,2],[95.783,0],[96.5059,0],[97.2288,0],[97.9517,2],[98.6746,0],[99.3975,0],[100.1854,0],[100.9083,2],[101.6311,0],[102.354,0],[103.0769,0],[103.7998,2],[104.5227,0],[105.2456,0],[105.9685,0],[106.6914,2],[107.4143,0],[108.1372,0],[108.8601,0],[109.583,2],[110.3058,0],[111.0287,0],[111.8166,0],[112.5395,2],[113.2624,0],[113.9853,0],[114.7082,0],[115.4311,2],[116.154,0],[116.8769,0],[117.5998,0],[118.3227,2],[119.0455,0],[119.7684,0],[120.4913,0],[121.2142,2],[121.9371,0],[122.66,0],[123.3829,0],[124.1708,2],[124.8937,0],[125.6166,0],[126.3395,0],[127.0623,2],[127.7852,0],[128.5081,0],[129.231,0],[130.0189,2],[130.7418,0],[131.4647,0],[132.1876,0],[132.9105,2],[133.6334,0],[134.3563,0],[135.1442,0],[135.867,2],[136.5899,0],[137.3128,0],[138.0357,0],[138.7586,2],[139.4815,0],[140.2044,0],[140.9273,0],[141.6502,2],[142.3731,0],[143.096,0],[143.8189,0],[144.5417,2],[145.2646,0],[145.9875,0],[146.7104,0],[147.4333,2],[148.1562,0],[148.8791,0],[149.602,2],[150.3249,2],[151.0478,0],[151.7707,0],[152.4936,0],[153.2164,2],[153.9393,0],[154.6622,0],[155.3851,0],[156.108,2],[156.8309,0],[157.5538,0],[158.3417,0],[159.1296,2],[159.8525,0],[160.5754,0],[161.2983,0],[162.0211,2],[162.744,0],[163.4669,0],[164.1898,0]],"verseStarts":[0.0,47.5301,95.0601],"reference":"partitura MSCX + gerador orquestral + MP3 aprovado","holdCount":19},"76":{"baseBpm":120,"duration":148.95,"sha256":"9985f5c877d8252afe8bde439746a51f8f6477103c38654091f462115c2e015f","beats":[[0.0,2],[0.5,0],[1.0,0],[1.5,1],[2.0,0],[2.5,0],[3.0,2],[3.5,0],[4.0,0],[4.5,1],[5.0,0],[5.5,0],[6.0,2],[6.5,0],[7.0,0],[7.5,1],[8.0,0],[8.5,0],[9.0,2],[9.5,0],[10.0,0],[10.5,1],[11.0,0],[11.5,0],[12.0,2],[12.5,0],[13.0,0],[13.5,1],[14.0,0],[14.5,0],[15.0,2],[15.5,0],[16.0,0],[16.5,1],[17.0,0],[17.5,0],[18.065,2],[18.565,0],[19.065,0],[19.565,1],[20.065,0],[20.565,0],[21.065,2],[21.565,0],[22.065,0],[22.565,1],[23.065,0],[23.63,0],[24.195,2],[24.695,0],[25.195,0],[25.695,1],[26.195,0],[26.695,0],[27.195,2],[27.695,0],[28.195,0],[28.695,1],[29.195,0],[29.695,0],[30.195,2],[30.695,0],[31.195,0],[31.695,1],[32.195,0],[32.695,0],[33.195,2],[33.695,0],[34.195,0],[34.695,1],[35.195,0],[35.76,0],[36.26,2],[36.76,0],[37.26,0],[37.76,1],[38.26,0],[38.76,0],[39.26,2],[39.76,0],[40.26,0],[40.76,1],[42.16,0],[42.66,0],[43.16,2],[43.66,0],[44.16,0],[44.66,1],[45.16,0],[45.66,0],[46.16,2],[46.66,0],[47.16,0],[47.66,1],[48.16,0],[48.66,0],[49.42,2],[49.92,0],[50.42,0],[50.92,1],[51.42,0],[51.92,0],[52.42,2],[52.92,0],[53.42,0],[53.92,1],[54.42,0],[54.92,0],[55.42,2],[55.92,0],[56.42,0],[56.92,1],[57.42,0],[57.92,0],[58.42,2],[58.92,0],[59.42,0],[59.92,1],[60.42,0],[60.92,0],[61.42,2],[61.92,0],[62.42,0],[62.92,1],[63.42,0],[63.92,0],[64.42,2],[64.92,0],[65.42,0],[65.92,1],[66.42,0],[66.92,0],[67.485,2],[67.985,0],[68.485,0],[68.985,1],[69.485,0],[69.985,0],[70.485,2],[70.985,0],[71.485,0],[71.985,1],[72.485,0],[73.05,0],[73.615,2],[74.115,0],[74.615,0],[75.115,1],[75.615,0],[76.115,0],[76.615,2],[77.115,0],[77.615,0],[78.115,1],[78.615,0],[79.115,0],[79.615,2],[80.115,0],[80.615,0],[81.115,1],[81.615,0],[82.115,0],[82.615,2],[83.115,0],[83.615,0],[84.115,1],[84.615,0],[85.18,0],[85.68,2],[86.18,0],[86.68,0],[87.18,1],[87.68,0],[88.18,0],[88.68,2],[89.18,0],[89.68,0],[90.18,1],[91.58,0],[92.08,0],[92.58,2],[93.08,0],[93.58,0],[94.08,1],[94.58,0],[95.08,0],[95.58,2],[96.08,0],[96.58,0],[97.08,1],[97.58,0],[98.08,0],[98.84,2],[99.34,0],[99.84,0],[100.34,1],[100.84,0],[101.34,0],[101.84,2],[102.34,0],[102.84,0],[103.34,1],[103.84,0],[104.34,0],[104.84,2],[105.34,0],[105.84,0],[106.34,1],[106.84,0],[107.34,0],[107.84,2],[108.34,0],[108.84,0],[109.34,1],[109.84,0],[110.34,0],[110.84,2],[111.34,0],[111.84,0],[112.34,1],[112.84,0],[113.34,0],[113.84,2],[114.34,0],[114.84,0],[115.34,1],[115.84,0],[116.34,0],[116.905,2],[117.405,0],[117.905,0],[118.405,1],[118.905,0],[119.405,0],[119.905,2],[120.405,0],[120.905,0],[121.405,1],[121.905,0],[122.47,0],[123.035,2],[123.535,0],[124.035,0],[124.535,1],[125.035,0],[125.535,0],[126.035,2],[126.535,0],[127.035,0],[127.535,1],[128.035,0],[128.535,0],[129.035,2],[129.535,0],[130.035,0],[130.535,1],[131.035,0],[131.535,0],[132.035,2],[132.535,0],[133.035,0],[133.535,1],[134.035,0],[134.6,0],[135.1,2],[135.6,0],[136.1,0],[136.6,1],[137.1,0],[137.6,0],[138.1,2],[138.6,0],[139.1,0],[139.6,1],[141.0,0],[141.5,0],[142.0,2],[142.5,0],[143.0,0],[143.5,1],[144.0,0],[144.5,0],[145.0,2],[145.5,0],[146.0,0],[146.5,1],[147.0,0],[147.5,0]],"verseStarts":[0.0,49.42,98.84],"reference":"partitura MSCX + gerador orquestral + MP3 aprovado","holdCount":17}};
+const AudioCtx=window.AudioContext||window.webkitAudioContext;
+const currentHymn=()=>String(window.__gaCurrentHymn?.num||'');
+const panel=()=>document.getElementById('hdMetronomePanel');
+const button=()=>document.getElementById('hdMetroStart');
+const checkbox=()=>document.getElementById('hdSyncMp3Bpm');
+const isPilot=()=>!!(AudioCtx&&MAPS[currentHymn()]&&panel()&&!panel().hidden&&checkbox()?.checked);
+let ctx=null,buffer=null,bufferHymn='',source=null,bus=null,master=null,clockTimer=null;
+let playing=false,loading=false,baseAt=0,offset=0,rate=1,beatIndex=0,token=0;
+let pilotError='',lastTick=0;
+const ownStatus=()=>({hino:bufferHymn,playing,loading,bufferSeconds:buffer?.duration||0,offset,
+  currentTime:playing&&ctx?Math.max(0,offset+(ctx.currentTime-baseAt)*rate):offset,
+  playbackRate:rate,beatIndex,beatCount:MAPS[bufferHymn]?.beats?.length||0,error:pilotError});
+window.GuiaRelogioUnicoPiloto={status:ownStatus,supportedHymns:['74','76'],mapInfo:(h)=>{
+  const m=MAPS[String(h)];return m?{beats:m.beats.length,verseStarts:m.verseStarts,baseBpm:m.baseBpm}:null;
+}};
+function getCtx(){
+ if(!ctx)ctx=new AudioCtx({latencyHint:'interactive'});
+ try{if(ctx.state==='suspended')ctx.resume().catch(()=>{});}catch(e){}
+ return ctx;
+}
+function syncUI(){
+ const b=button();if(!b)return;
+ b.textContent=loading?'Carregando MP3…':playing?'■ Parar':'▶ Iniciar';
+ b.classList.toggle('is-running',playing);b.disabled=loading;
+ b.title=pilotError?pilotError:'MP3 e cliques programados no mesmo relógio de áudio (piloto 74/76)';
+}
+function detachBus(){
+ if(!bus)return;
+ try{bus.gain.cancelScheduledValues(ctx.currentTime);bus.gain.setValueAtTime(0,ctx.currentTime);}catch(e){}
+ try{bus.disconnect();}catch(e){}
+ bus=null;
+}
+function disconnectSource(){
+ if(source){const s=source;source=null;try{s.onended=null;s.stop()}catch(e){}try{s.disconnect()}catch(e){}}
+}
+function stop(clearBuffer=false){
+ token++;loading=false;playing=false;
+ if(clockTimer){clearInterval(clockTimer);clockTimer=null;}
+ disconnectSource();detachBus();
+ if(clearBuffer){buffer=null;bufferHymn='';offset=0;}
+ syncUI();
+}
+function ensureBus(){
+ detachBus();
+ const c=getCtx();bus=c.createGain();bus.gain.value=1;bus.connect(c.destination);
+}
+function beep(time,accent){
+ if(!bus||!ctx)return;
+ const osc=ctx.createOscillator(),g=ctx.createGain();
+ osc.type='square';osc.frequency.setValueAtTime(accent===2?1860:accent===1?1430:1060,time);
+ const ui=Number(document.getElementById('hdMetroVolume')?.value||50);
+ const amplitude=Math.pow(Math.max(0,ui)/100,1.2)*.14;
+ g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.76:.56)),time);
+ g.gain.exponentialRampToValueAtTime(.0001,time+.055);
+ osc.connect(g);g.connect(bus);osc.start(time);osc.stop(time+.058);
+ osc.onended=()=>{try{osc.disconnect();g.disconnect()}catch(e){}};
+}
+function schedule(){
+ if(!playing||!ctx||!source||!buffer)return;
+ const m=MAPS[bufferHymn];if(!m)return;
+ const now=ctx.currentTime,horizon=now+.17;
+ while(beatIndex<m.beats.length){
+  const event=m.beats[beatIndex];
+  const at=baseAt+(event[0]-offset)/rate;
+  if(at>horizon)break;
+  if(at>=now+.004)beep(at,event[1]);
+  beatIndex++;
+ }
+}
+function firstBeatFor(t){
+ const items=MAPS[bufferHymn].beats;
+ let lo=0,hi=items.length;
+ while(lo<hi){const mid=(lo+hi)>>1;if(items[mid][0]<t-.0005)lo=mid+1;else hi=mid;}
+ return lo;
+}
+function bpm(){
+ const n=Number(document.getElementById('hdMetroBpmInput')?.value||
+              document.getElementById('hdMetronomeSummaryBpm')?.textContent||0);
+ return Number.isFinite(n)&&n>0?n:MAPS[bufferHymn||currentHymn()]?.baseBpm||80;
+}
+function newSource(when,pos,r){
+ const c=getCtx(),s=c.createBufferSource();
+ s.buffer=buffer;s.playbackRate.value=r;
+ if(!master){master=c.createGain();master.connect(c.destination);}
+ master.gain.value=Math.max(0,Math.min(1,Number(document.getElementById('hdMetroVolume')?.value||50)/100));
+ s.connect(master);s.start(when,pos);
+ s.onended=()=>{if(source===s&&playing){stop(false);offset=0;}};
+ return s;
+}
+function retime(){
+ if(!playing||!ctx||!source||!buffer)return;
+ const target=MAPS[bufferHymn];if(!target)return;
+ const newRate=Math.max(.5,Math.min(2,bpm()/target.baseBpm));
+ if(Math.abs(newRate-rate)<1e-5)return;
+ const at=ctx.currentTime+.075;
+ const newPos=Math.max(0,Math.min(buffer.duration-.02,offset+Math.max(0,at-baseAt)*rate));
+ const previous=source;
+ const next=newSource(at,newPos,newRate);
+ try{previous.onended=null;previous.stop(at)}catch(e){}
+ source=next;offset=newPos;baseAt=at;rate=newRate;
+ ensureBus();beatIndex=firstBeatFor(newPos);
+ schedule();
+}
+async function loadFor(h,requestId){
+ if(buffer&&bufferHymn===h)return buffer;
+ const m=MAPS[h];if(!m)throw Error('Hino sem mapa musical piloto');
+ const c=getCtx(),url=new URL('audio/hino-'+h+'.mp3',document.baseURI);
+ const response=await fetch(url.href,{cache:'no-store'});
+ if(!response.ok)throw Error('MP3 não encontrado: '+url.pathname);
+ const bytes=await response.arrayBuffer();
+ if(requestId!==token)throw Error('Reprodução cancelada');
+ if(!window.crypto?.subtle)throw Error('Validação do áudio requer HTTPS ou localhost.');
+ const digest=await crypto.subtle.digest('SHA-256',bytes.slice(0));
+ const sha=Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');
+ if(sha!==m.sha256)throw Error('Este MP3 não corresponde à gravação calibrada. Use o áudio do pacote de teste.');
+ const decoded=await c.decodeAudioData(bytes);
+ if(requestId!==token)throw Error('Reprodução cancelada');
+ if(Math.abs(decoded.duration-m.duration)>0.60)throw Error('Duração do MP3 diferente da gravação calibrada.');
+ buffer=decoded;bufferHymn=h;return buffer;
+}
+async function start(){
+ const h=currentHymn(),m=MAPS[h];if(!m||loading||playing)return;
+ pilotError='';loading=true;token++;const mine=token;
+ syncUI();
+ try{
+  const c=getCtx();await c.resume();
+  await loadFor(h,mine);
+  if(mine!==token||h!==currentHymn()||!isPilot())return;
+  loading=false;
+  // Não manter mídia independente reproduzindo em paralelo, mesmo escondida.
+  try{document.querySelector('#hdAudio audio')?.pause()}catch(e){}
+  offset=0;rate=Math.max(.5,Math.min(2,bpm()/m.baseBpm));
+  baseAt=c.currentTime+.16;
+  ensureBus();source=newSource(baseAt,0,rate);
+  beatIndex=0;playing=true;
+  clockTimer=setInterval(schedule,22);
+  schedule();syncUI();
+ }catch(err){
+  if(mine!==token)return;
+  pilotError=String(err?.message||err||'Erro de reprodução');
+  loading=false;playing=false;syncUI();
+  if(!/cancelada/i.test(pilotError))window.alert('Sincronização piloto: '+pilotError);
+ }
+}
+const oldStop=window.stopHymnMetronome;
+window.stopHymnMetronome=function(){
+ stop(false);if(typeof oldStop==='function')return oldStop.apply(this,arguments);
+};
+const oldInit=window.initHymnMetronomeUI;
+window.initHymnMetronomeUI=function(){
+ stop(true);
+ return typeof oldInit==='function'?oldInit.apply(this,arguments):undefined;
+};
+// Captura ANTES dos listeners antigos, para não disparar HTMLAudioElement nem
+// os dois schedulers antigos. Só nos dois pilotos com MP3 associado.
+window.addEventListener('click',e=>{
+ const b=e.target?.closest?.('#hdMetroStart');
+ if(!b||!isPilot())return;
+ e.preventDefault();e.stopImmediatePropagation();
+ if(playing||loading)stop(false);else start();
+},true);
+// Correções BPM aplicadas ao instante da troca, preservando a fase da gravação.
+document.addEventListener('click',e=>{
+ if(!e.target?.closest?.('#hdMetroPlus,#hdMetroMinus,#hdMetroReset'))return;
+ setTimeout(retime,0);
+},true);
+document.addEventListener('input',e=>{
+ if(e.target?.id==='hdMetroVolume'&&master)master.gain.setTargetAtTime(Math.max(0,Math.min(1,Number(e.target.value)/100)),ctx.currentTime,.02);
+},true);
+document.addEventListener('change',e=>{
+ if(e.target?.id==='hdMetroBpmInput')setTimeout(retime,0);
+ if(e.target?.id==='hdSyncMp3Bpm' && !e.target.checked){stop(false);}
+},true);
+document.addEventListener('click',e=>{
+ if(e.target?.closest?.('#hdMetronomeToggle,#hdPrevHymn,#hdNextHymn,#hdClose')){
+  if(playing||loading)stop(false);
+ }
+},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')stop(false)},true);
+document.addEventListener('visibilitychange',()=>{if(document.hidden && (playing||loading))stop(false)});
+window.addEventListener('pagehide',()=>{stop(true)},true);
+})();
+</script>
 </body></html>
