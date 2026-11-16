@@ -14704,11 +14704,13 @@ body:not(.index-mode):not(.welcome-mode){
               </div>
 
               <div class="hd-v728-tertiary">
-                <label class="hd-v728-volume">
+                <div class="hd-v728-volume ga-v78131-volume" role="group" aria-label="Volume do metrônomo e do MP3 associado">
                   <span class="vol-label">🔊 Volume</span>
-                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
+                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
+                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do MP3 associado e do metrônomo">
+                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
                   <span id="hdMetroVolumeText">${volume}%</span>
-                </label>
+                </div>
                 <div class="hd-v728-range">${unit} ${min}–${max}</div>
               </div>
 
@@ -15206,11 +15208,13 @@ body:not(.index-mode):not(.welcome-mode){
               </div>
 
               <div class="hd-v728-tertiary">
-                <label class="hd-v728-volume">
+                <div class="hd-v728-volume ga-v78131-volume" role="group" aria-label="Volume do metrônomo e do MP3 associado">
                   <span class="vol-label">🔊 Volume</span>
-                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}">
+                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
+                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do MP3 associado e do metrônomo">
+                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
                   <span id="hdMetroVolumeText">${volume}%</span>
-                </label>
+                </div>
                 <div class="hd-v728-range">${unit} ${min}–${max}</div>
               </div>
             </div>
@@ -19279,102 +19283,118 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   }
 }
 </style>
-<!-- V7.81.30 TESTE: pré-carregamento, modo foco móvel e troca exclusiva de motores. -->
-<style id="v78130-metrônomo-foco-vertical">
-/* No celular, o metrônomo substitui temporariamente os cartões do hino.
-   Os elementos continuam no DOM e voltam integralmente ao fechar o painel. */
-@media (max-width:959px){
- #hymnDetail.ga-v78130-metro-focus .hd-card{
-   width:min(100%,540px)!important;
-   max-height:calc(100dvh - 16px)!important;
-   height:auto!important;
-   min-height:0!important;
-   padding:10px 12px 12px!important;
-   overflow-y:auto!important;
-   overflow-x:hidden!important;
- }
- #hymnDetail.ga-v78130-metro-focus .hd-hero{
-   grid-area:auto!important;position:relative!important;top:auto!important;
-   min-height:0!important;height:auto!important;
-   margin:0 0 7px!important;padding:5px 42px 6px 10px!important;
-   display:flex!important;flex-direction:column!important;
-   justify-content:center!important;align-items:flex-start!important;
- }
- #hymnDetail.ga-v78130-metro-focus .hd-hero .hd-staff,
- #hymnDetail.ga-v78130-metro-focus .hd-hero .hd-swoosh{display:none!important;}
- #hymnDetail.ga-v78130-metro-focus #hdNum{
-   margin:0!important;display:flex!important;justify-content:flex-start!important;
-   line-height:1!important;gap:5px!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdNum .hd-number{
-   font-size:23px!important;line-height:1!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdTitle{
-   margin:1px 0 0!important;font-size:15px!important;
-   line-height:1.12!important;text-align:left!important;
-   max-width:100%!important;
- }
- #hymnDetail.ga-v78130-metro-focus .hd-hero #hdClose{
-   top:5px!important;right:6px!important;width:30px!important;height:30px!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdMeta,
- #hymnDetail.ga-v78130-metro-focus #hdStudyInfo,
- #hymnDetail.ga-v78130-metro-focus .hd-actions,
- #hymnDetail.ga-v78130-metro-focus .hd-secondary-actions,
- #hymnDetail.ga-v78130-metro-focus .hd-divider,
- #hymnDetail.ga-v78130-metro-focus #hdMediaArea > .hd-hymn-nav,
- #hymnDetail.ga-v78130-metro-focus #hdMediaArea > .hd-media-title{
-   display:none!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdMediaArea{
-   grid-area:auto!important;display:block!important;
-   margin:0!important;padding:0!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdMetronome{
-   margin:0!important;max-width:100%!important;
- }
- #hymnDetail.ga-v78130-metro-focus #hdMetronomePanel > .ga-v78123-fine{
-   margin-top:4px!important;
- }
-}
 
- /* O tema anterior aplicava display:grid/flex com maior especificidade.
-    Reforça a ocultação somente no modo metrônomo do celular. */
- #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-secondary-actions,
- #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-divider,
- #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-actions,
- #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > #hdMeta,
- #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > #hdStudyInfo{
-   display:none!important;
+
+<!-- V7.81.31 TESTE — restauração das informações do hino e volume de MP3 em etapas. -->
+<style id="v78131-volume-mp3-layout-preservado">
+/* Restauradas as áreas do hino: nenhuma coluna, ação, registro ou partitura é ocultada. */
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume{
+ display:grid!important;grid-template-columns:max-content 28px minmax(48px,1fr) 28px 34px!important;
+ gap:5px!important;align-items:center!important;width:100%!important;min-width:0!important;
+}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume .ga-v78131-vol-step,
+#hymnDetail .ga-v78131-native-volume .ga-v78131-vol-step{
+ display:inline-grid;place-items:center;touch-action:manipulation;cursor:pointer;
+ min-width:27px;width:28px;height:28px;padding:0;border-radius:9px;
+ background:#fffcf6;color:#173049;border:1px solid #d8c6a7;
+ font:800 18px/1 Arial,sans-serif;
+}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume .ga-v78131-vol-step:active,
+#hymnDetail .ga-v78131-native-volume .ga-v78131-vol-step:active{background:#f4e9d1;}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume input[type=range]{min-width:0;width:100%!important;margin:0!important;}
+#hymnDetail #hdMetroVolumeText{min-width:31px;white-space:nowrap;}
+#hymnDetail .ga-v78131-native-volume{
+ width:100%;display:flex;align-items:center;justify-content:center;
+ gap:8px;min-height:32px;padding:4px 8px;box-sizing:border-box;
+ color:#173049;font:700 12px/1 Arial,sans-serif;
+}
+#hymnDetail .ga-v78131-native-volume .ga-v78131-vol-step{height:27px;width:31px;}
+#hymnDetail .ga-v78131-native-volume .ga-v78131-vol-value{min-width:36px;text-align:center;font-variant-numeric:tabular-nums;}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume{
+   grid-template-columns:max-content 25px minmax(28px,1fr) 25px 29px!important;
+   gap:3px!important;
  }
+ #hymnDetail .hd-v728-volume.ga-v78131-volume .ga-v78131-vol-step{min-width:24px;width:25px;height:26px;font-size:16px;border-radius:7px;}
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78131-volume .vol-label{font-size:9.5px!important;}
+ #hymnDetail .ga-v78131-native-volume{gap:5px;padding:3px 5px;}
+}
 </style>
-<script id="v78130-modo-foco-movel">
+<script id="v78131-controle-volume-mp3">
 (function(){
  'use strict';
- const modal=()=>document.getElementById('hymnDetail');
- const panel=()=>document.getElementById('hdMetronomePanel');
- function syncFocus(){
-  const m=modal(),p=panel();if(!m)return;
-  const opened=!!(m.classList.contains('open')&&p&&!p.hidden);
-  const change=m.classList.contains('ga-v78130-metro-focus')!==opened;
-  m.classList.toggle('ga-v78130-metro-focus',opened);
-  if(change&&opened){const c=m.querySelector('.hd-card');if(c)c.scrollTop=0;}
+ const clamp=n=>Math.max(0,Math.min(100,Number(n)||0));
+ // Em modo metrônomo associado, este slider já controla a saída MP3 calibrada
+ // pelo ganho do mesmo AudioContext. Reutilizamos o handler original.
+ function metroStep(delta){
+  const slider=document.getElementById('hdMetroVolume');if(!slider)return;
+  slider.value=String(clamp(Number(slider.value)+delta));
+  slider.dispatchEvent(new Event('input',{bubbles:true}));
+  slider.dispatchEvent(new Event('change',{bubbles:true}));
  }
- // Os controles existentes continuam sendo os responsáveis pela abertura.
- // Apenas atualizamos a apresentação depois que a mudança de estado ocorrer.
- document.addEventListener('click',function(e){
-  if(e.target?.closest?.('#hdMetronomeToggle,#hdClose,#hdPrevHymn,#hdNextHymn')){
-   requestAnimationFrame(syncFocus);
-  }
+ function nativeStep(delta){
+  const a=document.querySelector('#hdAudio audio');if(!a)return;
+  const previous=(a.muted?0:Math.round(a.volume*100));
+  const next=clamp(previous+delta);
+  if(next>0)a.muted=false;
+  a.volume=next/100;
+  if(next===0)a.muted=true;
+  const output=document.getElementById('gaV78131Mp3VolValue');
+  if(output)output.textContent=next+'%';
+ }
+ document.addEventListener('click',e=>{
+  const button=e.target.closest?.('[data-ga-v78131]');
+  if(!button)return;
+  const kind=button.getAttribute('data-ga-v78131');
+  if(kind==='metro-minus')metroStep(-5);
+  else if(kind==='metro-plus')metroStep(5);
+  else if(kind==='native-minus')nativeStep(-5);
+  else if(kind==='native-plus')nativeStep(5);
  },false);
- const oldInit=window.initHymnMetronomeUI;
- if(typeof oldInit==='function'){
-  window.initHymnMetronomeUI=function(){
-   modal()?.classList.remove('ga-v78130-metro-focus');
-   return oldInit.apply(this,arguments);
-  };
+ // Botões junto ao MP3 independente (quarto botão de mídia), sem clonar o player,
+ // sem interferir em Spotify / YouTube / YouTube Music.
+ function ensureVolume(){
+  const wrap=document.getElementById('hdAudio'),audio=wrap?.querySelector('audio');
+  if(!audio)return;
+  let bar=wrap.querySelector('#gaV78131Mp3Volume');
+  if(!bar){
+   bar=document.createElement('div');bar.id='gaV78131Mp3Volume';
+   bar.className='ga-v78131-native-volume';
+   bar.setAttribute('role','group');bar.setAttribute('aria-label','Volume do MP3 independente');
+   bar.innerHTML='<span>Volume MP3</span><button type="button" class="ga-v78131-vol-step" data-ga-v78131="native-minus" aria-label="Diminuir volume do MP3">−</button><output class="ga-v78131-vol-value" id="gaV78131Mp3VolValue">50%</output><button type="button" class="ga-v78131-vol-step" data-ga-v78131="native-plus" aria-label="Aumentar volume do MP3">+</button>';
+   wrap.appendChild(bar);
+  }
+  function render(){
+   const out=document.getElementById('gaV78131Mp3VolValue');
+   if(out&&out.closest('#hdAudio')===wrap)out.textContent=(audio.muted?0:Math.round(audio.volume*100))+'%';
+  }
+  if(!audio.dataset.gaV78131VolumeBound){
+    audio.dataset.gaV78131VolumeBound='1';
+    audio.addEventListener('volumechange',render);
+  }
+  render();
  }
- document.addEventListener('keydown',e=>{if(e.key==='Escape')requestAnimationFrame(syncFocus)});
+ let raf=0;
+ const defer=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;ensureVolume()})};
+ const host=document.getElementById('hdMediaArea');
+ if(host)new MutationObserver(defer).observe(host,{subtree:true,childList:true});
+ document.addEventListener('click',e=>{
+  if(e.target.closest?.('.ga-v78124-mp3,[data-kind="instrumental"],#hdMetronomeToggle'))defer();
+ });
+ defer();
+ // Em celular, todos os recursos permanecem disponíveis; apenas desloque o
+ // scroll interior o mínimo para revelar o controle expandido, se necessário.
+ document.addEventListener('click',e=>{
+  if(!e.target.closest?.('#hdMetronomeToggle'))return;
+  if(!matchMedia('(max-width:959px)').matches)return;
+  requestAnimationFrame(()=>{
+   const p=document.getElementById('hdMetronomePanel');
+   const scroll=document.querySelector('#hymnDetail .hd-card');
+   if(!p||p.hidden||!scroll)return;
+   const over=p.getBoundingClientRect().bottom-scroll.getBoundingClientRect().bottom+10;
+   if(over>0)scroll.scrollBy({top:over,behavior:'smooth'});
+  });
+ },false);
 })();
 </script>
 </body></html>
