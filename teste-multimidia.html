@@ -14649,7 +14649,7 @@ body:not(.index-mode):not(.welcome-mode){
 
   const state={
     ctx:null,timer:null,running:false,nextTime:0,beat:0,
-    bpm:108,defaultBpm:108,min:96,max:120,volumeUI:50,
+    bpm:108,defaultBpm:108,min:96,max:120,volumeUI:50,paused:false,
     mode:'six',defaultMode:'six',config:null
   };
 
@@ -14691,6 +14691,7 @@ body:not(.index-mode):not(.welcome-mode){
                   <button type="button" class="hd-v728-step" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
                 </div>
                 <button type="button" class="hd-v728-start" id="hdMetroStart">▶ Iniciar</button>
+                <button type="button" id="hdMetroStop" class="ga-v78141-stop" aria-label="Parar e voltar ao início" title="Parar e voltar ao início" hidden>■</button>
               </div>
 
               <div class="hd-v728-secondary">
@@ -14857,23 +14858,30 @@ body:not(.index-mode):not(.welcome-mode){
       const syncedPilot=!!(pilot?.playing && pilot.hino===String(window.__gaCurrentHymn?.num||'')
         && document.getElementById('hdSyncMp3Bpm')?.checked);
       const isPlaying=state.running||syncedPilot;
-      start.textContent=isPlaying?'■ Parar':'▶ Iniciar';
+      start.textContent=isPlaying?'Ⅱ Pausar':state.paused?'▶ Retomar':'▶ Iniciar';
       start.classList.toggle('is-running',isPlaying);
     }
     if(vol)vol.textContent=Math.round(state.volumeUI)+'%';
     updatePulseButtons();
+    window.GuiaMetroTransportV78141?.render?.();
   }
 
   window.stopHymnMetronome=function(){
     if(state.timer){clearInterval(state.timer);state.timer=null}
-    state.running=false;state.beat=0;
+    state.running=false;state.paused=false;state.beat=0;
     if(state.ctx)state.nextTime=state.ctx.currentTime+.05;
     refresh();
   };
 
+  function pause(){
+    if(state.timer){clearInterval(state.timer);state.timer=null;}
+    state.running=false;state.paused=true;refresh();
+  }
+  window.GuiaMetroLegacyTransport={status:()=>({running:state.running,paused:state.paused}),pause,stop:()=>window.stopHymnMetronome()};
   function start(){
     const ctx=getCtx();
-    state.running=true;state.beat=0;state.nextTime=ctx.currentTime+.06;
+    if(!state.paused)state.beat=0;
+    state.running=true;state.paused=false;state.nextTime=ctx.currentTime+.06;
     schedule();
     if(state.timer)clearInterval(state.timer);
     state.timer=setInterval(schedule,25);
@@ -14927,7 +14935,7 @@ body:not(.index-mode):not(.welcome-mode){
     });
     document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(state.bpm-2));
     document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(state.bpm+2));
-    document.getElementById('hdMetroStart')?.addEventListener('click',()=>state.running?stopHymnMetronome():start());
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>state.running?pause():start());
 
     const input=document.getElementById('hdMetroBpmInput');
     input?.addEventListener('change',()=>setBpm(input.value));
@@ -14982,7 +14990,7 @@ body:not(.index-mode):not(.welcome-mode){
   const st={
     ctx:null,timer:null,running:false,nextTime:0,beat:0,
     bpm:80,defaultBpm:80,min:40,max:180,volumeUI:50,
-    mode:'primary',config:null,pulses:null,active:false
+    mode:'primary',config:null,pulses:null,active:false,paused:false
   };
 
   function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
@@ -15106,18 +15114,19 @@ body:not(.index-mode):not(.welcome-mode){
       const syncedPilot=!!(pilot?.playing && pilot.hino===String(window.__gaCurrentHymn?.num||'')
         && document.getElementById('hdSyncMp3Bpm')?.checked);
       const isPlaying=st.running||syncedPilot;
-      start.textContent=isPlaying?'■ Parar':'▶ Iniciar';
+      start.textContent=isPlaying?'Ⅱ Pausar':st.paused?'▶ Retomar':'▶ Iniciar';
       start.classList.toggle('is-running',isPlaying);
     }
     if(vol)vol.textContent=Math.round(st.volumeUI)+'%';
     document.querySelectorAll('#hymnDetail .hd-v728-pulse [data-mode]').forEach(btn=>{
       btn.classList.toggle('is-active',btn.dataset.mode===st.mode);
     });
+    window.GuiaMetroTransportV78141?.render?.();
   }
 
   function genericStop(){
     if(st.timer){clearInterval(st.timer);st.timer=null}
-    st.running=false;st.beat=0;
+    st.running=false;st.paused=false;st.beat=0;
     if(st.ctx)st.nextTime=st.ctx.currentTime+.05;
     if(st.active)refresh();
   }
@@ -15131,9 +15140,16 @@ body:not(.index-mode):not(.welcome-mode){
     try{ if(oldStop) oldStop(); }catch(e){}
   };
 
+  function genericPause(){
+    if(st.timer){clearInterval(st.timer);st.timer=null;}
+    st.running=false;st.paused=true;
+    if(st.active)refresh();
+  }
+  window.GuiaMetroGenericTransport={status:()=>({running:st.running,paused:st.paused,active:st.active}),pause:genericPause,stop:genericStop};
   function start(){
     const ctx=getCtx();
-    st.running=true;st.beat=0;st.nextTime=ctx.currentTime+.06;
+    if(!st.paused)st.beat=0;
+    st.running=true;st.paused=false;st.nextTime=ctx.currentTime+.06;
     schedule();
     if(st.timer)clearInterval(st.timer);
     st.timer=setInterval(schedule,25);
@@ -15223,6 +15239,7 @@ body:not(.index-mode):not(.welcome-mode){
                   <button type="button" class="hd-v728-step" id="hdMetroPlus" aria-label="Aumentar andamento">+</button>
                 </div>
                 <button type="button" class="hd-v728-start" id="hdMetroStart">▶ Iniciar</button>
+                <button type="button" id="hdMetroStop" class="ga-v78141-stop" aria-label="Parar e voltar ao início" title="Parar e voltar ao início" hidden>■</button>
               </div>
 
               <div class="hd-v728-secondary">
@@ -15286,7 +15303,7 @@ body:not(.index-mode):not(.welcome-mode){
 
     document.getElementById('hdMetroMinus')?.addEventListener('click',()=>setBpm(st.bpm-2));
     document.getElementById('hdMetroPlus')?.addEventListener('click',()=>setBpm(st.bpm+2));
-    document.getElementById('hdMetroStart')?.addEventListener('click',()=>st.running?genericStop():start());
+    document.getElementById('hdMetroStart')?.addEventListener('click',()=>st.running?genericPause():start());
 
     const input=document.getElementById('hdMetroBpmInput');
     input?.addEventListener('change',()=>setBpm(input.value));
@@ -18222,7 +18239,11 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
     });
     audio.addEventListener('ended',()=>{
       if(!relevant()||!linked())return;
-      reset();ensureStopped();
+      reset();
+      // Fim natural: limpa estado por completo. Os modos de reprodução contínua
+      // do player independente continuam responsáveis por Próximo/Repetir.
+      try{window.stopHymnMetronome?.();}catch(_e){}
+      window.GuiaMetroTransportV78141?.render?.();
     });
     audio.addEventListener('seeking',()=>{if(relevant())reset()});
     audio.addEventListener('seeked',()=>{
@@ -18921,12 +18942,12 @@ const button=()=>document.getElementById('hdMetroStart');
 const checkbox=()=>document.getElementById('hdSyncMp3Bpm');
 const isPilot=()=>!!(AudioCtx&&MAPS[currentHymn()]&&panel()&&!panel().hidden&&checkbox()?.checked);
 let ctx=null,buffer=null,bufferHymn='',source=null,bus=null,master=null,mixLimiter=null,clockTimer=null;
-let playing=false,loading=false,baseAt=0,offset=0,rate=1,beatIndex=0,token=0;
+let playing=false,paused=false,loading=false,baseAt=0,offset=0,rate=1,beatIndex=0,token=0;
 let pilotError='',lastTick=0;
 // V7.81.30: prepara o áudio ao abrir o hino e reutiliza o buffer decodificado.
 // Um único hino fica em cache para não acumular dezenas de MB no celular.
 const decodedCache=new Map(), pendingLoads=new Map();
-const ownStatus=()=>({hino:bufferHymn,playing,loading,bufferSeconds:buffer?.duration||0,offset,
+const ownStatus=()=>({hino:bufferHymn,playing,paused,loading,bufferSeconds:buffer?.duration||0,offset,
   currentTime:playing&&ctx?Math.max(0,offset+(ctx.currentTime-baseAt)*rate):offset,
   playbackRate:rate,beatIndex,beatCount:MAPS[bufferHymn]?.beats?.length||0,error:pilotError});
 window.GuiaRelogioUnicoPiloto={status:ownStatus,supportedHymns:['74','76'],mapInfo:(h)=>{
@@ -18950,10 +18971,11 @@ function getMixLimiter(){
 }
 function syncUI(){
  const b=button();if(!b)return;
- b.textContent=playing?'■ Parar':'▶ Iniciar';
+ b.textContent=playing?'Ⅱ Pausar':paused?'▶ Retomar':'▶ Iniciar';
  b.classList.toggle('is-running',playing);b.disabled=loading;
  b.setAttribute('aria-busy',loading?'true':'false');
- b.title=pilotError?pilotError:'MP3 e cliques programados no mesmo relógio de áudio (piloto 74/76)';
+ b.title=pilotError?pilotError:'MP3 e metrônomo sincronizados (piloto 74/76)';
+ window.GuiaMetroTransportV78141?.render?.();
 }
 function detachBus(){
  if(!bus)return;
@@ -18965,12 +18987,35 @@ function disconnectSource(){
  if(source){const s=source;source=null;try{s.onended=null;s.stop()}catch(e){}try{s.disconnect()}catch(e){}}
 }
 function stop(clearBuffer=false){
- token++;loading=false;playing=false;
+ token++;loading=false;playing=false;paused=false;offset=0;
  if(clockTimer){clearInterval(clockTimer);clockTimer=null;}
  disconnectSource();detachBus();
- if(clearBuffer){buffer=null;bufferHymn='';offset=0;}
+ if(clearBuffer){buffer=null;bufferHymn='';}
  syncUI();
 }
+function pausePilot(){
+ if(!playing||!ctx||!buffer)return;
+ // Guarda exatamente a posição do MP3, sem recarregar o arquivo.
+ offset=Math.max(0,Math.min(buffer.duration,offset+Math.max(0,ctx.currentTime-baseAt)*rate));
+ token++;playing=false;paused=true;loading=false;
+ if(clockTimer){clearInterval(clockTimer);clockTimer=null;}
+ disconnectSource();detachBus();syncUI();
+}
+async function resumePilot(){
+ if(!paused||!buffer||!MAPS[bufferHymn]){start();return;}
+ try{
+  const c=getCtx();await c.resume();
+  if(!paused||bufferHymn!==currentHymn()||!checkbox()?.checked)return;
+  rate=Math.max(.5,Math.min(2,bpm()/MAPS[bufferHymn].baseBpm));
+  baseAt=c.currentTime+.10;
+  ensureBus();source=newSource(baseAt,offset,rate);
+  beatIndex=firstBeatFor(offset);paused=false;playing=true;
+  clockTimer=setInterval(schedule,22);schedule();syncUI();
+ }catch(err){stop(false);pilotError=String(err?.message||err);syncUI();}
+}
+window.GuiaRelogioUnicoPiloto.pause=pausePilot;
+window.GuiaRelogioUnicoPiloto.resume=resumePilot;
+window.GuiaRelogioUnicoPiloto.stop=()=>stop(false);
 function ensureBus(){
  detachBus();
  const c=getCtx();bus=c.createGain();bus.gain.value=1;bus.connect(getMixLimiter());
@@ -19121,7 +19166,7 @@ async function start(){
   loading=false;
   // Não manter mídia independente reproduzindo em paralelo, mesmo escondida.
   try{document.querySelector('#hdAudio audio')?.pause()}catch(e){}
-  offset=0;rate=Math.max(.5,Math.min(2,bpm()/m.baseBpm));
+  offset=0;paused=false;rate=Math.max(.5,Math.min(2,bpm()/m.baseBpm));
   baseAt=c.currentTime+.16;
   ensureBus();source=newSource(baseAt,0,rate);
   beatIndex=0;playing=true;
@@ -19154,7 +19199,7 @@ window.addEventListener('click',e=>{
  const b=e.target?.closest?.('#hdMetroStart');
  if(!b||!isPilot())return;
  e.preventDefault();e.stopImmediatePropagation();
- if(playing||loading)stop(false);else start();
+ if(playing)pausePilot();else if(paused)resumePilot();else if(loading)stop(false);else start();
 },true);
 // Correções BPM aplicadas ao instante da troca, preservando a fase da gravação.
 document.addEventListener('click',e=>{
@@ -20270,6 +20315,117 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  },{once:true});
  window.setInterval(update,800);
  window.GuiaYoutubeVolumeFixoV78140={setVolume,refresh:update,status:()=>({visible:!!controls?.isConnected,volume:controls?Number(controls.querySelector('input').value):null,ready:!!playerReady()})};
+})();
+</script>
+
+
+<!-- V7.81.41 — Controle coerente de reprodução (1..210), com pausa, retomada e parada -->
+<style id="v78141-transport-style">
+#hymnDetail #hdMetronome .hd-v728-primary{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(78px,92px) 35px!important;
+  gap:5px!important;align-items:center!important;min-width:0!important;
+}
+#hymnDetail #hdMetronome .hd-v728-primary:has(#hdMetroStop[hidden]){
+  grid-template-columns:minmax(0,1fr) minmax(78px,98px)!important;
+}
+#hymnDetail #hdMetronome #hdMetroStop{
+  border:1px solid #ceb98f!important;background:#fffaf2!important;
+  color:#273b50!important;border-radius:8px!important;
+  font-weight:800!important;font-size:15px!important;
+  width:35px!important;min-width:35px!important;height:34px!important;
+  display:grid!important;place-items:center!important;cursor:pointer!important;padding:0!important;
+}
+#hymnDetail #hdMetronome #hdMetroStop[hidden]{display:none!important}
+#hymnDetail #hdMetronome #hdMetroStart{padding-inline:3px!important;white-space:nowrap!important}
+@media(max-width:420px){
+ #hymnDetail #hdMetronome .hd-v728-primary{
+   grid-template-columns:minmax(0,1fr) minmax(70px,82px) 31px!important;gap:4px!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-primary:has(#hdMetroStop[hidden]){
+   grid-template-columns:minmax(0,1fr) minmax(70px,88px)!important;
+ }
+ #hymnDetail #hdMetronome #hdMetroStop{width:31px!important;min-width:31px!important;height:29px!important}
+ #hymnDetail #hdMetronome #hdMetroStart{font-size:9px!important}
+}
+</style>
+<script id="v78141-transport-js">
+(function(){
+ 'use strict';
+ const q=(s)=>document.querySelector(s);
+ let lastHymn='';
+ function getState(){
+  const h=String(window.__gaCurrentHymn?.num||'');
+  const linked=!!q('#hdSyncMp3Bpm')?.checked;
+  const panel=q('#hdMetronomePanel');
+  if(!panel||panel.hidden)return{playing:false,paused:false};
+  const pilot=window.GuiaRelogioUnicoPiloto?.status?.();
+  if(linked && (h==='74'||h==='76') && pilot?.hino===h){
+   return {playing:!!pilot.playing,paused:!!pilot.paused,loading:!!pilot.loading};
+  }
+  const generic=window.GuiaMetroGenericTransport?.status?.();
+  const engine=(generic?.active?generic:window.GuiaMetroLegacyTransport?.status?.())||{};
+  const audio=q('#hdAudio audio');
+  const audioPaused=linked && audio?.isConnected && !audio.ended && audio.paused && audio.currentTime>0;
+  const audioPlaying=linked && audio?.isConnected && !audio.ended && !audio.paused;
+  return{playing:!!engine.running||!!audioPlaying,paused:!!engine.paused||!!audioPaused,loading:false};
+ }
+ function render(){
+  const main=q('#hdMetroStart'),stop=q('#hdMetroStop');
+  if(!main)return;
+  const s=getState();
+  main.textContent=s.playing?'Ⅱ Pausar':s.paused?'▶ Retomar':'▶ Iniciar';
+  main.setAttribute('aria-label',s.playing?'Pausar metrônomo e MP3':s.paused?'Retomar metrônomo e MP3':'Iniciar metrônomo e MP3');
+  main.classList.toggle('is-running',s.playing);
+  if(stop){stop.hidden=!(s.playing||s.paused);stop.disabled=!!s.loading;}
+ }
+ window.GuiaMetroTransportV78141={render};
+ function mount(){
+  const main=q('#hdMetroStart');if(!main)return;
+  const parent=main.parentNode;
+  if(parent&&!q('#hdMetroStop')){
+   const stop=document.createElement('button');stop.type='button';stop.id='hdMetroStop';
+   stop.className='ga-v78141-stop';stop.hidden=true;stop.textContent='■';
+   stop.title='Parar e voltar ao início';stop.setAttribute('aria-label','Parar e voltar ao início');
+   main.insertAdjacentElement('afterend',stop);
+  }
+  const a=q('#hdAudio audio');
+  if(a&&!a.dataset.gaV78141Bound){
+   a.dataset.gaV78141Bound='1';
+   for(const ev of ['play','playing','pause','ended','emptied','seeked']){
+    a.addEventListener(ev,()=>queueMicrotask(render));
+   }
+  }
+  render();
+ }
+ const originalInit=window.initHymnMetronomeUI;
+ window.initHymnMetronomeUI=function(){
+  const result=typeof originalInit==='function'?originalInit.apply(this,arguments):undefined;
+  queueMicrotask(mount);return result;
+ };
+ // Separate STOP is an explicit user action. Pause/resume uses the existing main button.
+ window.addEventListener('click',function(e){
+  const b=e.target?.closest?.('#hdMetroStop');if(!b)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  const h=String(window.__gaCurrentHymn?.num||'');
+  if((h==='74'||h==='76')&&q('#hdSyncMp3Bpm')?.checked){
+   window.GuiaRelogioUnicoPiloto?.stop?.();
+  }
+  try{window.stopHymnMetronome?.();}catch(_e){}
+  const a=q('#hdAudio audio');
+  if(a){try{a.pause();a.currentTime=0;}catch(_e){}}
+  try{window.GuiaMetroPhaseSync?.reset?.()}catch(_e){}
+  queueMicrotask(render);
+ },true);
+ // The pilot's AudioBufferSource.onended and HTMLAudioElement.ended both call render.
+ document.addEventListener('click',e=>{
+  if(e.target?.closest?.('#hdMetroStart,#hdMetronomeToggle,#hdMetroReset,#hdMetroPlus,#hdMetroMinus')){
+   setTimeout(render,0);
+  }
+ },false);
+ document.addEventListener('change',e=>{
+  if(e.target?.id==='hdSyncMp3Bpm')setTimeout(render,0);
+ },false);
+ document.addEventListener('hino-guia-metronomo-atualizado',render);
 })();
 </script>
 
