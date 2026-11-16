@@ -14704,12 +14704,18 @@ body:not(.index-mode):not(.welcome-mode){
               </div>
 
               <div class="hd-v728-tertiary">
-                <div class="hd-v728-volume ga-v78131-volume" role="group" aria-label="Volume do metrônomo e do MP3 associado">
-                  <span class="vol-label">🔊 Volume</span>
-                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
-                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do MP3 associado e do metrônomo">
-                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
-                  <span id="hdMetroVolumeText">${volume}%</span>
+                <div class="ga-v78132-volumes" aria-label="Volumes independentes">
+                  <label class="hd-v728-volume ga-v78132-metronome-level">
+                    <span class="vol-label">♩ Metrônomo</span>
+                    <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
+                    <span id="hdMetroVolumeText">${volume}%</span>
+                  </label>
+                  <div class="ga-v78132-mp3-level" role="group" aria-label="Volume do MP3 associado">
+                    <span class="vol-label">♫ MP3</span>
+                    <button type="button" data-ga-v78132="minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
+                    <output id="gaV78132LinkedVolume" aria-live="polite">50%</output>
+                    <button type="button" data-ga-v78132="plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
+                  </div>
                 </div>
                 <div class="hd-v728-range">${unit} ${min}–${max}</div>
               </div>
@@ -15208,12 +15214,18 @@ body:not(.index-mode):not(.welcome-mode){
               </div>
 
               <div class="hd-v728-tertiary">
-                <div class="hd-v728-volume ga-v78131-volume" role="group" aria-label="Volume do metrônomo e do MP3 associado">
-                  <span class="vol-label">🔊 Volume</span>
-                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
-                  <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume do MP3 associado e do metrônomo">
-                  <button type="button" class="ga-v78131-vol-step" data-ga-v78131="metro-plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
-                  <span id="hdMetroVolumeText">${volume}%</span>
+                <div class="ga-v78132-volumes" aria-label="Volumes independentes">
+                  <label class="hd-v728-volume ga-v78132-metronome-level">
+                    <span class="vol-label">♩ Metrônomo</span>
+                    <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
+                    <span id="hdMetroVolumeText">${volume}%</span>
+                  </label>
+                  <div class="ga-v78132-mp3-level" role="group" aria-label="Volume do MP3 associado">
+                    <span class="vol-label">♫ MP3</span>
+                    <button type="button" data-ga-v78132="minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
+                    <output id="gaV78132LinkedVolume" aria-live="polite">50%</output>
+                    <button type="button" data-ga-v78132="plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
+                  </div>
                 </div>
                 <div class="hd-v728-range">${unit} ${min}–${max}</div>
               </div>
@@ -18933,7 +18945,7 @@ function beep(time,accent){
  if(!bus||!ctx)return;
  const osc=ctx.createOscillator(),g=ctx.createGain();
  osc.type='square';osc.frequency.setValueAtTime(accent===2?1860:accent===1?1430:1060,time);
- const ui=Number(document.getElementById('hdMetroVolume')?.value||50);
+ const ui=Number(document.getElementById('hdMetroVolume')?.value ?? 50);
  const amplitude=Math.pow(Math.max(0,ui)/100,1.2)*.14;
  g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.76:.56)),time);
  g.gain.exponentialRampToValueAtTime(.0001,time+.055);
@@ -18967,7 +18979,7 @@ function newSource(when,pos,r){
  const c=getCtx(),s=c.createBufferSource();
  s.buffer=buffer;s.playbackRate.value=r;
  if(!master){master=c.createGain();master.connect(c.destination);}
- master.gain.value=Math.max(0,Math.min(1,Number(document.getElementById('hdMetroVolume')?.value||50)/100));
+ master.gain.value=Math.max(0,Math.min(1,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 50)/100));
  s.connect(master);s.start(when,pos);
  s.onended=()=>{if(source===s&&playing){stop(false);offset=0;}};
  return s;
@@ -19081,9 +19093,11 @@ document.addEventListener('click',e=>{
  if(!e.target?.closest?.('#hdMetroPlus,#hdMetroMinus,#hdMetroReset'))return;
  setTimeout(retime,0);
 },true);
-document.addEventListener('input',e=>{
- if(e.target?.id==='hdMetroVolume'&&master)master.gain.setTargetAtTime(Math.max(0,Math.min(1,Number(e.target.value)/100)),ctx.currentTime,.02);
-},true);
+window.GuiaRelogioUnicoPiloto.setMp3Volume=function(percent){
+ if(master&&ctx){
+  master.gain.setTargetAtTime(Math.max(0,Math.min(1,Number(percent)/100)),ctx.currentTime,.02);
+ }
+};
 document.addEventListener('change',e=>{
  if(e.target?.id==='hdMetroBpmInput')setTimeout(retime,0);
 },true);
@@ -19395,6 +19409,146 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
    if(over>0)scroll.scrollBy({top:over,behavior:'smooth'});
   });
  },false);
+})();
+</script>
+
+<!-- V7.81.32 — volumes independentes: barra para cliques, ± para MP3 associado. -->
+<style id="v78132-volumes-separados">
+#hymnDetail #hdMetronome .ga-v78132-volumes{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ gap:3px!important;min-width:0!important;width:100%!important;
+ align-items:center!important;
+}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+ display:grid!important;grid-template-columns:max-content minmax(42px,1fr) 33px!important;
+ gap:5px!important;align-items:center!important;min-width:0!important;
+ width:100%!important;margin:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label,
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .vol-label{
+ color:#6d6458!important;font:700 10px/1.1 Arial,sans-serif!important;
+ white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level input[type=range]{
+ min-width:0!important;width:100%!important;margin:0!important;
+ accent-color:#b18438;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{
+ font:700 10px/1 Arial,sans-serif!important;text-align:right!important;white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level{
+ display:grid!important;grid-template-columns:minmax(0,1fr) 27px 34px 27px!important;
+ gap:5px!important;align-items:center!important;justify-self:stretch!important;
+ width:100%!important;min-width:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+ width:27px!important;min-width:27px!important;height:25px!important;min-height:25px!important;
+ padding:0!important;border:1px solid #d9c8ab!important;border-radius:8px!important;
+ background:#fffcf6!important;color:#173049!important;
+ font:800 17px/1 Arial,sans-serif!important;display:grid!important;place-items:center!important;
+ touch-action:manipulation;cursor:pointer;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button:active{background:#f4e9d1!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level output{
+ text-align:center!important;font:700 10px/1 Arial,sans-serif!important;
+ font-variant-numeric:tabular-nums!important;color:#263746!important;
+ white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[hidden]{display:none!important;}
+/* A associação permanece na primeira coluna. Os volumes ficam agrupados, sem empurrar a partitura. */
+#hymnDetail #hdMetronome .hd-v728-tertiary{
+ grid-template-columns:minmax(0,1fr) minmax(175px,.85fr)!important;
+ gap:6px!important;align-items:center!important;
+}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .hd-v728-tertiary{
+  grid-template-columns:minmax(0,1fr)!important;gap:3px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:center!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+  grid-template-columns:20px minmax(26px,1fr) 27px!important;gap:4px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{
+   font-size:0!important;display:flex;align-items:center;justify-content:center;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label::before{
+   content:'♩';font-size:12px;line-height:1;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+   grid-template-columns:23px 25px 30px 25px!important;gap:3px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level .vol-label{font-size:10px!important;}
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+   width:25px!important;min-width:25px!important;height:24px!important;min-height:24px!important;
+ }
+}
+@media(max-width:350px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,1fr)!important;gap:3px!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+  grid-template-columns:72px minmax(38px,1fr) 32px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{font-size:10px!important;}
+ #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label::before{content:none;}
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  grid-template-columns:minmax(0,1fr) 26px 33px 26px!important;
+ }
+}
+</style>
+<script id="v78132-controle-volume-mp3-associado">
+(function(){
+ 'use strict';
+ const KEY='guia-hinario5-volume-mp3-associado-v1';
+ const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v)||0)));
+ let value=50;
+ try{const saved=localStorage.getItem(KEY);if(saved!==null&&Number.isFinite(Number(saved)))value=clamp(saved);}catch(_e){}
+ const meterPanel=()=>document.getElementById('hdMetronomePanel');
+ const linked=()=>!!document.getElementById('hdSyncMp3Bpm')?.checked;
+ const currentAudio=()=>document.querySelector('#hdAudio audio');
+ function apply(){
+  const output=document.getElementById('gaV78132LinkedVolume');
+  if(output)output.textContent=value+'%';
+  const group=document.querySelector('#hdMetronome .ga-v78132-mp3-level');
+  if(group)group.hidden=!linked();
+  try{window.GuiaRelogioUnicoPiloto?.setMp3Volume?.(value)}catch(_e){}
+  const a=currentAudio();
+  if(a&&meterPanel()&&!meterPanel().hidden&&linked()){
+    try{a.volume=value/100;a.muted=value===0;}catch(_e){}
+  }
+ }
+ function setValue(v){
+  value=clamp(v);
+  try{localStorage.setItem(KEY,String(value))}catch(_e){}
+  apply();
+ }
+ window.GuiaVolumeMp3Associado={get:()=>value,set:setValue};
+ // Conserva o player MP3 independente com seus controles originais.
+ document.addEventListener('click',e=>{
+  const step=e.target.closest?.('[data-ga-v78132]');if(!step)return;
+  const dir=step.dataset.gaV78132==='minus'?-5:5;
+  setValue(value+dir);
+ },false);
+ document.addEventListener('change',e=>{
+  if(e.target?.id==='hdSyncMp3Bpm')requestAnimationFrame(apply);
+ },false);
+ const originalInit=window.initHymnMetronomeUI;
+ window.initHymnMetronomeUI=function(){
+  const result=originalInit?.apply(this,arguments);
+  apply();
+  return result;
+ };
+ const sync=window.GuiaMetronomeMp3Sync;
+ if(sync?.attach){
+  const previous=sync.attach;
+  sync.attach=function(){const result=previous.apply(this,arguments);apply();return result;};
+ }
+ // Ajusta o volume do elemento reproduzido caso ele seja criado após abrir o metrônomo.
+ const area=document.getElementById('hdAudio');
+ if(area)new MutationObserver(()=>{if(linked()&&!meterPanel()?.hidden)apply()}).observe(area,{childList:true});
+ apply();
 })();
 </script>
 </body></html>
