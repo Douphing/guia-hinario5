@@ -1,4 +1,5 @@
 <!-- V7.81.24 TESTE: MP3 4ª mídia independente; painel Metrônomo exclusivo com MP3 opcional; base V7.81.23 preservada. -->
+<!-- V7.81.37 TESTE: preservacao do estado de reproducao ao alterar volume/BPM/pulso; bus do clique preservado ao recalcular andamento. -->
 <!-- V7.81.21 TESTE: vídeo maior em 16:9 sem achatamento e cabeçalho do metrônomo mais baixo; preservada V7.81.20 inclusive MP3-sync universal; produção não alterada. -->
 <!-- V7.81.20 TESTE: desktop lateral restaurado, slider BPM dispensado, MP3 segue BPM nos Hinos 1–210 usando referência individual; H74 base 83 BPM; produção intacta. -->
 <!-- V7.81.16 TESTE: tonalidade e andamento exibidos lado a lado no cabeçalho do metrônomo, mantendo o BPM padrão de cada hino. Hino 74: padrão 84 BPM (acima da média aritmética 80 da faixa 72–88); sincronização MP3↔BPM continua restrita ao Hino 74. Somente UI, sem modificar produção. -->
@@ -14845,8 +14846,14 @@ body:not(.index-mode):not(.welcome-mode){
     if(input&&document.activeElement!==input)input.value=String(state.bpm);
     if(sum)sum.textContent=String(state.bpm);
     if(start){
-      start.textContent=state.running?'■ Parar':'▶ Iniciar';
-      start.classList.toggle('is-running',state.running);
+      // V7.81.37: o refresh legado nao deve reverter o botao durante
+      // a reproducao sincronizada do piloto 74/76.
+      const pilot=window.GuiaRelogioUnicoPiloto?.status?.();
+      const syncedPilot=!!(pilot?.playing && pilot.hino===String(window.__gaCurrentHymn?.num||'')
+        && document.getElementById('hdSyncMp3Bpm')?.checked);
+      const isPlaying=state.running||syncedPilot;
+      start.textContent=isPlaying?'■ Parar':'▶ Iniciar';
+      start.classList.toggle('is-running',isPlaying);
     }
     if(vol)vol.textContent=Math.round(state.volumeUI)+'%';
     updatePulseButtons();
@@ -15083,8 +15090,14 @@ body:not(.index-mode):not(.welcome-mode){
     if(input&&document.activeElement!==input)input.value=String(st.bpm);
     if(sum)sum.textContent=String(st.bpm);
     if(start){
-      start.textContent=st.running?'■ Parar':'▶ Iniciar';
-      start.classList.toggle('is-running',st.running);
+      // V7.81.37: o piloto Web Audio continua reproduzindo mesmo quando
+      // o motor generico atualiza BPM, pulso ou volume. Nao mascarar isso.
+      const pilot=window.GuiaRelogioUnicoPiloto?.status?.();
+      const syncedPilot=!!(pilot?.playing && pilot.hino===String(window.__gaCurrentHymn?.num||'')
+        && document.getElementById('hdSyncMp3Bpm')?.checked);
+      const isPlaying=st.running||syncedPilot;
+      start.textContent=isPlaying?'■ Parar':'▶ Iniciar';
+      start.classList.toggle('is-running',isPlaying);
     }
     if(vol)vol.textContent=Math.round(st.volumeUI)+'%';
     document.querySelectorAll('#hymnDetail .hd-v728-pulse [data-mode]').forEach(btn=>{
@@ -18946,7 +18959,7 @@ function beep(time,accent){
  const osc=ctx.createOscillator(),g=ctx.createGain();
  osc.type='square';osc.frequency.setValueAtTime(accent===2?1860:accent===1?1430:1060,time);
  const ui=Number(document.getElementById('hdMetroVolume')?.value ?? 50);
- const amplitude=Math.pow(Math.max(0,ui)/100,1.2)*.14;
+ const amplitude=Math.pow(Math.max(0,ui)/100,1.1)*.29;
  g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.76:.56)),time);
  g.gain.exponentialRampToValueAtTime(.0001,time+.055);
  osc.connect(g);g.connect(bus);osc.start(time);osc.stop(time+.058);
@@ -18981,11 +18994,11 @@ function newSource(when,pos,r){
  if(!master){
   master=c.createGain();
   const limiter=c.createDynamicsCompressor();
-  limiter.threshold.value=-8;limiter.knee.value=5;limiter.ratio.value=8;
+  limiter.threshold.value=-5;limiter.knee.value=4;limiter.ratio.value=8;
   limiter.attack.value=.003;limiter.release.value=.18;
   master.connect(limiter);limiter.connect(c.destination);
  }
- master.gain.value=Math.max(0,Math.min(1.18,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 70)/100*1.18));
+ master.gain.value=Math.max(0,Math.min(2.0,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 70)/100*2.0));
  s.connect(master);s.start(when,pos);
  s.onended=()=>{if(source===s&&playing){stop(false);offset=0;}};
  return s;
@@ -19001,7 +19014,11 @@ function retime(){
  const next=newSource(at,newPos,newRate);
  try{previous.onended=null;previous.stop(at)}catch(e){}
  source=next;offset=newPos;baseAt=at;rate=newRate;
- ensureBus();beatIndex=firstBeatFor(newPos);
+ // V7.81.37: a mudanca de BPM nao zera o bus de volume dos cliques.
+ // O bus novo e criado somente se nao existir (o caso normal de retime
+ // e manter a mesma saida e ganho com AudioContext unico).
+ if(!bus)ensureBus();
+ beatIndex=firstBeatFor(newPos);
  schedule();
 }
 async function prepareDecoded(h){
@@ -19101,7 +19118,7 @@ document.addEventListener('click',e=>{
 },true);
 window.GuiaRelogioUnicoPiloto.setMp3Volume=function(percent){
  if(master&&ctx){
-  master.gain.setTargetAtTime(Math.max(0,Math.min(1.18,Number(percent)/100*1.18)),ctx.currentTime,.02);
+  master.gain.setTargetAtTime(Math.max(0,Math.min(2.0,Number(percent)/100*2.0)),ctx.currentTime,.02);
  }
 };
 document.addEventListener('change',e=>{
@@ -19936,4 +19953,98 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  },false);
 })();
 </script>
+
+<!-- V7.81.36: altura realmente compacta e sem deslocar a partitura. -->
+<style id="v78136-altura-real-volumes">
+#hymnDetail #hdMetronome .ga-v78132-volumes{
+ display:grid!important; grid-template-columns:minmax(0,126px) 54px!important;
+ width:min(100%,190px)!important; max-width:190px!important;
+ gap:8px!important; margin:0 auto!important;
+ align-items:center!important; justify-content:center!important;
+}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+ display:flex!important; flex-direction:column!important;
+ height:76px!important;min-height:76px!important;max-height:76px!important;
+ width:100%!important;max-width:126px!important;
+ box-sizing:border-box!important; padding:6px 8px!important;
+ gap:4px!important; justify-content:center!important; align-items:center!important;
+ border:1px solid #decba8!important; border-radius:11px!important;
+ background:#fffcf5!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level .ga-v78134-volume-icon{
+ display:inline-flex!important;order:0!important;
+ width:20px!important; min-width:20px!important;
+ height:18px!important; min-height:18px!important;
+ align-items:center!important;justify-content:center!important;
+ padding:0!important; margin:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78135-fader-svg{
+ width:19px!important;height:19px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level input[type=range]{
+ display:block!important;order:1!important; width:100%!important;max-width:108px!important;
+ height:16px!important;min-height:16px!important;margin:0!important;
+ flex:none!important; touch-action:pan-x!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{
+ display:block!important;order:2!important;
+ font:700 10px/1 Arial,sans-serif!important; height:10px!important;
+ min-height:10px!important; padding:0!important; margin:0!important;
+ text-align:center!important; color:#3a4551!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ height:76px!important;min-height:76px!important;max-height:76px!important;
+ width:54px!important;min-width:54px!important;max-width:54px!important;
+ box-sizing:border-box!important; padding:3px!important;
+ justify-content:center!important;gap:2px!important;
+ border-radius:11px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[hidden]{display:none!important}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-volume-icon{
+ display:inline-flex!important;order:0!important;align-items:center!important;
+ justify-content:center!important; width:19px!important;min-width:19px!important;
+ height:16px!important;min-height:16px!important;margin:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-sound-svg{
+ width:18px!important;height:18px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+ flex:none!important;min-height:17px!important;max-height:17px!important;height:17px!important;
+ width:26px!important;min-width:26px!important;max-width:26px!important;
+ padding:0!important;line-height:1!important;font-size:16px!important;
+ border-radius:6px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level output{
+ flex:none!important;display:block!important;
+ height:10px!important;min-height:10px!important;line-height:10px!important;
+ order:2!important;font-size:10px!important;margin:0!important;padding:0!important;
+}
+#hymnDetail #hdMetronome .hd-v728-tertiary{
+ display:grid!important; grid-template-columns:minmax(0,1fr)!important;
+ gap:1px!important; align-items:center!important; justify-content:center!important;
+}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,116px) 52px!important;
+  max-width:178px!important;width:min(100%,178px)!important;gap:7px!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+  max-width:116px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  width:52px!important;min-width:52px!important;max-width:52px!important;
+ }
+}
+@media(max-width:350px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,102px) 50px!important;
+  max-width:160px!important;width:min(100%,160px)!important;gap:6px!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{max-width:102px!important}
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  width:50px!important;min-width:50px!important;max-width:50px!important;
+ }
+}
+</style>
 </body></html>
