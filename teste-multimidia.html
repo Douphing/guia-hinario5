@@ -18697,6 +18697,49 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    if(Math.abs((t2-t1)-t1)>Math.max(2.5,nominal*.08)||t2>duration-8)return [];
    return [0,Math.round(t1*100)/100,Math.round(t2*100)/100];
  }
+ // V7.81.42 — estimativa conservadora do andamento e da entrada real do MP3.
+ // A análise só se aplica ao áudio local associado, sem alterar o arquivo.
+ function estimateBeatGrid(envelope,num){
+   const cfg=configFor(num),nominal=Number(cfg?.mp3BaseBpm||cfg?.bpm);
+   if(!(nominal>=30&&nominal<=240)||envelope.length<1000)return null;
+   const count=Math.min(envelope.length,1450),nov=new Float32Array(count);
+   let maxNovelty=0;
+   for(let i=3;i<count;i++){
+     const v=Math.max(0,envelope[i]-envelope[i-3]);
+     nov[i]=v;if(v>maxNovelty)maxNovelty=v;
+   }
+   if(maxNovelty<.003)return null;
+   // Alargar o pico um quadro: pequenas oscilações do decodificador
+   // não deslocam artificialmente a posição da batida.
+   const peaks=new Float32Array(count);
+   for(let i=1;i<count-1;i++)peaks[i]=Math.max(nov[i-1],nov[i],nov[i+1]);
+   const scores=[];let best=null;
+   const low=Math.max(30,nominal*.88),high=Math.min(240,nominal*1.12);
+   for(let tempo=low;tempo<=high;tempo+=.5){
+     const period=60/tempo;
+     for(let phase=0;phase<period;phase+=.02){
+       let total=0,totalFirst=0,totalSecond=0,n=0,nFirst=0,nSecond=0;
+       for(let t=phase;t<Math.min(24,count*.02-.1);t+=period){
+         const index=Math.round(t/.02);
+         const value=peaks[index]||0;
+         total+=value;n++;
+         if(t<12){totalFirst+=value;nFirst++}else{totalSecond+=value;nSecond++}
+       }
+       if(n<12||nFirst<5||nSecond<5)continue;
+       const score=total/n;
+       scores.push(score);
+       if(!best||score>best.score)best={score,bpm:tempo,phase,first:totalFirst/nFirst,second:totalSecond/nSecond};
+     }
+   }
+   if(!best||scores.length<50)return null;
+   scores.sort((a,b)=>a-b);
+   const reference=scores[Math.floor(scores.length/2)]||1e-6;
+   const confidence=best.score/Math.max(reference,1e-6);
+   // Não 'inventar' BPM para gravações sem pulsação identificável.
+   if(confidence<1.9||Math.min(best.first,best.second)<best.score*.42)return null;
+   return {bpm:Math.round(best.bpm*10)/10,phase:Math.round(best.phase*100)/100,
+     confidence:Math.round(confidence*100)/100,verified:false};
+ }
  async function analyzeAudio(audio,num,info){
    if(info.loading||info.ready)return;
    const known=KNOWN[num];
@@ -18719,6 +18762,15 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      context=new AudioCtx();
      const decoded=await context.decodeAudioData(file);
      const envelope=calcEnvelope(decoded);
+     // Só os dois pilotos possuem mapas musicais validados; os demais
+     // recebem uma estimativa que pode ser rejeitada por baixa confiança.
+     if(num!=='74'&&num!=='76'){
+       const beatGrid=estimateBeatGrid(envelope,num);
+       if(beatGrid){
+         info.beatGrid=beatGrid;
+         SYNC.calibrateBase?.(num,audio,beatGrid.bpm);
+       }
+     }
      info.anchors=extractStanzaStarts(envelope,num,decoded.duration);
      info.ready=true;
    }catch(err){
@@ -18771,6 +18823,12 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      }
      return anchor;
    },
+   calibrationFor(audio){return byAudio.get(audio)?.beatGrid||null},
+   statusFor(audio){const d=byAudio.get(audio);return d?{
+     hymn:d.num,ready:d.ready,recognized:!!d.beatGrid,
+     bpm:d.beatGrid?.bpm||null,confidence:d.beatGrid?.confidence||null,
+     verseStarts:(d.anchors||[]).slice()
+   }:null},
    pointsFor(audio){return (byAudio.get(audio)?.anchors||[]).slice()},
    // Somente para validação; não altera a configuração do usuário.
    nominalVerseSeconds
@@ -20426,6 +20484,84 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   if(e.target?.id==='hdSyncMp3Bpm')setTimeout(render,0);
  },false);
  document.addEventListener('hino-guia-metronomo-atualizado',render);
+})();
+</script>
+
+<script id="v78142-mp3-fase-bpm-210">
+(function(){
+  'use strict';
+  const original=window.GuiaMetroPhaseSync;
+  const linked=window.GuiaMetronomeMp3Sync;
+  if(!original||!linked)return;
+  let clock=null;
+  const hymn=()=>String(window.__gaCurrentHymn?.num||'');
+  const currentAudio=()=>document.querySelector('#hdAudio audio');
+  const cfgFor=(n)=>{try{return MULTIMIDIA[n]?.metronomo||null}catch(e){return null}};
+  function reset(){clock=null;try{original.reset?.()}catch(e){}}
+  window.GuiaMetroPhaseSync={
+    reset,
+    scheduleBeat(args){
+      const n=hymn();
+      // 74 e 76 continuam exclusivamente com a fonte e os mapas musicais
+      // calibrados, no relógio Web Audio da V7.81.27.
+      if(n==='74'||n==='76')return original.scheduleBeat(args);
+      const audio=currentAudio();
+      if(!audio?.isConnected||!linked.isLinked(n)){
+        clock=null;return original.scheduleBeat(args);
+      }
+      if(audio.paused||audio.ended||audio.seeking||audio.readyState<2){
+        clock=null;return true;
+      }
+      const {ctx,look,bpm,tempo,beats,accentEvery,click}=args;
+      if(!(ctx&&Number.isFinite(bpm)&&bpm>0&&Number.isFinite(tempo)&&tempo>0))return true;
+      const data=window.GuiaMetroVerseSync?.calibrationFor(audio);
+      const cfg=cfgFor(n);
+      // Sem calibração confiável, usa o BPM de origem cadastrado, sempre
+      // derivando a fase do TEMPO REAL do MP3 (não de um segundo relógio).
+      const base=Number(data?.bpm||cfg?.mp3BaseBpm||cfg?.bpm)||bpm;
+      const offset=Number(data?.phase??cfg?.mp3BeatOffsetSeconds??0)||0;
+      const anchor=Number(window.GuiaMetroVerseSync?.anchorAt(n,audio))||0;
+      const manual=Number(window.GuiaMetroFineOffset?.get(n))||0;
+      const mediaTime=Number(audio.currentTime);
+      const rate=Number(audio.playbackRate)||1;
+      const factor=tempo/bpm;
+      if(!Number.isFinite(mediaTime)||!(base>0&&rate>0&&factor>0))return true;
+      const periodMedia=60/(base*factor);
+      const position=(mediaTime-anchor-offset-manual)/periodMedia;
+      const signature=[n,anchor,base,offset,manual,bpm,tempo,rate,beats].join(':');
+      if(!clock||clock.audio!==audio||clock.signature!==signature||
+         position<clock.lastPosition-.12||position-clock.lastPosition>Math.max(beats*2,7)){
+        clock={audio,signature,step:Math.max(0,Math.ceil(position-.008)),lastPosition:position};
+      }
+      clock.lastPosition=position;
+      // A diferença entre dois pulsos é primeiro expressa no relógio do MP3.
+      // Ela só depois é convertida para o relógio de saída Web Audio.
+      const horizon=Math.min(Math.max(.05,look),.09);
+      let count=0;
+      while(count<3){
+        const seconds=(clock.step-position)*periodMedia/rate;
+        if(seconds>horizon)break;
+        if(seconds>=-.025 && (anchor+offset+manual+clock.step*periodMedia)<=audio.duration+.02){
+          const idx=((clock.step%beats)+beats)%beats;
+          const accent=idx===0?2:(accentEvery>0&&idx%accentEvery===0?1:0);
+          // Não disparar batidas durante a fermata final calibrada.
+          const suspend=window.GuiaMetroVerseSync?.suspendFromBeat?.(n,audio,anchor,factor);
+          if(!(Number.isFinite(suspend)&&clock.step>=suspend)){
+            click(Math.max(ctx.currentTime+.005,ctx.currentTime+seconds),accent);
+          }
+        }
+        clock.step++;count++;
+      }
+      return true;
+    }
+  };
+  window.GuiaMetroBpmV78142={status(){
+    const a=currentAudio(),n=hymn(),c=a?window.GuiaMetroVerseSync?.statusFor(a):null;
+    return {hymn:n,associated:linked.isLinked(n),playing:!!a&&!a.paused,
+      phaseLock:!!a&&linked.isLinked(n),audioBpmEstimated:c?.bpm||null,
+      confidence:c?.confidence||null,verified:n==='74'||n==='76',
+      note:c?.recognized?'Estimativa automática, requer validação auditiva':'Andamento-base cadastrado; sem mapa musical validado'};
+  }};
 })();
 </script>
 
