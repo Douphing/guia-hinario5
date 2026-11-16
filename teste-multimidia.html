@@ -18884,6 +18884,9 @@ const isPilot=()=>!!(AudioCtx&&MAPS[currentHymn()]&&panel()&&!panel().hidden&&ch
 let ctx=null,buffer=null,bufferHymn='',source=null,bus=null,master=null,clockTimer=null;
 let playing=false,loading=false,baseAt=0,offset=0,rate=1,beatIndex=0,token=0;
 let pilotError='',lastTick=0;
+// V7.81.30: prepara o áudio ao abrir o hino e reutiliza o buffer decodificado.
+// Um único hino fica em cache para não acumular dezenas de MB no celular.
+const decodedCache=new Map(), pendingLoads=new Map();
 const ownStatus=()=>({hino:bufferHymn,playing,loading,bufferSeconds:buffer?.duration||0,offset,
   currentTime:playing&&ctx?Math.max(0,offset+(ctx.currentTime-baseAt)*rate):offset,
   playbackRate:rate,beatIndex,beatCount:MAPS[bufferHymn]?.beats?.length||0,error:pilotError});
@@ -18979,25 +18982,52 @@ function retime(){
  ensureBus();beatIndex=firstBeatFor(newPos);
  schedule();
 }
+async function prepareDecoded(h){
+ const m=MAPS[h];
+ if(!m)throw Error('Hino sem mapa musical piloto');
+ if(decodedCache.has(h))return decodedCache.get(h);
+ if(pendingLoads.has(h))return pendingLoads.get(h);
+ // A revisão do áudio faz parte do endereço para não utilizar um MP3 antigo do cache.
+ const task=(async()=>{
+  const c=getCtx(),url=new URL('audio/hino-'+h+'.mp3',document.baseURI);
+  url.searchParams.set('versao',m.sha256.slice(0,12));
+  const response=await fetch(url.href,{cache:'default'});
+  if(!response.ok)throw Error('MP3 não encontrado: '+url.pathname);
+  const bytes=await response.arrayBuffer();
+  if(!window.crypto?.subtle)throw Error('Validação do áudio requer HTTPS ou localhost.');
+  const digest=await crypto.subtle.digest('SHA-256',bytes);
+  const sha=Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');
+  if(sha!==m.sha256)throw Error('Este MP3 não corresponde à gravação calibrada. Use o áudio do pacote de teste.');
+  // O navegador faz a decodificação antes de o usuário apertar Iniciar.
+  const decoded=await c.decodeAudioData(bytes);
+  if(Math.abs(decoded.duration-m.duration)>.60)throw Error('Duração do MP3 diferente da gravação calibrada.');
+  decodedCache.clear(); // não manter Hinos 74 e 76 simultaneamente na RAM.
+  decodedCache.set(h,decoded);
+  return decoded;
+ })();
+ pendingLoads.set(h,task);
+ try{return await task;}finally{if(pendingLoads.get(h)===task)pendingLoads.delete(h);}
+}
 async function loadFor(h,requestId){
  if(buffer&&bufferHymn===h)return buffer;
- const m=MAPS[h];if(!m)throw Error('Hino sem mapa musical piloto');
- const c=getCtx(),url=new URL('audio/hino-'+h+'.mp3',document.baseURI);
- const response=await fetch(url.href,{cache:'no-store'});
- if(!response.ok)throw Error('MP3 não encontrado: '+url.pathname);
- const bytes=await response.arrayBuffer();
+ const decoded=await prepareDecoded(h);
  if(requestId!==token)throw Error('Reprodução cancelada');
- if(!window.crypto?.subtle)throw Error('Validação do áudio requer HTTPS ou localhost.');
- const digest=await crypto.subtle.digest('SHA-256',bytes.slice(0));
- const sha=Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');
- if(sha!==m.sha256)throw Error('Este MP3 não corresponde à gravação calibrada. Use o áudio do pacote de teste.');
- const decoded=await c.decodeAudioData(bytes);
- if(requestId!==token)throw Error('Reprodução cancelada');
- if(Math.abs(decoded.duration-m.duration)>0.60)throw Error('Duração do MP3 diferente da gravação calibrada.');
- buffer=decoded;bufferHymn=h;return buffer;
+ buffer=decoded;bufferHymn=h;
+ return buffer;
+}
+function primeHymn(h){
+ if(!MAPS[h])return;
+ // A falha é comunicada apenas quando o usuário efetivamente pede reprodução.
+ prepareDecoded(h).catch(()=>{});
 }
 async function start(){
  const h=currentHymn(),m=MAPS[h];if(!m||loading||playing)return;
+ // IMPORTANT: no outro modo, o metrônomo genérico pode continuar ativo.
+ // Interrompe seu intervalo ANTES de criar a fonte sincronizada, garantindo
+ // um único gerador de cliques por vez.
+ try{if(typeof oldStop==='function')oldStop();}catch(e){}
+ try{document.querySelector('#hdAudio audio')?.pause()}catch(e){}
+ try{window.GuiaMetroPhaseSync?.reset()}catch(e){}
  pilotError='';loading=true;token++;const mine=token;
  syncUI();
  try{
@@ -19027,7 +19057,12 @@ window.stopHymnMetronome=function(){
 const oldInit=window.initHymnMetronomeUI;
 window.initHymnMetronomeUI=function(){
  stop(true);
- return typeof oldInit==='function'?oldInit.apply(this,arguments):undefined;
+ const result=typeof oldInit==='function'?oldInit.apply(this,arguments):undefined;
+ const h=currentHymn();
+ // Inicia download/verificação/decodificação ANTES do clique em Iniciar.
+ // Metrônomo sem MP3 continua iniciando imediatamente com o motor original.
+ if(MAPS[h]&&checkbox()?.checked)primeHymn(h);
+ return result;
 };
 // Captura ANTES dos listeners antigos, para não disparar HTMLAudioElement nem
 // os dois schedulers antigos. Só nos dois pilotos com MP3 associado.
@@ -19047,7 +19082,19 @@ document.addEventListener('input',e=>{
 },true);
 document.addEventListener('change',e=>{
  if(e.target?.id==='hdMetroBpmInput')setTimeout(retime,0);
- if(e.target?.id==='hdSyncMp3Bpm' && !e.target.checked){stop(false);}
+},true);
+// A troca da associação é uma transição de motor: interrompemos PRIMEIRO
+// MP3 nativo, AudioBufferSource, cliques e intervalos do motor genérico.
+// Não iniciamos nada automaticamente depois da troca; o usuário toca Iniciar.
+// Window/capture executa antes dos handlers legados em document.
+window.addEventListener('change',e=>{
+ if(e.target?.id!=='hdSyncMp3Bpm')return;
+ try{document.querySelector('#hdAudio audio')?.pause()}catch(err){}
+ stop(false); // cancela AudioBufferSource + scheduler + requisições pendentes
+ try{if(typeof oldStop==='function')oldStop()}catch(err){} // engine genérico/legado
+ try{window.GuiaMetroPhaseSync?.reset()}catch(err){}
+ // Um novo clique em Iniciar respeita a configuração recém-selecionada.
+ syncUI();
 },true);
 document.addEventListener('click',e=>{
  if(e.target?.closest?.('#hdMetronomeToggle,#hdPrevHymn,#hdNextHymn,#hdClose')){
@@ -19232,4 +19279,102 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   }
 }
 </style>
+<!-- V7.81.30 TESTE: pré-carregamento, modo foco móvel e troca exclusiva de motores. -->
+<style id="v78130-metrônomo-foco-vertical">
+/* No celular, o metrônomo substitui temporariamente os cartões do hino.
+   Os elementos continuam no DOM e voltam integralmente ao fechar o painel. */
+@media (max-width:959px){
+ #hymnDetail.ga-v78130-metro-focus .hd-card{
+   width:min(100%,540px)!important;
+   max-height:calc(100dvh - 16px)!important;
+   height:auto!important;
+   min-height:0!important;
+   padding:10px 12px 12px!important;
+   overflow-y:auto!important;
+   overflow-x:hidden!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus .hd-hero{
+   grid-area:auto!important;position:relative!important;top:auto!important;
+   min-height:0!important;height:auto!important;
+   margin:0 0 7px!important;padding:5px 42px 6px 10px!important;
+   display:flex!important;flex-direction:column!important;
+   justify-content:center!important;align-items:flex-start!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus .hd-hero .hd-staff,
+ #hymnDetail.ga-v78130-metro-focus .hd-hero .hd-swoosh{display:none!important;}
+ #hymnDetail.ga-v78130-metro-focus #hdNum{
+   margin:0!important;display:flex!important;justify-content:flex-start!important;
+   line-height:1!important;gap:5px!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdNum .hd-number{
+   font-size:23px!important;line-height:1!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdTitle{
+   margin:1px 0 0!important;font-size:15px!important;
+   line-height:1.12!important;text-align:left!important;
+   max-width:100%!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus .hd-hero #hdClose{
+   top:5px!important;right:6px!important;width:30px!important;height:30px!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdMeta,
+ #hymnDetail.ga-v78130-metro-focus #hdStudyInfo,
+ #hymnDetail.ga-v78130-metro-focus .hd-actions,
+ #hymnDetail.ga-v78130-metro-focus .hd-secondary-actions,
+ #hymnDetail.ga-v78130-metro-focus .hd-divider,
+ #hymnDetail.ga-v78130-metro-focus #hdMediaArea > .hd-hymn-nav,
+ #hymnDetail.ga-v78130-metro-focus #hdMediaArea > .hd-media-title{
+   display:none!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdMediaArea{
+   grid-area:auto!important;display:block!important;
+   margin:0!important;padding:0!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdMetronome{
+   margin:0!important;max-width:100%!important;
+ }
+ #hymnDetail.ga-v78130-metro-focus #hdMetronomePanel > .ga-v78123-fine{
+   margin-top:4px!important;
+ }
+}
+
+ /* O tema anterior aplicava display:grid/flex com maior especificidade.
+    Reforça a ocultação somente no modo metrônomo do celular. */
+ #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-secondary-actions,
+ #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-divider,
+ #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > .hd-actions,
+ #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > #hdMeta,
+ #hymnDetail#hymnDetail.ga-v78130-metro-focus .hd-card > #hdStudyInfo{
+   display:none!important;
+ }
+</style>
+<script id="v78130-modo-foco-movel">
+(function(){
+ 'use strict';
+ const modal=()=>document.getElementById('hymnDetail');
+ const panel=()=>document.getElementById('hdMetronomePanel');
+ function syncFocus(){
+  const m=modal(),p=panel();if(!m)return;
+  const opened=!!(m.classList.contains('open')&&p&&!p.hidden);
+  const change=m.classList.contains('ga-v78130-metro-focus')!==opened;
+  m.classList.toggle('ga-v78130-metro-focus',opened);
+  if(change&&opened){const c=m.querySelector('.hd-card');if(c)c.scrollTop=0;}
+ }
+ // Os controles existentes continuam sendo os responsáveis pela abertura.
+ // Apenas atualizamos a apresentação depois que a mudança de estado ocorrer.
+ document.addEventListener('click',function(e){
+  if(e.target?.closest?.('#hdMetronomeToggle,#hdClose,#hdPrevHymn,#hdNextHymn')){
+   requestAnimationFrame(syncFocus);
+  }
+ },false);
+ const oldInit=window.initHymnMetronomeUI;
+ if(typeof oldInit==='function'){
+  window.initHymnMetronomeUI=function(){
+   modal()?.classList.remove('ga-v78130-metro-focus');
+   return oldInit.apply(this,arguments);
+  };
+ }
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')requestAnimationFrame(syncFocus)});
+})();
+</script>
 </body></html>
