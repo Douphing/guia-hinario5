@@ -20593,4 +20593,138 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   };
 })();
 </script>
+<!-- V7.81.44 PILOTO — corrigir DESVIO progressivo separando BPM de gravação e atraso de entrada. -->
+<style id="v78144-calibracao-bpm-gravacao">
+#hymnDetail .ga-v78144-tempo-real{display:flex;align-items:center;justify-content:space-between;
+ gap:8px;flex-wrap:wrap;padding:7px 1px 4px;border-top:1px solid #e6d7b9;
+ margin-top:8px;color:#34475a;font:600 11px/1.25 Arial,sans-serif;}
+#hymnDetail .ga-v78144-tempo-real[hidden]{display:none!important}
+#hymnDetail .ga-v78144-title{display:flex;align-items:center;gap:5px;flex:1 1 140px;min-width:0}
+#hymnDetail .ga-v78144-controls{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex:0 0 auto}
+#hymnDetail .ga-v78144-controls button{height:25px!important;min-height:25px!important;min-width:28px!important;width:28px!important;
+ padding:0!important;border:1px solid #d9c6a2!important;border-radius:7px!important;
+ color:#223b53!important;background:#fffdf8!important;font-size:16px!important;font-weight:bold!important}
+#hymnDetail .ga-v78144-controls button.ga-v78144-reset{width:25px!important;min-width:25px!important;font-size:13px!important}
+#hymnDetail .ga-v78144-controls output{display:inline-block;min-width:54px;text-align:center;white-space:nowrap;
+ font-weight:800;font-variant-numeric:tabular-nums;color:#8c651d}
+#hymnDetail .ga-v78144-help{width:100%;font:400 10px/1.35 Arial,sans-serif;color:#726b5c}
+@media(max-width:350px){#hymnDetail .ga-v78144-tempo-real{gap:4px}#hymnDetail .ga-v78144-help{font-size:9px}}
+</style>
+<script id="v78144-calibracao-bpm-gravacao">
+(function(){
+ 'use strict';
+ const SYNC=window.GuiaMetronomeMp3Sync, VERSE=window.GuiaMetroVerseSync;
+ if(!SYNC||!VERSE)return;
+ const KEY='guia-h5-bpm-original-gravacao-v1:';
+ const current=()=>String(window.__gaCurrentHymn?.num||'');
+ const cfgFor=n=>{try{return MULTIMIDIA[String(n)]?.metronomo||null}catch(e){return null}};
+ const pilot=n=>n==='74'||n==='76';
+ const bounded=(x,defaultBpm)=>{
+  const value=Number(x),base=Number(defaultBpm);
+  if(!Number.isFinite(value)||!Number.isFinite(base)||base<=0)return null;
+  if(value<Math.max(30,base*.75)||value>Math.min(240,base*1.25))return null;
+  return Math.round(value*2)/2;
+ };
+ const nominal=n=>Number(cfgFor(n)?.mp3BaseBpm||cfgFor(n)?.bpm)||0;
+ function stored(n){
+  if(pilot(n))return null;
+  try{const raw=localStorage.getItem(KEY+n);return raw===null?null:bounded(raw,nominal(n))}catch(e){return null}
+ }
+ const audio=()=>document.querySelector('#hdAudio audio');
+ // Não tocar no mapa e no motor Web Audio comprovados dos hinos 74 e 76.
+ const formerAttach=SYNC.attach;
+ const formerCalibrate=SYNC.calibrateBase;
+ const formerCalibration=VERSE.calibrationFor;
+ SYNC.calibrateBase=function(n,a,bpm){
+  const h=String(n),chosen=stored(h);
+  if(typeof formerCalibrate==='function')return formerCalibrate.call(this,n,a,chosen===null?bpm:chosen);
+ };
+ SYNC.attach=function(a,n){
+  const result=typeof formerAttach==='function'?formerAttach.apply(this,arguments):undefined;
+  const chosen=stored(String(n));
+  if(chosen!==null&&a?.isConnected)SYNC.calibrateBase(n,a,chosen);
+  return result;
+ };
+ VERSE.calibrationFor=function(a){
+  const data=typeof formerCalibration==='function'?formerCalibration.call(this,a):null;
+  const n=current(),chosen=stored(n);
+  if(chosen===null||!a||a!==audio())return data;
+  return Object.assign({},data||{}, {bpm:chosen,verified:false,manualBpm:true});
+ };
+ const tempoLabel=()=>document.getElementById('gaV78144TempoValue');
+ function readLive(n){
+  const manual=stored(n);
+  if(manual!==null)return manual;
+  const estimate=audio()&&VERSE.calibrationFor(audio());
+  const estimated=Number(estimate?.bpm);
+  return Number.isFinite(estimated)&&estimated>0?estimated:nominal(n);
+ }
+ function render(n){
+  const ui=document.getElementById('gaV78144Tempo');
+  if(!ui)return;
+  const enabled=!pilot(n)&&!!cfgFor(n);
+  ui.hidden=!enabled;
+  if(!enabled)return;
+  const value=readLive(n),manual=stored(n);
+  const label=tempoLabel();
+  if(label)label.textContent=(Math.round(value*10)/10).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' BPM';
+  const reset=ui.querySelector('[data-ga-original="reset"]');
+  if(reset)reset.disabled=manual===null;
+ }
+ function update(n,next){
+  const target=bounded(next,nominal(n));
+  if(pilot(n)||!target)return;
+  try{localStorage.setItem(KEY+n,String(target))}catch(e){}
+  const a=audio();
+  if(a?.isConnected)SYNC.calibrateBase(n,a,target);
+  // Reancora as futuras batidas; não pausa nem troca o estado Iniciar/Pausar.
+  try{window.GuiaMetroPhaseSync?.reset?.()}catch(e){}
+  render(n);
+ }
+ function restore(n){
+  if(pilot(n))return;
+  try{localStorage.removeItem(KEY+n)}catch(e){}
+  // Para abandonar a substituição de BPM, usar o valor detectado ou cadastrado.
+  const a=audio();
+  if(a?.isConnected){
+   const detected=typeof formerCalibration==='function'?formerCalibration.call(VERSE,a):null;
+   const original=Number(detected?.bpm||nominal(n));
+   if(original>0)SYNC.calibrateBase(n,a,original);
+  }
+  try{window.GuiaMetroPhaseSync?.reset?.()}catch(e){}
+  render(n);
+ }
+ const formerInit=window.initHymnMetronomeUI;
+ window.initHymnMetronomeUI=function(cfg){
+  const ret=typeof formerInit==='function'?formerInit.apply(this,arguments):undefined;
+  const n=current(),details=document.querySelector('#hdMetronomePanel .ga-v78123-fine');
+  if(details&& !details.querySelector('#gaV78144Tempo')){
+   const row=document.createElement('div');
+   row.id='gaV78144Tempo';row.className='ga-v78144-tempo-real';
+   row.innerHTML='<div class="ga-v78144-title">♩ Andamento da gravação</div>'+ 
+      '<div class="ga-v78144-controls">'+
+        '<button type="button" data-ga-original="minus" aria-label="Reduzir BPM original do MP3 em 0,5">−</button>'+ 
+        '<output id="gaV78144TempoValue" aria-live="polite">— BPM</output>'+ 
+        '<button type="button" data-ga-original="plus" aria-label="Aumentar BPM original do MP3 em 0,5">+</button>'+ 
+        '<button type="button" class="ga-v78144-reset" data-ga-original="reset" aria-label="Restaurar detecção automática do BPM original">↺</button>'+ 
+      '</div><div class="ga-v78144-help">Se as batidas se afastam ao longo do hino, ajuste o BPM da gravação. Para acertar só a entrada, use o ajuste em ms acima. Fermatas ainda exigem calibração musical.</div>';
+   details.appendChild(row);
+   row.addEventListener('click',function(e){
+    const button=e.target.closest('[data-ga-original]');if(!button||current()!==n)return;
+    e.preventDefault();e.stopPropagation();
+    const action=button.dataset.gaOriginal;
+    if(action==='reset')restore(n);
+    else update(n,readLive(n)+(action==='plus'?.5:-.5));
+   });
+  }
+  render(n);
+  return ret;
+ };
+ window.GuiaBpmGravacaoV78144={status(){const n=current(),a=audio();return{
+  hino:n,especialPreservado:pilot(n),bpmCadastrado:nominal(n),bpmAjustado:stored(n),
+  bpmEmUso:readLive(n),bpmEstimado:a?VERSE.statusFor(a)?.bpm||null:null,
+  observacao:pilot(n)?'Hino aprovado: não alterar':'Ajuste provisório de andamento-base; não substitui mapa musical de fermatas'};
+ }};
+})();
+</script>
 </body></html>
