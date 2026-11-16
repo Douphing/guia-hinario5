@@ -18773,8 +18773,9 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      if(num!=='74'&&num!=='76'){
        const beatGrid=estimateBeatGrid(envelope,num);
        if(beatGrid){
+         // V7.81.45: somente diagnóstico. Uma estimativa do primeiro trecho
+         // NÃO pode alterar a velocidade musical do MP3 inteiro.
          info.beatGrid=beatGrid;
-         SYNC.calibrateBase?.(num,audio,beatGrid.bpm);
        }
      }
      info.anchors=extractStanzaStarts(envelope,num,decoded.duration);
@@ -18819,6 +18820,9 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
      return quarters*pulseFactor;
    },
    anchorAt(num,audio){
+     // V7.81.45: não reancorar hinos não calibrados em divisões de
+     // estrofes inferidas, pois falsos positivos deslocam as batidas.
+     if(String(num)!=='74'&&String(num)!=='76')return 0;
      const data=byAudio.get(audio);
      if(!data||data.num!==num||!data.anchors.length)return 0;
      const t=Number(audio.currentTime)||0;
@@ -20524,8 +20528,11 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
       const cfg=cfgFor(n);
       // Sem calibração confiável, usa o BPM de origem cadastrado, sempre
       // derivando a fase do TEMPO REAL do MP3 (não de um segundo relógio).
-      const base=Number(data?.bpm||cfg?.mp3BaseBpm||cfg?.bpm)||bpm;
-      const offset=Number(data?.phase??cfg?.mp3BeatOffsetSeconds??0)||0;
+      // Uma grade inferida da dinâmica não confirma BPM ou fase. Aplicar
+      // somente o BPM explicitamente ajustado pelo usuário (V7.81.44)
+      // ou o cadastro; isso evita desaceleração arbitrária do MP3.
+      const base=Number(data?.manualBpm?data.bpm:(cfg?.mp3BaseBpm||cfg?.bpm))||bpm;
+      const offset=Number(cfg?.mp3BeatOffsetSeconds??0)||0;
       const anchor=Number(window.GuiaMetroVerseSync?.anchorAt(n,audio))||0;
       const manual=Number(window.GuiaMetroFineOffset?.get(n))||0;
       const mediaTime=Number(audio.currentTime);
@@ -20655,9 +20662,8 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  function readLive(n){
   const manual=stored(n);
   if(manual!==null)return manual;
-  const estimate=audio()&&VERSE.calibrationFor(audio());
-  const estimated=Number(estimate?.bpm);
-  return Number.isFinite(estimated)&&estimated>0?estimated:nominal(n);
+  // Estimativas são apenas diagnósticas; não são BPM aplicados.
+  return nominal(n);
  }
  function render(n){
   const ui=document.getElementById('gaV78144Tempo');
@@ -20687,8 +20693,7 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   // Para abandonar a substituição de BPM, usar o valor detectado ou cadastrado.
   const a=audio();
   if(a?.isConnected){
-   const detected=typeof formerCalibration==='function'?formerCalibration.call(VERSE,a):null;
-   const original=Number(detected?.bpm||nominal(n));
+   const original=nominal(n);
    if(original>0)SYNC.calibrateBase(n,a,original);
   }
   try{window.GuiaMetroPhaseSync?.reset?.()}catch(e){}
@@ -20701,13 +20706,13 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   if(details&& !details.querySelector('#gaV78144Tempo')){
    const row=document.createElement('div');
    row.id='gaV78144Tempo';row.className='ga-v78144-tempo-real';
-   row.innerHTML='<div class="ga-v78144-title">♩ Andamento da gravação</div>'+ 
+   row.innerHTML='<div class="ga-v78144-title">♩ BPM original do MP3</div>'+ 
       '<div class="ga-v78144-controls">'+
         '<button type="button" data-ga-original="minus" aria-label="Reduzir BPM original do MP3 em 0,5">−</button>'+ 
         '<output id="gaV78144TempoValue" aria-live="polite">— BPM</output>'+ 
         '<button type="button" data-ga-original="plus" aria-label="Aumentar BPM original do MP3 em 0,5">+</button>'+ 
         '<button type="button" class="ga-v78144-reset" data-ga-original="reset" aria-label="Restaurar detecção automática do BPM original">↺</button>'+ 
-      '</div><div class="ga-v78144-help">Se as batidas se afastam ao longo do hino, ajuste o BPM da gravação. Para acertar só a entrada, use o ajuste em ms acima. Fermatas ainda exigem calibração musical.</div>';
+      '</div><div class="ga-v78144-help">Ajuste manual para gravações de andamento constante. A detecção automática não altera mais a velocidade. Para acertar só a entrada, use os ms. Fermatas exigem mapa musical.</div>';
    details.appendChild(row);
    row.addEventListener('click',function(e){
     const button=e.target.closest('[data-ga-original]');if(!button||current()!==n)return;
@@ -20724,6 +20729,21 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   hino:n,especialPreservado:pilot(n),bpmCadastrado:nominal(n),bpmAjustado:stored(n),
   bpmEmUso:readLive(n),bpmEstimado:a?VERSE.statusFor(a)?.bpm||null:null,
   observacao:pilot(n)?'Hino aprovado: não alterar':'Ajuste provisório de andamento-base; não substitui mapa musical de fermatas'};
+ }};
+})();
+</script>
+<!-- V7.81.45: proteção contra detecção automática não validada de andamento. -->
+<script id="v78145-protecao-tempo-original">
+(function(){
+'use strict';
+window.GuiaProtecaoTempoV78145={status(){
+ const h=String(window.__gaCurrentHymn?.num||'');
+ const approved=(h==='74'||h==='76');
+ return {hino:h,pilotoPreservado:approved,estimativaAlteraMP3:false,
+   ancoraDeEstrofeEstimadaAtiva:false,
+   bpmGravacao:window.GuiaBpmGravacaoV78144?.status?.()||null,
+   observacao:approved?'Relógio único com mapa musical aprovado':
+     'MP3 preservado; BPM estimado não é aplicado. Sincronismo musical não certificado'};
  }};
 })();
 </script>
