@@ -14800,15 +14800,15 @@ body:not(.index-mode):not(.welcome-mode){
     o1.type='square';
     o1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
     g1.gain.setValueAtTime(accent===2?.95:accent===1?.72:.56,time);
-    g1.gain.exponentialRampToValueAtTime(.001,time+.06);
-    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.065);
+    g1.gain.exponentialRampToValueAtTime(.001,time+.09);
+    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.095);
 
     const o2=ctx.createOscillator(),g2=ctx.createGain();
     o2.type='sine';
     o2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
     g2.gain.setValueAtTime(accent===2?.40:accent===1?.28:.20,time);
-    g2.gain.exponentialRampToValueAtTime(.001,time+.05);
-    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.055);
+    g2.gain.exponentialRampToValueAtTime(.001,time+.08);
+    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.085);
   }
 
   function effectiveBpm(){return state.mode==='two'?state.bpm/3:state.bpm}
@@ -15046,15 +15046,15 @@ body:not(.index-mode):not(.welcome-mode){
     o1.type='square';
     o1.frequency.setValueAtTime(accent===2?2050:accent===1?1500:1100,time);
     g1.gain.setValueAtTime(accent===2?.95:accent===1?.72:.56,time);
-    g1.gain.exponentialRampToValueAtTime(.001,time+.06);
-    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.065);
+    g1.gain.exponentialRampToValueAtTime(.001,time+.09);
+    o1.connect(g1);g1.connect(master);o1.start(time);o1.stop(time+.095);
 
     const o2=ctx.createOscillator(),g2=ctx.createGain();
     o2.type='sine';
     o2.frequency.setValueAtTime(accent===2?720:accent===1?560:460,time);
     g2.gain.setValueAtTime(accent===2?.40:accent===1?.28:.20,time);
-    g2.gain.exponentialRampToValueAtTime(.001,time+.05);
-    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.055);
+    g2.gain.exponentialRampToValueAtTime(.001,time+.08);
+    o2.connect(g2);g2.connect(master);o2.start(time);o2.stop(time+.085);
   }
 
   function currentPulse(){
@@ -18910,7 +18910,7 @@ const panel=()=>document.getElementById('hdMetronomePanel');
 const button=()=>document.getElementById('hdMetroStart');
 const checkbox=()=>document.getElementById('hdSyncMp3Bpm');
 const isPilot=()=>!!(AudioCtx&&MAPS[currentHymn()]&&panel()&&!panel().hidden&&checkbox()?.checked);
-let ctx=null,buffer=null,bufferHymn='',source=null,bus=null,master=null,clockTimer=null;
+let ctx=null,buffer=null,bufferHymn='',source=null,bus=null,master=null,mixLimiter=null,clockTimer=null;
 let playing=false,loading=false,baseAt=0,offset=0,rate=1,beatIndex=0,token=0;
 let pilotError='',lastTick=0;
 // V7.81.30: prepara o áudio ao abrir o hino e reutiliza o buffer decodificado.
@@ -18926,6 +18926,17 @@ function getCtx(){
  if(!ctx)ctx=new AudioCtx({latencyHint:'interactive'});
  try{if(ctx.state==='suspended')ctx.resume().catch(()=>{});}catch(e){}
  return ctx;
+}
+// O limitador final recebe os dois volumes sem misturar os respectivos controles.
+function getMixLimiter(){
+ const c=getCtx();
+ if(!mixLimiter){
+  mixLimiter=c.createDynamicsCompressor();
+  mixLimiter.threshold.value=-2;mixLimiter.knee.value=0;mixLimiter.ratio.value=20;
+  mixLimiter.attack.value=.001;mixLimiter.release.value=.12;
+  mixLimiter.connect(c.destination);
+ }
+ return mixLimiter;
 }
 function syncUI(){
  const b=button();if(!b)return;
@@ -18952,17 +18963,20 @@ function stop(clearBuffer=false){
 }
 function ensureBus(){
  detachBus();
- const c=getCtx();bus=c.createGain();bus.gain.value=1;bus.connect(c.destination);
+ const c=getCtx();bus=c.createGain();bus.gain.value=1;bus.connect(getMixLimiter());
 }
 function beep(time,accent){
  if(!bus||!ctx)return;
  const osc=ctx.createOscillator(),g=ctx.createGain();
  osc.type='square';osc.frequency.setValueAtTime(accent===2?1860:accent===1?1430:1060,time);
  const ui=Number(document.getElementById('hdMetroVolume')?.value ?? 50);
- const amplitude=Math.pow(Math.max(0,ui)/100,1.1)*.29;
- g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.76:.56)),time);
- g.gain.exponentialRampToValueAtTime(.0001,time+.055);
- osc.connect(g);g.connect(bus);osc.start(time);osc.stop(time+.058);
+ // V7.81.38: cliques mais presentes, sem mexer na posicao das batidas.
+ // Envelope mais longo para melhor audibilidade no alto-falante do celular.
+ const amplitude=Math.pow(Math.max(0,Math.min(100,ui))/100,0.90)*.62;
+ if(amplitude<=0)return;
+ g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.82:.67)),time);
+ g.gain.exponentialRampToValueAtTime(.0001,time+.092);
+ osc.connect(g);g.connect(bus);osc.start(time);osc.stop(time+.095);
  osc.onended=()=>{try{osc.disconnect();g.disconnect()}catch(e){}};
 }
 function schedule(){
@@ -18993,12 +19007,19 @@ function newSource(when,pos,r){
  s.buffer=buffer;s.playbackRate.value=r;
  if(!master){
   master=c.createGain();
+  // V7.81.38: volume percebido maior para MP3 calibrado, preservando dinamica.
+  // Compressor musical e limitador de seguranca evitam picos estourados.
+  const compressor=c.createDynamicsCompressor();
+  compressor.threshold.value=-14;compressor.knee.value=8;compressor.ratio.value=3;
+  compressor.attack.value=.004;compressor.release.value=.16;
+  const makeup=c.createGain();makeup.gain.value=1.17;
   const limiter=c.createDynamicsCompressor();
-  limiter.threshold.value=-5;limiter.knee.value=4;limiter.ratio.value=8;
-  limiter.attack.value=.003;limiter.release.value=.18;
-  master.connect(limiter);limiter.connect(c.destination);
+  limiter.threshold.value=-2;limiter.knee.value=0;limiter.ratio.value=18;
+  limiter.attack.value=.002;limiter.release.value=.12;
+  master.connect(compressor);compressor.connect(makeup);
+  makeup.connect(limiter);limiter.connect(getMixLimiter());
  }
- master.gain.value=Math.max(0,Math.min(2.0,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 70)/100*2.0));
+ master.gain.value=Math.max(0,Math.min(2.8,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 70)/100*2.8));
  s.connect(master);s.start(when,pos);
  s.onended=()=>{if(source===s&&playing){stop(false);offset=0;}};
  return s;
@@ -19118,7 +19139,7 @@ document.addEventListener('click',e=>{
 },true);
 window.GuiaRelogioUnicoPiloto.setMp3Volume=function(percent){
  if(master&&ctx){
-  master.gain.setTargetAtTime(Math.max(0,Math.min(2.0,Number(percent)/100*2.0)),ctx.currentTime,.02);
+  master.gain.setTargetAtTime(Math.max(0,Math.min(2.8,Number(percent)/100*2.8)),ctx.currentTime,.02);
  }
 };
 document.addEventListener('change',e=>{
@@ -20047,4 +20068,5 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  }
 }
 </style>
+<!-- V7.81.38: áudio reforçado com proteção de picos; sem alterações de layout ou sincronização. -->
 </body></html>
