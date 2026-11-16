@@ -15092,6 +15092,10 @@ body:not(.index-mode):not(.welcome-mode){
   }
 
   window.stopHymnMetronome=function(){
+    // V7.81.29: engine genérico é dono do estado BPM quando st.active.
+    // O oldStop pertence ao engine legado (estado padrão 108 BPM) e seu
+    // refresh alterava visualmente o hino atual no simples ato de fechar.
+    if(st.active){ genericStop(); return; }
     genericStop();
     try{ if(oldStop) oldStop(); }catch(e){}
   };
@@ -19169,4 +19173,63 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   },true);
 })();
 </script>
+
+<!-- V7.81.29: correção na origem do BPM ao fechar + ajuste fino compacto. -->
+<style id="v78129-fine-compact-no-overflow">
+/* Ajuste fino de uma linha; rótulos verbais mantidos na acessibilidade dos botões. */
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  box-sizing:border-box!important;display:block!important;
+  padding:0 0 2px!important;margin:4px 0 0!important;
+  overflow:hidden!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine[open]{
+  padding-top:4px!important;border-top:1px solid #e8ddc6!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine summary{
+  min-height:20px!important;padding:2px 0!important;font-size:11px!important;
+  max-width:100%!important;white-space:normal!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-note{
+  display:none!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-ctrl{
+  display:grid!important;
+  grid-template-columns:32px minmax(54px,1fr) 32px 32px!important;
+  gap:6px!important;
+  align-items:center!important;justify-items:center!important;
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  max-width:100%!important;padding:0!important;margin:2px 0 0!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-ctrl button{
+  width:32px!important;min-width:32px!important;max-width:32px!important;
+  min-height:29px!important;height:29px!important;padding:0!important;
+  font-size:16px!important;
+}
+#hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-ctrl output{
+  width:100%!important;min-width:0!important;max-width:100%!important;
+  overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+  font-size:12px!important;text-align:center!important;
+}
+@media(max-width:700px){
+  #hymnDetail #hdMetronome .hd-metronome-panel{
+    padding:7px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v728-controls{
+    gap:4px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v728-primary,
+  #hymnDetail #hdMetronome .hd-v728-secondary{
+    gap:5px!important;
+  }
+  #hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-ctrl{
+    grid-template-columns:29px minmax(46px,1fr) 29px 29px!important;
+    gap:4px!important;
+  }
+  #hymnDetail #hdMetronomePanel > .ga-v78123-fine .ga-v78123-fine-ctrl button{
+    width:29px!important;min-width:29px!important;max-width:29px!important;
+    min-height:28px!important;height:28px!important;
+  }
+}
+</style>
 </body></html>
