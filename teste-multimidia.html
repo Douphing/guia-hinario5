@@ -14706,12 +14706,12 @@ body:not(.index-mode):not(.welcome-mode){
               <div class="hd-v728-tertiary">
                 <div class="ga-v78132-volumes" aria-label="Volumes independentes">
                   <label class="hd-v728-volume ga-v78132-metronome-level">
-                    <span class="vol-label">♩ Metrônomo</span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
                     <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
                     <span id="hdMetroVolumeText">${volume}%</span>
                   </label>
                   <div class="ga-v78132-mp3-level" role="group" aria-label="Volume do MP3 associado">
-                    <span class="vol-label">♫ MP3</span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do MP3" title="Volume do MP3"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
                     <button type="button" data-ga-v78132="minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
                     <output id="gaV78132LinkedVolume" aria-live="polite">50%</output>
                     <button type="button" data-ga-v78132="plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
@@ -15216,12 +15216,12 @@ body:not(.index-mode):not(.welcome-mode){
               <div class="hd-v728-tertiary">
                 <div class="ga-v78132-volumes" aria-label="Volumes independentes">
                   <label class="hd-v728-volume ga-v78132-metronome-level">
-                    <span class="vol-label">♩ Metrônomo</span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
                     <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
                     <span id="hdMetroVolumeText">${volume}%</span>
                   </label>
                   <div class="ga-v78132-mp3-level" role="group" aria-label="Volume do MP3 associado">
-                    <span class="vol-label">♫ MP3</span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do MP3" title="Volume do MP3"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
                     <button type="button" data-ga-v78132="minus" aria-label="Diminuir volume do MP3 em 5%">−</button>
                     <output id="gaV78132LinkedVolume" aria-live="polite">50%</output>
                     <button type="button" data-ga-v78132="plus" aria-label="Aumentar volume do MP3 em 5%">+</button>
@@ -19704,4 +19704,99 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{font-size:8px!important;}
 }
 </style>
+
+<!-- V7.81.34 TESTE: ícones sonoros de volume; MP3 vertical independente, sem rótulos longos. -->
+<style id="v78134-icones-volumes-compactos">
+/* Preserva a barra existente do metrônomo; rótulos ficam acessíveis por ARIA e title. */
+#hymnDetail #hdMetronome .ga-v78134-volume-icon{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:20px!important;min-width:20px!important;height:24px!important;min-height:24px!important;
+ flex:none!important;font-size:0!important;line-height:0!important;
+ color:#263b4e!important;white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78134-volume-icon::before{content:none!important;display:none!important;}
+#hymnDetail #hdMetronome .ga-v78134-sound-svg{
+ display:block!important; width:19px!important;height:19px!important;flex:none!important;
+ overflow:visible;
+}
+#hymnDetail #hdMetronome .ga-v78134-mute{opacity:0;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[data-ga-v78134-level="zero"] .ga-v78134-wave1,
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[data-ga-v78134-level="zero"] .ga-v78134-wave2,
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[data-ga-v78134-level="low"] .ga-v78134-wave2{opacity:0;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[data-ga-v78134-level="zero"] .ga-v78134-mute{opacity:1;}
+/* A barra do metrônomo se distingue pelo formato; coluna MP3 é identificada pelo alto-falante. */
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+ grid-template-columns:20px minmax(36px,1fr) 29px!important;gap:6px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-volumes{
+ grid-template-columns:minmax(0,1fr) 48px!important;gap:8px!important;align-items:center!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level{
+ width:48px!important;max-width:48px!important;gap:2px!important;
+ padding:4px 2px!important;align-self:center!important;
+ border-color:#dccba9!important;background:#fffcf6!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-volume-icon{
+ height:19px!important;min-height:19px!important;order:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-sound-svg{width:18px!important;height:18px!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+ width:28px!important;min-width:28px!important;height:25px!important;min-height:25px!important;
+ font-size:17px!important;border-radius:8px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level output{
+ font-size:10px!important;line-height:1.2!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[hidden]{display:none!important;}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,1fr) 44px!important;gap:6px!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+  grid-template-columns:19px minmax(28px,1fr) 25px!important;gap:4px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{width:44px!important;max-width:44px!important;}
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+  width:27px!important;min-width:27px!important;height:24px!important;min-height:24px!important;
+ }
+}
+@media(max-width:350px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,1fr) 42px!important;gap:3px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{width:42px!important;max-width:42px!important;}
+ #hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{font-size:9px!important;}
+}
+</style>
+<script id="v78134-indicador-volume-mp3">
+(function(){
+ 'use strict';
+ function reflect(){
+  const group=document.querySelector('#hdMetronome .ga-v78132-mp3-level');
+  if(!group)return;
+  const current=window.GuiaVolumeMp3Associado?.get?.();
+  if(!Number.isFinite(current))return;
+  const level=current===0?'zero':current<35?'low':'high';
+  group.dataset.gaV78134Level=level;
+  const icon=group.querySelector('.ga-v78134-volume-icon');
+  if(icon)icon.title='Volume do MP3: '+current+'%';
+ }
+ // Os eventos de incremento já atualizam o ganho; este script só atualiza o ícone.
+ document.addEventListener('click',function(event){
+  if(event.target.closest?.('[data-ga-v78132]'))reflect();
+ },false);
+ const original=window.initHymnMetronomeUI;
+ if(typeof original==='function'){
+  window.initHymnMetronomeUI=function(){
+   const value=original.apply(this,arguments);
+   reflect();
+   return value;
+  };
+ }
+ document.addEventListener('change',function(event){
+  if(event.target?.id==='hdSyncMp3Bpm')reflect();
+ },false);
+ reflect();
+})();
+</script>
 </body></html>
