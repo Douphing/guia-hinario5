@@ -18714,7 +18714,13 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
    const peaks=new Float32Array(count);
    for(let i=1;i<count-1;i++)peaks[i]=Math.max(nov[i-1],nov[i],nov[i+1]);
    const scores=[];let best=null;
-   const low=Math.max(30,nominal*.88),high=Math.min(240,nominal*1.12);
+   // V7.81.43: piloto 1–10. A partitura pode indicar um tempo distinto
+   // do cadastro; incluí-lo na busca não significa confirmar o BPM do MP3.
+   const SCORE_TEMPO_PILOT_1_10={"1":56.0,"2":60.0,"3":60.0,"4":112.0,"5":112.0,"6":60.0,"7":80.0,"8":112.0,"9":63.0,"10":69.0};
+   const scoreTempo=Number(SCORE_TEMPO_PILOT_1_10[String(num)]);
+   const hasScoreTempo=Number.isFinite(scoreTempo)&&scoreTempo>=30&&scoreTempo<=240;
+   const low=Math.max(30,hasScoreTempo?Math.min(nominal*.88,scoreTempo*.97):nominal*.88);
+   const high=Math.min(240,hasScoreTempo?Math.max(nominal*1.12,scoreTempo*1.03):nominal*1.12);
    for(let tempo=low;tempo<=high;tempo+=.5){
      const period=60/tempo;
      for(let phase=0;phase<period;phase+=.02){
@@ -20565,4 +20571,26 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
 })();
 </script>
 
+
+<script id="guia-hinos-1-a-10-bpm-piloto-diagnostico">
+(function(){
+  // Uso opcional para a auditoria técnica: GuiaPilotoBpm1a10.resumo().
+  // Não altera nem publica nenhum dado.
+  const refs={"1":{"hino":1,"bpmGuia":61,"faixaGuia":[56,66],"compasso":"4/4","unidadeGuia":"semínima","bpmPartitura":56.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":11,"fermataCompassos":[10],"repeticoesNotadas":[],"partituraSHA256":"68fd014878624ae29f2203f73a761913e0bf0371188cdc8f7a10a6892839961d","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"2":{"hino":2,"bpmGuia":70,"faixaGuia":[60,80],"compasso":"4/4","unidadeGuia":"semínima","bpmPartitura":60.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":20,"fermataCompassos":[],"repeticoesNotadas":[],"partituraSHA256":"6497cc6eb314a0dc7524382ef2725634809eab79180612ba19ebd48de3ebef52","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"3":{"hino":3,"bpmGuia":68,"faixaGuia":[60,76],"compasso":"4/4","unidadeGuia":"semínima","bpmPartitura":60.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":15,"fermataCompassos":[13,15],"repeticoesNotadas":[],"partituraSHA256":"55484c26c9eac616697ba164e9ccce30f9df3577f2fb570a41c33a0b290d9195","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"4":{"hino":4,"bpmGuia":125,"faixaGuia":[112,138],"compasso":"6/4","unidadeGuia":"semínima","bpmPartitura":112.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":16,"fermataCompassos":[8,14,16],"repeticoesNotadas":[],"partituraSHA256":"1b8a892c962bdc98a80cff82926822c2a9a233548add5e68e9a85d18708cdca5","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"5":{"hino":5,"bpmGuia":128,"faixaGuia":[112,144],"compasso":"6/8","unidadeGuia":"colcheia","bpmPartitura":112.0,"unidadePartituraReferencia":"colcheia","compassosNaPartitura":19,"fermataCompassos":[],"repeticoesNotadas":[],"partituraSHA256":"f7e2d1970b91d31c176a48c8a45fc954e78c97ac793502e13a289ec2031e5bb1","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"6":{"hino":6,"bpmGuia":70,"faixaGuia":[60,80],"compasso":"4/4","unidadeGuia":"semínima","bpmPartitura":60.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":26,"fermataCompassos":[15],"repeticoesNotadas":[1],"partituraSHA256":"63481846040aaae36f2bc9b54986f94feba7c61bae27cc2f628b335e93818176","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"7":{"hino":7,"bpmGuia":90,"faixaGuia":[80,100],"compasso":"6/4","unidadeGuia":"semínima","bpmPartitura":80.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":22,"fermataCompassos":[],"repeticoesNotadas":[],"partituraSHA256":"c6c8c09654ba8e0e7196a7e77653395bb28ce25bcfc555604eb46a91dda19e92","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"8":{"hino":8,"bpmGuia":125,"faixaGuia":[112,138],"compasso":"6/8","unidadeGuia":"colcheia","bpmPartitura":112.0,"unidadePartituraReferencia":"colcheia","compassosNaPartitura":16,"fermataCompassos":[],"repeticoesNotadas":[],"partituraSHA256":"64b7ade14ae2d2181672b63768e3d9894e961df6e78ecb939cd8e6e054001309","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"9":{"hino":9,"bpmGuia":68,"faixaGuia":[63,72],"compasso":"3/4","unidadeGuia":"semínima","bpmPartitura":63.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":20,"fermataCompassos":[20],"repeticoesNotadas":[],"partituraSHA256":"1572b5b51d72e260049504e208db9e0d08fd42a49b15dbf21ed7fa264259ebde","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"},"10":{"hino":10,"bpmGuia":77,"faixaGuia":[69,84],"compasso":"4/4","unidadeGuia":"semínima","bpmPartitura":69.0,"unidadePartituraReferencia":"semínima","compassosNaPartitura":21,"fermataCompassos":[],"repeticoesNotadas":[],"partituraSHA256":"94b45d1c80bf05b4529d67e232eeec0ee3e446905ba75943742ce7a8962ab9b7","mp3Calibrado":false,"observacao":"BPM da partitura é referência de busca, não andamento-base confirmado do MP3"}};
+  window.GuiaPilotoBpm1a10={
+    resumo(){
+      return Object.keys(refs).map(n=>({hino:Number(n),bpmGuia:refs[n].bpmGuia,
+        bpmPartitura:refs[n].bpmPartitura,faixa:refs[n].faixaGuia,
+        compasso:refs[n].compasso,status:'PENDENTE - verificar MP3 real'}));
+    },
+    observar(){
+      const n=String(window.__gaCurrentHymn?.num||'');
+      if(!refs[n])return null;
+      const estado=window.GuiaMetroBpmV78142?.status?.()||null;
+      return {hino:Number(n),partitura:refs[n],estadoMP3:estado,
+        ressalva:'Estimativa automática não comprova sincronização de estrofes/fermatas'};
+    }
+  };
+})();
+</script>
 </body></html>
