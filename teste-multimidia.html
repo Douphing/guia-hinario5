@@ -19551,4 +19551,157 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  apply();
 })();
 </script>
+
+<!-- V7.81.33 — teste de volumes compactos: barra do metrônomo e MP3 vertical independente. -->
+<style id="v78133-controle-volume-vertical-compacto">
+/* O range mínimo/máximo já consta no cabeçalho: não reservar uma coluna invisível. */
+#hymnDetail #hdMetronome .hd-v728-tertiary{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:2px!important;
+  min-width:0!important;
+  width:100%!important;
+  align-items:center!important;
+}
+#hymnDetail #hdMetronome .hd-v728-tertiary .hd-v728-range{
+  display:none!important;
+}
+/* Dois volumes desmembrados da partitura. */
+#hymnDetail #hdMetronome .ga-v78132-volumes{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 56px!important;
+  gap:8px!important;
+  align-items:center!important;
+  width:100%!important;
+  min-width:0!important;
+}
+/* Metrônomo: apenas a barra que já funciona, com rótulo visível. */
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+  display:grid!important;
+  grid-template-columns:max-content minmax(28px,1fr) 29px!important;
+  gap:5px!important;
+  align-items:center!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{
+  display:inline!important;
+  font:700 10px/1.1 Arial,sans-serif!important;
+  color:#5f584d!important;
+  white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label::before{
+  content:none!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level input[type=range]{
+  min-width:0!important;
+  width:100%!important;
+  margin:0!important;
+  height:17px!important;
+  accent-color:#b18438!important;
+  touch-action:pan-x;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{
+  font:700 10px/1 Arial,sans-serif!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+/* MP3: + em cima, porcentagem no centro, − embaixo. Controles separados. */
+#hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:1px!important;
+  min-width:0!important;
+  width:56px!important;
+  max-width:56px!important;
+  padding:3px 3px 4px!important;
+  border:1px solid #e3d2b4!important;
+  border-radius:9px!important;
+  box-sizing:border-box!important;
+  background:#fffaf0!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[hidden]{
+  display:none!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .vol-label{
+  order:0!important;
+  display:block!important;
+  font:700 10px/1.1 Arial,sans-serif!important;
+  color:#61594c!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level [data-ga-v78132="plus"]{order:1!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level output{
+  order:2!important;
+  display:block!important;
+  width:100%!important;
+  font:700 10px/1.15 Arial,sans-serif!important;
+  font-variant-numeric:tabular-nums!important;
+  text-align:center!important;
+  color:#233849!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level [data-ga-v78132="minus"]{order:3!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+  display:grid!important;
+  place-items:center!important;
+  min-width:26px!important;
+  width:26px!important;
+  height:23px!important;
+  min-height:23px!important;
+  padding:0!important;
+  flex:none!important;
+  border:1px solid #d9c8ab!important;
+  border-radius:7px!important;
+  background:#fffcf6!important;
+  color:#173049!important;
+  font:800 17px/1 Arial,sans-serif!important;
+  touch-action:manipulation;
+  cursor:pointer;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button:active{background:#f2e3c3!important;}
+/* Em celular, miniatura da partitura continua na sua coluna própria;
+   nenhuma borda/volume é inserido dentro da partitura. */
+@media(max-width:700px){
+  #hymnDetail #hdMetronome .ga-v78132-volumes{
+    grid-template-columns:minmax(0,1fr) 48px!important;
+    gap:5px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+    grid-template-columns:max-content minmax(27px,1fr) 25px!important;
+    gap:3px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{
+    font-size:9px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{
+    font-size:9px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+    width:48px!important;max-width:48px!important;
+    padding:3px 2px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+    min-width:25px!important;width:25px!important;
+    height:22px!important;min-height:22px!important;
+  }
+}
+@media(max-width:350px){
+  #hymnDetail #hdMetronome .ga-v78132-volumes{
+    grid-template-columns:minmax(0,1fr) 44px!important;
+    gap:3px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+    width:44px!important;max-width:44px!important;
+  }
+  #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+    grid-template-columns:max-content minmax(24px,1fr) 24px!important;
+    gap:3px!important;
+  }
+  #hymnDetail #hdMetronome .ga-v78132-metronome-level .vol-label{font-size:8px!important;}
+}
+</style>
 </body></html>
