@@ -14783,6 +14783,11 @@ body:not(.index-mode):not(.welcome-mode){
   }
 
   function clickAt(time,accent){
+    // V7.81.40 — timbre reforçado para todo hino; tempo/acentuação originais preservados.
+    if(window.GuiaCliqueReforcadoV78140){
+      window.GuiaCliqueReforcadoV78140(getCtx(),time,accent,Number(state.volumeUI));
+      return;
+    }
     const ctx=getCtx();
     const comp=ctx.createDynamicsCompressor();
     comp.threshold.setValueAtTime(-10,time);
@@ -15029,6 +15034,11 @@ body:not(.index-mode):not(.welcome-mode){
   }
 
   function clickAt(time,accent){
+    // V7.81.40 — mesmo timbre reforçado do piloto 74/76, respeitando BPM e compasso.
+    if(window.GuiaCliqueReforcadoV78140){
+      window.GuiaCliqueReforcadoV78140(getCtx(),time,accent,Number(st.volumeUI));
+      return;
+    }
     const ctx=getCtx();
     const comp=ctx.createDynamicsCompressor();
     comp.threshold.setValueAtTime(-10,time);
@@ -20083,4 +20093,184 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
 }
 </style>
 <!-- V7.81.39: clique sincronizado com reforço de corpo e transiente, sem mudança no tempo musical. -->
+
+<!-- V7.81.40 TESTE — Clique reforçado para todos os hinos e controle de volume externo do YouTube -->
+<style id="v78140-volume-youtube-fixo">
+/* O YouTube oculta os controles de volume nativos depois de alguns segundos.
+   Este controle pertence ao Guia, fica visível fora do iframe e não cobre o vídeo. */
+#hymnDetail #hdLinks.ga-v78140-yt-links{
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ gap:10px!important;flex-wrap:wrap!important;width:100%!important;
+ max-width:100%!important;padding:3px 4px!important;margin:3px auto 0!important;
+ box-sizing:border-box!important;
+}
+#hymnDetail #hdLinks .ga-v78140-yt-volume{
+ display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;
+ flex:0 1 260px;box-sizing:border-box;
+ color:#23364a;font:700 11px/1 Arial,sans-serif;
+}
+#hymnDetail #hdLinks .ga-v78140-yt-volume[hidden]{display:none!important;}
+#hymnDetail #hdLinks .ga-v78140-yt-volume .ga-v78140-icon{
+ flex:0 0 17px;width:17px;height:17px;display:grid;place-items:center;
+}
+#hymnDetail #hdLinks .ga-v78140-yt-volume svg{width:17px;height:17px;display:block;}
+#hymnDetail #hdLinks .ga-v78140-yt-volume button{
+ flex:0 0 25px;min-width:25px!important;width:25px!important;height:25px!important;
+ min-height:25px!important;padding:0!important;margin:0!important;
+ border:1px solid #d4c29d!important;border-radius:8px!important;
+ color:#263746!important;background:#fffaf0!important;
+ box-shadow:none!important;font:800 16px/1 Arial,sans-serif!important;
+ cursor:pointer!important;touch-action:manipulation!important;
+}
+#hymnDetail #hdLinks .ga-v78140-yt-volume button:focus-visible,
+#hymnDetail #hdLinks .ga-v78140-yt-volume input:focus-visible{outline:2px solid #b18438;outline-offset:2px;}
+#hymnDetail #hdLinks .ga-v78140-yt-volume input[type="range"]{
+ display:block;min-width:38px;flex:1 1 110px;
+ max-width:150px;width:100%;margin:0!important;padding:0!important;height:24px;
+ accent-color:#b18438;touch-action:pan-x;cursor:pointer;
+}
+#hymnDetail #hdLinks .ga-v78140-yt-volume output{min-width:31px;text-align:right;font-size:10px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+#hymnDetail.ga-video-floating #hdLinks.ga-v78140-yt-links{display:none!important;}
+@media(max-width:430px){
+ #hymnDetail #hdLinks.ga-v78140-yt-links{gap:3px!important;row-gap:2px!important;}
+ #hymnDetail #hdLinks .ga-v78140-yt-volume{flex-basis:100%;max-width:270px;}
+}
+</style>
+<script id="v78140-reforco-geral-e-youtube">
+(function(){
+ 'use strict';
+ // Clique do piloto 74/76 permanece exatamente como na V7.81.39.
+ // Os motores genéricos dos demais hinos passam a usar sua sonoridade reforçada.
+ const outputs=new WeakMap();
+ window.GuiaCliqueReforcadoV78140=function(ctx,time,accent,ui){
+  if(!ctx||!Number.isFinite(time)||!Number.isFinite(ui)||ui<=0)return;
+  let out=outputs.get(ctx);
+  if(!out){
+   out=ctx.createDynamicsCompressor();
+   out.threshold.value=-3;out.knee.value=1;out.ratio.value=16;
+   out.attack.value=.002;out.release.value=.11;
+   out.connect(ctx.destination);outputs.set(ctx,out);
+  }
+  const level=Math.pow(Math.max(0,Math.min(100,ui))/100,0.63);
+  const strong=accent===2,medium=accent===1,weight=strong?1:medium?.92:.84;
+  const at=Math.max(ctx.currentTime+.002,time);
+  const square=ctx.createOscillator(),squareGain=ctx.createGain();
+  square.type='square';square.frequency.setValueAtTime(strong?1680:medium?1300:990,at);
+  squareGain.gain.setValueAtTime(Math.max(.0001,level*.94*weight),at);
+  squareGain.gain.exponentialRampToValueAtTime(.0001,at+.115);
+  square.connect(squareGain);squareGain.connect(out);
+  square.start(at);square.stop(at+.118);
+  const body=ctx.createOscillator(),bodyGain=ctx.createGain();
+  body.type='sine';body.frequency.setValueAtTime(strong?740:medium?610:490,at);
+  bodyGain.gain.setValueAtTime(Math.max(.0001,level*.43*weight),at);
+  bodyGain.gain.exponentialRampToValueAtTime(.0001,at+.14);
+  body.connect(bodyGain);bodyGain.connect(out);
+  body.start(at);body.stop(at+.143);
+  square.onended=()=>{try{square.disconnect();squareGain.disconnect();}catch(e){}};
+  body.onended=()=>{try{body.disconnect();bodyGain.disconnect();}catch(e){}};
+ };
+ const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v)||0)));
+ const root=()=>document.getElementById('hymnDetail');
+ const links=()=>document.getElementById('hdLinks');
+ const yt=()=>document.getElementById('hdYoutube');
+ const current=()=>window.GuiaReproducaoContinua?.getActive?.();
+ let controls=null,dragging=false,lastRequested=null,lastSetAt=0,shownValue=null;
+ function playerReady(){
+  const a=current(),frame=yt()?.querySelector('iframe');
+  if(!frame||!a?.iframe)return null;
+  if(a.kind!=='youtube'&&a.kind!=='youtubeMusic')return null;
+  const p=a.player;
+  const actualFrame=typeof p?.getIframe==='function'?p.getIframe():a.iframe;
+  if(a.iframe!==frame&&actualFrame!==frame)return null;
+  return p&&typeof p.setVolume==='function'&&typeof p.getVolume==='function'?p:null;
+ }
+ function visibleYoutube(){
+  const a=current();
+  return !!(root()?.classList.contains('open') && yt()?.querySelector('iframe') &&
+      a&&(a.kind==='youtube'||a.kind==='youtubeMusic'));
+ }
+ function labelIcon(v){
+  const paths=v===0
+   ? '<path d="m16 10 5 5m0-5-5 5"/>'
+   : v<35?'<path d="M15 9a4 4 0 0 1 0 6"/>'
+   : '<path d="M15 9a4 4 0 0 1 0 6"/><path d="M18 6.5a8 8 0 0 1 0 11"/>';
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 7 9H4v6h3l4 4z"/>'+paths+'</svg>';
+ }
+ function desired(){const v=window.GuiaVolumePersistente?.get?.();return Number.isFinite(v)?clamp(v):50;}
+ function setVolume(v){
+  v=clamp(v);lastRequested=v;lastSetAt=Date.now();
+  window.GuiaVolumePersistente?.set?.(v);
+  const p=playerReady();
+  if(p){try{p.setVolume(v);if(v===0)p.mute();else p.unMute();}catch(e){}}
+  showVolume(v);
+ }
+ function showVolume(v){
+  if(!controls)return;
+  v=clamp(v);
+  const range=controls.querySelector('input'),output=controls.querySelector('output');
+  if(range.value!==String(v))range.value=String(v);
+  if(output.textContent!==v+'%')output.textContent=v+'%';
+  const ico=controls.querySelector('.ga-v78140-icon');
+  const level=v===0?'muted':v<35?'low':'high';
+  if(ico.dataset.level!==level){ico.innerHTML=labelIcon(v);ico.dataset.level=level;}
+  ico.title='Volume do YouTube: '+v+'%';
+  shownValue=v;
+ }
+ function ensure(){
+  const host=links();if(!host)return;
+  if(!visibleYoutube()){
+   const existing=host.querySelector('.ga-v78140-yt-volume');
+   existing?.remove();host.classList.remove('ga-v78140-yt-links');controls=null;
+   return;
+  }
+  if(controls?.isConnected&&controls.parentElement===host)return;
+  controls=document.createElement('div');controls.className='ga-v78140-yt-volume';
+  controls.setAttribute('role','group');controls.setAttribute('aria-label','Volume fixo do YouTube');
+  controls.innerHTML='<span class="ga-v78140-icon" aria-hidden="true"></span>'+
+   '<button type="button" class="ga-v78140-minus" aria-label="Diminuir volume do YouTube">−</button>'+
+   '<input type="range" min="0" max="100" step="1" aria-label="Volume do YouTube, controle sempre visível">'+
+   '<button type="button" class="ga-v78140-plus" aria-label="Aumentar volume do YouTube">+</button>'+
+   '<output aria-live="off">50%</output>';
+  host.classList.add('ga-v78140-yt-links');host.appendChild(controls);
+  const range=controls.querySelector('input');
+  range.addEventListener('pointerdown',()=>{dragging=true;});
+  range.addEventListener('pointerup',()=>{dragging=false;});
+  range.addEventListener('pointercancel',()=>{dragging=false;});
+  range.addEventListener('input',()=>setVolume(range.value));
+  range.addEventListener('change',()=>{setVolume(range.value);dragging=false;});
+  controls.querySelector('.ga-v78140-minus').addEventListener('click',()=>setVolume(Number(range.value)-5));
+  controls.querySelector('.ga-v78140-plus').addEventListener('click',()=>setVolume(Number(range.value)+5));
+  showVolume(desired());
+ }
+ // A barra do vídeo pertence ao YouTube e pode sumir por comportamento nativo;
+ // esta permanece visível fora do iframe, inclusive ao tirar o mouse dele.
+ const update=()=>{
+  ensure();if(!controls||!visibleYoutube()||dragging)return;
+  const p=playerReady();
+  if(p){
+   try{
+    // Aguarda o YouTube confirmar a última alteração feita no controle externo.
+    if(lastRequested!==null&&Date.now()-lastSetAt<1400){showVolume(lastRequested);return;}
+    const actual=p.isMuted()?0:clamp(p.getVolume());
+    // O player pode receber ajustes pelo próprio menu nativo.
+    if(actual!==desired())window.GuiaVolumePersistente?.set?.(actual);
+    showVolume(actual);lastRequested=null;
+   }catch(e){showVolume(desired());}
+  }else showVolume(desired());
+ };
+ document.addEventListener('DOMContentLoaded',()=>{
+  const host=document.getElementById('hdMediaArea');
+  if(host){let queued=false;
+    new MutationObserver(()=>{
+     if(queued)return;queued=true;
+     requestAnimationFrame(()=>{queued=false;update();});
+    }).observe(host,{childList:true,subtree:true});
+  }
+  update();
+ },{once:true});
+ window.setInterval(update,800);
+ window.GuiaYoutubeVolumeFixoV78140={setVolume,refresh:update,status:()=>({visible:!!controls?.isConnected,volume:controls?Number(controls.querySelector('input').value):null,ready:!!playerReady()})};
+})();
+</script>
+
 </body></html>
