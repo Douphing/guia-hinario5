@@ -14706,7 +14706,7 @@ body:not(.index-mode):not(.welcome-mode){
               <div class="hd-v728-tertiary">
                 <div class="ga-v78132-volumes" aria-label="Volumes independentes">
                   <label class="hd-v728-volume ga-v78132-metronome-level">
-                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78135-fader-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5m0 4v9M12 3v11m0 4v3M18 3v3m0 4v11"/><path d="M3.6 8h4.8v4H3.6zM9.6 14h4.8v4H9.6zM15.6 6h4.8v4h-4.8z"/></svg></span>
                     <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
                     <span id="hdMetroVolumeText">${volume}%</span>
                   </label>
@@ -15216,7 +15216,7 @@ body:not(.index-mode):not(.welcome-mode){
               <div class="hd-v728-tertiary">
                 <div class="ga-v78132-volumes" aria-label="Volumes independentes">
                   <label class="hd-v728-volume ga-v78132-metronome-level">
-                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78134-sound-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.5 6.7 9H3.5v6h3.2L11 18.5z"/><path class="ga-v78134-wave1" d="M14.5 9a4 4 0 0 1 0 6"/><path class="ga-v78134-wave2" d="M17.6 6.2a8 8 0 0 1 0 11.6"/><path class="ga-v78134-mute" d="m15 10 5 5m0-5-5 5"/></svg></span>
+                    <span class="vol-label ga-v78134-volume-icon" role="img" aria-label="Volume do metrônomo" title="Volume do metrônomo"><svg class="ga-v78135-fader-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5m0 4v9M12 3v11m0 4v3M18 3v3m0 4v11"/><path d="M3.6 8h4.8v4H3.6zM9.6 14h4.8v4H9.6zM15.6 6h4.8v4h-4.8z"/></svg></span>
                     <input id="hdMetroVolume" type="range" min="0" max="100" step="1" value="${volume}" aria-label="Volume das batidas do metrônomo">
                     <span id="hdMetroVolumeText">${volume}%</span>
                   </label>
@@ -18978,8 +18978,14 @@ function bpm(){
 function newSource(when,pos,r){
  const c=getCtx(),s=c.createBufferSource();
  s.buffer=buffer;s.playbackRate.value=r;
- if(!master){master=c.createGain();master.connect(c.destination);}
- master.gain.value=Math.max(0,Math.min(1,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 50)/100));
+ if(!master){
+  master=c.createGain();
+  const limiter=c.createDynamicsCompressor();
+  limiter.threshold.value=-8;limiter.knee.value=5;limiter.ratio.value=8;
+  limiter.attack.value=.003;limiter.release.value=.18;
+  master.connect(limiter);limiter.connect(c.destination);
+ }
+ master.gain.value=Math.max(0,Math.min(1.18,Number(window.GuiaVolumeMp3Associado?.get?.() ?? 70)/100*1.18));
  s.connect(master);s.start(when,pos);
  s.onended=()=>{if(source===s&&playing){stop(false);offset=0;}};
  return s;
@@ -19095,7 +19101,7 @@ document.addEventListener('click',e=>{
 },true);
 window.GuiaRelogioUnicoPiloto.setMp3Volume=function(percent){
  if(master&&ctx){
-  master.gain.setTargetAtTime(Math.max(0,Math.min(1,Number(percent)/100)),ctx.currentTime,.02);
+  master.gain.setTargetAtTime(Math.max(0,Math.min(1.18,Number(percent)/100*1.18)),ctx.currentTime,.02);
  }
 };
 document.addEventListener('change',e=>{
@@ -19503,7 +19509,7 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  'use strict';
  const KEY='guia-hinario5-volume-mp3-associado-v1';
  const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v)||0)));
- let value=50;
+ let value=70;
  try{const saved=localStorage.getItem(KEY);if(saved!==null&&Number.isFinite(Number(saved)))value=clamp(saved);}catch(_e){}
  const meterPanel=()=>document.getElementById('hdMetronomePanel');
  const linked=()=>!!document.getElementById('hdSyncMp3Bpm')?.checked;
@@ -19797,6 +19803,137 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
   if(event.target?.id==='hdSyncMp3Bpm')reflect();
  },false);
  reflect();
+})();
+</script>
+
+<!-- V7.81.35 TESTE: dois controles de volume compactos, defaults ajustados, ganho piloto com limitador. -->
+<style id="v78135-dois-volumes-compactos">
+/* Duas caixas da mesma altura: fader do metrônomo e controle vertical do MP3. */
+#hymnDetail #hdMetronome .ga-v78132-volumes{
+ display:grid!important; grid-template-columns:minmax(0,164px) 62px!important;
+ width:min(100%,242px)!important;max-width:242px!important;
+ gap:8px!important; align-items:stretch!important;justify-content:center!important;
+ justify-self:center!important; margin-inline:auto!important;
+}
+#hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:space-around!important;gap:7px!important;
+ width:100%!important;max-width:none!important;min-width:0!important;
+ height:111px!important;min-height:111px!important;max-height:111px!important;
+ padding:7px 12px!important; margin:0!important;
+ box-sizing:border-box!important;border:1px solid #decba8!important;
+ border-radius:12px!important; background:#fffcf5!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level .ga-v78134-volume-icon{
+ display:inline-flex!important; align-items:center!important;justify-content:center!important;
+ width:28px!important;min-width:28px!important;height:24px!important;min-height:24px!important;
+ padding:0!important;order:0!important;color:#263b4e!important;
+}
+#hymnDetail #hdMetronome .ga-v78135-fader-svg{
+ display:block!important;width:24px!important;height:24px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level input[type=range]{
+ display:block!important; flex:none!important;order:1!important;
+ width:100%!important;height:24px!important; margin:0!important;
+ min-width:0!important;accent-color:#b18438!important;
+ cursor:pointer;touch-action:pan-x;
+}
+#hymnDetail #hdMetronome .ga-v78132-metronome-level #hdMetroVolumeText{
+ display:block!important;order:2!important;width:auto!important;
+ align-self:center!important;text-align:center!important;
+ font:700 11px/1 Arial,sans-serif!important;color:#665c4e!important;
+ font-variant-numeric:tabular-nums!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level{
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:space-evenly!important;
+ width:62px!important;max-width:62px!important;min-width:62px!important;
+ height:111px!important;min-height:111px!important;max-height:111px!important;
+ box-sizing:border-box!important;padding:6px 3px!important;
+ gap:1px!important;border:1px solid #decba8!important;
+ border-radius:12px!important;background:#fffcf5!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[hidden]{display:none!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-volume-icon{
+ display:inline-flex!important;order:0!important;width:28px!important;min-width:28px!important;
+ height:22px!important;min-height:22px!important;margin:0!important;
+ color:#263b4e!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level .ga-v78134-sound-svg{
+ width:23px!important;height:23px!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level[data-ga-v78134-level="high"] .ga-v78134-volume-icon{color:#a2711f!important;}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level button{
+ flex:none!important;min-width:29px!important;width:29px!important;
+ min-height:25px!important;height:25px!important;max-height:25px!important;
+ border-radius:8px!important;padding:0!important;
+ font:800 18px/1 Arial,sans-serif!important;
+}
+#hymnDetail #hdMetronome .ga-v78132-mp3-level output{
+ display:block!important;flex:none!important;order:2!important;
+ width:auto!important;margin:0!important;
+ font:700 11px/1 Arial,sans-serif!important;
+ font-variant-numeric:tabular-nums!important;
+}
+/* As caixas pertencem ao metrônomo, não à miniatura da partitura. */
+#hymnDetail #hdMetronome .hd-v728-tertiary{
+ grid-template-columns:minmax(0,1fr)!important;
+ align-items:center!important;gap:2px!important;
+}
+@media(max-width:700px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,144px) 58px!important;
+  width:min(100%,215px)!important;max-width:215px!important;
+  gap:7px!important;margin-inline:auto!important;
+ }
+ #hymnDetail #hdMetronome .hd-v728-volume.ga-v78132-metronome-level,
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  height:104px!important;min-height:104px!important;max-height:104px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  width:58px!important;min-width:58px!important;max-width:58px!important;
+ }
+}
+@media(max-width:350px){
+ #hymnDetail #hdMetronome .ga-v78132-volumes{
+  grid-template-columns:minmax(0,132px) 56px!important;
+  width:min(100%,198px)!important;max-width:198px!important;gap:6px!important;
+ }
+ #hymnDetail #hdMetronome .ga-v78132-mp3-level{
+  width:56px!important;min-width:56px!important;max-width:56px!important;
+ }
+}
+</style>
+<script id="v78135-volume-inicial-persistencia">
+(function(){
+ 'use strict';
+ const KEY='guia-hinario5-volume-metronomo-usuario-v78135';
+ const clamp=n=>Math.max(0,Math.min(100,Math.round(Number(n)||0)));
+ function saved(){
+  try{const x=localStorage.getItem(KEY);return x!==null&&Number.isFinite(+x)?clamp(+x):null;}catch(_e){return null;}
+ }
+ // Atualiza somente o padrão de apresentação, sem alterar registros musicais de cada hino.
+ function withVolume(cfg){
+  if(!cfg||typeof cfg!=='object')return cfg;
+  const current=saved();
+  return {...cfg,volume:current??(Number(cfg.volume)===50?75:cfg.volume??75)};
+ }
+ const oldBuild=window.buildHymnMetronomeHtml;
+ if(typeof oldBuild==='function')window.buildHymnMetronomeHtml=function(cfg){
+  return oldBuild.call(this,withVolume(cfg));
+ };
+ const oldInit=window.initHymnMetronomeUI;
+ if(typeof oldInit==='function')window.initHymnMetronomeUI=function(cfg){
+  const modified=withVolume(cfg),value=oldInit.call(this,modified);
+  const range=document.getElementById('hdMetroVolume');
+  const shown=document.getElementById('hdMetroVolumeText');
+  if(range&&Number.isFinite(Number(modified?.volume))){range.value=clamp(modified.volume);if(shown)shown.textContent=range.value+'%';}
+  return value;
+ };
+ document.addEventListener('input',e=>{
+  if(e.target?.id!=='hdMetroVolume')return;
+  try{localStorage.setItem(KEY,String(clamp(e.target.value)))}catch(_e){}
+ },false);
 })();
 </script>
 </body></html>
