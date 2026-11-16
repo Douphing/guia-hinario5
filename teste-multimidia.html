@@ -18967,17 +18967,31 @@ function ensureBus(){
 }
 function beep(time,accent){
  if(!bus||!ctx)return;
- const osc=ctx.createOscillator(),g=ctx.createGain();
- osc.type='square';osc.frequency.setValueAtTime(accent===2?1860:accent===1?1430:1060,time);
- const ui=Number(document.getElementById('hdMetroVolume')?.value ?? 50);
- // V7.81.38: cliques mais presentes, sem mexer na posicao das batidas.
- // Envelope mais longo para melhor audibilidade no alto-falante do celular.
- const amplitude=Math.pow(Math.max(0,Math.min(100,ui))/100,0.90)*.62;
- if(amplitude<=0)return;
- g.gain.setValueAtTime(Math.max(.0001,amplitude*(accent===2?1:accent===1?.82:.67)),time);
- g.gain.exponentialRampToValueAtTime(.0001,time+.092);
- osc.connect(g);g.connect(bus);osc.start(time);osc.stop(time+.095);
- osc.onended=()=>{try{osc.disconnect();g.disconnect()}catch(e){}};
+ // V7.81.39: clique reforcado com ataque nítido e corpo medio.
+ // O piloto tinha apenas um oscilador agudo com pouco sustain; em alto-falantes
+ // pequenos isso soava baixo, mesmo com o controle em 100%.
+ const ui=Math.max(0,Math.min(100,Number(document.getElementById('hdMetroVolume')?.value ?? 75)));
+ if(ui===0)return;
+ const level=Math.pow(ui/100,0.63);
+ const isStrong=accent===2, isMedium=accent===1;
+ const trebleFreq=isStrong?1680:isMedium?1300:990;
+ const bodyFreq=isStrong?740:isMedium?610:490;
+ const weight=isStrong?1:isMedium?.92:.84;
+ const c=ctx;
+ const tick=c.createOscillator(),tickGain=c.createGain();
+ tick.type='square';tick.frequency.setValueAtTime(trebleFreq,time);
+ tickGain.gain.setValueAtTime(Math.max(.0001,level*.94*weight),time);
+ tickGain.gain.exponentialRampToValueAtTime(.0001,time+.115);
+ tick.connect(tickGain);tickGain.connect(bus);
+ tick.start(time);tick.stop(time+.118);
+ const body=c.createOscillator(),bodyGain=c.createGain();
+ body.type='sine';body.frequency.setValueAtTime(bodyFreq,time);
+ bodyGain.gain.setValueAtTime(Math.max(.0001,level*.43*weight),time);
+ bodyGain.gain.exponentialRampToValueAtTime(.0001,time+.14);
+ body.connect(bodyGain);bodyGain.connect(bus);
+ body.start(time);body.stop(time+.143);
+ tick.onended=()=>{try{tick.disconnect();tickGain.disconnect()}catch(e){}};
+ body.onended=()=>{try{body.disconnect();bodyGain.disconnect()}catch(e){}};
 }
 function schedule(){
  if(!playing||!ctx||!source||!buffer)return;
@@ -20068,5 +20082,5 @@ window.addEventListener('pagehide',()=>{stop(true)},true);
  }
 }
 </style>
-<!-- V7.81.38: áudio reforçado com proteção de picos; sem alterações de layout ou sincronização. -->
+<!-- V7.81.39: clique sincronizado com reforço de corpo e transiente, sem mudança no tempo musical. -->
 </body></html>
