@@ -1681,6 +1681,23 @@ body.score-full-open{overflow:hidden!important}
   #hymnDetail .hd-metronome-toggle:has(.hd-v78116-music-facts){height:36px!important;min-height:36px!important}
 }
 </style>
+<style id="v78154-hino6-estrutura-estrofes">
+/* Só Hino 6: cada estrofe numerada e separada; coro no bloco próprio, sempre após a 3ª. */
+#v2LetterText.v78154-h6-estrutura .v2Stanza{
+  margin:0 auto 8px; padding:12px 10px 13px; border-bottom:1px solid #e8ddcb;
+  max-width:62rem; text-align:center;
+}
+#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(3){border-bottom:0;margin-bottom:3px}
+#v2LetterText.v78154-h6-estrutura .v2Stanza::before{
+  display:block; margin:0 0 9px; font:700 .67rem/1.15 Arial,sans-serif;
+  text-transform:uppercase; letter-spacing:.12em;color:#927343;
+}
+#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(1)::before{content:"1ª estrofe"}
+#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(2)::before{content:"2ª estrofe"}
+#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(3)::before{content:"3ª estrofe"}
+#v2LetterText.v78154-h6-estrutura .v2Chorus{margin-top:12px}
+@media (max-width:420px){#v2LetterText.v78154-h6-estrutura .v2Stanza{padding:9px 5px 10px}}
+</style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -2338,7 +2355,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "6":{
-  audio:"audio/hino-6.mp3",
+  audio:"audio/hino-6-PILOTO-V7.81.54.mp3",
   spotify:"2kOxNALfA3JrYVAHgH5uhx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2kOxNALfA3JrYVAHgH5uhx",
@@ -12903,6 +12920,7 @@ function downloadCallsCsv(){
     document.getElementById('v2LetterTitle').textContent=h.titulo||'';
 
     const box=document.getElementById('v2LetterText');
+    box.classList.toggle('v78154-h6-estrutura', String(h.num)==='6');
     const letra=LETRAS[String(h.num)];
     if(letra){
       if(letra.tipo==='coro' && Array.isArray(letra.linhas)){
