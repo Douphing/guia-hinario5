@@ -1714,46 +1714,6 @@ body.ga-v78155-score-over-letter #scoreFullscreen.open{z-index:100100!important}
 }
 </style>
 
-<style id="v78158-partitura-fora-do-titulo">
-/* O título "Mídias do Hino" permanece isolado. A partitura fica na barra de navegação.
-   O botão tem acesso direto ao mesmo visualizador, sem abrir metrônomo ou pausar mídias. */
-#hymnDetail #hdMediaArea .hd-hymn-nav{
-  position:relative!important;
-}
-#hymnDetail #hdMediaArea .hd-hymn-nav .ga-v78155-score-media{
-  position:absolute!important;
-  right:0!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:5px!important;
-  width:auto!important;
-  height:34px!important;
-  min-height:32px!important;
-  background:#fffdf7!important;
-  color:#263c51!important;
-  border:1px solid #d4c19b!important;
-  border-radius:10px!important;
-  font:700 12px/1 Arial,sans-serif!important;
-  padding:0 10px!important;
-  box-shadow:none!important;
-  white-space:nowrap!important;
-  z-index:2!important;
-}
-#hymnDetail #hdMediaArea .hd-hymn-nav .ga-v78155-score-media:hover{background:#f3e7ce!important}
-#hymnDetail #hdMediaArea .hd-hymn-nav .ga-v78155-score-media:focus-visible{outline:2px solid #a97d2e;outline-offset:2px}
-@media(max-width:420px){
-  #hymnDetail #hdMediaArea .hd-hymn-nav .ga-v78155-score-media{
-    font-size:10px!important;
-    padding:0 7px!important;
-    gap:3px!important;
-    height:31px!important;
-  }
-  #hymnDetail #hdMediaArea .hd-hymn-nav .ga-v78155-score-media svg{width:13px;height:13px}
-}
-</style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -20867,13 +20827,12 @@ window.GuiaProtecaoTempoV78145={status(){
   return b;
  };
  function render(){
-  // V7.81.58: Partitura e uma acao utilitaria da navegacao, nao pertence ao titulo.
-  const nav=$('hdMediaArea')?.querySelector('.hd-hymn-nav');
+  // V7.81.59: a Partitura fica SOMENTE no metrônomo e na Letra.
+  // Não adicionar atalhos no título "Mídias do Hino" nem nas setas de navegação.
   const oldTitleButton=$('hdMediaArea')?.querySelector('.hd-media-title .ga-v78155-score-media');
   if(oldTitleButton)oldTitleButton.remove();
-  if(nav&&!nav.querySelector('.ga-v78155-score-media')&&available()){
-   nav.appendChild(make('ga-v78155-score-media','Partitura'));
-  }
+  const oldNavButton=$('hdMediaArea')?.querySelector('.hd-hymn-nav .ga-v78155-score-media');
+  if(oldNavButton)oldNavButton.remove();
   const header=$('v2LetterOverlay')?.querySelector('.v2Head');
   if(header&&!header.querySelector('.ga-v78155-score-letter')){
    const btn=make('ga-v78155-score-letter','Partitura');
