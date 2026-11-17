@@ -1681,22 +1681,37 @@ body.score-full-open{overflow:hidden!important}
   #hymnDetail .hd-metronome-toggle:has(.hd-v78116-music-facts){height:36px!important;min-height:36px!important}
 }
 </style>
-<style id="v78154-hino6-estrutura-estrofes">
-/* Só Hino 6: cada estrofe numerada e separada; coro no bloco próprio, sempre após a 3ª. */
-#v2LetterText.v78154-h6-estrutura .v2Stanza{
-  margin:0 auto 8px; padding:12px 10px 13px; border-bottom:1px solid #e8ddcb;
-  max-width:62rem; text-align:center;
+<style id="v78155-acessos-partitura">
+/* Atalho do visualizador existente: mesmo conteúdo e zoom, sem reiniciar MP3 ou metrônomo. */
+#hymnDetail .ga-v78155-score-media,
+#v2LetterOverlay .ga-v78155-score-letter{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  flex:0 0 auto;white-space:nowrap;cursor:pointer;
+  background:#fffdf7!important;color:#263c51!important;
+  border:1px solid #d4c19b!important;border-radius:9px!important;
+  font:700 .72rem/1 Arial,sans-serif!important;
+  padding:7px 9px!important;min-height:31px!important;
+  box-shadow:none!important;
 }
-#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(3){border-bottom:0;margin-bottom:3px}
-#v2LetterText.v78154-h6-estrutura .v2Stanza::before{
-  display:block; margin:0 0 9px; font:700 .67rem/1.15 Arial,sans-serif;
-  text-transform:uppercase; letter-spacing:.12em;color:#927343;
+#hymnDetail .ga-v78155-score-media:hover,
+#v2LetterOverlay .ga-v78155-score-letter:hover{background:#f3e7ce!important}
+#hymnDetail .ga-v78155-score-media:focus-visible,
+#v2LetterOverlay .ga-v78155-score-letter:focus-visible{outline:2px solid #a97d2e;outline-offset:2px}
+#hymnDetail .ga-v78155-score-media svg,
+#v2LetterOverlay .ga-v78155-score-letter svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0}
+#hymnDetail .hd-media-title:has(.ga-v78155-score-media){gap:6px;justify-content:center;flex-wrap:nowrap}
+#hymnDetail .hd-media-title .ga-v78155-score-media{margin-left:4px}
+#v2LetterOverlay .v2Head .ga-v78155-score-letter{margin-left:auto}
+#v2LetterOverlay .ga-v78155-score-letter[hidden]{display:none!important}
+#v2LetterOverlay .v2Head .v2Close{flex:0 0 auto}
+/* A letra tem overlay de z-index 99999; elevar a partitura apenas quando aberta a partir dela. */
+body.ga-v78155-score-over-letter #scoreFullscreen.open{z-index:100100!important}
+@media(max-width:420px){
+ #hymnDetail .ga-v78155-score-media{font-size:.68rem!important;padding:6px 7px!important;min-height:30px!important}
+ #hymnDetail .hd-media-title:has(.ga-v78155-score-media){font-size:.92rem!important;gap:4px!important}
+ #v2LetterOverlay .ga-v78155-score-letter{font-size:.68rem!important;padding:6px 7px!important;min-height:30px!important}
+ #v2LetterOverlay .v2Head{gap:6px!important}
 }
-#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(1)::before{content:"1ª estrofe"}
-#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(2)::before{content:"2ª estrofe"}
-#v2LetterText.v78154-h6-estrutura .v2Stanza:nth-child(3)::before{content:"3ª estrofe"}
-#v2LetterText.v78154-h6-estrutura .v2Chorus{margin-top:12px}
-@media (max-width:420px){#v2LetterText.v78154-h6-estrutura .v2Stanza{padding:9px 5px 10px}}
 </style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
@@ -8346,14 +8361,14 @@ const LETRAS={
  "6":{
   tipo:"hino",
   titulo:"Glória ao Justo, fiel Cordeiro!",
-  rotuloCoro:"CORO",
-  estrutura:["estrofe-1","estrofe-2","estrofe-3","coro"],
+  rotuloFinal:"FINAL",
+  estrutura:["estrofe-1","estrofe-2","estrofe-3","final"],
   estrofes:[
    ["Ao Cordeiro imaculado, Jesus Cristo, exaltemos;","Do Seu Nome falaremos, pois, com infinito amor,","Veio à terra, glorioso, com poder e esplendor."],
    ["Seguiremos a Jesus Cristo com inteira confiança;","Temos viva esperança de chegar ao lar de amor,","Dirigidos, amparados pelo sábio Condutor."],
    ["Só a Cristo daremos glória e louvores em eterno,","Pois livrou-nos do inferno, do pecado e do mal,","Para dar-nos a herança no Seu lar celestial."]
   ],
-  coro:[
+  final:[
    "Glória ao Justo, fiel Cordeiro, Puro, Santo, Verdadeiro!",
    "Pela morte no madeiro, Nos reconciliou com Deus."
   ]
@@ -12920,7 +12935,6 @@ function downloadCallsCsv(){
     document.getElementById('v2LetterTitle').textContent=h.titulo||'';
 
     const box=document.getElementById('v2LetterText');
-    box.classList.toggle('v78154-h6-estrutura', String(h.num)==='6');
     const letra=LETRAS[String(h.num)];
     if(letra){
       if(letra.tipo==='coro' && Array.isArray(letra.linhas)){
@@ -20790,6 +20804,75 @@ window.GuiaProtecaoTempoV78145={status(){
    observacao:approved?'Relógio único com mapa musical aprovado':
      'MP3 preservado; BPM estimado não é aplicado. Sincronismo musical não certificado'};
  }};
+})();
+</script>
+
+<script id="v78155-partitura-acessivel-sem-metronomo">
+(function(){
+ 'use strict';
+ const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3.5-1.3 6.3-.8 9 1.2 2.7-2 5.5-2.5 9-1.2v13c-3.5-1.3-6.3-.8-9 1.2-2.7-2-5.5-2.5-9-1.2z"/><path d="M12 6.7v14"/></svg>';
+ const $=id=>document.getElementById(id);
+ const number=()=>String(window.__gaCurrentHymn?.num||'');
+ const config=()=>{const m=(typeof MULTIMIDIA!=='undefined'?MULTIMIDIA:window.MULTIMIDIA);return m?.[number()]?.metronomo||null};
+ const available=()=>{
+  const c=config();return !!(c&&(c.partituraImagem||c.partituraPaginas?.length));
+ };
+ const make=(cls,title)=>{
+  const b=document.createElement('button');
+  b.type='button';b.className=cls+' ga-v78155-score-access';
+  b.setAttribute('aria-label','Abrir partitura do hino em tela cheia');
+  b.title='Ver partitura sem abrir o metrônomo';
+  b.innerHTML=icon+'<span>'+title+'</span>';
+  return b;
+ };
+ function render(){
+  const title=$('hdMediaArea')?.querySelector('.hd-media-title');
+  if(title&&!title.querySelector('.ga-v78155-score-media')&&available()){
+   title.appendChild(make('ga-v78155-score-media','Partitura'));
+  }
+  const header=$('v2LetterOverlay')?.querySelector('.v2Head');
+  if(header&&!header.querySelector('.ga-v78155-score-letter')){
+   const btn=make('ga-v78155-score-letter','Partitura');
+   header.insertBefore(btn,header.querySelector('.v2Close'));
+  }
+  const btn=header?.querySelector('.ga-v78155-score-letter');
+  if(btn)btn.hidden=!available();
+ }
+ function openScore(fromLetter){
+  if(!available())return;
+  const thumb=$('hdScoreThumb');
+  if(!thumb)return;
+  if(fromLetter)document.body.classList.add('ga-v78155-score-over-letter');
+  // Reutiliza exatamente o viewer atual; não abre o metrônomo, não chama pause(), nem cria player novo.
+  thumb.click();
+  if(!$('scoreFullscreen')?.classList.contains('open')){
+   document.body.classList.remove('ga-v78155-score-over-letter');
+  }
+ }
+ document.addEventListener('click',e=>{
+  const b=e.target.closest?.('.ga-v78155-score-access');
+  if(!b)return;
+  e.preventDefault();e.stopPropagation();
+  openScore(!!b.closest('#v2LetterOverlay'));
+ });
+ const host=$('hdMediaArea');
+ if(host){
+  // Renderizador de hinos substitui o HTML deste contêiner, sem alterar estado do áudio.
+  const o=new MutationObserver(()=>render());
+  o.observe(host,{childList:true});
+ }
+ const letter=$('v2LetterOverlay');
+ if(letter){
+  new MutationObserver(()=>render()).observe(letter,{attributes:true,attributeFilter:['class']});
+ }
+ const viewer=$('scoreFullscreen');
+ if(viewer){
+  new MutationObserver(()=>{
+    if(!viewer.classList.contains('open'))document.body.classList.remove('ga-v78155-score-over-letter');
+  }).observe(viewer,{attributes:true,attributeFilter:['class']});
+ }
+ render();
+ window.GuiaPartituraDiretaV78155={abrir:()=>openScore(false),status:()=>({hino:number(),disponivel:available(),visorAberto:!!$('scoreFullscreen')?.classList.contains('open')})};
 })();
 </script>
 </body></html>
