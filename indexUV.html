@@ -1,4 +1,21 @@
-<!doctype html><html lang="pt-BR"><head>
+<!-- V7.81.7 TESTE: controles de reprodução e sequência SEMPRE visíveis em uma única linha compacta; MP3 nativo e masterização V7.81.6 preservados, produção intacta. -->
+<!doctype html>
+<!-- V7.81.6 TESTE: interface MP3 nativa, sequência recolhida, mute reversível; MP3 191-200 passam por masterização +4.3dB no pacote completo. Base V7.81.5 preservada. -->
+<!-- V7.81.5 TESTE: remove tarja de execução redundante; menu próprio Velocidade/Baixar MP3; último volume audível recuperável após mute e navegação; oculta legenda Fonte enviada pelo usuário. Sem modificar MP3, partitura, letra, fontes ou produção. -->
+<!-- V7.81 TESTE: integração aditiva Hinos 191–200 (MP3 V4.4 aprovado, letras/partituras/metrônomo). Hinos 1–190, Coros 1–6 e fontes externas preexistentes preservados. Mídias externas novas aguardam verificação; NÃO publicar em index.html sem aprovação. --><html lang="pt-BR"><head>
+<!-- V7.79.7 TESTE: mídias alternativas autorizadas: Antony Andrey para 161/182 YouTube e 161/187 Spotify; artista visível no botão. Orquestra Sacra prioritária; Vozes do Campo exclusivo no YouTube Music; produção intacta. -->
+<!-- V7.79.6 TESTE: links Orquestra Sacra hinos 187-190; 186 já estava correto; Spotify 187 (Antony Andrey) não incorporado. YouTube Music e produção preservados. -->
+<!-- V7.79.5 TESTE: inclusão de 18 URLs YouTube e 16 URLs Spotify fornecidas pelo usuário; 161–190, sem alterar YouTube Music, MP3, letras, partituras, metronomo ou index.html. -->
+<!-- V7.79.4 TESTE: Hino 186 com YouTube e Spotify individuais Orquestra Sacra, preservados os capítulos YouTube Music Vozes do Campo. Sem alteração de MP3 ou produção. -->
+<!-- V7.79.3 TESTE: fontes rigorosamente separadas em 161–190: YouTube e Spotify = somente Orquestra Sacra; YouTube Music = Vozes do Campo. Onde não há vídeo/faixa individual Sacra, oferecer pesquisa dirigida, sem reprodução indevida. MP3, letras, partituras, metrônomo e produção preservados. -->
+<!-- HISTORICO V7.79.2: continha coletâneas no YouTube; essa mistura foi corrigida na V7.79.3. -->
+<!-- V7.79.1 TESTE: links individuais confirmados (Spotify 171/179, YouTube Hymns 174) e pesquisa dirigida 161-180 quando não houver gravação individual confirmada. NÃO promover a produção automaticamente. -->
+<!-- V7.79 TESTE: Hinos 171–180 (MP3 V3.1, letras, partitura e mídias), preserva integralmente V7.78.3 e a produção index.html. -->
+<!-- V7.78.3 TESTE: metrônomo expandido e mídia em desktop baixo ficam na mesma disposição, independentemente da ordem de abertura. Correção isolada à observação de mudança de estado do modal; V7.78.2 preservada. -->
+<!-- V7.78.2 TESTE: Hino 162 Final (não Coro); navegação até 170; volume MP3 acessível; REV06 pendente de validação. -->
+<!-- V7.78 TESTE: acrescenta Hinos 161–170 com letras, MP3 único, metrônomo, partituras e trechos verificados do YouTube Music. Base V7.77 preservada, sem promover à produção. -->
+<!-- V7.77 TESTE: Hino 61 com MP3 V4.1 aprovado em audio/hino-61.mp3; somente parâmetro de cache atualizado. Base V7.76 preservada. -->
+<!-- V7.76 TESTE: apenas áudio local do Hino 61; referência de arquivo com atualização de cache. Base V7.75 preservada. -->
 <!-- V7.75 TESTE: corrige o filtro de registros ao fechar e reabrir Hinos chamados no menu. Base V7.74; arquivos e dados preservados. -->
 <!-- V7.73 TESTE: base estável V7.70 com ajuste isolado e reversível no metrônomo para desktop baixo. Sem mover nós do HTML; produção index.html intacta. -->
 <!-- V7.66 TESTE: histórico compacto integrado aos botões secundários em telas móveis, sem aumento vertical do modal. Desktop V7.65 preservado. -->
@@ -3656,7 +3673,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"61":{
-  audio:"audio/hino-61.mp3",
+  audio:"audio/hino-61.mp3?v=777",
   spotify:"6S480IyEKM0c4wOs58zcXY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6S480IyEKM0c4wOs58zcXY",
@@ -6410,6 +6427,1265 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },
+
+/* V7.78: novos Hinos 161–170; vínculos externos pendentes explicitados. */
+ "161":{
+  "spotifyArtista": "Antony Andrey",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2LqMROaPYrzAHofTlvG2JS",
+  "spotifyType": "track",
+  "spotify": "2LqMROaPYrzAHofTlvG2JS",
+  "youtubeArtista": "Antony Andrey",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=ksmT3qBvPAg",
+  "youtube": "ksmT3qBvPAg",
+  "audio": "audio/hino-161.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 0,
+  "youtubeMusicEnd": 167,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=0s",
+  "fonteExterna": "Spotify: Antony Andrey · YouTube: Antony Andrey · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 76,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-161-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-161-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 161 — Cristo quer salvar"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "162":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2StAIoCYt3sl1xIToZsble",
+  "spotifyType": "track",
+  "spotify": "2StAIoCYt3sl1xIToZsble",
+  "youtube": "6PW_txrWhSY",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=6PW_txrWhSY",
+  "youtubeOriginType": "video-individual",
+  "audio": "audio/hino-162.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 167,
+  "youtubeMusicEnd": 352,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=167s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 132,
+    "min": 120,
+    "max": 144,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-162-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-162-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 162 — Cristo salvou-me"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "163":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=EHqN88eOrAI",
+  "youtube": "EHqN88eOrAI",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/7MzoHSHGNmP8ybJV0E5WRL",
+  "spotifyType": "track",
+  "spotify": "7MzoHSHGNmP8ybJV0E5WRL",
+  "audio": "audio/hino-163.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 352,
+  "youtubeMusicEnd": 605,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=352s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 125,
+    "min": 112,
+    "max": 138,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-163-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-163-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 163 — Neste mundo de ilusão"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "164":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/1SJL9dK2WcgIfoaWfZpls6",
+  "spotifyType": "track",
+  "spotify": "1SJL9dK2WcgIfoaWfZpls6",
+  "youtube": "SKITfUNJQho",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=SKITfUNJQho",
+  "youtubeOriginType": "video-individual",
+  "audio": "audio/hino-164.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 605,
+  "youtubeMusicEnd": 790,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=605s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 80,
+    "min": 72,
+    "max": 88,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-164-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-164-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 164 — Louvemos sempre alegres"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "165":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=eo0GsN5431M",
+  "youtube": "eo0GsN5431M",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/5HbbjHswMEuWSfqnBpGG7D",
+  "spotifyType": "track",
+  "spotify": "5HbbjHswMEuWSfqnBpGG7D",
+  "audio": "audio/hino-165.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 790,
+  "youtubeMusicEnd": 943,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=790s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 128,
+    "min": 112,
+    "max": 144,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-165-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-165-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 165 — Foi o Senhor Jesus"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "166":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=I2RFGsE2zP8",
+  "youtube": "I2RFGsE2zP8",
+  "spotify": "6C1SQEaDlMApId5CNtgjQ4",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/track/6C1SQEaDlMApId5CNtgjQ4",
+  "audio": "audio/hino-166.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 943,
+  "youtubeMusicEnd": 1144,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=943s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 111,
+    "min": 96,
+    "max": 126,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-166-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-166-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 166 — A graça inefável de Deus"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "167":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/0CdBqcXOQFPqB0Rsv6Q0Ks",
+  "spotifyType": "track",
+  "spotify": "0CdBqcXOQFPqB0Rsv6Q0Ks",
+  "youtube": "3HKiWoStEEU",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=3HKiWoStEEU",
+  "youtubeOriginType": "video-individual",
+  "audio": "audio/hino-167.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 1144,
+  "youtubeMusicEnd": 1315,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=1144s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 80,
+    "min": 72,
+    "max": 88,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-167-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-167-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 167 — Água viva"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "168":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=wHecH4Cz_CA",
+  "youtube": "wHecH4Cz_CA",
+  "spotifySearch": "https://open.spotify.com/search/168%20A%20Palavra%20do%20Senhor%20Orquestra%20Sacra",
+  "spotifyPending": true,
+  "audio": "audio/hino-168.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 1315,
+  "youtubeMusicEnd": 1512,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=1315s",
+  "fonteExterna": "Spotify: pesquisa Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 75,
+    "min": 69,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-168-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-168-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 168 — A Palavra do Senhor"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "169":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/4WkukJEx9kJcAan1R14iQG",
+  "spotifyType": "track",
+  "spotify": "4WkukJEx9kJcAan1R14iQG",
+  "youtube": "GZWmpUxB6To",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=GZWmpUxB6To",
+  "youtubeOriginType": "video-individual",
+  "audio": "audio/hino-169.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 1512,
+  "youtubeMusicEnd": 1697,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=1512s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 113,
+    "min": 100,
+    "max": 126,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-169-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-169-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 169 — Aos pés de Deus estamos"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "170":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/4GJR0IFQ1ouW28e7hF8KBn",
+  "spotifyType": "track",
+  "spotify": "4GJR0IFQ1ouW28e7hF8KBn",
+  "youtube": "OBJucqljfQs",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=OBJucqljfQs",
+  "youtubeOriginType": "video-individual",
+  "audio": "audio/hino-170.mp3",
+  "youtubeMusic": "H-Op5TAcqAM",
+  "youtubeMusicStart": 1697,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=1697s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 128,
+    "min": 112,
+    "max": 144,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-170-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-170-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 170 — Pai eternal, envia dos céus..."
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+
+/* V7.79 — Hinos 171–180; MP3 local, partituras (171 e 177 multipáginas), capítulos verificados 171–180. */
+ "171":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=C6wFh1Il94c",
+  "youtube": "C6wFh1Il94c",
+  "spotify": "6wOMWk3hl6rpJtYrtqR9ef",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/track/6wOMWk3hl6rpJtYrtqR9ef",
+  "audio": "audio/hino-171.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 0,
+  "youtubeMusicEnd": 195,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=0s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 66,
+    "min": 56,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-171-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-171-p1.jpg",
+      "assets/partituras/hino-171-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 171 — Vida eterna! Vida eterna!"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "172":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=rxAd9BhZiaE",
+  "youtube": "rxAd9BhZiaE",
+  "spotifySearch": "https://open.spotify.com/search/172%20Um%20culto%20santo%20ao%20Senhor%20Orquestra%20Sacra",
+  "spotifyPending": true,
+  "audio": "audio/hino-172.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 195,
+  "youtubeMusicEnd": 350,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=195s",
+  "fonteExterna": "Spotify: pesquisa Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 59,
+    "min": 54,
+    "max": 63,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-172-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-172-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 172 — Um culto santo ao Senhor (Encerramento)"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "173":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=X_nYP9KqUnE",
+  "youtube": "X_nYP9KqUnE",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/207tKhQLDVFJ07Yi8f5xie",
+  "spotifyType": "track",
+  "spotify": "207tKhQLDVFJ07Yi8f5xie",
+  "audio": "audio/hino-173.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 350,
+  "youtubeMusicEnd": 543,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=350s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 75,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-173-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-173-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 173 — Para ouvir aqui estamos"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "174":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=BlH91abrwFc",
+  "youtube": "BlH91abrwFc",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/5OQXJGbpW3aq0sbb8u4bEa",
+  "spotifyType": "track",
+  "spotify": "5OQXJGbpW3aq0sbb8u4bEa",
+  "audio": "audio/hino-174.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 543,
+  "youtubeMusicEnd": 738,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=543s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 75,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-174-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-174-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 174 — Vem atender ao Seu chamado"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "175":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=yppRyb9D8ac",
+  "youtube": "yppRyb9D8ac",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/47fR4Xm2fL756TY687JxPr",
+  "spotifyType": "track",
+  "spotify": "47fR4Xm2fL756TY687JxPr",
+  "audio": "audio/hino-175.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 738,
+  "youtubeMusicEnd": 1028,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=738s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 72,
+    "min": 63,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-175-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-175-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 175 — O Senhor Jesus te chama"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "176":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=4scSO4sPTvw",
+  "youtube": "4scSO4sPTvw",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/55ds7lBy14IM5ayhyTmjp5",
+  "spotifyType": "track",
+  "spotify": "55ds7lBy14IM5ayhyTmjp5",
+  "audio": "audio/hino-176.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 1028,
+  "youtubeMusicEnd": 1228,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1028s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 70,
+    "min": 63,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-176-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-176-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 176 — Por Ti vivo, ó Deus potente"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "177":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=8h0JQw1oZ5Y",
+  "youtube": "8h0JQw1oZ5Y",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/3Qu0cRO52JNxLSBnNoEmEX",
+  "spotifyType": "track",
+  "spotify": "3Qu0cRO52JNxLSBnNoEmEX",
+  "audio": "audio/hino-177.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 1228,
+  "youtubeMusicEnd": 1468,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1228s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 135,
+    "min": 120,
+    "max": 150,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-177-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-177-p1.jpg",
+      "assets/partituras/hino-177-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 177 — Eu necessito achegar-me"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "178":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=J9nKKoraomc",
+  "youtube": "J9nKKoraomc",
+  "spotifySearch": "https://open.spotify.com/search/178%20A%20Palavra%20preciosa%20Orquestra%20Sacra",
+  "spotifyPending": true,
+  "audio": "audio/hino-178.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 1468,
+  "youtubeMusicEnd": 1686,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1468s",
+  "fonteExterna": "Spotify: pesquisa Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 68,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-178-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-178-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 178 — A Palavra preciosa"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "179":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=-2ROJis5AJA",
+  "youtube": "-2ROJis5AJA",
+  "spotify": "3HZcLoVVkNJjZekT6XPYWa",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/track/3HZcLoVVkNJjZekT6XPYWa",
+  "audio": "audio/hino-179.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 1686,
+  "youtubeMusicEnd": 1908,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1686s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 77,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-179-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-179-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 179 — Trabalhai! Trabalhai!"
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "180":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=lW7lW1I58CA",
+  "youtube": "lW7lW1I58CA",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2TVB4bWDc2kptDudiaywAW",
+  "spotifyType": "track",
+  "spotify": "2TVB4bWDc2kptDudiaywAW",
+  "audio": "audio/hino-180.mp3",
+  "youtubeMusic": "0AS9FwjZnL4",
+  "youtubeMusicStart": 1908,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1908s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 82,
+    "min": 76,
+    "max": 88,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-180-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-180-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 180 — Jesus é a Luz que veio ao mundo..."
+  },
+  "repeticoes": 1,
+  "modoReproducao": "partitura"
+},
+ "181":{
+  "spotify": "6ptqHGf3MDGx8kSkBTV1n4",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/track/6ptqHGf3MDGx8kSkBTV1n4",
+  "youtube": "-JR62eqf6XI",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=-JR62eqf6XI",
+  "youtubeOriginType": "video-individual",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 0,
+  "youtubeMusicEnd": 207,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-181.mp3",
+  "metronomo": {
+    "bpm": 73,
+    "min": 66,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-181-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-181-p1.jpg",
+      "assets/partituras/hino-181-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 181 — Só em Cristo, só em Cristo"
+  }
+},
+ "182":{
+  "youtubeArtista": "Antony Andrey",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=c-zWuJfzWBI",
+  "youtube": "c-zWuJfzWBI",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2NZaUx1bkV7q3V5Mh9qapE",
+  "spotifyType": "track",
+  "spotify": "2NZaUx1bkV7q3V5Mh9qapE",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 207,
+  "youtubeMusicEnd": 383,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=207s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Antony Andrey · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-182.mp3",
+  "metronomo": {
+    "bpm": 60,
+    "min": 56,
+    "max": 66,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-182-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-182-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 182 — Brevemente retornará Jesus Cristo"
+  }
+},
+ "183":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=vTpm-FsgbpQ",
+  "youtube": "vTpm-FsgbpQ",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2cPOzY0vKzayHW7A4tOGVa",
+  "spotifyType": "track",
+  "spotify": "2cPOzY0vKzayHW7A4tOGVa",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 383,
+  "youtubeMusicEnd": 613,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=383s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-183.mp3",
+  "metronomo": {
+    "bpm": 124,
+    "min": 112,
+    "max": 138,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-183-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-183-p1.jpg",
+      "assets/partituras/hino-183-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 183 — Cristo Jesus é a Porta dos céus"
+  }
+},
+ "184":{
+  "spotify": "5LR0iM7iONBti6vheeFGPL",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/track/5LR0iM7iONBti6vheeFGPL",
+  "youtube": "H175pVGBc5A",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=H175pVGBc5A",
+  "youtubeOriginType": "video-individual",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 613,
+  "youtubeMusicEnd": 791,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=613s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-184.mp3",
+  "metronomo": {
+    "bpm": 68,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-184-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-184-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 184 — Nós Te louvamos, por fé, grande Deus"
+  }
+},
+ "185":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=IQdOWN95JKM",
+  "youtube": "IQdOWN95JKM",
+  "spotify": "6phHyORZrkuvXtzhPmMy77",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/6phHyORZrkuvXtzhPmMy77",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 791,
+  "youtubeMusicEnd": 937,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=791s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-185.mp3",
+  "metronomo": {
+    "bpm": 75,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-185-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-185-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 185 — Deus mandou Sua Luz"
+  }
+},
+ "186":{
+  "spotify": "1IuRhhBlaTMsQEyRUnNe9X",
+  "spotifyType": "track",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/1IuRhhBlaTMsQEyRUnNe9X",
+  "youtube": "JkvMSABt-94",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=JkvMSABt-94",
+  "youtubeOriginType": "video-individual",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 937,
+  "youtubeMusicEnd": 1168,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=937s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-186.mp3",
+  "metronomo": {
+    "bpm": 70,
+    "min": 60,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-186-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-186-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 186 — Cristo, Luz do mundo"
+  }
+},
+ "187":{
+  "spotifyArtista": "Antony Andrey",
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/4NgvoXbYaEZkpnIXNUAO3n",
+  "spotifyType": "track",
+  "spotify": "4NgvoXbYaEZkpnIXNUAO3n",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=RbjoI272qqo",
+  "youtube": "RbjoI272qqo",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 1168,
+  "youtubeMusicEnd": 1374,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1168s",
+  "fonteExterna": "Spotify: Antony Andrey · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-187.mp3",
+  "metronomo": {
+    "bpm": 73,
+    "min": 66,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-187-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-187-p1.jpg",
+      "assets/partituras/hino-187-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 187 — Jesus Cristo habita em nós"
+  }
+},
+ "188":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/024fzNtpSDNwmA4LM9CFyV",
+  "spotifyType": "track",
+  "spotify": "024fzNtpSDNwmA4LM9CFyV",
+  "youtube": "_JD_Gr0lJJM",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=_JD_Gr0lJJM",
+  "youtubeOriginType": "video-individual",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 1374,
+  "youtubeMusicEnd": 1539,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1374s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-188.mp3",
+  "metronomo": {
+    "bpm": 76,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-188-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-188-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 188 — O Mestre habita em mim"
+  }
+},
+ "189":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/5TR8XSuxnNDPGLouJt4GhP",
+  "spotifyType": "track",
+  "spotify": "5TR8XSuxnNDPGLouJt4GhP",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=KS4afku2Fxo",
+  "youtube": "KS4afku2Fxo",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 1539,
+  "youtubeMusicEnd": 1684,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1539s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-189.mp3",
+  "metronomo": {
+    "bpm": 76,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-189-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-189-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 189 — Oh! Que preciosa paz"
+  }
+},
+ "190":{
+  "spotifyOrigin": "https://open.spotify.com/intl-pt/track/1eTH4qwmXSdykuimmsQitz",
+  "spotifyType": "track",
+  "spotify": "1eTH4qwmXSdykuimmsQitz",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=_f_ZYX9KidA",
+  "youtube": "_f_ZYX9KidA",
+  "youtubeMusic": "Uu9L8bQzaTc",
+  "youtubeMusicStart": 1684,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1684s",
+  "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
+  "modoReproducao": "partitura",
+  "audio": "audio/hino-190.mp3",
+  "metronomo": {
+    "bpm": 72,
+    "min": 60,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-190-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-190-p1.jpg",
+      "assets/partituras/hino-190-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 190 — Amados, não temamos"
+  }
+},
+ "191":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=Vkb54RUOkDQ",
+  "youtube": "Vkb54RUOkDQ",
+  "youtubeArtista": "Orquestra Sacra",
+  "youtubeMusic": "IM7ssGI7shs",
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=IM7ssGI7shs&t=0s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicStart": 0,
+  "youtubeMusicEnd": 208,
+  "spotifyOrigin": "https://open.spotify.com/track/3kJvz00UUuDWzcAVE9ZExT",
+  "spotifyType": "track",
+  "spotify": "3kJvz00UUuDWzcAVE9ZExT",
+  "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: Antony Andrey",
+  "audio": "audio/hino-191.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 122,
+    "min": 100,
+    "max": 126,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-191-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-191-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 191 — Vem, vem consolar-me"
+  }
+},
+ "192":{
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20192%20Qu%C3%A3o%20fiel%20promessa%20Jesus%20nos%20fez%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=qlDVRkAZvAM",
+  "youtube": "qlDVRkAZvAM",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-192.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 124,
+    "min": 108,
+    "max": 126,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-192-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-192-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 192 — Quão fiel promessa Jesus nos fez"
+  }
+},
+ "193":{
+  "youtubeMusic": "NHt_ywH0zZg",
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=NHt_ywH0zZg&t=1112s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicStart": 1112,
+  "youtubeMusicEnd": 1364,
+  "spotifyOrigin": "https://open.spotify.com/track/1HJgCzkXjDQzudAVjvYVM1",
+  "spotifyType": "track",
+  "spotify": "1HJgCzkXjDQzudAVjvYVM1",
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: Orquestra Sacra",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=kzKgpHuYboU",
+  "youtube": "kzKgpHuYboU",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-193.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 142,
+    "min": 120,
+    "max": 144,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-193-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-193-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 193 — Nada jamais me faltará"
+  }
+},
+ "194":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=DmQEpuRVPCg",
+  "youtube": "DmQEpuRVPCg",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20194%20V%C3%B3s%20chorareis%20e%20vos%20lamentareis%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "audio": "audio/hino-194.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 74,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-194-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-194-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 194 — “Vós chorareis e vos lamentareis”"
+  }
+},
+ "195":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=GSEIt19lwZM",
+  "youtube": "GSEIt19lwZM",
+  "youtubeArtista": "Orquestra Sacra",
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20195%20Senhor%2C%20estou%20disposto%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "audio": "audio/hino-195.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 86,
+    "min": 69,
+    "max": 88,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-195-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-195-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 195 — Senhor, estou disposto"
+  }
+},
+ "196":{
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20196%20Sem%20Deus%20Pai%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=WaGmOAuiYxg",
+  "youtube": "WaGmOAuiYxg",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-196.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 109,
+    "min": 88,
+    "max": 112,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "6/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-196-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-196-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 196 — Sem Deus Pai"
+  }
+},
+ "197":{
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20197%20Senhor%2C%20por%20Teu%20poder%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=A12O86QYxt4",
+  "youtube": "A12O86QYxt4",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-197.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 102,
+    "min": 84,
+    "max": 104,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "6/4",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-197-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-197-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 197 — Senhor, por Teu poder"
+  }
+},
+ "198":{
+  "youtubeMusicPending": true,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20198%20Nosso%20Pai%20celeste%20sabe%20e%20prov%C3%AA%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=4W8dPu7NM7k",
+  "youtube": "4W8dPu7NM7k",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-198.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 97,
+    "min": 76,
+    "max": 100,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-198-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-198-p1.jpg",
+      "assets/partituras/hino-198-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 198 — Nosso Pai celeste sabe e provê"
+  }
+},
+ "199":{
+  "youtubeMusic": "oiR2-RvPBrI",
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=oiR2-RvPBrI&t=1066s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicStart": 1066,
+  "youtubeMusicEnd": 1277,
+  "spotifyOrigin": "https://open.spotify.com/track/11Ps5YU4GFQJpCtNCSmOnF",
+  "spotifyType": "track",
+  "spotify": "11Ps5YU4GFQJpCtNCSmOnF",
+  "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: Orquestra Sacra",
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=kEbHExWm-Sk",
+  "youtube": "kEbHExWm-Sk",
+  "youtubeArtista": "Fonte enviada pelo usuário",
+  "audio": "audio/hino-199.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 116,
+    "min": 88,
+    "max": 120,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "6/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-199-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-199-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 199 — Senhor, Tu és a minha Porção"
+  }
+},
+ "200":{
+  "youtubeOriginType": "video-individual",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=OgNlZz43BEw",
+  "youtube": "OgNlZz43BEw",
+  "youtubeArtista": "Orquestra Sacra",
+  "youtubeMusic": "ANBgqh2jX_0",
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=ANBgqh2jX_0&t=253s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicStart": 253,
+  "youtubeMusicEnd": 483,
+  "spotifySearch": "https://open.spotify.com/search/Hino%20200%20N%C3%A3o%20se%20turbe%20o%20vosso%20cora%C3%A7%C3%A3o%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
+  "spotifyPending": true,
+  "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: pesquisa em fontes aprovadas",
+  "audio": "audio/hino-200.mp3",
+  "modoReproducao": "partitura",
+  "metronomo": {
+    "bpm": 78,
+    "min": 60,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-200-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-200-p1.jpg",
+      "assets/partituras/hino-200-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 200 — “Não se turbe o vosso coração”"
+  }
+},
  "45":{
   audio:"audio/hino-45.mp3?v=697",
   spotify:"0834t6lumVQ5FKetjMgREw",
@@ -8422,6 +9698,1406 @@ const LETRAS={
   ]
  },
 
+
+/* V7.78: letras 161–170 transcritas e conferidas com as partituras-fonte. */
+ "161":{
+  "tipo": "hino",
+  "titulo": "Cristo quer salvar",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "O Evangelho vamos anunciar,",
+      "Pois Cristo quer salvar e quer justificar;",
+      "Verteu na cruz Seu sangue expiador",
+      "O justo Redentor."
+    ],
+    [
+      "O Evangelho vamos proclamar,",
+      "Pois Cristo quer salvar e quer justificar;",
+      "Mui breve, em nuvens, Ele voltará",
+      "E o prêmio nos dará."
+    ],
+    [
+      "Do Evangelho temos que falar,",
+      "Pois Cristo quer salvar e quer justificar;",
+      "Por essa graça, damos o louvor",
+      "A Deus, o Criador."
+    ]
+  ],
+  "coro": [
+    "Em Cristo há perdão, eterna salvação,",
+    "É Ele a celeste Luz;",
+    "É, do mundo, eterna Redenção;",
+    "Só Ele ao céu conduz."
+  ]
+},
+ "162":{
+  "tipo": "hino",
+  "titulo": "Cristo salvou-me",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3",
+    "final"
+  ],
+  "estrofes": [
+    [
+      "Cristo salvou-me, tenho certeza,",
+      "Por Sua obra de redenção;",
+      "Fui perdoado por Sua graça,",
+      "Sinto agora Sua unção."
+    ],
+    [
+      "Cristo salvou-me; que alegria",
+      "Sente minh'alma em Seu amor;",
+      "Fui resgatado e libertado",
+      "Para viver com o meu Senhor."
+    ],
+    [
+      "Cristo salvou-me; sigo, portanto,",
+      "Os bons conselhos do Criador;",
+      "Ando, por eles, no bom caminho",
+      "Que me conduz ao lar de esplendor."
+    ]
+  ],
+  "final": [
+    "Oh! Que doçura, sinto a virtude",
+    "Que tão alegre me faz viver;",
+    "Sei que, de Cristo, a plenitude",
+    "Da Sua graça vou receber."
+  ]
+},
+ "163":{
+  "tipo": "hino",
+  "titulo": "Neste mundo de ilusão",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Neste mundo de ilusão não há felicidade;",
+      "Só em Cristo há salvação, pois Ele é a Verdade;",
+      "Ei-Lo à porta a bater, vida quer te conceder;",
+      "De ninguém a podes ter, só do Cordeiro de Deus."
+    ],
+    [
+      "Por ti, Cristo padeceu dando a própria vida;",
+      "Pela morte que sofreu, graça te é concedida;",
+      "Por ti, Ele agonizou e Seu sangue derramou;",
+      "Sua vida não poupou, Cristo, o Cordeiro de Deus."
+    ],
+    [
+      "Sem a Luz e sem a Paz andas, no mundo, aflito;",
+      "Cristo mui feliz te faz, oh! Vem a Ele, contrito;",
+      "Vem, sim, vem ao bom Jesus, receber a Sua luz,",
+      "Que à glória te conduz. Vem ao Cordeiro de Deus!"
+    ]
+  ],
+  "coro": [
+    "Queres felicidade?",
+    "Crê no Senhor Jesus,",
+    "Que, por ti, desceu dos céus;",
+    "Crê no Cordeiro de Deus!"
+  ]
+},
+ "164":{
+  "tipo": "hino",
+  "titulo": "Louvemos sempre alegres",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Louvemos sempre alegres a Deus, três vezes Santo,",
+      "Que, por amar-nos tanto, mandou o Salvador.",
+      "Jesus, por Sua morte, pagou nossas ofensas;",
+      "Sofrendo dor imensa, mostrou o Seu amor."
+    ],
+    [
+      "Estão os nossos nomes, por Deus, no céu escritos;",
+      "Cheguemo-nos, contritos, ao Pai de eterno amor.",
+      "Em paz, na Sua senda caminham os remidos,",
+      "Lutando sempre unidos, com força e valor."
+    ],
+    [
+      "Jesus virá, com glória, fazer o julgamento",
+      "De quem Seu mandamento não quis obedecer;",
+      "Porém, os Seus remidos já têm a esperança",
+      "E a firme confiança de o prêmio receber."
+    ]
+  ]
+},
+ "165":{
+  "tipo": "hino",
+  "titulo": "Foi o Senhor Jesus",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Para salvar-nos, quem veio do céu?",
+      "Nosso Senhor Jesus.",
+      "Ele, ao poder do pecado venceu,",
+      "Trouxe-nos vida e luz."
+    ],
+    [
+      "Quem, nesta graça, nos pode guardar?",
+      "Cristo, fiel Pastor.",
+      "Suas palavras nos podem guiar",
+      "Ao lar de esplendor."
+    ],
+    [
+      "Quem poderá novas forças nos dar?",
+      "Cristo, o Rei dos reis.",
+      "Ele nos faz glória eterna alcançar;",
+      "É Guia dos fiéis."
+    ]
+  ],
+  "coro": [
+    "Foi o Senhor Jesus",
+    "Que nos abençoou;",
+    "Da escravidão nos libertou",
+    "Nosso Senhor Jesus."
+  ]
+},
+ "166":{
+  "tipo": "hino",
+  "titulo": "A graça inefável de Deus",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Se muitos soubessem que paz sem igual",
+      "Tem quem o perdão alcançou;",
+      "Por fé buscariam a graça eternal;",
+      "Iriam a Deus, que os amou."
+    ],
+    [
+      "Se muitos soubessem que grande amor",
+      "Desfrutam os santos de Deus,",
+      "Iriam a Cristo Jesus, o Senhor,",
+      "Teriam herança nos céus."
+    ],
+    [
+      "Se muitos soubessem a glória que há",
+      "No reino que vamos herdar,",
+      "Creriam em Cristo, que vida nos dá,",
+      "Iriam o mal rejeitar."
+    ]
+  ],
+  "coro": [
+    "A graça inefável de Deus,",
+    "Que veio por Cristo Jesus,",
+    "É dom excelente que leva aos céus,",
+    "Ao reino de glória e luz."
+  ]
+},
+ "167":{
+  "tipo": "hino",
+  "titulo": "Água viva",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Água viva sai do Manancial",
+      "Que é Cristo, o Redentor;",
+      "Ela traz, dos céus, vida eternal",
+      "E converte o pecador."
+    ],
+    [
+      "Água viva da Fonte de amor",
+      "Só Jesus nos pode dar;",
+      "D'Ele vem perdão para o pecador",
+      "Que deseja se salvar."
+    ],
+    [
+      "Água viva do trono celestial,",
+      "Refrigério a todos traz;",
+      "Outras águas há, mas nenhuma igual",
+      "À do Príncipe da paz."
+    ]
+  ],
+  "coro": [
+    "Dessa água quem quiser beber,",
+    "Só a Cristo deve recorrer;",
+    "Outra água nos fará perecer,",
+    "Mas a de Jesus nos faz viver."
+  ]
+},
+ "168":{
+  "tipo": "hino",
+  "titulo": "A Palavra do Senhor",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Na Palavra do Senhor, bons conselhos pode achar,",
+      "Neste mundo, o pecador que na glória quer entrar;",
+      "Tem virtude, tem vigor a Palavra do Senhor,",
+      "É a Guia do fiel para ir ao Criador."
+    ],
+    [
+      "Quem procura o Salvador, certamente O achará",
+      "No Evangelho do amor, que riqueza a todos dá;",
+      "Quem quiser de graça ter o perdão e a salvação,",
+      "Deve a Cristo recorrer, com sincero coração."
+    ],
+    [
+      "Quem a Cristo encontrar e virtude suplicar,",
+      "Transformado ficará para, a Deus, glorificar;",
+      "Provará o puro amor de Jesus, o Salvador,",
+      "Sustentado pela fé no poder do Criador."
+    ]
+  ],
+  "coro": [
+    "A Palavra do Senhor",
+    "Mostra a todo o pecador",
+    "Que Deus, por Seu grande amor,",
+    "Enviou o Salvador."
+  ]
+},
+ "169":{
+  "tipo": "hino",
+  "titulo": "Aos pés de Deus estamos",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Aos pés de Deus estamos, perante Quem nos prostramos;",
+      "Por fé O adoramos com devoção e fervor;",
+      "Em nome do Seu Filho, nós nos apresentamos;",
+      "Humildemente oramos, rogando Seu favor."
+    ],
+    [
+      "Tudo o que padecemos, já padeceu nosso Mestre,",
+      "Mas foi vitorioso; nos concedeu salvação;",
+      "Ele intercede agora junto ao Pai celeste",
+      "Para ser atendida a nossa oração."
+    ],
+    [
+      "Nunca desanimemos mas, confiantes, oremos,",
+      "Certos de que Deus ouve a voz do nosso clamor;",
+      "Ele é o Onipotente, só n'Ele confiemos;",
+      "Todo louvor daremos a Deus, o Criador."
+    ]
+  ]
+},
+ "170":{
+  "tipo": "hino",
+  "titulo": "Pai eternal, envia dos céus...",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Glória! Aleluia! Ó bom Pai dos céus,",
+      "O Evangelho nos fez filhos Teus;",
+      "Por Ele temos a fé em Jesus,",
+      "Temos conforto, justiça e luz."
+    ],
+    [
+      "A Ti pertencem, ó Pai de amor,",
+      "Glória e honra, e todo o louvor;",
+      "Pelo Evangelho nós temos a paz,",
+      "Forças do alto e graça eficaz."
+    ],
+    [
+      "É o Evangelho que nos faz crescer",
+      "Na santidade, virtude e poder;",
+      "N'Ele entendemos Teu grande favor;",
+      "Damos-Te glória, ó Pai de amor."
+    ]
+  ],
+  "coro": [
+    "Pai eternal, envia dos céus",
+    "Tua fiel Palavra de amor;",
+    "N'Ela consiste a vida dos Teus;",
+    "Glória ao Teu Nome, amado Senhor!"
+  ]
+},
+
+/* V7.79 — Letras dos Hinos 171–180, conforme partituras originais; 172 sem coro. */
+ "171":{
+  "tipo": "hino",
+  "titulo": "Vida eterna! Vida eterna!",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "As moradas preparadas para os santos do Senhor",
+      "São ornadas de beleza sem igual;",
+      "Nelas nós habitaremos com Jesus, o Redentor,",
+      "E com Deus, o nosso Pai celestial."
+    ],
+    [
+      "É de ouro a cidade gloriosa do Senhor,",
+      "Resplandece para sempre sua luz;",
+      "Não há nela sol nem lua, pois tem luz do Criador",
+      "E também a sua Lâmpada é Jesus."
+    ],
+    [
+      "Com as vestes brancas e entoando hinos de louvor,",
+      "Triunfantes, entraremos lá nos céus;",
+      "Lá veremos todos quantos já dormiram no Senhor,",
+      "Lá veremos, face a face, nosso Deus."
+    ]
+  ],
+  "coro": [
+    "Vida eterna, vida eterna",
+    "Nós teremos junto ao nosso Deus;",
+    "Regozijo, alegria sempiterna,",
+    "É o prêmio dos eleitos Seus."
+  ]
+},
+ "172":{
+  "tipo": "hino",
+  "titulo": "Um culto santo ao Senhor (Encerramento)",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Um culto santo ao Senhor",
+      "Foi celebrado com amor;",
+      "Foi recebido lá nos céus",
+      "Por nosso poderoso Deus."
+    ],
+    [
+      "Um novo alento há em nós,",
+      "Pois Deus ouviu a nossa voz;",
+      "A sã Palavra nos mandou",
+      "E nossas forças renovou."
+    ],
+    [
+      "Com o conselho divinal",
+      "Suplantaremos todo o mal;",
+      "E, face a face, lá nos céus,",
+      "Veremos nosso grande Deus."
+    ]
+  ]
+},
+ "173":{
+  "tipo": "hino",
+  "titulo": "Para ouvir aqui estamos",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Para ouvir aqui estamos",
+      "A Palavra do Senhor;",
+      "Só por Ela temos vida",
+      "E a luz do Salvador."
+    ],
+    [
+      "Exaltando aqui estamos",
+      "A Jesus, que nos salvou;",
+      "Todo o louvor Lhe damos;",
+      "Ele já nos resgatou."
+    ],
+    [
+      "Nós devemos ser-Lhe gratos",
+      "Pelo Seu imenso amor;",
+      "Nesta casa, e em toda a parte,",
+      "Exaltemos ao Senhor."
+    ]
+  ],
+  "coro": [
+    "Templos santos fomos feitos",
+    "Para habitação de Deus;",
+    "O Senhor nos quer perfeitos;",
+    "Somos os eleitos Seus."
+  ]
+},
+ "174":{
+  "tipo": "hino",
+  "titulo": "Vem atender ao Seu chamado",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Ao amado Jesus Cristo dá ouvidos,",
+      "Ele diz: “Vem a Mim”;",
+      "E serão os teus pecados esquecidos;",
+      "Cristo diz: “Vem a Mim”."
+    ],
+    [
+      "Só Jesus tem força para libertar-te;",
+      "Crê no teu Redentor;",
+      "Ele quer, com Deus, o Pai, reconciliar-te;",
+      "Crê no teu Salvador."
+    ],
+    [
+      "Sobre a amarga cruz, por ti, provou a morte;",
+      "Ouve a voz do Senhor;",
+      "Não rejeites tão preciosa e grande sorte;",
+      "Vem provar Seu amor."
+    ]
+  ],
+  "coro": [
+    "Vem atender ao Seu chamado;",
+    "Serás, por Cristo, perdoado",
+    "E fará de ti um bem-aventurado.",
+    "Diz Jesus: “Vem a Mim”."
+  ]
+},
+ "175":{
+  "tipo": "hino",
+  "titulo": "O Senhor Jesus te chama",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "O Senhor Jesus te chama,",
+      "Com sublime e grande amor;",
+      "Não desprezes Quem te ama",
+      "E quer ser teu Salvador."
+    ],
+    [
+      "O prazer bem cedo finda",
+      "Neste mundo sedutor;",
+      "Cristo quer, em Sua vinda,",
+      "Dar-te o reino de esplendor."
+    ],
+    [
+      "Hoje é dia aceitável,",
+      "Hoje é dia de perdão;",
+      "Com amor inigualável,",
+      "Cristo dá a salvação."
+    ]
+  ],
+  "coro": [
+    "Deixa Cristo, o Rei da glória,",
+    "Possuir teu coração,",
+    "Se desejas ter vitória",
+    "E eterna salvação."
+  ]
+},
+ "176":{
+  "tipo": "hino",
+  "titulo": "Por Ti vivo, ó Deus potente",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Viver desejo só por Ti, Senhor,",
+      "Cumprindo sempre Teu querer,",
+      "Mostrando a luz ao mundo enganador",
+      "E consagrando a Ti meu ser."
+    ],
+    [
+      "Viver por Ti, Senhor, honroso é,",
+      "Oh! Faz-me andar em Teu amor;",
+      "Em paz prosseguirei de fé em fé",
+      "E vencerei o tentador."
+    ],
+    [
+      "Viver desejo, ó Deus, em retidão,",
+      "Com as virtudes celestiais;",
+      "De Ti receberei o galardão",
+      "E as riquezas eternais."
+    ]
+  ],
+  "coro": [
+    "Por Ti vivo, ó Deus potente;",
+    "Por Ti, Senhor, sempre viverei;",
+    "Com minh’alma, mui reverente,",
+    "O Teu Nome bendirei."
+  ]
+},
+ "177":{
+  "tipo": "hino",
+  "titulo": "Eu necessito achegar-me",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Eu necessito achegar-me",
+      "Ao meu fiel e bondoso Senhor,",
+      "Para poder consolar-me",
+      "Sempre no Seu infinito amor."
+    ],
+    [
+      "Eu necessito ater-me",
+      "Ao meu Senhor, o veraz Redentor;",
+      "Não posso, eu só, defender-me,",
+      "Mas com Jesus eu serei vencedor."
+    ],
+    [
+      "Eu necessito prostrar-me",
+      "Aos santos pés do meu bom Redentor;",
+      "Ele ao céu quer levar-me",
+      "Por Seu eterno e sublime amor."
+    ]
+  ],
+  "coro": [
+    "Sim, eu necessito entregar-me",
+    "Nos braços do meu Redentor;",
+    "Só em Jesus poderei abrigar-me,",
+    "Pois é fiel Defensor."
+  ]
+},
+ "178":{
+  "tipo": "hino",
+  "titulo": "A Palavra preciosa",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "A Palavra da verdade,",
+      "De Deus Pai, o Criador,",
+      "Traz dos céus a santidade",
+      "Aos remidos do Senhor."
+    ],
+    [
+      "A Palavra criadora",
+      "Trouxe ao mundo grande luz",
+      "Pela obra redentora",
+      "Consumada por Jesus."
+    ],
+    [
+      "Para sempre permanece",
+      "A Palavra divinal;",
+      "Nossas almas fortalece",
+      "E protege-nos do mal."
+    ]
+  ],
+  "coro": [
+    "A Palavra preciosa",
+    "Do fiel, vivente Deus,",
+    "É Espada poderosa,",
+    "Que defende os santos Seus."
+  ]
+},
+ "179":{
+  "tipo": "hino",
+  "titulo": "Trabalhai! Trabalhai!",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Trabalhemos, irmãos, somos servos de Deus,",
+      "As searas de Cristo já brancas estão;",
+      "Recebendo as forças que vêm lá dos céus,",
+      "Cumpriremos, alegres, a nossa missão."
+    ],
+    [
+      "Trabalhemos, irmãos, com afinco e amor,",
+      "Anunciando aos famintos que o pão celestial",
+      "É Jesus, a Palavra de vida e vigor;",
+      "Ela nos alimenta e nos livra do mal."
+    ],
+    [
+      "Trabalhemos, irmãos, pois ungiu-nos o Pai",
+      "Para a graça de Cristo, por fé propagar;",
+      "Os talentos, o Mestre nos diz: “Granjeai”.",
+      "Sobre o muito, no céu, nos irá colocar."
+    ]
+  ],
+  "coro": [
+    "Trabalhai, trabalhai,",
+    "Vigiai, vigiai",
+    "E orai sem cessar,",
+    "Pois breve o Mestre vai voltar."
+  ]
+},
+ "180":{
+  "tipo": "hino",
+  "titulo": "Jesus é a Luz que veio ao mundo...",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Jesus é a Luz que veio",
+      "Ao mundo para me resgatar;",
+      "Em trevas eu jamais andarei,",
+      "Pois Ele me faz brilhar."
+    ],
+    [
+      "Jesus, com Sua luz divinal,",
+      "Mostrou-me a salvação;",
+      "A minha mente esclareceu;",
+      "Livrou-me da perdição."
+    ],
+    [
+      "Jesus, vem com a Tua gloriosa luz",
+      "Para me guiar",
+      "No Evangelho santo,",
+      "Até findar meu peregrinar."
+    ]
+  ],
+  "coro": [
+    "Se eu andar nessa Luz,",
+    "Um dia eu verei o fiel, bom Jesus;",
+    "Na casa de Deus Pai,",
+    "Eu contemplarei todo o esplendor",
+    "Do meu Redentor. Que alegria!",
+    "Lá não há tristeza e nem mal,",
+    "Só o amor perenal."
+  ]
+},
+ "181":{
+  "tipo": "hino",
+  "titulo": "Só em Cristo, só em Cristo",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Vós, que procurais a água que dá vida,",
+      "Vinde a Cristo, Fonte do perdão;",
+      "Toda alma contristada e abatida,",
+      "Em Jesus encontrará a salvação."
+    ],
+    [
+      "Nesta Fonte tão preciosa, inesgotável,",
+      "Refrigério todos acharão;",
+      "Recorrendo a Jesus, Pastor amável,",
+      "Os sedentos não mais sede sentirão."
+    ],
+    [
+      "Cristo é o Manancial que purifica",
+      "E enobrece todo o coração;",
+      "Seu Espírito encoraja, santifica",
+      "E ensina a viver em retidão."
+    ]
+  ],
+  "coro": [
+    "Só em Cristo, só em Cristo,",
+    "Água viva todos podem encontrar;",
+    "Só em Cristo, só em Cristo,",
+    "Vós, sedentos, podereis vos saciar."
+  ]
+},
+ "182":{
+  "tipo": "hino",
+  "titulo": "Brevemente retornará Jesus Cristo",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Brevemente retornará e a promessa cumprirá,",
+      "Jesus Cristo, o Rei dos reis, que ao céu nos levará;",
+      "Pois só Ele pode nos dar o eterno galardão."
+    ],
+    [
+      "Vamos todos nos consagrar e servir ao Redentor;",
+      "É glorioso o porvir no Seu reino de esplendor;",
+      "Nossa alma desfrutará paz que nunca findará."
+    ],
+    [
+      "A potente voz de Jesus ouvirão os santos Seus,",
+      "Convidando os fiéis a entrarem lá nos céus;",
+      "Brevemente retornará Cristo, eterno Rei dos reis."
+    ]
+  ]
+},
+ "183":{
+  "tipo": "hino",
+  "titulo": "Cristo Jesus é a Porta dos céus",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Cristo Jesus é a Porta dos céus,",
+      "N'Ele há paz, n'Ele há luz;",
+      "Reconcilia o homem com Deus;",
+      "Só Ele à glória conduz."
+    ],
+    [
+      "Cristo é a Porta, e outra não há,",
+      "Que traz o bem celestial;",
+      "Vida com glória aos justos dará,",
+      "Paz e repouso eternal."
+    ],
+    [
+      "Cristo, Autor de eternal redenção,",
+      "Veio de Deus, leva a Deus;",
+      "Por essa Porta, os santos serão",
+      "Glorificados nos céus."
+    ]
+  ],
+  "coro": [
+    "Por essa Porta devemos entrar",
+    "E caminhar, sem hesitar;",
+    "Salvar-se-á quem por Ela passar,",
+    "N'Ela também confiar;",
+    "Não mais duvides, não deves tardar",
+    "Para entrar, sem vacilar;",
+    "Breve, Jesus voltará para os Seus",
+    "E vai levá-los a Deus."
+  ]
+},
+ "184":{
+  "tipo": "hino",
+  "titulo": "Nós Te louvamos, por fé, grande Deus",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Nós Te louvamos, por fé, grande Deus,",
+      "E imploramos Teu santo favor;",
+      "Anjos Te louvam lá nos céus",
+      "E nós também Te damos louvor."
+    ],
+    [
+      "Salva Teu povo, ó Deus, Criador,",
+      "Pelo Teu grande, infinito poder;",
+      "Dá-nos mais fé, maior vigor,",
+      "Para que, após o mal, possamos vencer."
+    ],
+    [
+      "Venha Teu reino eterno de paz",
+      "Sobre Teus santos fiéis dominar;",
+      "Pela Palavra eficaz",
+      "Tu nos farás, na glória, entrar."
+    ]
+  ]
+},
+ "185":{
+  "tipo": "hino",
+  "titulo": "Deus mandou Sua Luz",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3",
+    "final"
+  ],
+  "estrofes": [
+    [
+      "Deus mandou ao mundo Sua Luz brilhar",
+      "E as trevas do pecado dissipar,",
+      "Anunciando a eterna salvação,",
+      "Paz divina e perdão."
+    ],
+    [
+      "O Sol da justiça Sua luz raiou,",
+      "E o ermo em terra fértil transformou;",
+      "Todo aquele que aceitar a Luz dos céus,",
+      "O perdão terá de Deus."
+    ],
+    [
+      "Temos em Jesus a luz que não tem par,",
+      "Luz que brilha sem jamais se apagar,",
+      "Sol que nunca cessa de resplandecer",
+      "Sobre quem em Cristo crer."
+    ]
+  ],
+  "final": [
+    "Brilha essa Luz em mim,",
+    "Desde que aceitei Jesus;",
+    "Essa Luz iluminou o meu viver",
+    "E me faz resplandecer."
+  ]
+},
+ "186":{
+  "tipo": "hino",
+  "titulo": "Cristo, Luz do mundo",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Onde havia pranto, júbilo se ouviu;",
+      "Em lugar de dor, eterna paz surgiu;",
+      "Onde dominou completa sequidão,",
+      "Águas brotaram e trouxeram salvação."
+    ],
+    [
+      "Cristo, Estrela d'Alva, Luz celestial,",
+      "Que resplandeceu a todo o mortal,",
+      "Veio anunciar que a noite já passou",
+      "E que o dia da justiça já chegou."
+    ],
+    [
+      "Cristo, Conselheiro, Príncipe da paz,",
+      "Pão que vem do céu e vida a todos traz,",
+      "Reino divinal que sobre nós desceu,",
+      "É o Salvador que Deus ao homem prometeu."
+    ]
+  ],
+  "coro": [
+    "Cristo, Luz do mundo,",
+    "É o Autor de tão preciosa redenção."
+  ]
+},
+ "187":{
+  "tipo": "hino",
+  "titulo": "Jesus Cristo habita em nós",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "O que hoje é mistério para os santos do Senhor,",
+      "Revelado lhes será por Seu Espírito de amor,",
+      "Pois está em Jesus Cristo a plenitude divinal",
+      "E os justos participam do segredo celestial."
+    ],
+    [
+      "Nós nem tudo entendemos, pois o Pai o quer assim,",
+      "Mas, de luz em luz, iremos sempre avante até o fim;",
+      "Nossos olhos, desvendados por Jesus, contemplarão",
+      "Os mistérios eternais, que revelados nos serão."
+    ],
+    [
+      "Hoje fala, pelo Espírito da graça, o Senhor,",
+      "E nos mostra o caminho para o reino de esplendor,",
+      "Mas, em breve, face a face, ouviremos Sua voz.",
+      "Glória eterna cantaremos, Jesus Cristo habita em nós!"
+    ]
+  ],
+  "coro": [
+    "Jesus Cristo habita em nós,",
+    "Sua luz habita em nós;",
+    "Nesta graça preciosa não nos sentiremos sós;",
+    "Glória! Glória! Aleluia!",
+    "Jesus Cristo habita em nós!"
+  ]
+},
+ "188":{
+  "tipo": "hino",
+  "titulo": "O Mestre habita em mim",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Conversão gloriosa operou-se em meu ser,",
+      "Pois Cristo habita em mim;",
+      "Sinto paz que outrora não pude haver;",
+      "O Mestre habita em mim."
+    ],
+    [
+      "Separado da senda do mal eu estou,",
+      "Pois Cristo habita em mim;",
+      "Dos pecados passados Deus me perdoou;",
+      "O Mestre habita em mim."
+    ],
+    [
+      "Findarei os meus dias na graça de Deus,",
+      "Pois Cristo habita em mim;",
+      "Sentirei Sua paz, pois irei para os céus;",
+      "O Mestre habita em mim."
+    ]
+  ],
+  "coro": [
+    "Com Cristo em meu coração",
+    "Eu sinto real salvação.",
+    "Venturoso, aguardo a glória de Deus,",
+    "Pois Cristo me leva aos céus."
+  ]
+},
+ "189":{
+  "tipo": "hino",
+  "titulo": "Oh! Que preciosa paz",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Oh! Que preciosa paz provém",
+      "De Jesus, o Salvador!",
+      "Os fiéis desfrutam desse bem:",
+      "Paz de Deus, o Criador."
+    ],
+    [
+      "Para essa paz Deus nos chamou,",
+      "Por Jesus, o Emanuel;",
+      "Abundantemente a derramou",
+      "Sobre o justo e fiel."
+    ],
+    [
+      "Só a paz de Deus protegerá",
+      "Nossa mente e coração;",
+      "E, de transgredir, nos livrará,",
+      "Vindo a nós a tentação."
+    ]
+  ],
+  "coro": [
+    "Oh! Que preciosa",
+    "É a paz de Deus!",
+    "Bênção gloriosa",
+    "Que somente vem dos céus!"
+  ]
+},
+ "190":{
+  "tipo": "hino",
+  "titulo": "Amados, não temamos",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Mantendo nossa vida consagrada ao Senhor,",
+      "Do céu virão as bênçãos, pois Fiel é o Criador;",
+      "A graça retenhamos, sem jamais esmorecer;",
+      "Jesus venceu o mundo e nos fará prevalecer."
+    ],
+    [
+      "Na fé fortalecidos, revestidos de poder",
+      "Seremos pelo Mestre, que nos dá o Seu saber;",
+      "Avante, esforcemo-nos em obras divinais;",
+      "O prêmio é vida eterna nas moradas celestiais."
+    ],
+    [
+      "Lembremo-nos de todos os conselhos que nos deu",
+      "Jesus, o Verdadeiro, que a glória prometeu;",
+      "Avante, com propósito em nosso coração",
+      "De sempre Deus servir e assim chegar à perfeição."
+    ]
+  ],
+  "coro": [
+    "Amados, não temamos",
+    "Na marcha para os céus;",
+    "A Cristo obedeçamos,",
+    "Pois nos leva para Deus."
+  ]
+},
+ "191":{
+  "tipo": "hino",
+  "titulo": "Vem, vem consolar-me",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Em Ti, Senhor, abrigado,",
+      "Terei força na provação;",
+      "Também serei consolado",
+      "Na hora da aflição."
+    ],
+    [
+      "Ó Deus eterno, enviaste,",
+      "Por Cristo, veraz salvação;",
+      "Minh’alma justificaste,",
+      "Me concedeste perdão."
+    ],
+    [
+      "Por Ti, ó Deus, eu existo,",
+      "Caminho Contigo por fé;",
+      "A paz que sinto em Cristo,",
+      "Do Teu amor, fruto é."
+    ]
+  ],
+  "coro": [
+    "Vem, vem consolar-me,",
+    "Pai celestial, com Teu amor;",
+    "Confio em Ti, ó Deus Criador,",
+    "Poderoso e fiel Senhor."
+  ]
+},
+ "192":{
+  "tipo": "hino",
+  "titulo": "Quão fiel promessa Jesus nos fez",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Jesus, o Senhor, preparou",
+      "O lugar aos filhos de Deus;",
+      "No eterno lar onde Ele entrou",
+      "Fará entrar os santos Seus."
+    ],
+    [
+      "Jesus, órfãos não nos deixou;",
+      "Enviou o Consolador;",
+      "Por imenso amor, nos abençoou",
+      "Com vida eterna e esplendor."
+    ],
+    [
+      "Quão doce é saber que Jesus",
+      "Nos deu fé a fim de andar",
+      "Pela Sua senda de paz e luz,",
+      "Até o breve Seu voltar."
+    ]
+  ],
+  "coro": [
+    "Quão fiel promessa Jesus nos fez:",
+    "“Convosco sempre estarei!”;",
+    "Brevemente em nuvens retornará",
+    "O nosso grande Rei!"
+  ]
+},
+ "193":{
+  "tipo": "hino",
+  "titulo": "Nada jamais me faltará",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Apascentado por Jesus Cristo",
+      "Nada jamais me faltará;",
+      "De confiança eu me revisto,",
+      "O meu Pastor não falhará."
+    ],
+    [
+      "Passo a passo, por fé prossigo",
+      "Rumo à pátria celestial;",
+      "Na tempestade tenho abrigo;",
+      "Tenho socorro divinal."
+    ],
+    [
+      "Eu vou vencendo de dia em dia",
+      "As minhas provas, pela fé;",
+      "Cristo me unge com alegria;",
+      "Sempre presente Ele é."
+    ]
+  ],
+  "coro": [
+    "Sigo de perto meu grande Mestre,",
+    "Nada jamais me faltará;",
+    "No Seu aprisco santo e celeste",
+    "Todo o fiel protegido está."
+  ]
+},
+ "194":{
+  "tipo": "hino",
+  "titulo": "“Vós chorareis e vos lamentareis”",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "“Vós, na verdade, chorareis e vos lamentareis;",
+      "O mundo se alegrará”, disse o Rei dos reis;",
+      "Mas eis que, muito em breve, Cristo retornará",
+      "E nossa alegria nunca terminará."
+    ],
+    [
+      "Orando em nome de Jesus, Deus nos atenderá;",
+      "Por Seus fiéis, o Redentor intercedendo está;",
+      "Por grande amor paterno, Deus ouve as orações",
+      "E forças nos concede nas nossas provações."
+    ],
+    [
+      "“Nós sofreremos aflições como Jesus sofreu;",
+      "Bom ânimo devemos ter, pois Cristo já venceu;",
+      "O reino Lhe pertence na terra e nos céus;",
+      "Com Ele reinaremos junto aos santos Seus.”"
+    ]
+  ]
+},
+ "195":{
+  "tipo": "hino",
+  "titulo": "Senhor, estou disposto",
+  "estrutura": [
+    "estrofe-1",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Senhor, estou disposto a sempre Te seguir;",
+      "No Teu caminho santo, terei feliz porvir;",
+      "Quão bela é a herança que me darás nos céus,",
+      "Desejo recebê-la, ó glorioso Deus."
+    ],
+    [
+      "Senhor, os Teus preceitos disponho-me a cumprir",
+      "E sigo os Teus conselhos; ao céu desejo ir.",
+      "Unido aos santos anjos, em glória viverei",
+      "No Teu celeste reino com Cristo, o grande Rei."
+    ],
+    [
+      "Senhor, a Tua face desejo contemplar",
+      "Na glória incomparável do Teu eterno lar.",
+      "Eu sinto a Tua graça, também o Teu vigor,",
+      "E nada me impede de honrar-Te com fervor."
+    ]
+  ]
+},
+ "196":{
+  "tipo": "hino",
+  "titulo": "Sem Deus Pai",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Sem Deus Pai somos frágeis humanos,",
+      "Sem Deus, não há em nós esperança;",
+      "Neste mundo em que peregrinamos,",
+      "Só por Ele nos vem segurança."
+    ],
+    [
+      "Sem Jesus Cristo não temos vida,",
+      "Sem Jesus, santo amor não provamos;",
+      "Ele, por graça, nos dá guarida",
+      "Nos perigos que aqui encontramos."
+    ],
+    [
+      "Sem o Espírito Santo não vemos,",
+      "Sem o Espírito, andamos errantes;",
+      "Só por Ele a Palavra entendemos",
+      "E seremos, então, triunfantes."
+    ]
+  ],
+  "coro": [
+    "É Jesus Cristo Quem nos convida",
+    "Ao Seu reino de glória nos céus;",
+    "Ele nos dá poder, graça e vida,",
+    "E as santas promessas de Deus."
+  ]
+},
+ "197":{
+  "tipo": "hino",
+  "titulo": "Senhor, por Teu poder",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Senhor, por Teu poder, vem nos conceder",
+      "Celestial ciência, ó Criador;",
+      "Aqui nos encontramos para aprender",
+      "A Tua sã doutrina, cheia de amor."
+    ],
+    [
+      "Os nossos corações conheces, ó Deus;",
+      "Em comunhão Contigo estamos, Senhor;",
+      "Tu prometeste, para todos os Teus,",
+      "O Teu divino e santo Consolador."
+    ],
+    [
+      "Com Teus conselhos santos vem ensinar",
+      "Teus filhos muito amados, ó Criador;",
+      "O nosso entendimento vem renovar",
+      "E faz-nos meditar no Teu grande amor."
+    ]
+  ],
+  "coro": [
+    "A Tua igreja Te roga, ó Deus:",
+    "Envia, do alto, Teu Consolador;",
+    "Em nossos corações desperta o fervor,",
+    "Assim caminharemos rumo aos céus."
+  ]
+},
+ "198":{
+  "tipo": "hino",
+  "titulo": "Nosso Pai celeste sabe e provê",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Nosso Pai celeste sabe e provê",
+      "O que temos de mister;",
+      "Nada deixará faltar ao que crê,",
+      "Pois grande é Seu poder."
+    ],
+    [
+      "Duvidosos não devemos estar,",
+      "Pois Deus tudo proverá;",
+      "Caminhemos firmes, sem vacilar,",
+      "Ajuda dos céus virá."
+    ],
+    [
+      "Que cuidado tem das aves dos céus",
+      "Nosso Pai celestial!",
+      "Muito mais terá cuidado dos Seus,",
+      "Com Seu zelo paternal."
+    ]
+  ],
+  "coro": [
+    "Sempre, com fé, procuremos agradar a Deus;",
+    "Sempre, por fé, aceitemos o que vem dos céus;",
+    "Deus tem, por nós, o cuidado santo e paternal;",
+    "Glória, sempiterna glória ao Deus vivo,",
+    "Nosso Pai celestial!"
+  ]
+},
+ "199":{
+  "tipo": "hino",
+  "titulo": "Senhor, Tu és a minha Porção",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "Senhor, Tu és a minha Porção,",
+      "Em Ti me alegrarei;",
+      "Em Ti está minha salvação,",
+      "Senhor, meu grande Rei."
+    ],
+    [
+      "Imenso, puro é Teu amor,",
+      "Meu Salvador, Jesus;",
+      "Estás em meu coração, Senhor;",
+      "Por Ti vivo na luz."
+    ],
+    [
+      "Sublime sorte coube a mim,",
+      "Por Ti, ó meu Senhor,",
+      "Pois vida eterna terei, ao fim,",
+      "No Teu reino de amor."
+    ]
+  ],
+  "coro": [
+    "És minha Porção,",
+    "És meu Galardão;",
+    "Bem-aventurado sou,",
+    "Tu és minha Porção."
+  ]
+},
+ "200":{
+  "tipo": "hino",
+  "titulo": "“Não se turbe o vosso coração”",
+  "estrutura": [
+    "estrofe-1",
+    "coro",
+    "estrofe-2",
+    "estrofe-3"
+  ],
+  "estrofes": [
+    [
+      "“Não se turbe o vosso coração”, assim falou Jesus,",
+      "Nosso Mestre, que à glória nos conduz.",
+      "Pela fé no Pai celeste caminhemos para os céus,",
+      "Lar sublime, indescritível, do bom Deus."
+    ],
+    [
+      "Não temamos, ó eleitos, pois o Pai se agradou",
+      "Em nos dar o reino que Ele preparou;",
+      "Por bondade infinita, por afeto paternal,",
+      "Nos concederá o prêmio eternal."
+    ],
+    [
+      "Aguardemos, ó amados, com real consagração,",
+      "De Jesus, a gloriosa aparição;",
+      "Com a lâmpada acesa, Ele quer nos encontrar",
+      "Para, ao reino eterno, em glória, nos levar."
+    ]
+  ],
+  "coro": [
+    "Mui breve Jesus retornará,",
+    "Com glória, em nuvens voltará;",
+    "Majestoso surgirá,",
+    "Para o céu conduzirá os Seus fiéis",
+    "E a coroa lhes dará."
+  ]
+},
  "Coro 1":{
   tipo:"coro",
   titulo:"Aleluia! Aleluia!",
@@ -8876,12 +11552,17 @@ function openHymnDetail(h,cat){
    const forceThreePlatforms=Number.isFinite(hymnNum)&&hymnNum>=130&&hymnNum<=160;
 
    if(forceThreePlatforms||media.spotify||media.spotifySearch||media.spotifyPending){
-     const pending=forceThreePlatforms ? !media.spotify : (!media.spotify && (!!media.spotifySearch||!!media.spotifyPending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="spotify" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(pending?'<small>Indisponível</small>':'')+'</span><b>›</b></button>');
+     // V7.79.1: uma busca direcionada nunca deve ser confundida com uma gravação confirmada.
+     const searchOnly=!media.spotify&&!!media.spotifySearch;
+     const pending=!media.spotify&&!searchOnly;
+     const action=searchOnly?'data-search-url="'+esc(media.spotifySearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no Spotify"':'data-kind="spotify"';
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.spotifyArtista?'<small>'+esc(media.spotifyArtista)+'</small>':'')))+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtube||media.youtubeSearch||media.youtubePending){
-     const pending=forceThreePlatforms ? !media.youtube : (!media.youtube && (!!media.youtubeSearch||!!media.youtubePending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtube" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(pending?'<small>Indisponível</small>':'')+'</span><b>›</b></button>');
+     const searchOnly=!media.youtube&&!!media.youtubeSearch;
+     const pending=!media.youtube&&!searchOnly;
+     const action=searchOnly?'data-search-url="'+esc(media.youtubeSearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no YouTube"':'data-kind="youtube"';
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeArtista && String(media.youtubeArtista).trim().toLowerCase()!=='fonte enviada pelo usuário'?'<small>'+esc(media.youtubeArtista)+'</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':''))))+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
      const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
@@ -8919,7 +11600,15 @@ function openHymnDetail(h,cat){
      '<div class="hd-slot" id="hdYoutube"></div>'+
      '<div class="hd-links" id="hdLinks"></div>';
 
-   area.querySelectorAll('.hd-play:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   // A pesquisa abre resultados externos; não tenta tocar um ID não confirmado.
+   area.querySelectorAll('.hd-play[data-search-url]').forEach(btn=>btn.addEventListener('click',()=>{
+     const url=btn.dataset.searchUrl||'';
+     if(/^https:\/\/(?:open\.spotify\.com\/search\/|www\.youtube\.com\/results\?search_query=)/.test(url)){
+       window.open(url,'_blank','noopener,noreferrer');
+     }
+   }));
+   area.querySelectorAll('.hd-play[data-kind]:not([disabled])').forEach(btn=>btn.addEventListener('click',()=>loadHymnMedia(btn.dataset.kind,media,btn)));
+   // V7.81.7: os controles ficam visíveis em uma única linha, sem expansor.
    window.GuiaReproducaoContinua?.bind();
    if(media.metronomo) initHymnMetronomeUI(media.metronomo);
    initHymnNav(h);
@@ -8963,6 +11652,7 @@ function calcularRepeticoesAudio(h,media){
 }
 
 function loadHymnMedia(kind,media,button,automatico=false){
+ window.GuiaPlayerMenuCleanup?.();
  window.GuiaReproducaoContinua?.cleanup();
  let novoAudio=null,novoIframe=null,fimTrecho=0;
  const au=document.getElementById('hdAudio'),sp=document.getElementById('hdSpotify'),yt=document.getElementById('hdYoutube'),links=document.getElementById('hdLinks');
@@ -8976,7 +11666,7 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
  if(kind==='instrumental'){
    const h=window.__gaCurrentHymn||{};
-   const total=calcularRepeticoesAudio(h,media);
+   const total=(media&&media.modoReproducao==='partitura')?1:calcularRepeticoesAudio(h,media);
    let ciclo=1;
 
    const status=document.createElement('div');
@@ -8992,13 +11682,54 @@ function loadHymnMedia(kind,media,button,automatico=false){
      status.classList.toggle('is-done',done);
    };
    atualizarStatus(false);
+   // V7.81.5: o texto da execução não ocupa mais espaço no modal; manter estado interno.
+   status.hidden=true;
 
    const a=document.createElement('audio');
    a.controls=true;a.preload='auto';a.src=media.audio;a.setAttribute('playsinline','');
-   au.appendChild(a);
+   // V7.81.6 — somente controles nativos do navegador no MP3.
+   // Download e velocidade ficam no menu NATIVO quando o browser disponibiliza.
+   // Preserva volume escolhido e mute reversível após mudar de hino.
+   const mp3Row=document.createElement('div');
+   mp3Row.className='hd-mp3-controls-row';
+   mp3Row.appendChild(a);
+   au.appendChild(mp3Row);
+   const storedVolume=window.GuiaVolumePersistente?.get()??window.__guiaMp3Volume??50;
+   const lastAudible=window.GuiaVolumePersistente?.getAudible()??50;
+   const requestedVolume=Math.max(0,Math.min(100,Number(storedVolume)||0));
+   a.volume=(requestedVolume===0?lastAudible:requestedVolume)/100;
+   a.muted=requestedVolume===0;
+   a.addEventListener('volumechange',()=>{
+     // O botão nativo pode mudar .muted e .volume separadamente.
+     // Se o navegador desmutar com slider em zero, restaurar o último nível.
+     if(!a.muted && a.volume===0){
+       a.volume=(window.GuiaVolumePersistente?.getAudible()??50)/100;
+       return;
+     }
+     const audible=Math.round(a.volume*100);
+     // Um deslize de volume e mute rápido podem gerar um só evento:
+     // guardar o valor audível mesmo nessa situação antes de registrar mute.
+     if(a.muted && audible>0 && audible!==window.GuiaVolumePersistente?.getAudible()){
+       window.GuiaVolumePersistente?.set(audible);
+     }
+     const actual=a.muted?0:audible;
+     window.__guiaMp3Volume=window.GuiaVolumePersistente?.set(actual)??actual;
+   });
+   // A velocidade selecionada via menu nativo pode ser reaplicada no próximo MP3.
+   const SPEED_KEY='guia-hinario5-velocidade-mp3-v1';
+   let savedSpeed=Number(window.__guiaMp3Speed)||1;
+   try{const v=Number(localStorage.getItem(SPEED_KEY));if(Number.isFinite(v)&&v>=.5&&v<=3)savedSpeed=v}catch(e){}
+   a.playbackRate=savedSpeed;
+   a.addEventListener('ratechange',()=>{
+     const value=Number(a.playbackRate);
+     if(!Number.isFinite(value)||value<.5||value>3)return;
+     window.__guiaMp3Speed=value;
+     try{localStorage.setItem(SPEED_KEY,String(value))}catch(e){}
+   });
    novoAudio=a;
    au.appendChild(status);
    a.addEventListener('error',()=>{
+     status.hidden=false; // informar apenas erro real de áudio, sem faixa informativa permanente
      status.classList.remove('is-done');
      status.innerHTML='<span>Áudio</span><strong>Arquivo não encontrado</strong>';
    });
@@ -9056,15 +11787,15 @@ function loadHymnMedia(kind,media,button,automatico=false){
    }
    const id=directId;
    const isMusic=kind==='youtubeMusic';
-   const start=isMusic?Number(media.youtubeMusicStart||0):0;
-   const end=isMusic?Number(media.youtubeMusicEnd||0):0;
+   const start=Number(isMusic?(media.youtubeMusicStart||0):(media.youtubeStart||0));
+   const end=Number(isMusic?(media.youtubeMusicEnd||0):(media.youtubeEnd||0));
 
    let source=kind==='youtube'
      ? (media.youtubeOrigin||('https://www.youtube.com/watch?v='+id))
      : (media.youtubeMusicOrigin||('https://music.youtube.com/watch?v='+id));
 
-   // Garante que "Abrir na origem" do YouTube Music leve ao trecho correto.
-   if(isMusic && start>0 && !/[?&]t=/.test(source)){
+   // Trechos de coletâneas são usados somente no YouTube Music (Vozes do Campo).
+   if(start>0 && !/[?&]t=/.test(source)){
      source += (source.includes('?')?'&':'?')+'t='+start+'s';
    }
 
@@ -9095,10 +11826,8 @@ function loadHymnMedia(kind,media,button,automatico=false){
        +'&origin='+encodeURIComponent(realOrigin)
        +'&widget_referrer='+encodeURIComponent(widgetReferrer);
 
-     if(isMusic){
-       if(start>0) embedUrl+='&start='+start;
-       if(end>0) embedUrl+='&end='+end;
-     }
+     if(start>0) embedUrl+='&start='+start;
+     if(end>0) embedUrl+='&end='+end;
 
      f.src=embedUrl;
      f.referrerPolicy='strict-origin-when-cross-origin';
@@ -11290,9 +14019,13 @@ body:not(.index-mode):not(.welcome-mode){
 
   window.buildHymnNavHtml=function(h){
     const n=Number(h&&h.num);
-    if(!Number.isFinite(n)||n<1||n>160)return '';
-    const prev=n>1?n-1:null;
-    const next=n<160?n+1:null;
+    // V7.78.2: navegar somente pelos hinos cadastrados, inclusive cargas futuras.
+    const nums=allUniqueHymns().map(x=>Number(x.num))
+      .filter(x=>Number.isInteger(x)&&x>0).sort((a,b)=>a-b);
+    const idx=nums.indexOf(n);
+    if(idx<0)return '';
+    const prev=idx>0?nums[idx-1]:null;
+    const next=idx<nums.length-1?nums[idx+1]:null;
     return `
       <div class="hd-hymn-nav" aria-label="Navegação entre hinos">
         <button type="button" id="hdPrevHymn"
@@ -12142,11 +14875,49 @@ body:not(.index-mode):not(.welcome-mode){
 @media(max-width:340px){#hymnDetail .hd-sequence{flex-wrap:wrap;row-gap:4px}}
 </style>
 
+<script id="v7812-volume-persistente">
+/* V7.81.2 — preferência única de volume. Nunca depender apenas do slider nativo.
+   Volume Spotify permanece no aplicativo do Spotify por restrições da plataforma. */
+(function(){
+ 'use strict';
+ const KEY='guia-hinario5-volume-midia-v1';
+ const AUDIBLE_KEY='guia-hinario5-ultimo-volume-audivel-v1';
+ const clamp=v=>Math.max(0,Math.min(100,Math.round(Number(v))));
+ let value=50,lastAudible=50;
+ try{
+   const saved=localStorage.getItem(KEY);
+   if(saved!==null&&saved!==''&&Number.isFinite(Number(saved)))value=clamp(saved);
+   else if(Number.isFinite(Number(window.__guiaMp3Volume))&&window.__guiaMp3Volume!==undefined)value=clamp(window.__guiaMp3Volume);
+   const storedAudible=localStorage.getItem(AUDIBLE_KEY);
+   if(storedAudible!==null&&Number(storedAudible)>0&&Number.isFinite(Number(storedAudible)))lastAudible=clamp(storedAudible);
+   else if(value>0)lastAudible=value;
+ }catch(e){if(value>0)lastAudible=value;}
+ // A preferência 0 é MUTE. Nunca perder o volume anterior ao silenciar.
+ function set(v){
+   if(!Number.isFinite(Number(v)))return value;
+   value=clamp(v);if(value>0)lastAudible=value;
+   window.__guiaMp3Volume=value;
+   try{
+     localStorage.setItem(KEY,String(value));
+     localStorage.setItem(AUDIBLE_KEY,String(lastAudible));
+   }catch(e){}
+   return value;
+ }
+ set(value);
+ window.GuiaVolumePersistente={
+   get:()=>value,set,
+   getAudible:()=>Math.max(1,lastAudible),
+   restore:()=>set(Math.max(1,lastAudible)),
+   isMuted:()=>value===0
+ };
+})();
+</script>
+
 <script id="v751-reproducao-continua">
 (function(){
  'use strict';
  const st={mode:'next',kind:null,audio:null,iframe:null,end:0,player:null,
-   poll:null,revision:0,complete:false,connecting:false,playing:false};
+   poll:null,volumePoll:null,revision:0,complete:false,connecting:false,playing:false};
  let ytPromise=null;
  const el=id=>document.getElementById(id);
  const isYT=kind=>kind==='youtube'||kind==='youtubeMusic';
@@ -12174,6 +14945,7 @@ body:not(.index-mode):not(.welcome-mode){
  function refreshPlayback(){
    const b=el('hdPlaybackToggle');if(!b)return;
    const active=!!st.kind && st.kind!=='spotify';
+   const hasMedium=!!st.kind;
    b.disabled=!active;
    b.innerHTML=guiaControleSvg(st.playing?'pause':'play')+'<small class="ga-ctl-name">'+(st.playing?'Pausar':'Tocar')+'</small>';
    b.setAttribute('aria-label',st.playing?'Pausar reprodução':'Reproduzir mídia');
@@ -12183,9 +14955,9 @@ body:not(.index-mode):not(.welcome-mode){
    b.dataset.playback=active?(st.playing?'playing':'ready'):'inactive';
    b.setAttribute('aria-pressed',String(active&&st.playing));
    const prev=el('hdSequence')?.querySelector('[data-media-action="previous"]');
-   if(prev)prev.disabled=!active||!hasPrevious();
+   if(prev)prev.disabled=!hasMedium||!hasPrevious();
    const next=el('hdSequence')?.querySelector('[data-media-action="next"]');
-   if(next)next.disabled=!active;
+   if(next)next.disabled=!hasMedium||!getNext(st.kind,window.__gaCurrentHymn);
  }
  // Parar interrompe a reprodução, mas preserva o elemento de mídia para retomar.
  function stopNow(){
@@ -12232,9 +15004,16 @@ body:not(.index-mode):not(.welcome-mode){
    }
  }
  function stopInternal(){
+   window.GuiaPlayerMenuCleanup?.();
    window.GuiaPlayerPersistente?.beforeStop();
    ++st.revision;
    if(st.poll){clearInterval(st.poll);st.poll=null}
+   if(st.volumePoll){clearInterval(st.volumePoll);st.volumePoll=null}
+   try{if(st.audio)window.GuiaVolumePersistente?.set(st.audio.muted?0:Math.round(st.audio.volume*100))}catch(e){}
+   try{if(st.player&&typeof st.player.getVolume==='function'){
+     const pv=st.player.isMuted()?0:st.player.getVolume();
+     if(Number.isFinite(pv))window.GuiaVolumePersistente?.set(pv);
+   }}catch(e){}
    try{st.audio?.pause()}catch(e){}
    try{st.player?.destroy()}catch(e){}
    // Se não há controlador (ou no Spotify), remover o iframe realmente interrompe o som.
@@ -12246,14 +15025,14 @@ body:not(.index-mode):not(.welcome-mode){
  function cleanup(){stopInternal();}
  function getActive(){return {kind:st.kind,audio:st.audio,iframe:st.iframe,player:st.player,mode:st.mode};}
  function advanceNow(){
-   if(!st.kind||st.kind==='spotify')return;
+   if(!st.kind)return;
    const old=st.mode;
    st.mode='next';st.complete=false;
    finish(st.kind,window.__gaCurrentHymn);
    st.mode=old;refresh();
  }
  function retreatNow(){
-   if(!st.kind||st.kind==='spotify')return;
+   if(!st.kind)return;
    const old=st.mode;
    st.mode='previous';st.complete=false;
    finish(st.kind,window.__gaCurrentHymn);
@@ -12265,13 +15044,18 @@ body:not(.index-mode):not(.welcome-mode){
    if(kind==='instrumental')return !!m.audio;
    if(kind==='youtube')return !!m.youtube;
    if(kind==='youtubeMusic')return !!m.youtubeMusic;
+   if(kind==='spotify')return !!m.spotify;
    return false;
  }
  function getNext(kind,h){
    const value=String(h?.num||'');
    const coro=/^Coro\s+([1-6])$/.exec(value);
+   // V7.78.1: sequência acompanha automaticamente os hinos cadastrados.
+   // Não limitar a 160: preserva os antigos e inclui as futuras cargas.
    const keys=coro?Array.from({length:6},(_,i)=>'Coro '+(i+1)):
-     Array.from({length:160},(_,i)=>String(i+1));
+     allUniqueHymns().map(h=>String(h.num))
+       .filter(k=>/^\d+$/.test(k))
+       .sort((a,b)=>Number(a)-Number(b));
    const possible=keys.filter(k=>k!==value&&eligible(kind,k));
    if(!possible.length)return null;
    if(st.mode==='random')return possible[Math.floor(Math.random()*possible.length)];
@@ -12282,6 +15066,7 @@ body:not(.index-mode):not(.welcome-mode){
  }
  function finish(kind,h){
    if(st.mode==='stop'||st.complete||kind!==st.kind)return;
+   // Spotify não envia evento ended nem permite iniciar/faixa ajustar volume pelo iframe.
    st.complete=true;
    if(st.mode==='repeat'){
      const key=String(h?.num||'');
@@ -12308,10 +15093,11 @@ body:not(.index-mode):not(.welcome-mode){
      if(!button||button.disabled){note('Escolha outra mídia para continuar.');return}
      loadHymnMedia(kind,nextMedia,button,true);
      window.GuiaPlayerPersistente?.hideForSequence(estavaRecolhido);
+     if(kind==='spotify')note('O Spotify exige iniciar a nova faixa no próprio player. Volume e repetição automática são controlados pelo Spotify.');
    }catch(e){note('Não foi possível avançar automaticamente. Abra o próximo hino manualmente.');}
  }
  function hasPrevious(){
-   if(!st.kind||st.kind==='spotify')return false;
+   if(!st.kind)return false;
    const old=st.mode;st.mode='previous';
    const result=!!getNext(st.kind,window.__gaCurrentHymn);
    st.mode=old;return result;
@@ -12345,6 +15131,21 @@ body:not(.index-mode):not(.welcome-mode){
          onReady:e=>{
            if(revision!==st.revision)return;
            refreshPlayback();
+           try{
+             const v=window.GuiaVolumePersistente?.get()??50;
+             e.target.setVolume(v===0?(window.GuiaVolumePersistente?.getAudible()??50):v);
+             if(v===0)e.target.mute();else e.target.unMute();
+           }catch(err){}
+           if(st.volumePoll)clearInterval(st.volumePoll);
+           // O YouTube não emite evento de alteração do slider nativo do iframe.
+           // Ler o volume de forma leve, sem sobrescrever escolhas posteriores do usuário.
+           st.volumePoll=setInterval(()=>{
+             if(revision!==st.revision||!st.player)return;
+             try{
+               const v=st.player.isMuted()?0:st.player.getVolume();
+               if(Number.isFinite(v))window.GuiaVolumePersistente?.set(v);
+             }catch(err){}
+           },800);
            if(automatico){
              try{e.target.playVideo()}catch(err){note('O navegador pode exigir início manual do próximo vídeo.');}
            }
@@ -12382,7 +15183,11 @@ body:not(.index-mode):not(.welcome-mode){
    const seq=el('hdSequence');
    // Mostra o modo de sequência apenas com mídia aberta e compatível.
    // Spotify continua manual: evita sugerir uma troca automática inexistente.
-   if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind));
+   if(seq)seq.hidden=!(kind==='instrumental'||isYT(kind)||kind==='spotify');
+   if(seq){
+     seq.querySelectorAll('[data-sequence]').forEach(b=>{b.disabled=kind==='spotify';b.title=kind==='spotify'?'O Spotify não informa o fim da faixa ao Guia; use os controles do Spotify':b.getAttribute('data-sequence')==='repeat'?'Repetir esta mídia ao terminar':b.dataset.sequence;});
+     const stop=seq.querySelector('[data-media-action="stop"]');if(stop)stop.disabled=kind==='spotify';
+   }
    refresh();
    st.playing=!!st.audio&&!st.audio.paused;
    if(st.audio){
@@ -12400,6 +15205,7 @@ body:not(.index-mode):not(.welcome-mode){
      });
    }
    if(isYT(kind)&&st.iframe)connectYT(!!options.automatico);
+   if(kind==='spotify')note('Spotify: anterior/próximo trocam a faixa; toque em reproduzir no player. Demais controles são do Spotify.');
  }
  function bind(){
    document.querySelectorAll('#hdSequence [data-media-action]').forEach(b=>{
@@ -12438,7 +15244,7 @@ body:not(.index-mode):not(.welcome-mode){
  },true);
  window.GuiaReproducaoContinua={cleanup,attach,bind,finished:finish,getActive,advanceNow,retreatNow,hasPrevious,stopNow,closeMediaNow,playPauseNow,
    // Apenas para verificação local da implementação; não altera o projeto.
-   getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe})};
+   getState:()=>({mode:st.mode,kind:st.kind,active:!!st.audio||!!st.iframe,volume:window.GuiaVolumePersistente?.get()??null})};
 })();
 </script>
 
@@ -13627,6 +16433,23 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
        n.nodeType===1&&(n.id==='hdMetronome'||n.querySelector?.('#hdMetronome')))));
    if(relevant)schedule();
  }).observe(area,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
+ // V7.78.3: a mídia pode abrir DEPOIS do metrônomo. Nesse caso o estado
+ // 'media-open' muda no modal, sem alterar o atributo hidden do painel;
+ // a versão antiga nunca recalculava a posição na coluna esquerda.
+ // Observa só as transições de estado relevantes; mudanças na nossa própria
+ // classe de posicionamento NÃO agendam novamente (evita loops e atraso).
+ let lastModalState = [d.classList.contains('open'),
+   d.classList.contains('media-open'),
+   d.classList.contains('ga-video-floating')].join('|');
+ new MutationObserver(()=>{
+   const currentState = [d.classList.contains('open'),
+     d.classList.contains('media-open'),
+     d.classList.contains('ga-video-floating')].join('|');
+   if(currentState!==lastModalState){
+     lastModalState=currentState;
+     schedule();
+   }
+ }).observe(d,{attributes:true,attributeFilter:['class']});
  window.addEventListener('resize',schedule,{passive:true});
  schedule();
 })();
@@ -13835,4 +16658,27 @@ body.ga-mini-active{padding-bottom:max(100px,calc(96px + env(safe-area-inset-bot
 }
 </style>
 
+
+<style id="v7782-audio-volume">
+#hymnDetail #hdAudio .hd-mp3-controls-row{display:flex;align-items:center;gap:5px;position:relative;width:100%;min-width:0}
+#hymnDetail #hdAudio .hd-mp3-controls-row>audio{width:1px!important;min-width:0!important;flex:1 1 0!important;max-width:none!important;height:40px}
+#hymnDetail #hdAudio .hd-mp3-volume-box{flex:0 0 35px;position:relative;align-self:center;z-index:3}
+#hymnDetail #hdAudio .hd-mp3-volume-btn{display:flex;align-items:center;justify-content:center;width:35px;height:35px;min-width:35px;padding:0!important;margin:0!important;border:1px solid #d3bf96!important;border-radius:10px!important;background:#fffaf1!important;color:#263746!important;font:800 11px/1 Arial,sans-serif!important;cursor:pointer}
+#hymnDetail #hdAudio .hd-mp3-volume-btn[aria-expanded="true"]{background:#263746!important;color:#fff!important}
+#hymnDetail #hdAudio .hd-mp3-volume-panel{position:absolute;right:0;bottom:calc(100% + 8px);z-index:12;display:flex;align-items:center;gap:7px;padding:9px 10px;min-width:170px;border:1px solid #cfb987;border-radius:12px;background:#fffdf7;box-shadow:0 8px 24px rgba(23,38,52,.22)}
+#hymnDetail #hdAudio .hd-mp3-volume-panel[hidden]{display:none!important}
+#hymnDetail #hdAudio .hd-mp3-volume-panel input[type="range"]{display:block;flex:1;min-width:100px;width:116px;accent-color:#b18438;touch-action:pan-x}
+#hymnDetail #hdAudio .hd-mp3-volume-value{min-width:32px;color:#263746;font:700 11px Arial,sans-serif}
+</style>
+
+<style id="v7816-native-clean-player">
+/* V7.81.6: o navegador concentra áudio, volume, velocidade e baixar no player NATIVO. */
+#hymnDetail #hdAudio .hd-audio-progress[hidden]{display:none!important}
+#hymnDetail #hdAudio .hd-mp3-controls-row{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important}
+#hymnDetail #hdAudio .hd-mp3-controls-row>audio{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;flex:none!important;height:42px!important}
+#hymnDetail #hdAudio .hd-mp3-volume-box,#hymnDetail #hdAudio .hd-mp3-more-box{display:none!important}
+/* V7.81.7: mantém a barra histórica V7.61/63 com DEZ botões em UMA linha.
+   A expansão criada em V7.81.6 foi retirada: nenhum botão fica escondido
+   atrás de “Sequência”. O player nativo continua abaixo da barra. */
+</style>
 </body></html>
