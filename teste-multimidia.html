@@ -1,3 +1,4 @@
+<!-- TESTE R2 2026-11-23: somente caminhos de MP3 dos Hinos 1-210 (211 referencias); nenhuma alteracao em producao. -->
 <!-- V7.81.24 TESTE: MP3 4ª mídia independente; painel Metrônomo exclusivo com MP3 opcional; base V7.81.23 preservada. -->
 <!-- V7.81.37 TESTE: preservacao do estado de reproducao ao alterar volume/BPM/pulso; bus do clique preservado ao recalcular andamento. -->
 <!-- V7.81.21 TESTE: vídeo maior em 16:9 sem achatamento e cabeçalho do metrônomo mais baixo; preservada V7.81.20 inclusive MP3-sync universal; produção não alterada. -->
@@ -23,7 +24,7 @@
 <!-- V7.78.3 TESTE: metrônomo expandido e mídia em desktop baixo ficam na mesma disposição, independentemente da ordem de abertura. Correção isolada à observação de mudança de estado do modal; V7.78.2 preservada. -->
 <!-- V7.78.2 TESTE: Hino 162 Final (não Coro); navegação até 170; volume MP3 acessível; REV06 pendente de validação. -->
 <!-- V7.78 TESTE: acrescenta Hinos 161–170 com letras, MP3 único, metrônomo, partituras e trechos verificados do YouTube Music. Base V7.77 preservada, sem promover à produção. -->
-<!-- V7.77 TESTE: Hino 61 com MP3 V4.1 aprovado em audio/hino-61.mp3; somente parâmetro de cache atualizado. Base V7.76 preservada. -->
+<!-- V7.77 TESTE: Hino 61 com MP3 V4.1 aprovado em https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-61.mp3; somente parâmetro de cache atualizado. Base V7.76 preservada. -->
 <!-- V7.76 TESTE: apenas áudio local do Hino 61; referência de arquivo com atualização de cache. Base V7.75 preservada. -->
 <!-- V7.75 TESTE: corrige o filtro de registros ao fechar e reabrir Hinos chamados no menu. Base V7.74; arquivos e dados preservados. -->
 <!-- V7.73 TESTE: base estável V7.70 com ajuste isolado e reversível no metrônomo para desktop baixo. Sem mover nós do HTML; produção index.html intacta. -->
@@ -2241,7 +2242,7 @@ window.addEventListener('appinstalled', function () {
 <script>
 const MULTIMIDIA={
  "1":{
-  audio:"audio/hino-1.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-1.mp3",
   spotify:"5b4OXiSiJUN9ZEHwyNg01G",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/5b4OXiSiJUN9ZEHwyNg01G",
@@ -2267,7 +2268,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "2":{
-  audio:"audio/hino-2.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-2.mp3",
   spotify:"6jyLirHINq4MjvIvkdFmsN",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/6jyLirHINq4MjvIvkdFmsN",
@@ -2293,7 +2294,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "3":{
-  audio:"audio/hino-3.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-3.mp3",
   spotify:"0V7AYCAgKpG8dkx0nLyoLp",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0V7AYCAgKpG8dkx0nLyoLp",
@@ -2319,7 +2320,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "4":{
-  audio:"audio/hino-4.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-4.mp3",
   spotify:"77u8hNME1vkIGiviNc5M15",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/77u8hNME1vkIGiviNc5M15",
@@ -2345,7 +2346,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "5":{
-  audio:"audio/hino-5.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-5.mp3",
   spotify:"1r6WwYj0UF276zdC5UCUxB",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/1r6WwYj0UF276zdC5UCUxB",
@@ -2371,7 +2372,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "6":{
-  audio:"audio/hino-6.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-6.mp3",
   spotify:"2kOxNALfA3JrYVAHgH5uhx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2kOxNALfA3JrYVAHgH5uhx",
@@ -2397,7 +2398,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "7":{
-  audio:"audio/hino-7.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-7.mp3",
   spotify:"6k7a7TRmSsZDiW3RfkkqDD",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/6k7a7TRmSsZDiW3RfkkqDD",
@@ -2423,7 +2424,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "8":{
-  audio:"audio/hino-8.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-8.mp3",
   spotify:"0gXg5oy8HIVffupKCNsDWM",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0gXg5oy8HIVffupKCNsDWM",
@@ -2449,7 +2450,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "9":{
-  audio:"audio/hino-9.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-9.mp3",
   spotify:"3mdkSeCWD6us6sRnp2ehGB",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3mdkSeCWD6us6sRnp2ehGB",
@@ -2475,7 +2476,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "10":{
-  audio:"audio/hino-10.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-10.mp3",
   spotify:"4O06owYB2SthbMpF6iLxxm",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4O06owYB2SthbMpF6iLxxm",
@@ -2501,7 +2502,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "11":{
-  audio:"audio/hino-11.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-11.mp3",
   spotify:"06j5xLTSMTrN82FQGBvEQV",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/06j5xLTSMTrN82FQGBvEQV",
@@ -2527,7 +2528,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "12":{
-  audio:"audio/hino-12.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-12.mp3",
   spotify:"668o8aYhF85w7sWHeBjRrX",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/668o8aYhF85w7sWHeBjRrX",
@@ -2553,7 +2554,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "13":{
-  audio:"audio/hino-13.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-13.mp3",
   spotify:"4PGb712TZ8ngvnhJTYxqyw",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4PGb712TZ8ngvnhJTYxqyw",
@@ -2579,7 +2580,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "14":{
-  audio:"audio/hino-14.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-14.mp3",
   spotify:"2zvAEv4p8GD8OIAa7ba4l3",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2zvAEv4p8GD8OIAa7ba4l3",
@@ -2605,7 +2606,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "15":{
-  audio:"audio/hino-15.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-15.mp3",
   spotify:"4vCjeapw6sAXzyre0b75VE",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4vCjeapw6sAXzyre0b75VE",
@@ -2631,7 +2632,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "16":{
-  audio:"audio/hino-16.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-16.mp3",
   spotify:"3IdDyK8DPmP8E5KOD0sJKZ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3IdDyK8DPmP8E5KOD0sJKZ",
@@ -2657,7 +2658,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "17":{
-  audio:"audio/hino-17.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-17.mp3",
   spotify:"0dWNsV4Szbn4oAeallBf81",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0dWNsV4Szbn4oAeallBf81",
@@ -2683,7 +2684,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "18":{
-  audio:"audio/hino-18.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-18.mp3",
   spotify:"0RvRDAuMF5SB6dOigQf2pZ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0RvRDAuMF5SB6dOigQf2pZ",
@@ -2709,7 +2710,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "19":{
-  audio:"audio/hino-19.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-19.mp3",
   spotify:"0zELIFcpTengbTwAjWxmx8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0zELIFcpTengbTwAjWxmx8",
@@ -2735,7 +2736,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "20":{
-  audio:"audio/hino-20.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-20.mp3",
   spotify:"22ZBqzvABgykQ3xFtrSv1h",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/22ZBqzvABgykQ3xFtrSv1h",
@@ -2762,7 +2763,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "21":{
-  audio:"audio/hino-21.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-21.mp3",
   spotify:"1EnzsX9cgVcwdPxlGGA5OG",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1EnzsX9cgVcwdPxlGGA5OG",
@@ -2788,7 +2789,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura-especial"
  }, "22":{
-  audio:"audio/hino-22.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-22.mp3",
   spotify:"1tFDW3CKBk5zHi34tSqd9G",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1tFDW3CKBk5zHi34tSqd9G",
@@ -2814,7 +2815,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "23":{
-  audio:"audio/hino-23.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-23.mp3",
   spotify:"2oV2xdiECgNJejpqmVBbSt",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2oV2xdiECgNJejpqmVBbSt",
@@ -2840,7 +2841,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "24":{
-  audio:"audio/hino-24.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-24.mp3",
   spotify:"1QpxuunlXge6wQV7NEkgNX",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1QpxuunlXge6wQV7NEkgNX",
@@ -2866,7 +2867,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "25":{
-  audio:"audio/hino-25.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-25.mp3",
   spotify:"6GhUw8QK5VrXzoPAyX8nfx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6GhUw8QK5VrXzoPAyX8nfx",
@@ -2892,7 +2893,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "26":{
-  audio:"audio/hino-26.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-26.mp3",
   spotify:"261ksa7Bi0eooxpXBetRYa",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/261ksa7Bi0eooxpXBetRYa",
@@ -2918,7 +2919,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "27":{
-  audio:"audio/hino-27.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-27.mp3",
   spotify:"7eTe0wg6UvXGWQ2x6FugKw",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7eTe0wg6UvXGWQ2x6FugKw",
@@ -2944,7 +2945,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "28":{
-  audio:"audio/hino-28.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-28.mp3",
   spotify:"68b5WraHMlPzXVTh3yqwVh",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/68b5WraHMlPzXVTh3yqwVh",
@@ -2970,7 +2971,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "29":{
-  audio:"audio/hino-29.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-29.mp3",
   spotify:"27XjdcExCQXxz1OwXpKgBO",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/27XjdcExCQXxz1OwXpKgBO",
@@ -2996,7 +2997,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "30":{
-  audio:"audio/hino-30.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-30.mp3",
   spotify:"4gvJTQ5lHFf1OusHoJbfDY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4gvJTQ5lHFf1OusHoJbfDY",
@@ -3023,7 +3024,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "31":{
-  audio:"audio/hino-31.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-31.mp3",
   spotify:"1IWZEcwzQxCbQLDAXvnKb6",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1IWZEcwzQxCbQLDAXvnKb6",
@@ -3049,7 +3050,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "32":{
-  audio:"audio/hino-32.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-32.mp3",
   spotify:"6DhNJpEIaBIibNhkEaAD1Q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6DhNJpEIaBIibNhkEaAD1Q",
@@ -3075,7 +3076,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "33":{
-  audio:"audio/hino-33.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-33.mp3",
   spotify:"5tdiX3rQGhQyzldiY5uLNe",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5tdiX3rQGhQyzldiY5uLNe",
@@ -3101,7 +3102,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "34":{
-  audio:"audio/hino-34.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-34.mp3",
   spotify:"0ETiV2o8Gr98zrpj7EurRP",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0ETiV2o8Gr98zrpj7EurRP",
@@ -3127,7 +3128,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "35":{
-  audio:"audio/hino-35.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-35.mp3",
   spotify:"6lFbSM0SdLMG5Fn1AfOYx6",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6lFbSM0SdLMG5Fn1AfOYx6",
@@ -3153,7 +3154,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"36":{
-  audio:"audio/hino-36.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-36.mp3",
   spotify:"52pJZi8IVmBxiAD5KTTMdZ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/52pJZi8IVmBxiAD5KTTMdZ",
@@ -3179,7 +3180,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "37":{
-  audio:"audio/hino-37.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-37.mp3",
   spotify:"1Tt1Q6Khadtb2Kt5KWC1Xo",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1Tt1Q6Khadtb2Kt5KWC1Xo",
@@ -3205,7 +3206,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "38":{
-  audio:"audio/hino-38.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-38.mp3",
   spotify:"24HkBIjlLmCKYvhuqQdAJi",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/24HkBIjlLmCKYvhuqQdAJi",
@@ -3231,7 +3232,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "39":{
-  audio:"audio/hino-39.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-39.mp3",
   spotify:"7MBkK6PA0DZpSzEap3550h",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7MBkK6PA0DZpSzEap3550h",
@@ -3257,7 +3258,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "40":{
-  audio:"audio/hino-40.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-40.mp3",
   spotify:"7yr53i4tTt9NELSx3ghe6P",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7yr53i4tTt9NELSx3ghe6P",
@@ -3283,7 +3284,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "41":{
-  audio:"audio/hino-41.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-41.mp3",
   spotify:"09w0fA9AuslBgZKzjnwWHo",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/09w0fA9AuslBgZKzjnwWHo",
@@ -3309,7 +3310,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "42":{
-  audio:"audio/hino-42.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-42.mp3",
   spotify:"0ehXNJPz60LU8yGMeFDlnt",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0ehXNJPz60LU8yGMeFDlnt",
@@ -3335,7 +3336,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "43":{
-  audio:"audio/hino-43.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-43.mp3",
   spotify:"0951vh7ZV1zkDRXOQHLiQI",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0951vh7ZV1zkDRXOQHLiQI",
@@ -3361,7 +3362,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "44":{
-  audio:"audio/hino-44.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-44.mp3",
   spotify:"7Ac7ajKZYl9lcVudrcVudb",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7Ac7ajKZYl9lcVudrcVudb",
@@ -3387,7 +3388,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "46":{
-  audio:"audio/hino-46.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-46.mp3",
   spotify:"6Y4vOzgCnzdmSd7LKOeQHm",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6Y4vOzgCnzdmSd7LKOeQHm",
@@ -3413,7 +3414,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "47":{
-  audio:"audio/hino-47.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-47.mp3",
   spotify:"482RuNttcW1oGleDA9TzNf",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/482RuNttcW1oGleDA9TzNf",
@@ -3439,7 +3440,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "48":{
-  audio:"audio/hino-48.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-48.mp3",
   spotify:"6XhKXfQaAhrxeOzhgv40xT",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6XhKXfQaAhrxeOzhgv40xT",
@@ -3465,7 +3466,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "49":{
-  audio:"audio/hino-49.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-49.mp3",
   spotify:"1lMCHzc9TY9EiNaFOxq0Kb",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1lMCHzc9TY9EiNaFOxq0Kb",
@@ -3491,7 +3492,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "50":{
-  audio:"audio/hino-50.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-50.mp3",
   spotify:"6vN2F6nkBJRSGGoyruN12E",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6vN2F6nkBJRSGGoyruN12E",
@@ -3517,7 +3518,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "51":{
-  audio:"audio/hino-51.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-51.mp3",
   spotify:"0HswhobToUaufM8UAh8ivo",
   spotifyOrigin:"https://open.spotify.com/0HswhobToUaufM8UAh8ivo",
   youtubeOrigin:"https://www.youtube.com/watch?v=_1pDkkxUlBE",
@@ -3542,7 +3543,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "52":{
-  audio:"audio/hino-52.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-52.mp3",
   spotify:"5Xpnzq37PHm8ERCmmn8rL4",
   spotifyOrigin:"https://open.spotify.com/5Xpnzq37PHm8ERCmmn8rL4",
   youtube:"0xtyQPyaqBA",
@@ -3567,7 +3568,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "53":{
-  audio:"audio/hino-53.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-53.mp3",
   spotify:"2hR9TIRkQD6FBu3WXJBSvD",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2hR9TIRkQD6FBu3WXJBSvD",
@@ -3593,7 +3594,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "54":{
-  audio:"audio/hino-54.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-54.mp3",
   spotify:"33By6XdFF5pQbCDoDqXcsT",
   spotifyOrigin:"https://open.spotify.com/track/33By6XdFF5pQbCDoDqXcsT",
   youtube:"x2LnzbjdKLI",
@@ -3618,7 +3619,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "55":{
-  audio:"audio/hino-55.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-55.mp3",
   spotify:"5Eoj2kDvlZ5fj9L9MhC6Lg",
   spotifyOrigin:"https://open.spotify.com/5Eoj2kDvlZ5fj9L9MhC6Lg",
   youtube:"Ai__5dK_CoY",
@@ -3643,7 +3644,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "56":{
-  audio:"audio/hino-56.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-56.mp3",
   spotify:"5oybqZiWJD628h4lFbSILY",
   spotifyOrigin:"https://open.spotify.com/5oybqZiWJD628h4lFbSILY",
   youtube:"GJPI7uQPx_E",
@@ -3668,7 +3669,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "57":{
-  audio:"audio/hino-57.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-57.mp3",
   spotify:"6bZDNV0sAxm6oP2IDPNgBV",
   spotifyOrigin:"https://open.spotify.com/6bZDNV0sAxm6oP2IDPNgBV",
   youtube:"Mes6PkFCHtc",
@@ -3693,7 +3694,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "58":{
-  audio:"audio/hino-58.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-58.mp3",
   spotify:"0a5PwEE9GMlm0V3qxkRTsM",
   spotifyOrigin:"https://open.spotify.com/0a5PwEE9GMlm0V3qxkRTsM",
   youtube:"cOaF8kPDthE",
@@ -3718,7 +3719,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "59":{
-  audio:"audio/hino-59.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-59.mp3",
   spotify:"0dFb5D9cw4DMOb8VMk7UO8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0dFb5D9cw4DMOb8VMk7UO8",
@@ -3744,7 +3745,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "60":{
-  audio:"audio/hino-60.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-60.mp3",
   spotify:"2JEGHvYEwegSBledcRxQmK",
   spotifyOrigin:"https://open.spotify.com/2JEGHvYEwegSBledcRxQmK",
   youtube:"8jv_H272rKw",
@@ -3769,7 +3770,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"61":{
-  audio:"audio/hino-61.mp3?v=777",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-61.mp3?v=777",
   spotify:"6S480IyEKM0c4wOs58zcXY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6S480IyEKM0c4wOs58zcXY",
@@ -3798,7 +3799,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"voltas-1-2-e-final-na-3"
  },"62":{
-  audio:"audio/hino-62.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-62.mp3",
   spotify:"6HAG0Efd6zgJdwEIUKAFV3",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6HAG0Efd6zgJdwEIUKAFV3",
@@ -3826,7 +3827,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"63":{
-  audio:"audio/hino-63.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-63.mp3",
   spotify:"0DmrUF3KEVMu8WfHJmG7YT",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0DmrUF3KEVMu8WfHJmG7YT",
@@ -3854,7 +3855,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"64":{
-  audio:"audio/hino-64.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-64.mp3",
   spotify:"5cV2LArAdCuDg5Lz7K9jV2",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5cV2LArAdCuDg5Lz7K9jV2",
@@ -3882,7 +3883,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"65":{
-  audio:"audio/hino-65.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-65.mp3",
   spotify:"1EDBOmWuQJiAYy0j0urmkY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1EDBOmWuQJiAYy0j0urmkY",
@@ -3910,7 +3911,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"66":{
-  audio:"audio/hino-66.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-66.mp3",
   spotify:"65zDTch4Pp3Z5zINs3nwYF",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/65zDTch4Pp3Z5zINs3nwYF",
@@ -3938,7 +3939,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"67":{
-  audio:"audio/hino-67.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-67.mp3",
   spotify:"19SOhGijCWZMoqcOAm7lhY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/19SOhGijCWZMoqcOAm7lhY",
@@ -3966,7 +3967,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"68":{
-  audio:"audio/hino-68.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-68.mp3",
   spotify:"49EDLZuoyWp0MSfD03SJ0b",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/49EDLZuoyWp0MSfD03SJ0b",
@@ -3994,7 +3995,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"69":{
-  audio:"audio/hino-69.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-69.mp3",
   spotify:"1TJqJ0imAjTagSpzcME3U4",
   spotifyOrigin:"https://open.spotify.com/1TJqJ0imAjTagSpzcME3U4",
   youtube:"VSOAWORF5bw",
@@ -4021,7 +4022,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"70":{
-  audio:"audio/hino-70.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-70.mp3",
   spotify:"0R4nLrkKQ1r7KMPJ9oiP21",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0R4nLrkKQ1r7KMPJ9oiP21",
@@ -4049,7 +4050,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
 "71":{
-  audio:"audio/hino-71.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-71.mp3",
   spotify:"0dZJRg34YwOkZ3pxbmTNYB",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0dZJRg34YwOkZ3pxbmTNYB",
@@ -4075,7 +4076,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"72":{
-  audio:"audio/hino-72.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-72.mp3",
   spotify:"6aJn8CrSZzNUCabAY7HFdB",
   spotifyOrigin:"https://open.spotify.com/6aJn8CrSZzNUCabAY7HFdB",
   youtube:"0VZErvU-kvw",
@@ -4100,7 +4101,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"73":{
-  audio:"audio/hino-73.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-73.mp3",
   spotify:"2fEyfr2lRxmUKj1ejYf5oz",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2fEyfr2lRxmUKj1ejYf5oz",
   youtube:"XySabmljXA4",
@@ -4125,7 +4126,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"74":{
-  audio:"audio/hino-74.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-74.mp3",
   spotify:"2ossBPDib8ibMv7Z8V0EUh",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2ossBPDib8ibMv7Z8V0EUh",
   youtube:"_9m1tSR9avs",
@@ -4153,7 +4154,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },"75":{
-  audio:"audio/hino-75.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-75.mp3",
   spotify:"4bSNVr9vQtakuiFaE8BYKy",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4bSNVr9vQtakuiFaE8BYKy",
   youtube:"IyYW5FMGy_E",
@@ -4180,7 +4181,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"76":{
-  audio:"audio/hino-76.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-76.mp3",
   spotify:"7blCGQ3Wq6cWe8QMvGerqF",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/7blCGQ3Wq6cWe8QMvGerqF",
   youtube:"LrdjjN-pMX4",
@@ -4207,7 +4208,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"77":{
-  audio:"audio/hino-77.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-77.mp3",
   spotify:"4qOSoHEdkvmAjEvvh6zh9S",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4qOSoHEdkvmAjEvvh6zh9S",
   youtube:"W5YcmkNeviQ",
@@ -4234,7 +4235,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"78":{
-  audio:"audio/hino-78.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-78.mp3",
   spotify:"3HYPhVyJOqxyho1epITw7F",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3HYPhVyJOqxyho1epITw7F",
   youtube:"LPxz6CwilkE",
@@ -4261,7 +4262,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"79":{
-  audio:"audio/hino-79.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-79.mp3",
   spotify:"2CVa44A3RxnYcYnRjh1bUu",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2CVa44A3RxnYcYnRjh1bUu",
   youtube:"q_d5GLo8ok8",
@@ -4288,7 +4289,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"80":{
-  audio:"audio/hino-80.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-80.mp3",
   spotify:"1ZGVvVzN2e9AQOP2FIiHox",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1ZGVvVzN2e9AQOP2FIiHox",
@@ -4316,7 +4317,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
 /* V6.99 — MULTIMIDIA Hinos 81–100: somente mídias diretas validadas; sem campos *Search. */"81":{
-  audio:"audio/hino-81.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-81.mp3",
   spotify:"3MGbmghB0bnAIObQbKEItc",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3MGbmghB0bnAIObQbKEItc",
@@ -4344,7 +4345,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"  
  },"82":{
-  audio:"audio/hino-82.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-82.mp3",
   spotify:"4LOW3VAZCVWujCEnr6juJ8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4LOW3VAZCVWujCEnr6juJ8",
@@ -4372,7 +4373,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"83":{
-  audio:"audio/hino-83.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-83.mp3",
   spotify:"4bxzw12pG82rDmUaDKkSA4",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4bxzw12pG82rDmUaDKkSA4",
@@ -4400,7 +4401,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"84":{
-  audio:"audio/hino-84.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-84.mp3",
   spotify:"277JLNlB4dAyyBwpF6mH1q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/277JLNlB4dAyyBwpF6mH1q",
@@ -4428,7 +4429,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"85":{
-  audio:"audio/hino-85.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-85.mp3",
   spotify:"2453T6ylNYU2HA2rSdkH3q",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2453T6ylNYU2HA2rSdkH3q",
@@ -4456,7 +4457,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"86":{
-  audio:"audio/hino-86.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-86.mp3",
   spotify:"01u22AeyH9atUaeT0igBin",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/01u22AeyH9atUaeT0igBin",
@@ -4484,7 +4485,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"87":{
-  audio:"audio/hino-87.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-87.mp3",
   spotify:"5I9b13PiUz2PaiZivKdIW8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/5I9b13PiUz2PaiZivKdIW8",
@@ -4512,7 +4513,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"88":{
-  audio:"audio/hino-88.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-88.mp3",
   spotify:"2XzI4AnusDEz1wTv7DHkrb",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2XzI4AnusDEz1wTv7DHkrb",
@@ -4540,7 +4541,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"89":{
-  audio:"audio/hino-89.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-89.mp3",
   spotify:"6JxMTAaEUHRN32ozlWQJmU",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6JxMTAaEUHRN32ozlWQJmU",
@@ -4568,7 +4569,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"90":{
-  audio:"audio/hino-90.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-90.mp3",
   spotify:"3Vrm55QWVWJXIxVoBEGDyh",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3Vrm55QWVWJXIxVoBEGDyh",
@@ -4595,7 +4596,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"91":{
-  audio:"audio/hino-91.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-91.mp3",
   spotify:"0802eAp01OHlLroFGywAen",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0802eAp01OHlLroFGywAen",
@@ -4623,7 +4624,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"92":{
-  audio:"audio/hino-92.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-92.mp3",
   spotify:"4nubODkbed4cPIEv8fzdhx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4nubODkbed4cPIEv8fzdhx",
@@ -4652,7 +4653,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },"93":{
-  audio:"audio/hino-93.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-93.mp3",
   spotify:"3uZPnfLKg328vgUrDVUoab",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3uZPnfLKg328vgUrDVUoab",
@@ -4680,7 +4681,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"94":{
-  audio:"audio/hino-94.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-94.mp3",
   spotify:"0LLJ4CsiK4RoKhjLLtv095",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0LLJ4CsiK4RoKhjLLtv095",
@@ -4708,7 +4709,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"95":{
-  audio:"audio/hino-95.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-95.mp3",
   spotify:"7COtKkSuvOhTZ2YpculugS",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7COtKkSuvOhTZ2YpculugS",
@@ -4736,7 +4737,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"96":{
-  audio:"audio/hino-96.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-96.mp3",
   spotify:"1RkwqvfRlb6lR5qGFq2aJk",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/1RkwqvfRlb6lR5qGFq2aJk",
@@ -4764,7 +4765,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"97":{
-  audio:"audio/hino-97.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-97.mp3",
   spotify:"4n4Y1YcsdhuOMSGpE1Jqxf",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4n4Y1YcsdhuOMSGpE1Jqxf",
@@ -4793,7 +4794,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },"98":{
-  audio:"audio/hino-98.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-98.mp3",
   spotify:"0UbYaQMRMZPw7zQNWh8bZN",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0UbYaQMRMZPw7zQNWh8bZN",
@@ -4821,7 +4822,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"99":{
-  audio:"audio/hino-99.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-99.mp3",
   spotify:"4jPa3eGx5HLyBn17CZ7yMv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4jPa3eGx5HLyBn17CZ7yMv",
@@ -4849,7 +4850,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"100":{
-  audio:"audio/hino-100.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-100.mp3",
   spotify:"77KLaKJuRKRVMPDcijceCr",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/77KLaKJuRKRVMPDcijceCr",
@@ -4878,7 +4879,7 @@ const MULTIMIDIA={
  },
 
 /* V7.01 TESTE — MULTIMIDIA Hinos 101–120: integração incremental; Hinos 1–100 protegidos. */"101":{
-  audio:"audio/hino-101.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-101.mp3",
   spotify:"3iVCxMFDwVuXsgKVEhnXTv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3iVCxMFDwVuXsgKVEhnXTv",
@@ -4906,7 +4907,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"102":{
-  audio:"audio/hino-102.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-102.mp3",
   spotify:"5Hq9CYvuYwnDoMaUEJDrrV",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/5Hq9CYvuYwnDoMaUEJDrrV",
@@ -4935,7 +4936,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },"103":{
-  audio:"audio/hino-103.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-103.mp3",
   spotify:"2WzX60oH0Zcr2PA1RtOSBJ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2WzX60oH0Zcr2PA1RtOSBJ",
@@ -4963,7 +4964,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"104":{
-  audio:"audio/hino-104.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-104.mp3",
   spotify:"2QJzfIqFQTTC00R1epebzI",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2QJzfIqFQTTC00R1epebzI",
@@ -4991,7 +4992,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"105":{
-  audio:"audio/hino-105.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-105.mp3",
   spotify:"3ZqUxdh2KCWoydIIBIsnuO",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3ZqUxdh2KCWoydIIBIsnuO",
@@ -5020,7 +5021,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  },"106":{
-  audio:"audio/hino-106.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-106.mp3",
   spotify:"1H6K2RNhqHHQWHZxI420b5",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/1H6K2RNhqHHQWHZxI420b5",
@@ -5048,7 +5049,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"107":{
-  audio:"audio/hino-107.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-107.mp3",
   spotify:"3Iq3xNLt9lExmUw6AjL2S8",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3Iq3xNLt9lExmUw6AjL2S8",
@@ -5076,7 +5077,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"108":{
-  audio:"audio/hino-108.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-108.mp3",
   spotify:"3FHIk7JtT2rKjRhDol8mh4",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/3FHIk7JtT2rKjRhDol8mh4",
@@ -5104,7 +5105,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"109":{
-  audio:"audio/hino-109.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-109.mp3",
   spotify:"2FzCJo4OxL1t8Pq7eZuBA2",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2FzCJo4OxL1t8Pq7eZuBA2",
@@ -5132,7 +5133,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"110":{
-  audio:"audio/hino-110.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-110.mp3",
   spotify:"0Pp7i93S6MGWLkKvfVlSeZ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0Pp7i93S6MGWLkKvfVlSeZ",
@@ -5159,7 +5160,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"111":{
-  audio:"audio/hino-111.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-111.mp3",
   spotify:"1gE5oecN1kWlkakIq6PmSa",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1gE5oecN1kWlkakIq6PmSa",
@@ -5187,7 +5188,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"112":{
-  audio:"audio/hino-112.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-112.mp3",
   spotify:"7EqF6XXaLWnzIdU4tRR6Gx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/7EqF6XXaLWnzIdU4tRR6Gx",
@@ -5215,7 +5216,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"113":{
-  audio:"audio/hino-113.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-113.mp3",
   spotify:"4pGB4kTQO664EurKR7jKVe",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/4pGB4kTQO664EurKR7jKVe",
@@ -5243,7 +5244,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"114":{
-  audio:"audio/hino-114.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-114.mp3",
   spotify:"2izreF7oYjkdv1Yk4Yq9we",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/2izreF7oYjkdv1Yk4Yq9we",
@@ -5273,7 +5274,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"115":{
-  audio:"audio/hino-115.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-115.mp3",
   spotify:"1znhAB2dpDdQKV8sS6rD6I",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1znhAB2dpDdQKV8sS6rD6I",
@@ -5301,7 +5302,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"116":{
-  audio:"audio/hino-116.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-116.mp3",
   spotify:"50cRqYFMZpFiloteZIWQ8x",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/50cRqYFMZpFiloteZIWQ8x",
@@ -5329,7 +5330,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"117":{
-  audio:"audio/hino-117.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-117.mp3",
   spotify:"0B2CWlqhDPXw9uWJl9zpsl",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0B2CWlqhDPXw9uWJl9zpsl",
@@ -5357,7 +5358,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"118":{
-  audio:"audio/hino-118.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-118.mp3",
   spotify:"6pqE8HzU3OKwTd4LxOLKdl",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/6pqE8HzU3OKwTd4LxOLKdl",
@@ -5385,7 +5386,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"119":{
-  audio:"audio/hino-119.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-119.mp3",
   spotify:"0vcayPOBL3ghbgafWLS8gY",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/intl-pt/track/0vcayPOBL3ghbgafWLS8gY",
@@ -5413,7 +5414,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  },"120":{
-  audio:"audio/hino-120.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-120.mp3",
   spotify:"5y5CakRAKP5TkE8RKvvjI6",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5y5CakRAKP5TkE8RKvvjI6",
@@ -5440,7 +5441,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "121":{
-  audio:"audio/hino-121.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-121.mp3?v=707",
   spotify:"562UgvxDx5XGKmKHndz2zv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/562UgvxDx5XGKmKHndz2zv",
@@ -5467,7 +5468,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "122":{
-  audio:"audio/hino-122.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-122.mp3?v=707",
   spotify:"2FsIpgumIaFIe93QsUjTKX",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2FsIpgumIaFIe93QsUjTKX",
@@ -5496,7 +5497,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "123":{
-  audio:"audio/hino-123.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-123.mp3?v=707",
   spotify:"2d6JfMZGcQsBCuVMo7mx2E",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2d6JfMZGcQsBCuVMo7mx2E",
@@ -5525,7 +5526,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "124":{
-  audio:"audio/hino-124.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-124.mp3?v=707",
   spotify:"3lldJaItjD7qMO93SwZuBx",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3lldJaItjD7qMO93SwZuBx",
@@ -5554,7 +5555,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "125":{
-  audio:"audio/hino-125.mp3?v=711",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-125.mp3?v=711",
   spotify:"6HgteSmvrAWTQ45Dbk8TWH",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/6HgteSmvrAWTQ45Dbk8TWH",
@@ -5581,7 +5582,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "126":{
-  audio:"audio/hino-126.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-126.mp3?v=707",
   spotify:"5ppYnT2qIzBkI2F7uJZ1Tg",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5ppYnT2qIzBkI2F7uJZ1Tg",
@@ -5610,7 +5611,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "127":{
-  audio:"audio/hino-127.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-127.mp3?v=707",
   spotify:"1vZ5WQJqB36GH0k8q36xwi",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1vZ5WQJqB36GH0k8q36xwi",
@@ -5637,7 +5638,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "128":{
-  audio:"audio/hino-128.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-128.mp3?v=707",
   spotify:"2njRz1TntNHr1pU4sQhfJJ",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2njRz1TntNHr1pU4sQhfJJ",
@@ -5666,7 +5667,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "129":{
-  audio:"audio/hino-129.mp3?v=712",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-129.mp3?v=712",
   spotify:"5hLavGG6FVOKboB5bh8l91",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/5hLavGG6FVOKboB5bh8l91",
@@ -5695,7 +5696,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "130":{
-  audio:"audio/hino-130.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-130.mp3?v=707",
   spotify:"2cdYc45TglY63VJcJLb13c",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2cdYc45TglY63VJcJLb13c",
@@ -5723,7 +5724,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "131":{
-  audio:"audio/hino-131.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-131.mp3?v=707",
   spotify:"7oKRh10kHsqouUHvYCrqzv",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/7oKRh10kHsqouUHvYCrqzv",
@@ -5752,7 +5753,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "132":{
-  audio:"audio/hino-132.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-132.mp3?v=707",
   spotify:"1RKTj4DquJzc6Fuqxrx7s9",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/1RKTj4DquJzc6Fuqxrx7s9",
@@ -5781,7 +5782,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "133":{
-  audio:"audio/hino-133.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-133.mp3?v=707",
   spotifyPending:true,
   youtube:"TCsSgthx5aE",
   youtubeOrigin:"https://www.youtube.com/watch?v=TCsSgthx5aE",
@@ -5808,7 +5809,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "134":{
-  audio:"audio/hino-134.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-134.mp3?v=707",
   spotifyPending:true,
   youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -5834,7 +5835,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "135":{
-  audio:"audio/hino-135.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-135.mp3?v=707",
   spotifyPending:true,
   youtube:"mOMkaOmb-pU",
   youtubeOrigin:"https://www.youtube.com/watch?v=mOMkaOmb-pU",
@@ -5861,7 +5862,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "136":{
-  audio:"audio/hino-136.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-136.mp3?v=707",
   spotifyPending:true,
   youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -5887,7 +5888,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "137":{
-  audio:"audio/hino-137.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-137.mp3?v=707",
   spotifyPending:true,
   youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -5913,7 +5914,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "138":{
-  audio:"audio/hino-138.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-138.mp3?v=707",
   spotify:"3ztjE7Y8QirPGUtkjlLYqV",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3ztjE7Y8QirPGUtkjlLYqV",
@@ -5943,7 +5944,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  }, "139":{
-  audio:"audio/hino-139.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-139.mp3?v=707",
   spotifyPending:true,
   youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
@@ -5969,7 +5970,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "140":{
-  audio:"audio/hino-140.mp3?v=707",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-140.mp3?v=707",
   youtubePending:true,
   youtubeMusic:"a1bz-Pp_Y9E",
   youtubeMusicOrigin:"https://music.youtube.com/watch?v=a1bz-Pp_Y9E&t=1807s",
@@ -5997,7 +5998,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura"
  },
  "141":{
-  audio:"audio/hino-141.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-141.mp3?v=733",
   spotifyPending:true,
   youtube:"tHpgdGGdA4M",
   youtubeOrigin:"https://www.youtube.com/watch?v=tHpgdGGdA4M",
@@ -6023,7 +6024,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "142":{
-  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-142.mp3",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-142.mp3?v=733",
   spotifyPending:true,
   youtube:"cih5DQGFZ_0",
   youtubeOrigin:"https://www.youtube.com/watch?v=cih5DQGFZ_0",
@@ -6049,7 +6050,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "143":{
-  audio:"audio/hino-143.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-143.mp3?v=733",
   spotify:"3DMDQY9i1xrqEyECE7Bs90",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3DMDQY9i1xrqEyECE7Bs90",
@@ -6077,7 +6078,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "144":{
-  audio:"audio/hino-144.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-144.mp3?v=733",
   spotify:"3BfP4TKniiBvmTg1Bwk5J5",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/3BfP4TKniiBvmTg1Bwk5J5",
@@ -6105,7 +6106,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "145":{
-  audio:"audio/hino-145.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-145.mp3?v=733",
   spotifyPending:true,
   youtube:"A1y_oBP6mxA",
   youtubeOrigin:"https://www.youtube.com/watch?v=A1y_oBP6mxA",
@@ -6131,7 +6132,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "146":{
-  audio:"audio/hino-146.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-146.mp3?v=733",
   spotifyPending:true,
   youtube:"UItXNL_lz8A",
   youtubeOrigin:"https://www.youtube.com/watch?v=UItXNL_lz8A",
@@ -6157,7 +6158,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "147":{
-  audio:"audio/hino-147.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-147.mp3?v=733",
   spotify:"2EKB0zBiqs2tsc4b1BxHoI",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/2EKB0zBiqs2tsc4b1BxHoI",
@@ -6185,7 +6186,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "148":{
-  audio:"audio/hino-148.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-148.mp3?v=733",
   spotifyPending:true,
   youtube:"6hpvibajkvQ",
   youtubeOrigin:"https://www.youtube.com/watch?v=6hpvibajkvQ",
@@ -6211,7 +6212,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "149":{
-  audio:"audio/hino-149.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-149.mp3?v=733",
   spotifyPending:true,
   youtubePending:true,
   youtubeMusic:"ntixdKdlF6I",
@@ -6237,7 +6238,7 @@ const MULTIMIDIA={
   modoReproducao:"partitura",
   formaEspecial:"casas-1-2-e-final-na-3"
  }, "150":{
-  audio:"audio/hino-150.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-150.mp3?v=733",
   spotifyPending:true,
   youtube:"RRLbX-n3cxU",
   youtubeOrigin:"https://www.youtube.com/watch?v=RRLbX-n3cxU",
@@ -6262,7 +6263,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "151":{
-  audio:"audio/hino-151.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-151.mp3?v=733",
   spotifyPending:true,
   youtube:"tQUHdHs9Qi0",
   youtubeOrigin:"https://www.youtube.com/watch?v=tQUHdHs9Qi0",
@@ -6288,7 +6289,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "152":{
-  audio:"audio/hino-152.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-152.mp3?v=733",
   spotifyPending:true,
   youtube:"ZowthnnSa4M",
   youtubeOrigin:"https://www.youtube.com/watch?v=ZowthnnSa4M",
@@ -6314,7 +6315,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "153":{
-  audio:"audio/hino-153.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-153.mp3?v=733",
   spotifyPending:true,
   youtube:"Way-PkQCQlw",
   youtubeOrigin:"https://www.youtube.com/watch?v=Way-PkQCQlw",
@@ -6340,7 +6341,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "154":{
-  audio:"audio/hino-154.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-154.mp3?v=733",
   spotifyPending:true,
   youtube:"A7puwny5EZQ",
   youtubeOrigin:"https://www.youtube.com/watch?v=A7puwny5EZQ",
@@ -6366,7 +6367,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "155":{
-  audio:"audio/hino-155.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-155.mp3?v=733",
   spotifyPending:true,
   youtube:"BDabBy4Zlkc",
   youtubeOrigin:"https://www.youtube.com/watch?v=BDabBy4Zlkc",
@@ -6392,7 +6393,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "156":{
-  audio:"audio/hino-156.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-156.mp3?v=733",
   spotifyPending:true,
   youtube:"fvtKlkFU5Mo",
   youtubeOrigin:"https://www.youtube.com/watch?v=fvtKlkFU5Mo",
@@ -6418,7 +6419,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "157":{
-  audio:"audio/hino-157.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-157.mp3?v=733",
   spotifyPending:true,
   youtube:"ZJ_tFvwKYiA",
   youtubeOrigin:"https://www.youtube.com/watch?v=ZJ_tFvwKYiA",
@@ -6444,7 +6445,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "158":{
-  audio:"audio/hino-158.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-158.mp3?v=733",
   spotifyPending:true,
   youtube:"U1MWl3vR49U",
   youtubeOrigin:"https://www.youtube.com/watch?v=U1MWl3vR49U",
@@ -6470,7 +6471,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "159":{
-  audio:"audio/hino-159.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-159.mp3?v=733",
   spotifyPending:true,
   youtube:"0at3MKqAgOs",
   youtubeOrigin:"https://www.youtube.com/watch?v=0at3MKqAgOs",
@@ -6496,7 +6497,7 @@ const MULTIMIDIA={
   repeticoes:1,
   modoReproducao:"partitura"
  }, "160":{
-  audio:"audio/hino-160.mp3?v=733",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-160.mp3?v=733",
   spotify:"4IttZ0DFIva9vAxju7OzJB",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/4IttZ0DFIva9vAxju7OzJB",
@@ -6534,7 +6535,7 @@ const MULTIMIDIA={
   "youtubeOriginType": "video-individual",
   "youtubeOrigin": "https://www.youtube.com/watch?v=ksmT3qBvPAg",
   "youtube": "ksmT3qBvPAg",
-  "audio": "audio/hino-161.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-161.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 0,
   "youtubeMusicEnd": 167,
@@ -6566,7 +6567,7 @@ const MULTIMIDIA={
   "youtube": "6PW_txrWhSY",
   "youtubeOrigin": "https://www.youtube.com/watch?v=6PW_txrWhSY",
   "youtubeOriginType": "video-individual",
-  "audio": "audio/hino-162.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-162.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 167,
   "youtubeMusicEnd": 352,
@@ -6598,7 +6599,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/7MzoHSHGNmP8ybJV0E5WRL",
   "spotifyType": "track",
   "spotify": "7MzoHSHGNmP8ybJV0E5WRL",
-  "audio": "audio/hino-163.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-163.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 352,
   "youtubeMusicEnd": 605,
@@ -6630,7 +6631,7 @@ const MULTIMIDIA={
   "youtube": "SKITfUNJQho",
   "youtubeOrigin": "https://www.youtube.com/watch?v=SKITfUNJQho",
   "youtubeOriginType": "video-individual",
-  "audio": "audio/hino-164.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-164.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 605,
   "youtubeMusicEnd": 790,
@@ -6662,7 +6663,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/5HbbjHswMEuWSfqnBpGG7D",
   "spotifyType": "track",
   "spotify": "5HbbjHswMEuWSfqnBpGG7D",
-  "audio": "audio/hino-165.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-165.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 790,
   "youtubeMusicEnd": 943,
@@ -6694,7 +6695,7 @@ const MULTIMIDIA={
   "spotify": "6C1SQEaDlMApId5CNtgjQ4",
   "spotifyType": "track",
   "spotifyOrigin": "https://open.spotify.com/track/6C1SQEaDlMApId5CNtgjQ4",
-  "audio": "audio/hino-166.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-166.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 943,
   "youtubeMusicEnd": 1144,
@@ -6726,7 +6727,7 @@ const MULTIMIDIA={
   "youtube": "3HKiWoStEEU",
   "youtubeOrigin": "https://www.youtube.com/watch?v=3HKiWoStEEU",
   "youtubeOriginType": "video-individual",
-  "audio": "audio/hino-167.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-167.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 1144,
   "youtubeMusicEnd": 1315,
@@ -6757,7 +6758,7 @@ const MULTIMIDIA={
   "youtube": "wHecH4Cz_CA",
   "spotifySearch": "https://open.spotify.com/search/168%20A%20Palavra%20do%20Senhor%20Orquestra%20Sacra",
   "spotifyPending": true,
-  "audio": "audio/hino-168.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-168.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 1315,
   "youtubeMusicEnd": 1512,
@@ -6789,7 +6790,7 @@ const MULTIMIDIA={
   "youtube": "GZWmpUxB6To",
   "youtubeOrigin": "https://www.youtube.com/watch?v=GZWmpUxB6To",
   "youtubeOriginType": "video-individual",
-  "audio": "audio/hino-169.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-169.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 1512,
   "youtubeMusicEnd": 1697,
@@ -6821,7 +6822,7 @@ const MULTIMIDIA={
   "youtube": "OBJucqljfQs",
   "youtubeOrigin": "https://www.youtube.com/watch?v=OBJucqljfQs",
   "youtubeOriginType": "video-individual",
-  "audio": "audio/hino-170.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-170.mp3",
   "youtubeMusic": "H-Op5TAcqAM",
   "youtubeMusicStart": 1697,
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=H-Op5TAcqAM&t=1697s",
@@ -6854,7 +6855,7 @@ const MULTIMIDIA={
   "spotify": "6wOMWk3hl6rpJtYrtqR9ef",
   "spotifyType": "track",
   "spotifyOrigin": "https://open.spotify.com/track/6wOMWk3hl6rpJtYrtqR9ef",
-  "audio": "audio/hino-171.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-171.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 0,
   "youtubeMusicEnd": 195,
@@ -6886,7 +6887,7 @@ const MULTIMIDIA={
   "youtube": "rxAd9BhZiaE",
   "spotifySearch": "https://open.spotify.com/search/172%20Um%20culto%20santo%20ao%20Senhor%20Orquestra%20Sacra",
   "spotifyPending": true,
-  "audio": "audio/hino-172.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-172.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 195,
   "youtubeMusicEnd": 350,
@@ -6918,7 +6919,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/207tKhQLDVFJ07Yi8f5xie",
   "spotifyType": "track",
   "spotify": "207tKhQLDVFJ07Yi8f5xie",
-  "audio": "audio/hino-173.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-173.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 350,
   "youtubeMusicEnd": 543,
@@ -6950,7 +6951,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/5OQXJGbpW3aq0sbb8u4bEa",
   "spotifyType": "track",
   "spotify": "5OQXJGbpW3aq0sbb8u4bEa",
-  "audio": "audio/hino-174.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-174.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 543,
   "youtubeMusicEnd": 738,
@@ -6982,7 +6983,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/47fR4Xm2fL756TY687JxPr",
   "spotifyType": "track",
   "spotify": "47fR4Xm2fL756TY687JxPr",
-  "audio": "audio/hino-175.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-175.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 738,
   "youtubeMusicEnd": 1028,
@@ -7014,7 +7015,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/55ds7lBy14IM5ayhyTmjp5",
   "spotifyType": "track",
   "spotify": "55ds7lBy14IM5ayhyTmjp5",
-  "audio": "audio/hino-176.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-176.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 1028,
   "youtubeMusicEnd": 1228,
@@ -7046,7 +7047,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/3Qu0cRO52JNxLSBnNoEmEX",
   "spotifyType": "track",
   "spotify": "3Qu0cRO52JNxLSBnNoEmEX",
-  "audio": "audio/hino-177.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-177.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 1228,
   "youtubeMusicEnd": 1468,
@@ -7078,7 +7079,7 @@ const MULTIMIDIA={
   "youtube": "J9nKKoraomc",
   "spotifySearch": "https://open.spotify.com/search/178%20A%20Palavra%20preciosa%20Orquestra%20Sacra",
   "spotifyPending": true,
-  "audio": "audio/hino-178.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-178.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 1468,
   "youtubeMusicEnd": 1686,
@@ -7110,7 +7111,7 @@ const MULTIMIDIA={
   "spotify": "3HZcLoVVkNJjZekT6XPYWa",
   "spotifyType": "track",
   "spotifyOrigin": "https://open.spotify.com/track/3HZcLoVVkNJjZekT6XPYWa",
-  "audio": "audio/hino-179.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-179.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 1686,
   "youtubeMusicEnd": 1908,
@@ -7142,7 +7143,7 @@ const MULTIMIDIA={
   "spotifyOrigin": "https://open.spotify.com/intl-pt/track/2TVB4bWDc2kptDudiaywAW",
   "spotifyType": "track",
   "spotify": "2TVB4bWDc2kptDudiaywAW",
-  "audio": "audio/hino-180.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-180.mp3",
   "youtubeMusic": "0AS9FwjZnL4",
   "youtubeMusicStart": 1908,
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=0AS9FwjZnL4&t=1908s",
@@ -7179,7 +7180,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-181.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-181.mp3",
   "metronomo": {
     "bpm": 73,
     "min": 66,
@@ -7212,7 +7213,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=207s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Antony Andrey · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-182.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-182.mp3",
   "metronomo": {
     "bpm": 60,
     "min": 56,
@@ -7243,7 +7244,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=383s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-183.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-183.mp3",
   "metronomo": {
     "bpm": 124,
     "min": 112,
@@ -7275,7 +7276,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=613s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-184.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-184.mp3",
   "metronomo": {
     "bpm": 68,
     "min": 60,
@@ -7306,7 +7307,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=791s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-185.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-185.mp3",
   "metronomo": {
     "bpm": 75,
     "min": 66,
@@ -7337,7 +7338,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=937s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-186.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-186.mp3",
   "metronomo": {
     "bpm": 70,
     "min": 60,
@@ -7369,7 +7370,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1168s",
   "fonteExterna": "Spotify: Antony Andrey · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-187.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-187.mp3",
   "metronomo": {
     "bpm": 73,
     "min": 66,
@@ -7401,7 +7402,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1374s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-188.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-188.mp3",
   "metronomo": {
     "bpm": 76,
     "min": 69,
@@ -7432,7 +7433,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1539s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-189.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-189.mp3",
   "metronomo": {
     "bpm": 76,
     "min": 69,
@@ -7462,7 +7463,7 @@ const MULTIMIDIA={
   "youtubeMusicOrigin": "https://www.youtube.com/watch?v=Uu9L8bQzaTc&t=1684s",
   "fonteExterna": "Spotify: Orquestra Sacra · YouTube: Orquestra Sacra · YouTube Music: CCB - Vozes do Campo",
   "modoReproducao": "partitura",
-  "audio": "audio/hino-190.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-190.mp3",
   "metronomo": {
     "bpm": 72,
     "min": 60,
@@ -7495,7 +7496,7 @@ const MULTIMIDIA={
   "spotifyType": "track",
   "spotify": "3kJvz00UUuDWzcAVE9ZExT",
   "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: Antony Andrey",
-  "audio": "audio/hino-191.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-191.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 122,
@@ -7523,7 +7524,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=qlDVRkAZvAM",
   "youtube": "qlDVRkAZvAM",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-192.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-192.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 124,
@@ -7556,7 +7557,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=kzKgpHuYboU",
   "youtube": "kzKgpHuYboU",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-193.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-193.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 142,
@@ -7584,7 +7585,7 @@ const MULTIMIDIA={
   "spotifySearch": "https://open.spotify.com/search/Hino%20194%20V%C3%B3s%20chorareis%20e%20vos%20lamentareis%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
   "spotifyPending": true,
   "fonteExterna": "YouTube instrumental: URL indicada pelo usuário; validar canal e caráter instrumental · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
-  "audio": "audio/hino-194.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-194.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 74,
@@ -7612,7 +7613,7 @@ const MULTIMIDIA={
   "spotifySearch": "https://open.spotify.com/search/Hino%20195%20Senhor%2C%20estou%20disposto%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
   "spotifyPending": true,
   "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: pendente de faixa cantada · Spotify: pesquisa em fontes aprovadas",
-  "audio": "audio/hino-195.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-195.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 86,
@@ -7640,7 +7641,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=WaGmOAuiYxg",
   "youtube": "WaGmOAuiYxg",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-196.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-196.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 109,
@@ -7668,7 +7669,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=A12O86QYxt4",
   "youtube": "A12O86QYxt4",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-197.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-197.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 102,
@@ -7696,7 +7697,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=4W8dPu7NM7k",
   "youtube": "4W8dPu7NM7k",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-198.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-198.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 97,
@@ -7730,7 +7731,7 @@ const MULTIMIDIA={
   "youtubeOrigin": "https://www.youtube.com/watch?v=kEbHExWm-Sk",
   "youtube": "kEbHExWm-Sk",
   "youtubeArtista": "Fonte enviada pelo usuário",
-  "audio": "audio/hino-199.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-199.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 116,
@@ -7762,7 +7763,7 @@ const MULTIMIDIA={
   "spotifySearch": "https://open.spotify.com/search/Hino%20200%20N%C3%A3o%20se%20turbe%20o%20vosso%20cora%C3%A7%C3%A3o%20Orquestra%20Sacra%20Orquestra%20Sacra%20Paulista%20Orquestra%20Hymns%20Antony%20Andrey",
   "spotifyPending": true,
   "fonteExterna": "YouTube instrumental: Orquestra Sacra · YouTube Music cantado: Vozes do Campo (canto a confirmar) · Spotify: pesquisa em fontes aprovadas",
-  "audio": "audio/hino-200.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-200.mp3",
   "modoReproducao": "partitura",
   "metronomo": {
     "bpm": 78,
@@ -7783,7 +7784,7 @@ const MULTIMIDIA={
   }
 },
  "201":{
-  "audio": "audio/hino-201.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-201.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7816,7 +7817,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "202":{
-  "audio": "audio/hino-202.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-202.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7841,7 +7842,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "203":{
-  "audio": "audio/hino-203.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-203.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7866,7 +7867,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "204":{
-  "audio": "audio/hino-204.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-204.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7894,7 +7895,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "205":{
-  "audio": "audio/hino-205.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-205.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7925,7 +7926,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "206":{
-  "audio": "audio/hino-206.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-206.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7953,7 +7954,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "207":{
-  "audio": "audio/hino-207.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-207.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -7981,7 +7982,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "208":{
-  "audio": "audio/hino-208.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-208.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -8012,7 +8013,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "209":{
-  "audio": "audio/hino-209.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-209.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -8040,7 +8041,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "210":{
-  "audio": "audio/hino-210.mp3",
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-210.mp3",
   "modoReproducao": "partitura",
   "fonteExterna": "Curadoria interna: YouTube instrumental fontes aprovadas; YouTube Music Vozes do Campo cantado; Spotify Orquestra Sacra prioritária. Não substituir faixas por buscas ou canais.",
   "metronomo": {
@@ -8070,7 +8071,7 @@ const MULTIMIDIA={
   "hdBrandLabelsOnly": true
 },
  "45":{
-  audio:"audio/hino-45.mp3?v=697",
+  audio:"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-45.mp3?v=697",
   spotify:"0834t6lumVQ5FKetjMgREw",
   spotifyType:"track",
   spotifyOrigin:"https://open.spotify.com/track/0834t6lumVQ5FKetjMgREw",
