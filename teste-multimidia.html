@@ -1,3 +1,5 @@
+<!-- GUIA V7.81.44 - TESTE: reforço de letras únicas nos Hinos 211–220; botões de mídias só com marcas; produção intacta. -->
+<!-- V7.81.43 TESTE: letras 211–220 seguem padrão do Guia (coro uma vez após a 1ª estrofe; final uma vez no término). Partituras 215-p2/216-p1 separadas e imagens atualizadas com versão de cache. Não altera index.html de produção nem histórico do usuário. -->
 <!-- V7.81.41 TESTE: painel compacto; eliminados os 3 textos redundantes sem mudar filtros, contagens, histórico ou exportação. -->
 <!-- V7.81.40 TESTE: letras 211–220 integradas, partitura final 215, CSV de integridade; não altera o histórico nem links externos sem correspondência exata. -->
 <!-- V7.81.39 TESTE: auditoria dos 422 hinos de Culto Oficial, 219 com multimídia e 203 pendentes de modal; lista completa de faltantes; aviso de armazenamento local. Modais/coros/produçao preservados. -->
@@ -12291,24 +12293,25 @@ function openHymnDetail(h,cat){
    const platformBtns=[];
    const hymnNum=Number(h&&h.num);
    const forceThreePlatforms=Number.isFinite(hymnNum)&&hymnNum>=130&&hymnNum<=160;
-   const cleanMediaBrands=Number.isFinite(hymnNum)&&hymnNum>=201&&hymnNum<=210;
+   const cleanMediaBrands=true; // V7.81.44: apenas nome da plataforma em todos os botões.
+   const lote211a220=Number.isFinite(hymnNum)&&hymnNum>=211&&hymnNum<=220;
 
    if(forceThreePlatforms||media.spotify||media.spotifySearch||media.spotifyPending){
      // V7.79.1: uma busca direcionada nunca deve ser confundida com uma gravação confirmada.
      const searchOnly=!media.spotify&&!!media.spotifySearch;
-     const pending=!media.spotify&&!searchOnly;
-     const action=searchOnly?'data-search-url="'+esc(media.spotifySearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no Spotify"':'data-kind="spotify"';
-     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+(cleanMediaBrands?'':(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.spotifyArtista?'<small>'+esc(media.spotifyArtista)+'</small>':''))))+'</span><b>›</b></button>');
+     const pending=!media.spotify&&(!searchOnly||lote211a220);
+     const action=searchOnly&&!lote211a220?'data-search-url="'+esc(media.spotifySearch)+'" aria-label="Pesquisar este hino no Spotify"':'data-kind="spotify"';
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand spotify" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1ED760"/><path d="M8 12c6-2 12-1 17 1M9 16c5-1 10-.5 15 1.5M10 20c4-.7 8-.3 12 1" fill="none" stroke="#082617" stroke-width="2.3" stroke-linecap="round"/></svg></i><span class="hd-platform-copy">Spotify'+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtube||media.youtubeSearch||media.youtubePending){
      const searchOnly=!media.youtube&&!!media.youtubeSearch;
-     const pending=!media.youtube&&!searchOnly;
-     const action=searchOnly?'data-search-url="'+esc(media.youtubeSearch)+'" aria-label="Pesquisar este hino da Orquestra Sacra no YouTube"':'data-kind="youtube"';
-     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+(cleanMediaBrands?'':(searchOnly?'<small>Pesquisar</small>':(pending?'<small>Indisponível</small>':(media.youtubeArtista && String(media.youtubeArtista).trim().toLowerCase()!=='fonte enviada pelo usuário'?'<small>'+esc(media.youtubeArtista)+'</small>':(media.youtubeOriginType==='coletanea-com-timestamp'?'<small>Coletânea</small>':'')))))+'</span><b>›</b></button>');
+     const pending=!media.youtube&&(!searchOnly||lote211a220);
+     const action=searchOnly&&!lote211a220?'data-search-url="'+esc(media.youtubeSearch)+'" aria-label="Pesquisar este hino no YouTube"':'data-kind="youtube"';
+     platformBtns.push('<button type="button" class="hd-play hd-platform'+(pending?' hd-media-pending':'')+(searchOnly?' hd-media-search':'')+'" '+action+' '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand youtube" aria-hidden="true"><svg viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="6" fill="#FF1F22"/><path d="M14 8l9 5-9 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube'+'</span><b>›</b></button>');
    }
    if(forceThreePlatforms||media.youtubeMusic||media.youtubeMusicSearch||media.youtubeMusicPending){
      const pending=forceThreePlatforms ? !media.youtubeMusic : (!media.youtubeMusic && (!!media.youtubeMusicSearch||!!media.youtubeMusicPending));
-     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube Music'+(cleanMediaBrands?'':(pending?'<small>Indisponível</small>':''))+'</span><b>›</b></button>');
+     platformBtns.push('<button class="hd-play hd-platform'+(pending?' hd-media-pending':'')+'" data-kind="youtubeMusic" '+(pending?'disabled aria-disabled="true" title="Esta mídia ainda não está disponível"':'')+'><i class="brand ytmusic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#FF1F22"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 11l8 5-8 5z" fill="#fff"/></svg></i><span class="hd-platform-copy">YouTube Music'+'</span><b>›</b></button>');
    }
 
    const metronomeHtml=media.metronomo ? buildHymnMetronomeHtml(media.metronomo) : '';
@@ -12960,8 +12963,15 @@ function downloadCallsCsv(){
           ).join('');
           return '<div class="v2Stanza">'+linhas+'</div>';
         };
-        if(Array.isArray(letra.estrutura)&&letra.estrutura.length){
-          box.innerHTML=letra.estrutura.map(item=>{
+        // V7.81.44: os Hinos 211–220 sempre usam a sequência canônica de exibição.
+        // Não depende de estrutura legada: cada estrofe aparece uma só vez,
+        // um único coro após a primeira estrofe, e final somente ao término.
+        const lote211a220=/^(?:21[1-9]|220)$/.test(String(h.num));
+        const estruturaExibicao=lote211a220
+          ? (letra.estrofes||[]).flatMap((_,i)=>i===0&&temCoro?['estrofe-1','coro']:['estrofe-'+(i+1)]).concat(temFinal?['final']:[])
+          : letra.estrutura;
+        if(Array.isArray(estruturaExibicao)&&estruturaExibicao.length){
+          box.innerHTML=estruturaExibicao.map(item=>{
             if(item==='coro') return coro;
             if(item==='final') return final;
             const m=String(item).match(/^estrofe-(\d+)$/);
@@ -20902,9 +20912,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Dó maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-211-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-211-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-211-p1.jpg"
+      "assets/partituras/hino-211-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 211 — O Senhor Jesus passava..."
   }
@@ -20924,9 +20934,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Mi♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-212-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-212-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-212-p1.jpg"
+      "assets/partituras/hino-212-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 212 — Testemunhas verazes nós somos"
   }
@@ -20946,9 +20956,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Mi♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-213-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-213-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-213-p1.jpg"
+      "assets/partituras/hino-213-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 213 — Quando vier do céu"
   }
@@ -20968,10 +20978,10 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Sol maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-214-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-214-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-214-p1.jpg",
-      "assets/partituras/hino-214-p2.jpg"
+      "assets/partituras/hino-214-p1.jpg?v=78144",
+      "assets/partituras/hino-214-p2.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 214 — Como foi para os céus, assim virá"
   }
@@ -20991,10 +21001,10 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Dó maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-215-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-215-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-215-p1.jpg",
-      "assets/partituras/hino-215-p2.jpg"
+      "assets/partituras/hino-215-p1.jpg?v=78144",
+      "assets/partituras/hino-215-p2.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 215 — Em breve ao céu irei"
   }
@@ -21014,9 +21024,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Ré♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-216-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-216-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-216-p1.jpg"
+      "assets/partituras/hino-216-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 216 — Irmãos, amemos ao Senhor"
   }
@@ -21036,9 +21046,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Ré♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-217-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-217-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-217-p1.jpg"
+      "assets/partituras/hino-217-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 217 — Vamos, unidos, a Deus louvar"
   }
@@ -21058,9 +21068,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Lá♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-218-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-218-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-218-p1.jpg"
+      "assets/partituras/hino-218-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 218 — Oh! Jubilemos, devotos de Cristo"
   }
@@ -21080,10 +21090,10 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Si♭ maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-219-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-219-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-219-p1.jpg",
-      "assets/partituras/hino-219-p2.jpg"
+      "assets/partituras/hino-219-p1.jpg?v=78144",
+      "assets/partituras/hino-219-p2.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 219 — Novos céus nós aguardamos"
   }
@@ -21103,9 +21113,9 @@ window.GuiaProtecaoTempoV78145={status(){
     "tonalidade": "Dó maior",
     "volume": 50,
     "partitura": false,
-    "partituraImagem": "assets/partituras/hino-220-p1.jpg",
+    "partituraImagem": "assets/partituras/hino-220-p1.jpg?v=78144",
     "partituraPaginas": [
-      "assets/partituras/hino-220-p1.jpg"
+      "assets/partituras/hino-220-p1.jpg?v=78144"
     ],
     "partituraTitulo": "Hino 220 — Cristo voltará"
   }
@@ -21162,7 +21172,7 @@ window.GuiaProtecaoTempoV78145={status(){
 
 
 <!-- V7.81.40 TESTE: letras Hinos 211–220 transcritas das partituras do pacote. Nenhum link externo não confirmado foi inventado. -->
-<script id="guia-v78140-letras-211-220">
+<script id="guia-v78144-letras-211-220">
 (function(){
  'use strict';
  if(typeof LETRAS==='undefined')return;
@@ -21203,9 +21213,7 @@ window.GuiaProtecaoTempoV78145={status(){
       "estrofe-1",
       "coro",
       "estrofe-2",
-      "coro",
-      "estrofe-3",
-      "coro"
+      "estrofe-3"
     ],
     "estrofes": [
       [
@@ -21337,9 +21345,7 @@ window.GuiaProtecaoTempoV78145={status(){
       "estrofe-1",
       "coro",
       "estrofe-2",
-      "coro",
-      "estrofe-3",
-      "coro"
+      "estrofe-3"
     ],
     "estrofes": [
       [
@@ -21367,9 +21373,7 @@ window.GuiaProtecaoTempoV78145={status(){
       "estrofe-1",
       "coro",
       "estrofe-2",
-      "coro",
-      "estrofe-3",
-      "coro"
+      "estrofe-3"
     ],
     "estrofes": [
       [
@@ -21422,8 +21426,7 @@ window.GuiaProtecaoTempoV78145={status(){
     "estrutura": [
       "estrofe-1",
       "coro",
-      "estrofe-2",
-      "coro"
+      "estrofe-2"
     ],
     "estrofes": [
       [
@@ -21453,9 +21456,7 @@ window.GuiaProtecaoTempoV78145={status(){
       "estrofe-1",
       "coro",
       "estrofe-2",
-      "coro",
-      "estrofe-3",
-      "coro"
+      "estrofe-3"
     ],
     "estrofes": [
       [
@@ -21478,11 +21479,11 @@ window.GuiaProtecaoTempoV78145={status(){
   }
 };
  for(const [numero,letra] of Object.entries(novasLetras)){
-   // Não substitui uma letra preexistente ou validada em pacote posterior.
-   if(!LETRAS[numero])LETRAS[numero]=letra;
+   // Aplica a correção ao lote 211–220 sem tocar nos Hinos 1–210.
+   LETRAS[numero]=letra;
  }
  // Histórico do usuário permanece em HYMN_STORE, sem qualquer gravação adicional.
- window.GuiaLetras211a220V78140={disponiveis:()=>Object.keys(novasLetras).filter(n=>!!LETRAS[n]),
+ window.GuiaLetras211a220V78144={disponiveis:()=>Object.keys(novasLetras).filter(n=>!!LETRAS[n]),
    resumo:()=>Object.entries(novasLetras).map(([n,l])=>({numero:n,estrofes:l.estrofes.length,coro:!!l.coro,final:!!l.final}))};
 })();
 </script>
