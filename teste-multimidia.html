@@ -1,3 +1,4 @@
+<!-- V7.81.39 TESTE: auditoria dos 422 hinos de Culto Oficial, 219 com multimídia e 203 pendentes de modal; lista completa de faltantes; aviso de armazenamento local. Modais/coros/produçao preservados. -->
 <!-- TESTE R2 2026-11-23: somente caminhos de MP3 dos Hinos 1-210 (211 referencias); nenhuma alteracao em producao. -->
 <!-- V7.81.24 TESTE: MP3 4ª mídia independente; painel Metrônomo exclusivo com MP3 opcional; base V7.81.23 preservada. -->
 <!-- V7.81.37 TESTE: preservacao do estado de reproducao ao alterar volume/BPM/pulso; bus do clique preservado ao recalcular andamento. -->
@@ -21133,7 +21134,7 @@ window.GuiaProtecaoTempoV78145={status(){
 #officialProgressBlock .op-item:last-child{border-bottom:none}
 #officialProgressBlock .op-item button{border:0;background:transparent;color:#264963;text-align:left;font:650 .79rem/1.4 Arial,sans-serif;text-decoration:underline;cursor:pointer}
 #officialProgressBlock .op-item small{white-space:nowrap;color:#6c7780}
-#officialProgressBlock .op-foot{font-size:.72rem;color:#687077;line-height:1.5;margin:8px 0 0}
+#officialProgressBlock .op-explain,#officialProgressBlock .op-source{font-size:.76rem;line-height:1.5;margin:8px 0;padding:9px;border:1px solid #e4d8c1;border-radius:8px;background:#fff;color:#364a58}#officialProgressBlock .op-source strong{color:#8b3f28}#officialProgressBlock .op-foot{font-size:.72rem;color:#687077;line-height:1.5;margin:8px 0 0}
 @media(max-width:390px){#officialProgressBlock{padding:9px}#officialProgressBlock .op-stat b{font-size:1.15rem}#officialProgressBlock .op-actions button{font-size:.72rem}}
 </style>
 
@@ -21150,6 +21151,8 @@ window.GuiaProtecaoTempoV78145={status(){
     if(!official.has(String(Number(k))))official.set(String(Number(k)),h);
   });
   const catalog=[...official.values()].sort((a,b)=>Number(a.num)-Number(b.num));
+  const mediaAvailable=catalog.filter(h=>typeof MULTIMIDIA!=='undefined'&&!!MULTIMIDIA[String(Number(h.num))]).length;
+  const mediaPending=catalog.length-mediaAvailable;
   const normalizeNum=num=>/^\d+$/.test(String(num??''))?String(Number(num)):null;
   function snap(){
     const logs=typeof HYMN_STORE.calls==='function'?HYMN_STORE.calls():[];
@@ -21163,16 +21166,18 @@ window.GuiaProtecaoTempoV78145={status(){
     const called=catalog.filter(h=>byNum.has(String(Number(h.num))));
     const missing=catalog.filter(h=>!byNum.has(String(Number(h.num))));
     const pct=catalog.length?Math.round(1000*called.length/catalog.length)/10:0;
-    return {byNum,called,missing,pct,all:catalog};
+    const records=Array.isArray(logs)?logs.filter(r=>r&&r.type!=='note'):[];
+    const outsideCount=records.filter(r=>!official.has(normalizeNum(r.num))).length;
+    return {byNum,called,missing,pct,all:catalog,totalRecords:records.length,outsideCount};
   }
   function exportCsv(mode='all'){
     const s=snap();
     const items=mode==='missing'?s.missing:mode==='called'?s.called:s.all;
-    const rows=[['Hino','Título','Apropriação','Situação','Quantidade de chamadas','Primeira chamada','Última chamada']];
+    const rows=[['Hino','Título','Apropriação','Situação','Modal multimídia','Quantidade de chamadas','Primeira chamada','Última chamada']];
     items.forEach(h=>{
       const calls=s.byNum.get(String(Number(h.num)))||[];
       const times=calls.map(r=>new Date(r.at)).filter(d=>!isNaN(d.getTime())).sort((a,b)=>a-b);
-      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
+      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?'Disponível':'Pendente',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
     });
     const q=v=>'"'+String(v??'').replace(/[\r\n]+/g,' ').replace(/"/g,'""')+'"';
     const csv='\uFEFF'+rows.map(row=>row.map(q).join(';')).join('\r\n');
@@ -21187,12 +21192,12 @@ window.GuiaProtecaoTempoV78145={status(){
     const s=snap();const box=block.querySelector('#opList');if(!box)return;
     const q=(block.querySelector('#opSearch')?.value||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     const items=(current==='missing'?s.missing:current==='called'?s.called:s.all).filter(h=>!q || [h.num,h.titulo].join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q));
-    const vis=items.slice(0,80);
+    const vis=items; // V7.81.39: sem limite artificial; pesquisa e rolagem continuam disponíveis
     box.innerHTML=vis.length?vis.map(h=>{
       const count=s.byNum.get(String(Number(h.num)))?.length||0;
-      return '<div class="op-item"><button type="button" data-hino="'+escapeText(h.num)+'">'+escapeText(h.num)+' — '+escapeText(h.titulo)+'</button><small>'+(count?count+' chamada'+(count>1?'s':''):'Faltante')+'</small></div>';
+      return '<div class="op-item"><button type="button" data-hino="'+escapeText(h.num)+'">'+escapeText(h.num)+' — '+escapeText(h.titulo)+'</button><small>'+(count?count+' chamada'+(count>1?'s':''):'Não chamado')+(typeof MULTIMIDIA!=='undefined'&&!MULTIMIDIA[String(Number(h.num))]?' · sem modal':'')+'</small></div>';
     }).join(''):'<div class="op-item">Nenhum hino neste filtro.</div>';
-    block.querySelector('#opListCount').textContent='Exibindo '+vis.length+' de '+items.length+(items.length>80?' (pesquise para localizar outros)':'');
+    block.querySelector('#opListCount').textContent='Exibindo '+vis.length+' de '+items.length+' hinos neste filtro.';
     box.querySelectorAll('[data-hino]').forEach(b=>b.onclick=()=>{
       const h=official.get(String(Number(b.dataset.hino)));
       if(!h)return;
@@ -21206,8 +21211,10 @@ window.GuiaProtecaoTempoV78145={status(){
     if(!box||window.__personalView!=='calls'||window.__historyHymn)return;
     const s=snap(); const block=document.createElement('section');block.id='officialProgressBlock';
     block.innerHTML=`<h4 class="op-title">Progresso dos hinos chamados</h4>
-      <p class="op-sub">Apropriação: <b>Culto Oficial</b> · ${catalog.length} hinos elegíveis · Coros excluídos</p>
-      <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já marcados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Faltam marcar</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
+      <p class="op-sub">Apropriação: <b>Culto Oficial</b> · ${catalog.length} hinos elegíveis entre 1–480 · Coros excluídos</p>
+      <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já chamados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Ainda não chamados</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
+      <p class="op-explain"><b>Modais e chamadas são contagens diferentes.</b> Dos ${catalog.length} hinos oficiais, <b>${mediaAvailable}</b> já têm modal multimídia nesta versão e <b>${mediaPending}</b> ainda aguardam modal. <b>Todos entram no relatório</b>, independentemente da existência de áudio ou partitura no sistema.</p>
+      <p class="op-source"><b>Registros encontrados neste navegador:</b> ${s.totalRecords} chamada(s) no histórico, sendo ${s.called.length} hino(s) oficiais diferentes marcados e ${s.outsideCount} registro(s) fora de Culto Oficial.${location.protocol==='file:'?' <strong>Você abriu um arquivo local. Os registros salvos no endereço do GitHub Pages não são carregados aqui.</strong>':' Os registros são locais a este navegador e endereço; não são sincronizados automaticamente entre dispositivos.'}</p>
       <div class="op-bar" role="progressbar" aria-label="Cobertura dos hinos de culto oficial" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.pct}"><div class="op-bar-fill" style="width:${s.pct}%"></div></div>
       <div class="op-actions"><button class="op-primary" type="button" id="opToggle" aria-expanded="false">Ver relatório e faltantes</button><button type="button" id="opExportAll">Exportar relatório CSV</button></div>
       <div class="op-detail" id="opDetail" hidden>
@@ -21216,7 +21223,7 @@ window.GuiaProtecaoTempoV78145={status(){
         <div class="op-list" id="opList" aria-live="polite"></div><div class="op-foot" id="opListCount"></div>
         <div class="op-actions"><button type="button" id="opExportMissing">CSV dos faltantes</button><button type="button" id="opExportCalled">CSV dos marcados</button></div>
       </div>
-      <p class="op-foot">Cada hino conta uma única vez na cobertura, mesmo que tenha várias chamadas. O histórico original com datas e observações permanece abaixo.</p>`;
+      <p class="op-foot">Faltantes = ${catalog.length} menos os hinos oficiais diferentes registrados neste navegador. Um hino chamado várias vezes conta uma só vez, mas todas as chamadas continuam no histórico. A existência de modal não altera essa conta.</p>`;
     box.prepend(block);
     block.querySelector('#opToggle').onclick=()=>{
       const detail=block.querySelector('#opDetail');detail.hidden=!detail.hidden;
@@ -21235,7 +21242,7 @@ window.GuiaProtecaoTempoV78145={status(){
   }
   const orig=renderCalls;
   renderCalls=function(filterNum){orig(filterNum);if(!filterNum)addDashboard();};
-  window.GuiaCultoOficialReport={snapshot:snap,exportCsv,catalogLength:catalog.length};
+  window.GuiaCultoOficialReport={snapshot:snap,exportCsv,catalogLength:catalog.length,modalAvailable:mediaAvailable,modalPending:mediaPending};
 })();
 </script>
 
