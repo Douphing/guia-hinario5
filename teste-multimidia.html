@@ -1,3 +1,5 @@
+<!-- V7.81.41 TESTE: painel compacto; eliminados os 3 textos redundantes sem mudar filtros, contagens, histórico ou exportação. -->
+<!-- V7.81.40 TESTE: letras 211–220 integradas, partitura final 215, CSV de integridade; não altera o histórico nem links externos sem correspondência exata. -->
 <!-- V7.81.39 TESTE: auditoria dos 422 hinos de Culto Oficial, 219 com multimídia e 203 pendentes de modal; lista completa de faltantes; aviso de armazenamento local. Modais/coros/produçao preservados. -->
 <!-- TESTE R2 2026-11-23: somente caminhos de MP3 dos Hinos 1-210 (211 referencias); nenhuma alteracao em producao. -->
 <!-- V7.81.24 TESTE: MP3 4ª mídia independente; painel Metrônomo exclusivo com MP3 opcional; base V7.81.23 preservada. -->
@@ -11917,7 +11919,7 @@ const HYMN_STORE={
    registrarEventoGA('favoritar_hino', gaHinoParams(h,{acao:wasFav?'remover':'adicionar'}));
    return !!data[k];
  },
- calls(){return this.read(this.calledLogKey,[])},
+ calls(){const dados=this.read(this.calledLogKey,[]);return Array.isArray(dados)?dados:[]},
  countCalls(num){return this.calls().filter(x=>String(x.num)===String(num)).length},
  addCall(h,note){
    const data=this.calls();
@@ -20991,7 +20993,8 @@ window.GuiaProtecaoTempoV78145={status(){
     "partitura": false,
     "partituraImagem": "assets/partituras/hino-215-p1.jpg",
     "partituraPaginas": [
-      "assets/partituras/hino-215-p1.jpg"
+      "assets/partituras/hino-215-p1.jpg",
+      "assets/partituras/hino-215-p2.jpg"
     ],
     "partituraTitulo": "Hino 215 — Em breve ao céu irei"
   }
@@ -21134,9 +21137,336 @@ window.GuiaProtecaoTempoV78145={status(){
 #officialProgressBlock .op-item:last-child{border-bottom:none}
 #officialProgressBlock .op-item button{border:0;background:transparent;color:#264963;text-align:left;font:650 .79rem/1.4 Arial,sans-serif;text-decoration:underline;cursor:pointer}
 #officialProgressBlock .op-item small{white-space:nowrap;color:#6c7780}
-#officialProgressBlock .op-explain,#officialProgressBlock .op-source{font-size:.76rem;line-height:1.5;margin:8px 0;padding:9px;border:1px solid #e4d8c1;border-radius:8px;background:#fff;color:#364a58}#officialProgressBlock .op-source strong{color:#8b3f28}#officialProgressBlock .op-foot{font-size:.72rem;color:#687077;line-height:1.5;margin:8px 0 0}
+#officialProgressBlock .op-foot{font-size:.72rem;color:#687077;line-height:1.5;margin:8px 0 0}
 @media(max-width:390px){#officialProgressBlock{padding:9px}#officialProgressBlock .op-stat b{font-size:1.15rem}#officialProgressBlock .op-actions button{font-size:.72rem}}
 </style>
+
+
+<!-- V7.81.40 TESTE: letras Hinos 211–220 transcritas das partituras do pacote. Nenhum link externo não confirmado foi inventado. -->
+<script id="guia-v78140-letras-211-220">
+(function(){
+ 'use strict';
+ if(typeof LETRAS==='undefined')return;
+ const novasLetras={
+  "211": {
+    "tipo": "hino",
+    "titulo": "O Senhor Jesus passava...",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ],
+    "estrofes": [
+      [
+        "O Senhor Jesus passava, com Ele ia a multidão;",
+        "Eis que um cego, junto ao caminho, esperava por compaixão;",
+        "E, ouvindo que se falava sobre o nome de Jesus,",
+        "Levantou-se e foi ao bom Mestre para receber a luz."
+      ],
+      [
+        "A Palavra virtuosa, tão esperada, escutou;",
+        "A visão lhe foi restaurada e, por fé, também se salvou;",
+        "Libertado por Jesus Cristo, dava glória ao grande Deus;",
+        "Exaltou o Mestre divino e seguiu os passos Seus."
+      ],
+      [
+        "Jesus Cristo é o mesmo, entre os fiéis também está,",
+        "E quem crer verá Sua glória; Seu favor, por certo, terá;",
+        "Ele é a Luz preciosa que, dos céus, Deus enviou;",
+        "Quem em trevas se encontrava, essa Luz iluminou."
+      ]
+    ]
+  },
+  "212": {
+    "tipo": "hino",
+    "titulo": "Testemunhas verazes nós somos",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "coro",
+      "estrofe-3",
+      "coro"
+    ],
+    "estrofes": [
+      [
+        "Testemunhas verazes nós somos do que Cristo em nós operou;",
+        "Seus passos agora seguimos, pois Cristo Jesus nos transformou,",
+        "Sim, Ele nos transformou."
+      ],
+      [
+        "Esconder não devemos, do mundo, nossa fé em Cristo Jesus;",
+        "Amor celestial e profundo o Justo mostrou por nós na cruz,",
+        "Sim, Cristo mostrou na cruz."
+      ],
+      [
+        "O Evangelho da graça divina sobre a terra ouvido será;",
+        "Por Sua celeste doutrina os homens Jesus converterá,",
+        "Sim, Ele os converterá."
+      ]
+    ],
+    "coro": [
+      "Eis que as trevas já são passadas, veio o dia com esplendor;",
+      "Chegado é o reino de Deus a nós, o reino de luz e amor."
+    ]
+  },
+  "213": {
+    "tipo": "hino",
+    "titulo": "Quando vier do céu",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ],
+    "estrofes": [
+      [
+        "Quando vier do céu Cristo Jesus, o Rei,",
+        "O mundo de ilusão, vencido eu terei;",
+        "Repouso celestial e vida eternal",
+        "Receberei de Deus, a Quem me consagrei."
+      ],
+      [
+        "Consiste o meu viver em agradar a Deus,",
+        "Em revestir-me aqui da vida lá dos céus;",
+        "Unido eu estou a Cristo, que me amou;",
+        "Com sangue remidor pagou os erros meus."
+      ],
+      [
+        "Bendito é o Senhor, meu Redentor, Jesus,",
+        "Que, pelo Seu amor, à glória me conduz;",
+        "O santo Seu poder aqui me faz vencer;",
+        "Bendito é o Senhor, que é a minha Luz."
+      ]
+    ]
+  },
+  "214": {
+    "tipo": "hino",
+    "titulo": "Como foi para os céus, assim virá",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ],
+    "estrofes": [
+      [
+        "Ao subir Jesus a Deus, vieram anjos lá dos céus,",
+        "Declarando que o Mestre voltaria para os Seus;",
+        "A resplandecente Estrela da Manhã ressurgirá,",
+        "Que alegria o povo santo sentirá!"
+      ],
+      [
+        "Cristo voltará em nuvens quando o tempo se cumprir,",
+        "Para à glória prometida, Seus remidos conduzir;",
+        "Bem-aventurados todos que O servem com amor,",
+        "A coroa lhes dará o Criador."
+      ],
+      [
+        "A Palavra do Senhor no mundo se cumprindo está,",
+        "Os sinais dos tempos mostram que Ele, em breve, voltará;",
+        "Oh! Que glorioso 'vinde' Seus eleitos ouvirão,",
+        "De Jesus, na gloriosa aparição."
+      ]
+    ],
+    "final": [
+      "Como foi para os céus, assim virá",
+      "O Senhor, com celeste esplendor;",
+      "A promessa preciosa que Deus fez se cumprirá:",
+      "Breve voltará Jesus, o Redentor."
+    ]
+  },
+  "215": {
+    "tipo": "hino",
+    "titulo": "Em breve ao céu irei",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ],
+    "estrofes": [
+      [
+        "Em breve ao céu irei e lá contemplarei",
+        "A glória do bom Pai e a face do meu Rei;",
+        "Oh! Quão feliz serei na pátria divinal,",
+        "Ao receber, de Deus, vida eternal."
+      ],
+      [
+        "Somente ao meu Jesus sempre pertencerei,",
+        "No sangue expiador refugiar-me-ei;",
+        "Gloriosamente, Deus, por Cristo, prometeu",
+        "E vida perenal ao povo Seu."
+      ],
+      [
+        "Com todos os fiéis jubilarei nos céus,",
+        "Onde terei lugar junto do grande Deus;",
+        "Hinos celestiais a Ele entoarei,",
+        "Incomparável paz desfrutarei."
+      ]
+    ],
+    "final": [
+      "Com meu Senhor logo estarei;",
+      "Seu esplendor contemplarei;",
+      "Corpo eternal receberei",
+      "Para viver com Deus, excelso Rei."
+    ]
+  },
+  "216": {
+    "tipo": "hino",
+    "titulo": "Irmãos, amemos ao Senhor",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "coro",
+      "estrofe-3",
+      "coro"
+    ],
+    "estrofes": [
+      [
+        "Irmãos, amemos ao Senhor, pois grande é Seu amor,",
+        "Seu precioso sangue derramou e nossas almas lavou."
+      ],
+      [
+        "Irmãos, amemos ao Senhor, Divino Ensinador,",
+        "A perfeita Fonte do saber, que faz na graça crescer."
+      ],
+      [
+        "Irmãos, amemos ao Senhor, Autor e Consumador",
+        "Desta fé, que dá a salvação e celestial galardão."
+      ]
+    ],
+    "coro": [
+      "Com toda a nossa devoção, com toda a força e fervor,",
+      "Com toda a alma e entendimento, amemos ao Senhor."
+    ]
+  },
+  "217": {
+    "tipo": "hino",
+    "titulo": "Vamos, unidos, a Deus louvar",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "coro",
+      "estrofe-3",
+      "coro"
+    ],
+    "estrofes": [
+      [
+        "Vamos, unidos, a Deus louvar e a Jesus, nosso Rei, cantar,",
+        "Pelo Evangelho assegurar que Cristo vai voltar."
+      ],
+      [
+        "Vamos a todos testificar que Deus mandou Cristo a salvar;",
+        "E quem a Ele se entregar, no céu irá reinar."
+      ],
+      [
+        "Vamos, irmãos, a Deus celebrar, e não cessemos de afirmar",
+        "Que, só por Cristo, se pode entrar no céu, eternal lar."
+      ]
+    ],
+    "coro": [
+      "Vem, Jesus, os Teus fiéis buscar,",
+      "Pois desejamos, um dia, nos céus habitar."
+    ]
+  },
+  "218": {
+    "tipo": "hino",
+    "titulo": "Oh! Jubilemos, devotos de Cristo",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ],
+    "estrofes": [
+      [
+        "Oh! Jubilemos, devotos de Cristo, e entoemos a Ele louvor;",
+        "Ressuscitado, por muitos foi visto; sobre o mal foi, na cruz, Vencedor;",
+        "Deus exaltou o Seu Filho benquisto, que lá no céu é fiel Mediador."
+      ],
+      [
+        "Oh! Jubilemos em Cristo, o Vivente, que, sobre a cruz, por amor padeceu;",
+        "Ele, o Forte e Onipotente, todas as forças do mal abateu",
+        "Para podermos dizer livremente: Nós fomos feitos herdeiros do céu."
+      ],
+      [
+        "Oh! Jubilemos, remidos do Santo, que prometeu Sua glória nos dar;",
+        "Lá no Seu reino, com um novo canto, nós poderemos a Deus exaltar;",
+        "O regozijo será, no céu tanto, que não se pode aqui imaginar."
+      ]
+    ]
+  },
+  "219": {
+    "tipo": "hino",
+    "titulo": "Novos céus nós aguardamos",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "coro"
+    ],
+    "estrofes": [
+      [
+        "Novos céus nós aguardamos e nova terra também;",
+        "Neles nós sempre pensamos, neles está nosso bem;",
+        "Por isso estamos servindo a Deus, o Criador;",
+        "Sua vontade cumprindo, veremos Seu esplendor."
+      ],
+      [
+        "Pelo Espírito andemos dentro da lei do bom Deus;",
+        "O coração inclinemos para as coisas dos céus;",
+        "Do mundo toda a vaidade devemos rejeitar;",
+        "Temos de Deus uma herdade: a terra que nos vai dar."
+      ]
+    ],
+    "coro": [
+      "Novos céus Deus, aos Seus fiéis, dará;",
+      "Nova terra, onde a justiça está;",
+      "Em breve volta o Rei, Cristo Jesus, Senhor;",
+      "Firmes na graça sejamos, firmes na fé e no amor."
+    ]
+  },
+  "220": {
+    "tipo": "hino",
+    "titulo": "Cristo voltará",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "coro",
+      "estrofe-3",
+      "coro"
+    ],
+    "estrofes": [
+      [
+        "Com poder e glória e total vitória, Cristo, sobre as nuvens, breve voltará;",
+        "Oh! Que grande dia! Oh! Que alegria! Para os fiéis o pranto findará."
+      ],
+      [
+        "Eis que se apressa a fiel promessa do Senhor Jesus, que breve há de voltar;",
+        "Quero nesse dia, cheio de alegria, juntar-me aos salvos, Cristo encontrar."
+      ],
+      [
+        "Sempre vigiando, contra o mal lutando, vamos aguardar a volta do Senhor;",
+        "O que for achado servindo ao pecado, não terá lugar nas bodas de amor."
+      ]
+    ],
+    "coro": [
+      "Cristo voltará, Cristo voltará, e a Sua igreja arrebatará;",
+      "E, então, no céu a coroará com a glória eterna que Ele lhe dará."
+    ]
+  }
+};
+ for(const [numero,letra] of Object.entries(novasLetras)){
+   // Não substitui uma letra preexistente ou validada em pacote posterior.
+   if(!LETRAS[numero])LETRAS[numero]=letra;
+ }
+ // Histórico do usuário permanece em HYMN_STORE, sem qualquer gravação adicional.
+ window.GuiaLetras211a220V78140={disponiveis:()=>Object.keys(novasLetras).filter(n=>!!LETRAS[n]),
+   resumo:()=>Object.entries(novasLetras).map(([n,l])=>({numero:n,estrofes:l.estrofes.length,coro:!!l.coro,final:!!l.final}))};
+})();
+</script>
 
 <script id="guia-oficial-progress-script">
 (function(){
@@ -21167,17 +21497,18 @@ window.GuiaProtecaoTempoV78145={status(){
     const missing=catalog.filter(h=>!byNum.has(String(Number(h.num))));
     const pct=catalog.length?Math.round(1000*called.length/catalog.length)/10:0;
     const records=Array.isArray(logs)?logs.filter(r=>r&&r.type!=='note'):[];
+    let storageBlocked=false;try{localStorage.getItem('guia-h5-chamados-log-v1')}catch(e){storageBlocked=true;}
     const outsideCount=records.filter(r=>!official.has(normalizeNum(r.num))).length;
-    return {byNum,called,missing,pct,all:catalog,totalRecords:records.length,outsideCount};
+    return {byNum,called,missing,pct,all:catalog,totalRecords:records.length,outsideCount,storageBlocked};
   }
   function exportCsv(mode='all'){
     const s=snap();
     const items=mode==='missing'?s.missing:mode==='called'?s.called:s.all;
-    const rows=[['Hino','Título','Apropriação','Situação','Modal multimídia','Quantidade de chamadas','Primeira chamada','Última chamada']];
+    const rows=[['Hino','Título','Apropriação','Situação','Modal multimídia','Letra','Spotify direto','YouTube direto','YouTube Music direto','Quantidade de chamadas','Primeira chamada','Última chamada']];
     items.forEach(h=>{
       const calls=s.byNum.get(String(Number(h.num)))||[];
       const times=calls.map(r=>new Date(r.at)).filter(d=>!isNaN(d.getTime())).sort((a,b)=>a-b);
-      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?'Disponível':'Pendente',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
+      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?'Disponível':'Pendente',typeof LETRAS!=='undefined'&&LETRAS[String(Number(h.num))]?'Incluída':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.spotify?'Confirmado':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.youtube?'Confirmado':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.youtubeMusic?'Confirmado':'Pendente',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
     });
     const q=v=>'"'+String(v??'').replace(/[\r\n]+/g,' ').replace(/"/g,'""')+'"';
     const csv='\uFEFF'+rows.map(row=>row.map(q).join(';')).join('\r\n');
@@ -21213,8 +21544,6 @@ window.GuiaProtecaoTempoV78145={status(){
     block.innerHTML=`<h4 class="op-title">Progresso dos hinos chamados</h4>
       <p class="op-sub">Apropriação: <b>Culto Oficial</b> · ${catalog.length} hinos elegíveis entre 1–480 · Coros excluídos</p>
       <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já chamados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Ainda não chamados</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
-      <p class="op-explain"><b>Modais e chamadas são contagens diferentes.</b> Dos ${catalog.length} hinos oficiais, <b>${mediaAvailable}</b> já têm modal multimídia nesta versão e <b>${mediaPending}</b> ainda aguardam modal. <b>Todos entram no relatório</b>, independentemente da existência de áudio ou partitura no sistema.</p>
-      <p class="op-source"><b>Registros encontrados neste navegador:</b> ${s.totalRecords} chamada(s) no histórico, sendo ${s.called.length} hino(s) oficiais diferentes marcados e ${s.outsideCount} registro(s) fora de Culto Oficial.${location.protocol==='file:'?' <strong>Você abriu um arquivo local. Os registros salvos no endereço do GitHub Pages não são carregados aqui.</strong>':' Os registros são locais a este navegador e endereço; não são sincronizados automaticamente entre dispositivos.'}</p>
       <div class="op-bar" role="progressbar" aria-label="Cobertura dos hinos de culto oficial" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.pct}"><div class="op-bar-fill" style="width:${s.pct}%"></div></div>
       <div class="op-actions"><button class="op-primary" type="button" id="opToggle" aria-expanded="false">Ver relatório e faltantes</button><button type="button" id="opExportAll">Exportar relatório CSV</button></div>
       <div class="op-detail" id="opDetail" hidden>
@@ -21222,8 +21551,7 @@ window.GuiaProtecaoTempoV78145={status(){
         <input type="search" id="opSearch" class="op-search" aria-label="Pesquisar hinos no relatório" placeholder="Pesquisar número ou título" autocomplete="off">
         <div class="op-list" id="opList" aria-live="polite"></div><div class="op-foot" id="opListCount"></div>
         <div class="op-actions"><button type="button" id="opExportMissing">CSV dos faltantes</button><button type="button" id="opExportCalled">CSV dos marcados</button></div>
-      </div>
-      <p class="op-foot">Faltantes = ${catalog.length} menos os hinos oficiais diferentes registrados neste navegador. Um hino chamado várias vezes conta uma só vez, mas todas as chamadas continuam no histórico. A existência de modal não altera essa conta.</p>`;
+      </div>`;
     box.prepend(block);
     block.querySelector('#opToggle').onclick=()=>{
       const detail=block.querySelector('#opDetail');detail.hidden=!detail.hidden;
