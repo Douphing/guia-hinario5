@@ -20879,4 +20879,364 @@ window.GuiaProtecaoTempoV78145={status(){
  window.GuiaPartituraDiretaV78155={abrir:()=>openScore(false),status:()=>({hino:number(),disponivel:available(),visorAberto:!!$('scoreFullscreen')?.classList.contains('open')})};
 })();
 </script>
+
+<!-- V7.81.38 TESTE: integração aditiva dos modais 211–220, dados de partitura/andamento; LETRAS 1–210 e Coros preservados. -->
+<script id="guia-v78138-hinos-211-220">
+(function(){
+  if (typeof MULTIMIDIA==='undefined') return;
+  MULTIMIDIA["211"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-211.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 72,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-211-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-211-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 211 — O Senhor Jesus passava..."
+  }
+};
+  MULTIMIDIA["212"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-212.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 84,
+    "min": 72,
+    "max": 88,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-212-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-212-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 212 — Testemunhas verazes nós somos"
+  }
+};
+  MULTIMIDIA["213"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-213.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 125,
+    "min": 104,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-213-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-213-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 213 — Quando vier do céu"
+  }
+};
+  MULTIMIDIA["214"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-214.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 74,
+    "min": 66,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-214-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-214-p1.jpg",
+      "assets/partituras/hino-214-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 214 — Como foi para os céus, assim virá"
+  }
+};
+  MULTIMIDIA["215"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-215.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 56,
+    "min": 44,
+    "max": 60,
+    "unidade": "semínima pontuada",
+    "unidadeSimbolo": "♩.",
+    "compasso": "12/8",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-215-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-215-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 215 — Em breve ao céu irei"
+  }
+};
+  MULTIMIDIA["216"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-216.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 124,
+    "min": 100,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Ré♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-216-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-216-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 216 — Irmãos, amemos ao Senhor"
+  }
+};
+  MULTIMIDIA["217"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-217.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 136,
+    "min": 112,
+    "max": 144,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Ré♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-217-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-217-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 217 — Vamos, unidos, a Deus louvar"
+  }
+};
+  MULTIMIDIA["218"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-218.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 72,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-218-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-218-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 218 — Oh! Jubilemos, devotos de Cristo"
+  }
+};
+  MULTIMIDIA["219"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-219.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 48,
+    "min": 40,
+    "max": 50,
+    "unidade": "semínima pontuada",
+    "unidadeSimbolo": "♩.",
+    "compasso": "6/8",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-219-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-219-p1.jpg",
+      "assets/partituras/hino-219-p2.jpg"
+    ],
+    "partituraTitulo": "Hino 219 — Novos céus nós aguardamos"
+  }
+};
+  MULTIMIDIA["220"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-220.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "R2: link do MP3 a validar no teste HTTPS; nenhuma mídia externa adicional cadastrada.",
+  "metronomo": {
+    "bpm": 71,
+    "min": 56,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-220-p1.jpg",
+    "partituraPaginas": [
+      "assets/partituras/hino-220-p1.jpg"
+    ],
+    "partituraTitulo": "Hino 220 — Cristo voltará"
+  }
+};
+  try { SEARCH_INDEX_CACHE=null; } catch(e) {}
+})();
+</script>
+
+<style id="guia-oficial-progress-css">
+#officialProgressBlock{margin:0 0 13px;padding:13px;border:1px solid #d8c79e;border-radius:13px;background:#fffaf0;color:#233d50;font-family:Arial,sans-serif}
+#officialProgressBlock .op-title{font-weight:750;font-size:1rem;color:#193449;margin:0 0 4px}
+#officialProgressBlock .op-sub{font-size:.76rem;line-height:1.5;color:#66645e;margin:0 0 10px}
+#officialProgressBlock .op-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#officialProgressBlock .op-stat{border:1px solid #e6dcc8;border-radius:10px;background:white;padding:9px 5px;text-align:center}
+#officialProgressBlock .op-stat b{font-size:1.36rem;display:block;font-variant-numeric:tabular-nums;color:#193449}
+#officialProgressBlock .op-stat span{font-size:.7rem;color:#66737a;font-weight:650}
+#officialProgressBlock .op-bar{height:8px;background:#e1e6e8;border-radius:99px;overflow:hidden;margin:10px 0 9px}
+#officialProgressBlock .op-bar-fill{background:#397968;height:100%;transition:width .25s}
+#officialProgressBlock .op-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}
+#officialProgressBlock .op-actions button,#officialProgressBlock .op-filters button{border:1px solid #c6ad7a;border-radius:9px;background:#fff;color:#274152;padding:9px 7px;font-size:.79rem;font-weight:700;cursor:pointer}
+#officialProgressBlock .op-actions button.op-primary,#officialProgressBlock .op-filters button[aria-pressed="true"]{background:#24445b;color:#fff;border-color:#24445b}
+#officialProgressBlock .op-detail{margin-top:10px;border-top:1px solid #e4d8c1;padding-top:10px}
+#officialProgressBlock .op-detail[hidden]{display:none!important}
+#officialProgressBlock .op-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+#officialProgressBlock .op-filters button{flex:1 1 75px}
+#officialProgressBlock .op-search{width:100%;min-height:38px;box-sizing:border-box;padding:8px 10px;border:1px solid #ccb98d;border-radius:9px;background:#fff;color:#193449;font-size:.85rem}
+#officialProgressBlock .op-list{max-height:260px;overflow:auto;margin:7px 0;border:1px solid #e4d8c1;border-radius:9px;background:white}
+#officialProgressBlock .op-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid #efe9db;font-size:.8rem}
+#officialProgressBlock .op-item:last-child{border-bottom:none}
+#officialProgressBlock .op-item button{border:0;background:transparent;color:#264963;text-align:left;font:650 .79rem/1.4 Arial,sans-serif;text-decoration:underline;cursor:pointer}
+#officialProgressBlock .op-item small{white-space:nowrap;color:#6c7780}
+#officialProgressBlock .op-foot{font-size:.72rem;color:#687077;line-height:1.5;margin:8px 0 0}
+@media(max-width:390px){#officialProgressBlock{padding:9px}#officialProgressBlock .op-stat b{font-size:1.15rem}#officialProgressBlock .op-actions button{font-size:.72rem}}
+</style>
+
+<script id="guia-oficial-progress-script">
+(function(){
+  'use strict';
+  if(typeof DATA==='undefined'||typeof HYMN_STORE==='undefined'||typeof renderCalls!=='function')return;
+  const escapeText=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // Fonte ÚNICA: campo apropriacao de DATA. Repetições do mesmo hino são deduplicadas.
+  const official=new Map();
+  Object.values(DATA).flat().forEach(h=>{
+    const k=String(h.num||'');
+    if(!/^\d+$/.test(k)||Number(k)<1||Number(k)>480||String(h.apropriacao||'').trim()!=='Culto Oficial')return;
+    if(!official.has(String(Number(k))))official.set(String(Number(k)),h);
+  });
+  const catalog=[...official.values()].sort((a,b)=>Number(a.num)-Number(b.num));
+  const normalizeNum=num=>/^\d+$/.test(String(num??''))?String(Number(num)):null;
+  function snap(){
+    const logs=typeof HYMN_STORE.calls==='function'?HYMN_STORE.calls():[];
+    const byNum=new Map();
+    if(Array.isArray(logs)) logs.forEach(r=>{
+      if(!r || r.type==='note')return;
+      const k=normalizeNum(r.num);
+      if(!k||!official.has(k))return;
+      const a=byNum.get(k)||[];a.push(r);byNum.set(k,a);
+    });
+    const called=catalog.filter(h=>byNum.has(String(Number(h.num))));
+    const missing=catalog.filter(h=>!byNum.has(String(Number(h.num))));
+    const pct=catalog.length?Math.round(1000*called.length/catalog.length)/10:0;
+    return {byNum,called,missing,pct,all:catalog};
+  }
+  function exportCsv(mode='all'){
+    const s=snap();
+    const items=mode==='missing'?s.missing:mode==='called'?s.called:s.all;
+    const rows=[['Hino','Título','Apropriação','Situação','Quantidade de chamadas','Primeira chamada','Última chamada']];
+    items.forEach(h=>{
+      const calls=s.byNum.get(String(Number(h.num)))||[];
+      const times=calls.map(r=>new Date(r.at)).filter(d=>!isNaN(d.getTime())).sort((a,b)=>a-b);
+      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
+    });
+    const q=v=>'"'+String(v??'').replace(/[\r\n]+/g,' ').replace(/"/g,'""')+'"';
+    const csv='\uFEFF'+rows.map(row=>row.map(q).join(';')).join('\r\n');
+    const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    const a=document.createElement('a');a.href=url;
+    a.download='relatorio-culto-oficial-'+(mode==='missing'?'faltantes':mode==='called'?'marcados':'completo')+'-'+new Date().toISOString().slice(0,10)+'.csv';
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+    try{registrarEventoGA('exportar_csv',{tipo_exportacao:'cobertura_culto_oficial_'+mode,quantidade_registros:items.length})}catch(e){}
+  }
+  let current='missing';
+  function showList(block){
+    const s=snap();const box=block.querySelector('#opList');if(!box)return;
+    const q=(block.querySelector('#opSearch')?.value||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const items=(current==='missing'?s.missing:current==='called'?s.called:s.all).filter(h=>!q || [h.num,h.titulo].join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q));
+    const vis=items.slice(0,80);
+    box.innerHTML=vis.length?vis.map(h=>{
+      const count=s.byNum.get(String(Number(h.num)))?.length||0;
+      return '<div class="op-item"><button type="button" data-hino="'+escapeText(h.num)+'">'+escapeText(h.num)+' — '+escapeText(h.titulo)+'</button><small>'+(count?count+' chamada'+(count>1?'s':''):'Faltante')+'</small></div>';
+    }).join(''):'<div class="op-item">Nenhum hino neste filtro.</div>';
+    block.querySelector('#opListCount').textContent='Exibindo '+vis.length+' de '+items.length+(items.length>80?' (pesquise para localizar outros)':'');
+    box.querySelectorAll('[data-hino]').forEach(b=>b.onclick=()=>{
+      const h=official.get(String(Number(b.dataset.hino)));
+      if(!h)return;
+      if(typeof closePersonal==='function')closePersonal();
+      try{window.__gaOrigemConsulta='relatorio_culto_oficial';openHymnDetail(h,String(h.ocasiao||'').split('/')[0])}catch(e){}
+    });
+  }
+  function addDashboard(){
+    current='missing';
+    const box=document.getElementById('personalContent');
+    if(!box||window.__personalView!=='calls'||window.__historyHymn)return;
+    const s=snap(); const block=document.createElement('section');block.id='officialProgressBlock';
+    block.innerHTML=`<h4 class="op-title">Progresso dos hinos chamados</h4>
+      <p class="op-sub">Apropriação: <b>Culto Oficial</b> · ${catalog.length} hinos elegíveis · Coros excluídos</p>
+      <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já marcados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Faltam marcar</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
+      <div class="op-bar" role="progressbar" aria-label="Cobertura dos hinos de culto oficial" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.pct}"><div class="op-bar-fill" style="width:${s.pct}%"></div></div>
+      <div class="op-actions"><button class="op-primary" type="button" id="opToggle" aria-expanded="false">Ver relatório e faltantes</button><button type="button" id="opExportAll">Exportar relatório CSV</button></div>
+      <div class="op-detail" id="opDetail" hidden>
+        <div class="op-filters"><button type="button" data-op-filter="missing" aria-pressed="true">Faltantes (${s.missing.length})</button><button type="button" data-op-filter="called" aria-pressed="false">Marcados (${s.called.length})</button><button type="button" data-op-filter="all" aria-pressed="false">Todos (${catalog.length})</button></div>
+        <input type="search" id="opSearch" class="op-search" aria-label="Pesquisar hinos no relatório" placeholder="Pesquisar número ou título" autocomplete="off">
+        <div class="op-list" id="opList" aria-live="polite"></div><div class="op-foot" id="opListCount"></div>
+        <div class="op-actions"><button type="button" id="opExportMissing">CSV dos faltantes</button><button type="button" id="opExportCalled">CSV dos marcados</button></div>
+      </div>
+      <p class="op-foot">Cada hino conta uma única vez na cobertura, mesmo que tenha várias chamadas. O histórico original com datas e observações permanece abaixo.</p>`;
+    box.prepend(block);
+    block.querySelector('#opToggle').onclick=()=>{
+      const detail=block.querySelector('#opDetail');detail.hidden=!detail.hidden;
+      block.querySelector('#opToggle').setAttribute('aria-expanded',String(!detail.hidden));
+      if(!detail.hidden)showList(block);
+    };
+    block.querySelector('#opExportAll').onclick=()=>exportCsv('all');
+    block.querySelector('#opExportMissing').onclick=()=>exportCsv('missing');
+    block.querySelector('#opExportCalled').onclick=()=>exportCsv('called');
+    block.querySelectorAll('[data-op-filter]').forEach(b=>b.onclick=()=>{
+      current=b.dataset.opFilter;
+      block.querySelectorAll('[data-op-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));
+      showList(block);
+    });
+    block.querySelector('#opSearch').oninput=()=>showList(block);
+  }
+  const orig=renderCalls;
+  renderCalls=function(filterNum){orig(filterNum);if(!filterNum)addDashboard();};
+  window.GuiaCultoOficialReport={snapshot:snap,exportCsv,catalogLength:catalog.length};
+})();
+</script>
+
 </body></html>
