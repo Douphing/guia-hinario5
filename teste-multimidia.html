@@ -1,3 +1,4 @@
+<!-- V7.81.49 TESTE: adiciona 241–250, CSV individual e contatos do Guia. -->
 <!-- V7.81.48 TESTE: correção da presença e cadastro das mídias externas 221–240. -->
 <!-- V7.81.47 TESTE: novos modais/partituras/letras 231-240, produção intacta. -->
 <!-- V7.81.46 TESTE: modais/partituras/letras 221–230, produção intacta. -->
@@ -1724,6 +1725,17 @@ body.ga-v78155-score-over-letter #scoreFullscreen.open{z-index:100100!important}
 }
 </style>
 
+
+<style id="guia-v78149-contato-css">
+.guia-contato{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:28px auto 8px;padding:16px 18px;border:1px solid #d3c19a;border-radius:17px;background:#faf8f1;color:#263b4d}
+.guia-contato h2{margin:0 0 4px;font:700 1.05rem Georgia,serif;color:#273b4b}
+.guia-contato p{margin:0;color:#716953;font:.85rem/1.4 Arial,sans-serif}
+.guia-contato-email{flex-shrink:0;text-decoration:none;border:1px solid #aa8b51;border-radius:12px;padding:10px 13px;color:#263a4c;background:#fffefa;font:700 .84rem Arial,sans-serif}
+.guia-contato-email:hover,.guia-contato-email:focus-visible{background:#f4e9cc}
+.guia-contato-sobre{margin-top:13px!important;padding-top:12px;border-top:1px solid #e3d6b7;overflow-wrap:anywhere}
+.guia-contato-sobre a{color:#263b52;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:440px){.guia-contato{padding:13px;gap:9px}.guia-contato h2{font-size:.97rem}.guia-contato p{font-size:.77rem}.guia-contato-email{padding:10px 9px;font-size:.76rem}}
+</style>
 </head><body id="top" class="index-mode welcome-mode"><div id="installPopup" class="install-popup" aria-hidden="true"><div class="install-box"><div class="install-icon">H5</div><h2>Instalar Guia Hinário 5</h2><p>
       Instale este guia no seu celular para ter acesso rápido
       diretamente pela tela inicial.
@@ -1750,7 +1762,12 @@ body.ga-v78155-score-over-letter #scoreFullscreen.open{z-index:100100!important}
         Guia Visual de Hinos por Ocasião — Hinário nº 5<br>
         Atualizado em outubro de 2026.
       </div><p class="about-author"><strong>Desenvolvimento:</strong> Douglas Campos Andrade
-      </p></div></div></div><main class="wrap"><nav class="index" id="indice" tabindex="-1" aria-label="Índice"></nav><div class="section-divider" aria-hidden="true"><span>RELAÇÃO DE HINOS</span></div><div id="content"></div><section class="seo-links" aria-label="Consultar hinos por ocasião"><h2>Consultar hinos por ocasião</h2><nav><a href="hinos-palavra.html">Palavra</a><a href="hinos-oracao.html">Oração</a><a href="hinos-testemunho.html">Testemunho</a><a href="hinos-batismo.html">Batismo</a><a href="hinos-santa-ceia.html">Santa Ceia</a><a href="hinos-funeral.html">Funeral</a><a href="hinos-abertura.html">Abertura</a><a href="hinos-encerramento.html">Encerramento</a><a href="hinos-meia-hora.html">Meia-Hora</a></nav></section></main><footer>480 hinos + 6 coros • Guia visual baseado na relação fornecida do Hinário nº 5</footer>
+      </p><p class="guia-contato-sobre"><strong>Contato oficial do Guia:</strong>
+ <a href="mailto:guiahinario5ccb@gmail.com?subject=Contato%20-%20Guia%20do%20Hinario%20n%C2%BA%205">guiahinario5ccb@gmail.com</a><br><small>Sugestões, elogios, dúvidas e correções</small></p>
+ </div></div></div><main class="wrap"><nav class="index" id="indice" tabindex="-1" aria-label="Índice"></nav><div class="section-divider" aria-hidden="true"><span>RELAÇÃO DE HINOS</span></div><div id="content"></div><section class="seo-links" aria-label="Consultar hinos por ocasião"><h2>Consultar hinos por ocasião</h2><nav><a href="hinos-palavra.html">Palavra</a><a href="hinos-oracao.html">Oração</a><a href="hinos-testemunho.html">Testemunho</a><a href="hinos-batismo.html">Batismo</a><a href="hinos-santa-ceia.html">Santa Ceia</a><a href="hinos-funeral.html">Funeral</a><a href="hinos-abertura.html">Abertura</a><a href="hinos-encerramento.html">Encerramento</a><a href="hinos-meia-hora.html">Meia-Hora</a></nav></section><section class="guia-contato" aria-labelledby="guia-contato-title">
+ <div class="guia-contato-copy"><h2 id="guia-contato-title">Fale com o Guia</h2><p>Sugestões, elogios, dúvidas ou correções.</p></div>
+ <a class="guia-contato-email" href="mailto:guiahinario5ccb@gmail.com?subject=Contato%20-%20Guia%20do%20Hinario%20n%C2%BA%205" aria-label="Enviar e-mail ao Guia do Hinário">✉ Enviar e-mail</a>
+</section></main><footer>480 hinos + 6 coros • Guia visual baseado na relação fornecida do Hinário nº 5</footer>
 <script>
 
 // Eventos personalizados do Google Analytics — Guia v2.0
@@ -12296,7 +12313,7 @@ function openHymnDetail(h,cat){
 
    const platformBtns=[];
    const hymnNum=Number(h&&h.num);
-   const forceThreePlatforms=Number.isFinite(hymnNum)&&((hymnNum>=130&&hymnNum<=160)||(hymnNum>=221&&hymnNum<=240));
+   const forceThreePlatforms=Number.isFinite(hymnNum)&&((hymnNum>=130&&hymnNum<=160)||(hymnNum>=221&&hymnNum<=250));
    const cleanMediaBrands=true; // V7.81.44: apenas nome da plataforma em todos os botões.
    const lote211a220=Number.isFinite(hymnNum)&&hymnNum>=211&&hymnNum<=220;
 
@@ -12715,9 +12732,10 @@ function loadHymnMedia(kind,media,button,automatico=false){
 
 <script>
 function downloadCallsCsv(){
- const items=HYMN_STORE.calls().slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
- if(!items.length){alert('Ainda não há hinos chamados para baixar.');return}
- registrarEventoGA('exportar_csv',{tipo_exportacao:'hinos_chamados',quantidade_registros:items.length});
+ const filtroHino=(window.__personalView==='calls' && window.__historyHymn!=null && String(window.__historyHymn).trim()!=='') ? String(window.__historyHymn) : null;
+ const items=HYMN_STORE.calls().filter(x=>!filtroHino||String(x.num)===filtroHino).sort((a,b)=>new Date(b.at)-new Date(a.at));
+ if(!items.length){alert(filtroHino?'Não há registros deste hino para baixar.':'Ainda não há hinos chamados para baixar.');return}
+ registrarEventoGA('exportar_csv',{tipo_exportacao:filtroHino?'hino_individual':'hinos_chamados',numero_hino:filtroHino||'',quantidade_registros:items.length});
  const escCsv=v=>'"'+String(v??'').replace(/\r?\n/g,' ').replace(/"/g,'""')+'"';
  const rows=[['Hino','Título','Data','Hora','Observação']];
  items.forEach(x=>{
@@ -12726,7 +12744,7 @@ function downloadCallsCsv(){
  });
  const csv='\uFEFF'+rows.map(r=>r.map(escCsv).join(';')).join('\r\n');
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download='hinos-chamados-'+new Date().toISOString().slice(0,10)+'.csv';
+ a.href=url;a.download=(filtroHino?'registros-hino-'+filtroHino:'hinos-chamados')+'-'+new Date().toISOString().slice(0,10)+'.csv';
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 </script>
@@ -22681,6 +22699,605 @@ window.GuiaProtecaoTempoV78145={status(){
    return {hino:n,spotify:!!m.spotify,youtube:!!m.youtube,youtubeMusic:!!m.youtubeMusic,mp3:!!m.audio,
      fonteSpotify:m.spotifyArtista||'',fonteYoutube:m.youtubeArtista||'',fonteMusic:m.youtubeMusicArtista||''};
  });
+})();
+</script>
+
+
+<!-- V7.81.49 TESTE: Hinos 241–250; letras/partituras separadas, músicas com fontes verificadas. -->
+<script id="guia-v78149-hinos-241-250">
+(function(){
+ 'use strict';
+ if (typeof MULTIMIDIA==='undefined' || typeof LETRAS==='undefined') return;
+ const novasLetras={
+  "241": {
+    "titulo": "A Justiça divina",
+    "estrofes": [
+      [
+        "Deus quis ao mundo manifestar",
+        "A perfeita Caridade;",
+        "Pelos profetas, fez anunciar",
+        "A Justiça e a Verdade.",
+        "Essa Justiça, que é Jesus,",
+        "Enviada foi ao mundo,",
+        "Manifestando, por Sua luz,",
+        "O amor que ao céu conduz."
+      ],
+      [
+        "Essa Justiça nos libertou",
+        "Da condenação vindoura;",
+        "Deus, por Jesus, nos predestinou",
+        "Para a glória duradoura.",
+        "Somos, agora, remidos Seus,",
+        "Exaltemos o Seu Nome;",
+        "Ele nos fez cidadãos dos céus",
+        "E herdeiros do bom Deus."
+      ]
+    ],
+    "coro": [
+      "A Justiça divina é Jesus, o Salvador;",
+      "Sua sã doutrina nos conduz ao Criador."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2"
+    ]
+  },
+  "242": {
+    "titulo": "Profundo é o saber de Deus, Criador",
+    "estrofes": [
+      [
+        "Profundo é o saber de Deus, Criador,",
+        "Saber sem igual, de grande esplendor;",
+        "O intento de Deus ninguém pode sondar;",
+        "Conselhos ninguém foi ao grande Deus ditar."
+      ],
+      [
+        "Perfeito saber é só o de Deus,",
+        "Altíssimos são os pensamentos Seus;",
+        "Por Ele e d’Ele é tudo o que há;",
+        "É Deus que, aos homens, sustento sempre dá."
+      ],
+      [
+        "Sublime saber pertence a Deus,",
+        "Ciência dos céus não negará aos Seus;",
+        "Riquezas perpétuas só Ele é que tem;",
+        "A Ele a glória eternamente. Amém."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "243": {
+    "titulo": "É Jesus o nosso Intercessor",
+    "estrofes": [
+      [
+        "Sumo Sacerdote santo, eternal,",
+        "É Jesus o Senhor;",
+        "Intercede junto ao Pai celestial,",
+        "Nosso Deus, Criador."
+      ],
+      [
+        "Sacerdote compassivo é o Senhor;",
+        "Ele nos resgatou;",
+        "É piedoso para com o transgressor,",
+        "Pois na cruz o salvou."
+      ],
+      [
+        "Foi tentado em tudo o Senhor Jesus,",
+        "Resistiu com valor;",
+        "Com Seu braço forte Ele nos conduz;",
+        "Tem por nós grande amor."
+      ]
+    ],
+    "coro": [
+      "É Jesus o nosso Intercessor",
+      "Junto a Deus, o Formador;",
+      "Em Seu Nome, a nossa oração",
+      "Chegará ao Criador."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "244": {
+    "titulo": "Cristo intercede por ti",
+    "estrofes": [
+      [
+        "Quando te faltam forças contra o mal,",
+        "Tens o socorro dos céus;",
+        "Cristo Jesus, Cordeiro divinal,",
+        "É Intercessor junto a Deus."
+      ],
+      [
+        "Quando o inimigo te vier tentar,",
+        "Clama a Jesus, Redentor;",
+        "Forças, por certo, Ele irá te dar",
+        "E te fará vencedor."
+      ],
+      [
+        "Quando estiveres em tribulação,",
+        "Clama ao Filho de Deus,",
+        "E certamente te socorrerão",
+        "Anjos mandados dos céus."
+      ]
+    ],
+    "coro": [
+      "Cristo intercede por ti",
+      "Junto a Deus, o Pai celestial;",
+      "Cristo é o modelo santo e perfeito,",
+      "Cristo é o Amigo leal."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "245": {
+    "titulo": "Não pode entender o mundo",
+    "estrofes": [
+      [
+        "Não pode entender o mundo",
+        "Quão alegre é o meu viver;",
+        "Mas, de Cristo, o amor profundo",
+        "Sentirá quem n’Ele crer."
+      ],
+      [
+        "Eu me sinto mui ditoso,",
+        "Pela graça do bom Deus;",
+        "Meu futuro é mui glorioso,",
+        "Pois espero ir aos céus."
+      ],
+      [
+        "O meu ser foi transformado",
+        "Pela obra do Senhor;",
+        "Dia a dia mais chegado",
+        "Eu estou ao lar de amor."
+      ]
+    ],
+    "coro": [
+      "Mesmo quando em aflição,",
+      "Sinto a paz de Deus;",
+      "Cristo, ao meu coração,",
+      "Bênçãos traz dos céus;",
+      "Se, com Ele, aqui viver tão glorioso é,",
+      "Quão glorioso então será,",
+      "Se permanecer na fé?!"
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "246": {
+    "titulo": "Irmãos, já resgatados",
+    "estrofes": [
+      [
+        "Irmãos, já resgatados no sangue de Jesus,",
+        "Agora iluminados, mostremos Sua luz;",
+        "Do mundo, separados, o Mestre nos conduz."
+      ],
+      [
+        "Com todo o povo eleito servimos ao Senhor;",
+        "Herdeiros nos tem feito do reino de esplendor,",
+        "Eterno e perfeito, um reino de amor."
+      ],
+      [
+        "No número dos santos estamos, por Jesus,",
+        "E, com vestidos brancos, honramos Sua luz;",
+        "Cobertos com Seu manto, o mal não nos seduz."
+      ]
+    ],
+    "coro": [
+      "Resgatados fomos,",
+      "Perdoados somos;",
+      "Salvos nós seremos,",
+      "Sendo a Deus fiéis."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "247": {
+    "titulo": "Se fores tentado",
+    "estrofes": [
+      [
+        "Se fores tentado, não deves ceder,",
+        "Resiste ao pecado até o vencer;",
+        "Sê mui valoroso com fé que Deus dá,",
+        "Então o inimigo, de ti, fugirá."
+      ],
+      [
+        "Não manches as vestes que Cristo lavou;",
+        "Para embranquecê-las, sangue derramou;",
+        "Rejeita o pecado, procura imitar",
+        "Os que o venceram sem desanimar."
+      ],
+      [
+        "Se forças te faltam para combater,",
+        "Deus, o Onipotente, pode te valer;",
+        "A quem busca auxílio, vitória dará,",
+        "Jamais confundido Ele o deixará."
+      ]
+    ],
+    "final": [
+      "Só em Cristo confia, seja noite ou dia,",
+      "E terás alegria em teu coração."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ]
+  },
+  "248": {
+    "titulo": "Glória! Aleluia! Sinto Jesus",
+    "estrofes": [
+      [
+        "Glória! Aleluia! Sinto Jesus,",
+        "Ele me guia na senda de luz;",
+        "Seu forte braço me susterá,",
+        "De todo o mal me defenderá."
+      ],
+      [
+        "Glória! Aleluia! Santo é o Senhor,",
+        "Três vezes Santo e rico em amor;",
+        "Vivo seguro em Seu poder,",
+        "E este mundo posso vencer."
+      ],
+      [
+        "Glória! Aleluia! Amo ao Senhor;",
+        "Quero servi-Lo com todo o fervor;",
+        "Em Sua glória eu entrarei",
+        "E, junto aos santos, habitarei."
+      ]
+    ],
+    "coro": [
+      "Glória! Aleluia! Contemplarei",
+      "Face a face o meu Senhor,",
+      "E então igual a Ele serei",
+      "No Seu glorioso lar de esplendor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "249": {
+    "titulo": "A Caridade",
+    "estrofes": [
+      [
+        "Esperança e fé sustêm nossa vida no Senhor,",
+        "Na firmeza e santidade;",
+        "Esses dons que vêm dos céus levarão ao Criador",
+        "Os que andarem na divina Caridade."
+      ],
+      [
+        "Se falarmos, ó irmãos, a linguagem celestial",
+        "E a dos homens, em verdade,",
+        "Isso não nos levará à cidade eternal,",
+        "Se em nós não estiver a Caridade."
+      ],
+      [
+        "Para os santos do Senhor, é virtude sem igual",
+        "A excelente Caridade;",
+        "Revestidos desse bem, venceremos todo o mal",
+        "E veremos Deus, o Pai da eternidade."
+      ]
+    ],
+    "coro": [
+      "A Caridade é a perfeição",
+      "Que permanece eternamente;",
+      "O fiel a Deus, que em si a possuir, receberá",
+      "Galardão excelente."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "250": {
+    "titulo": "Com meu Redentor viverei nos céus",
+    "estrofes": [
+      [
+        "No dia em que Jesus vier",
+        "Para, deste mundo, me recolher,",
+        "Em Sua paz descansarei",
+        "E a Sua volta aguardarei."
+      ],
+      [
+        "Ecoará dos altos céus",
+        "O som da trombeta do eterno Deus;",
+        "E, do meu sono, acordarei",
+        "Para encontrar o glorioso Rei."
+      ],
+      [
+        "Vou com Jesus me encontrar;",
+        "Grande há de ser o meu jubilar,",
+        "Pois transformado eu serei",
+        "Na aparição do excelso Rei."
+      ]
+    ],
+    "coro": [
+      "Com meu Redentor viverei nos céus",
+      "Junto ao Criador, o eterno Deus;",
+      "Por divino amor, eu desfrutarei",
+      "Da eterna herança com Cristo, o Rei."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  }
+};
+ for (const [numero,dados] of Object.entries(novasLetras)) LETRAS[numero]=dados;
+  MULTIMIDIA["241"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-241.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 80,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-241-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-241-p1.jpg?v=78149",
+      "assets/partituras/hino-241-p2.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 241 — A Justiça divina"
+  },
+  "youtube": "rMGEQaG231Q",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=rMGEQaG231Q",
+  "youtubeOriginType": "video-individual",
+  "youtubeArtista": "Orquestra Sacra"
+};
+  MULTIMIDIA["242"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-242.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 73,
+    "min": 63,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Lá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-242-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-242-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 242 — Profundo é o saber de Deus, Criador"
+  }
+};
+  MULTIMIDIA["243"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-243.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 87,
+    "min": 72,
+    "max": 92,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-243-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-243-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 243 — É Jesus o nosso Intercessor"
+  }
+};
+  MULTIMIDIA["244"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-244.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 80,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-244-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-244-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 244 — Cristo intercede por ti"
+  }
+};
+  MULTIMIDIA["245"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-245.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 79,
+    "min": 63,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-245-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-245-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 245 — Não pode entender o mundo"
+  }
+};
+  MULTIMIDIA["246"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-246.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 128,
+    "min": 116,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-246-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-246-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 246 — Irmãos, já resgatados"
+  }
+};
+  MULTIMIDIA["247"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-247.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 124,
+    "min": 100,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-247-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-247-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 247 — Se fores tentado"
+  }
+};
+  MULTIMIDIA["248"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-248.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 132,
+    "min": 112,
+    "max": 138,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-248-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-248-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 248 — Glória! Aleluia! Sinto Jesus"
+  }
+};
+  MULTIMIDIA["249"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-249.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 80,
+    "min": 66,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-249-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-249-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 249 — A Caridade"
+  },
+  "youtube": "_1DmxW-ph3E",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=_1DmxW-ph3E",
+  "youtubeOriginType": "video-individual",
+  "youtubeArtista": "Orquestra Sacra"
+};
+  MULTIMIDIA["250"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-250.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Links ainda não identificados permanecem indisponíveis.",
+  "metronomo": {
+    "bpm": 72,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-250-p1.jpg?v=78149",
+    "partituraPaginas": [
+      "assets/partituras/hino-250-p1.jpg?v=78149"
+    ],
+    "partituraTitulo": "Hino 250 — Com meu Redentor viverei nos céus"
+  },
+  "youtube": "fMSAyC-2EMM",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=fMSAyC-2EMM",
+  "youtubeOriginType": "video-individual",
+  "youtubeArtista": "Orquestra Sacra"
+};
+ window.GuiaHinos241a250V78149={numeros:Object.keys(novasLetras),
+   resumo:()=>Object.entries(novasLetras).map(([numero,l])=>({numero:Number(numero),estrofes:l.estrofes.length,
+   coro:!!l.coro,final:!!l.final,estrutura:l.estrutura.slice(),paginas:MULTIMIDIA[numero].metronomo.partituraPaginas.length,
+   youtube:!!MULTIMIDIA[numero].youtube,spotify:!!MULTIMIDIA[numero].spotify,youtubeMusic:!!MULTIMIDIA[numero].youtubeMusic}))};
 })();
 </script>
 
