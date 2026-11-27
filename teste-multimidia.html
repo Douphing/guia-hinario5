@@ -1,3 +1,4 @@
+<!-- V7.81.50 TESTE: lote 251–260 integrado; atualização somente de testes. -->
 <!-- V7.81.49 TESTE: adiciona 241–250, CSV individual e contatos do Guia. -->
 <!-- V7.81.48 TESTE: correção da presença e cadastro das mídias externas 221–240. -->
 <!-- V7.81.47 TESTE: novos modais/partituras/letras 231-240, produção intacta. -->
@@ -12313,7 +12314,7 @@ function openHymnDetail(h,cat){
 
    const platformBtns=[];
    const hymnNum=Number(h&&h.num);
-   const forceThreePlatforms=Number.isFinite(hymnNum)&&((hymnNum>=130&&hymnNum<=160)||(hymnNum>=221&&hymnNum<=250));
+   const forceThreePlatforms=Number.isFinite(hymnNum)&&((hymnNum>=130&&hymnNum<=160)||(hymnNum>=221&&hymnNum<=260));
    const cleanMediaBrands=true; // V7.81.44: apenas nome da plataforma em todos os botões.
    const lote211a220=Number.isFinite(hymnNum)&&hymnNum>=211&&hymnNum<=220;
 
@@ -23404,6 +23405,582 @@ window.GuiaProtecaoTempoV78145={status(){
   const orig=renderCalls;
   renderCalls=function(filterNum){orig(filterNum);if(!filterNum)addDashboard();};
   window.GuiaCultoOficialReport={snapshot:snap,exportCsv,catalogLength:catalog.length,modalAvailable:mediaAvailable,modalPending:mediaPending};
+})();
+</script>
+
+
+<!-- GUIA V7.81.50 TESTE: hinos 251–260; letras, partituras individuais, andamento, botões de mídia sem URLs inventadas. -->
+<script id="guia-v78150-hinos-251-260">
+(function(){
+  'use strict';
+  if(typeof LETRAS==='undefined'||typeof MULTIMIDIA==='undefined') return;
+  const novasLetras={
+  "251": {
+    "titulo": "Firme nas mãos de Cristo",
+    "estrofes": [
+      [
+        "Firme nas mãos de Cristo, firme no Salvador,",
+        "Minh’alma já se encontra abrigada em Seu amor.",
+        "Sinto a voz divina de Cristo, o Rei da glória;",
+        "Em todas as batalhas, alcançarei vitória."
+      ],
+      [
+        "Firme nas mãos de Cristo, em paz minh’alma está;",
+        "Sobre o inimigo, pela fé, triunfará.",
+        "Forte serei na luta, na dor e na tormenta,",
+        "Prossigo avante, em glória, pois Cristo me sustenta."
+      ],
+      [
+        "Firme nas mãos de Cristo, que padeceu por mim,",
+        "Sigo, por fé, Seus passos, glória eu terei ao fim;",
+        "Espero com paciência, pois não é tempo ainda;",
+        "Breve verei, nas nuvens, Cristo, em Sua vinda."
+      ]
+    ],
+    "final": [
+      "Firme nas mãos de Cristo, firme no Salvador,",
+      "Minh’alma já se encontra abrigada em Seu amor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ]
+  },
+  "252": {
+    "titulo": "Exaltação ao Deus Onipotente!",
+    "estrofes": [
+      [
+        "Exaltação ao Deus Onipotente!",
+        "Santo louvor Lhe dão os filhos Seus.",
+        "Oram por fé e, reverentemente,",
+        "Cantam ao Pai, Senhor e grande Deus."
+      ],
+      [
+        "Veneração ao Deus Onipresente!",
+        "Rege do céu o mundo que formou.",
+        "Do Seu olhar, não pode o ser vivente",
+        "Se ocultar, pois Ele o criou."
+      ],
+      [
+        "Adoração ao Deus Onisciente!",
+        "É mui sublime o pensamento Seu;",
+        "Sábio, fiel e bom a todo o crente",
+        "Que, pela fé, invoca o Rei do céu."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "253": {
+    "titulo": "Foi alegre, ditoso o dia",
+    "estrofes": [
+      [
+        "Eu estava morto no pecado,",
+        "Mas Jesus, com Sua voz, me despertou;",
+        "Era, pelo mal, escravizado",
+        "E agora liberto estou."
+      ],
+      [
+        "Eu não servirei à iniquidade,",
+        "Pois retenho em mim a fé no Salvador;",
+        "Entrarei na celestial cidade",
+        "Para estar com o meu Senhor."
+      ],
+      [
+        "Com eterna bem-aventurança,",
+        "Os Seus santos, o Senhor coroará;",
+        "Eu prossigo com a esperança",
+        "Da vitória, que perto está."
+      ]
+    ],
+    "coro": [
+      "Foi alegre, ditoso o dia",
+      "Em que Cristo, o Verdadeiro,",
+      "Trouxe a luz divina ao meu coração",
+      "E vestiu-me de justiça e salvação;",
+      "Grande glória, oh! aleluia!",
+      "No Seu reino desfrutarei;",
+      "Lá eu cantarei louvores ao Justo,",
+      "Majestoso e grande Rei."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "254": {
+    "titulo": "De Jesus a graça divina",
+    "estrofes": [
+      [
+        "De Jesus a graça divina e, também, a paz de Deus,",
+        "Com a celestial doutrina, permaneçam nos filhos Seus."
+      ],
+      [
+        "Fé e amor conservem unidos os remidos do Senhor;",
+        "Sejam eles revestidos das virtudes do Redentor."
+      ],
+      [
+        "Sempre unidos ao sábio Mestre devem os fiéis viver;",
+        "E a comunhão celeste, nos seus corações, devem ter."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "255": {
+    "titulo": "Jesus é a nossa Rocha",
+    "estrofes": [
+      [
+        "Jesus é a nossa Rocha de eterna salvação,",
+        "Que pode abrigar-nos em toda a tentação;",
+        "Se n’Ele confiarmos, ninguém nos vencerá,",
+        "Pois nossa fé constante em Cristo está."
+      ],
+      [
+        "Seguro Alicerce é o Senhor Jesus,",
+        "Que nos tirou das trevas, mostrando-nos a luz;",
+        "Será esclarecido quem nessa Rocha crer,",
+        "Bem firme estará pelo Seu poder."
+      ],
+      [
+        "A geração eleita nós somos, no Senhor,",
+        "E sacerdócio santo ao nosso Criador;",
+        "A graça, nós devemos ao mundo proclamar;",
+        "Quem crer no Seu poder há de triunfar."
+      ]
+    ],
+    "coro": [
+      "É Cristo a Rocha de eterna salvação,",
+      "Real Fundamento da nossa redenção;",
+      "É Cristo a Rocha, Autor do sumo bem,",
+      "Quem n’Ele firme está, proteção tem."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "256": {
+    "titulo": "Sem Deus Pai, vivi no mundo",
+    "estrofes": [
+      [
+        "Sem Deus Pai, vivi no mundo, à vaidade eu servi;",
+        "Em tristezas me encontrava quando a Cristo conheci;",
+        "Seu perdão, Seu amor, em minh’alma recebi."
+      ],
+      [
+        "Eu jamais compreenderia o Evangelho do Senhor,",
+        "Se não fosse Sua graça, Seu amor, imenso amor,",
+        "Que do mal me livrou, me unindo ao Criador."
+      ],
+      [
+        "No meu ser agora sinto Teu Espírito, ó Senhor,",
+        "Que me guia na verdade e me leva ao lar de amor;",
+        "Nesse lar viverei com Jesus, meu Redentor."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "257": {
+    "titulo": "Remiu-nos por graça",
+    "estrofes": [
+      [
+        "Remiu-nos por graça o bondoso Jesus,",
+        "Morrendo por nós sobre a cruz;",
+        "Pagou nossa dívida ao Criador,",
+        "Por Seu inefável amor."
+      ],
+      [
+        "Ninguém merecia o favor do Senhor,",
+        "Mas Ele, por grande amor,",
+        "A todos promete real salvação;",
+        "Quem crê em Jesus tem perdão."
+      ],
+      [
+        "Só em Cristo temos veraz salvação,",
+        "Por Ele alcançamos perdão;",
+        "Jesus veio com Seu poder nos salvar",
+        "E Seus fiéis ao céu guiar."
+      ]
+    ],
+    "coro": [
+      "Busquemos a Cristo com todo o fervor,",
+      "Na paz, na humildade, com fé e temor;",
+      "Divina mercê quer Jesus dispensar",
+      "A quem, confiante, a Ele clamar."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "258": {
+    "titulo": "Louvemos ao nosso Senhor",
+    "estrofes": [
+      [
+        "Louvemos ao nosso Senhor,",
+        "Exaltemos Seu Nome eterno,",
+        "Pois Ele é Fonte de amor",
+        "E é digno de todo o louvor."
+      ],
+      [
+        "Oh! Vamos louvores cantar,",
+        "Agradáveis louvores ao bom Deus,",
+        "E hinos de glória entoar;",
+        "Vamos no Seu amor jubilar!"
+      ],
+      [
+        "Oh! Vamos, com fé, ao Senhor;",
+        "Assentemo-nos todos à mesa,",
+        "Pois nos servirá com amor,",
+        "Pelo Espírito Consolador."
+      ],
+      [
+        "Aqui nos achamos, Senhor,",
+        "Ofertando tributos de glória;",
+        "Só Tu és, do bem, Doador,",
+        "Ó eterno, bondoso Senhor."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "estrofe-4"
+    ]
+  },
+  "259": {
+    "titulo": "Só triunfará o de sincero coração",
+    "estrofes": [
+      [
+        "Quem servir a Deus, triunfará sobre o mal",
+        "E receberá o galardão eternal;",
+        "Lutará, com todo o fervor, contra toda a tentação;",
+        "Só triunfará o de sincero coração."
+      ],
+      [
+        "Nada pode destruir a fé que Deus dá;",
+        "Com Seu braço forte, Seus fiéis guiará;",
+        "Quem Seu Nome sempre confessar, nunca lutará em vão;",
+        "Só triunfará o de sincero coração."
+      ],
+      [
+        "As potentes armas do cristão são dos céus,",
+        "Armas virtuosas que provêm só de Deus;",
+        "A espada do Espírito livrará da tentação;",
+        "Só triunfará o de sincero coração."
+      ]
+    ],
+    "coro": [
+      "Vamos batalhar",
+      "Para alcançar",
+      "Grande galardão:",
+      "Nossa salvação."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "260": {
+    "titulo": "Sou servo inútil, ó Deus piedoso",
+    "estrofes": [
+      [
+        "Sou servo inútil, ó Deus piedoso,",
+        "Sou sempre fraco, sinto-me faltoso;",
+        "Nesta imprudência, rogo clemência;",
+        "Lava a minha alma, clamo a Ti, Senhor."
+      ],
+      [
+        "Sou servo inútil, servo imperfeito;",
+        "Vivo ansioso para ser aceito;",
+        "Podes limpar-me, justificar-me;",
+        "Se Tu o quiseres, nada impedirá."
+      ],
+      [
+        "Sou servo inútil neste caminho,",
+        "Sem Teu cuidado, que farei sozinho?",
+        "Este Teu filho roga auxílio;",
+        "Ouve meu pedido: “Compaixão, Senhor!”"
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  }
+};
+  const novasMidias={
+  "251": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-251.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 87,
+      "min": 72,
+      "max": 92,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Sol maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-251-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-251-p1.jpg?v=78150",
+        "assets/partituras/hino-251-p2.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 251 — Firme nas mãos de Cristo"
+    }
+  },
+  "252": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-252.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 95,
+      "min": 80,
+      "max": 100,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Mi♭ maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-252-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-252-p1.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 252 — Exaltação ao Deus Onipotente!"
+    }
+  },
+  "253": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-253.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 81,
+      "min": 72,
+      "max": 84,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Sol maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-253-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-253-p1.jpg?v=78150",
+        "assets/partituras/hino-253-p2.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 253 — Foi alegre, ditoso o dia"
+    }
+  },
+  "254": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-254.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 62,
+      "min": 52,
+      "max": 66,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Fá maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-254-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-254-p1.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 254 — De Jesus a graça divina"
+    }
+  },
+  "255": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-255.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 75,
+      "min": 60,
+      "max": 80,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Si♭ maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-255-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-255-p1.jpg?v=78150",
+        "assets/partituras/hino-255-p2.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 255 — Jesus é a nossa Rocha"
+    }
+  },
+  "256": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-256.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 115,
+      "min": 100,
+      "max": 120,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "6/4",
+      "tonalidade": "Sol maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-256-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-256-p1.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 256 — Sem Deus Pai, vivi no mundo"
+    }
+  },
+  "257": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-257.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 137,
+      "min": 116,
+      "max": 144,
+      "unidade": "colcheia",
+      "unidadeSimbolo": "♪",
+      "compasso": "6/8",
+      "tonalidade": "Fá maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-257-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-257-p1.jpg?v=78150",
+        "assets/partituras/hino-257-p2.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 257 — Remiu-nos por graça"
+    }
+  },
+  "258": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-258.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 76,
+      "min": 63,
+      "max": 80,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Si♭ maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-258-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-258-p1.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 258 — Louvemos ao nosso Senhor"
+    },
+    "youtube": "Pg0Gr7WfQE4",
+    "youtubeOrigin": "https://www.youtube.com/watch?v=Pg0Gr7WfQE4",
+    "youtubeOriginType": "video-individual",
+    "youtubeArtista": "Orquestra Sacra"
+  },
+  "259": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-259.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 87,
+      "min": 72,
+      "max": 92,
+      "unidade": "semínima",
+      "unidadeSimbolo": "♩",
+      "compasso": "4/4",
+      "tonalidade": "Sol maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-259-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-259-p1.jpg?v=78150",
+        "assets/partituras/hino-259-p2.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 259 — Só triunfará o de sincero coração"
+    }
+  },
+  "260": {
+    "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-260.mp3",
+    "modoReproducao": "partitura",
+    "hdBrandLabelsOnly": true,
+    "fonteExterna": "YouTube e Spotify: Orquestra Sacra. YouTube Music: Vozes do Campo. Acesso sem faixa direta confirmada indisponível.",
+    "metronomo": {
+      "bpm": 122,
+      "min": 108,
+      "max": 126,
+      "unidade": "colcheia",
+      "unidadeSimbolo": "♪",
+      "compasso": "6/8",
+      "tonalidade": "Mi♭ maior",
+      "volume": 50,
+      "partitura": false,
+      "partituraImagem": "assets/partituras/hino-260-p1.jpg?v=78150",
+      "partituraPaginas": [
+        "assets/partituras/hino-260-p1.jpg?v=78150"
+      ],
+      "partituraTitulo": "Hino 260 — Sou servo inútil, ó Deus piedoso"
+    }
+  }
+};
+  for(const [n,v] of Object.entries(novasLetras)) LETRAS[n]=v;
+  for(const [n,v] of Object.entries(novasMidias)) MULTIMIDIA[n]=v;
+  window.GuiaHinos251a260V78150={
+    numeros:Object.keys(novasLetras),
+    resumo:()=>Object.keys(novasLetras).map(n=>({numero:Number(n),estrofes:novasLetras[n].estrofes.length,
+       coro:!!novasLetras[n].coro,final:!!novasLetras[n].final,
+       paginas:novasMidias[n].metronomo.partituraPaginas.length,
+       spotify:!!novasMidias[n].spotify,youtube:!!novasMidias[n].youtube,youtubeMusic:!!novasMidias[n].youtubeMusic}))
+  };
 })();
 </script>
 
