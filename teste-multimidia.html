@@ -1,3 +1,4 @@
+<!-- V7.81.47 TESTE: novos modais/partituras/letras 231-240, produção intacta. -->
 <!-- V7.81.46 TESTE: modais/partituras/letras 221–230, produção intacta. -->
 <!-- V7.81.45 TESTE: YouTube (211–220) restrito à Orquestra Sacra; 215 verificado, demais pendentes. YouTube Music preserva Vozes do Campo. Sem alteração na produção. -->
 <!-- GUIA V7.81.44 - TESTE: reforço de letras únicas nos Hinos 211–220; botões de mídias só com marcas; produção intacta. -->
@@ -22020,6 +22021,639 @@ window.GuiaProtecaoTempoV78145={status(){
    resumo: () => Object.entries(novasLetras).map(([n,v]) => ({ numero:Number(n), estrofes:v.estrofes.length,
      coro:!!v.coro, final:!!v.final, paginas:MULTIMIDIA[n].metronomo.partituraPaginas.length,
      spotify:!!MULTIMIDIA[n].spotify, youtube:!!MULTIMIDIA[n].youtube, youtubeMusic:!!MULTIMIDIA[n].youtubeMusic }))
+ };
+})();
+</script>
+
+
+<!-- V7.81.47 TESTE: Hinos 231-240, partituras 11 p1/p2, letras da partitura, MP3 R2, YouTube Orquestra Sacra e YouTube Music Vozes do Campo. -->
+<script id="guia-v78147-hinos-231-240">
+(function(){
+ 'use strict';
+ if (typeof MULTIMIDIA==='undefined' || typeof LETRAS==='undefined') return;
+ const novasLetras = {
+  "231": {
+    "titulo": "Provemos, irmãos, do amor do Senhor",
+    "estrofes": [
+      [
+        "Provemos, irmãos, do amor do Senhor;",
+        "Quem dele provar lutará com valor;",
+        "Com força divina prevalecerá;",
+        "Por Cristo Jesus, triunfante será."
+      ],
+      [
+        "Na hora da luta, o nosso Senhor",
+        "Virá ajudar-nos por Seu grande amor;",
+        "Fiéis, confiantes, marchemos aos céus;",
+        "Rejubilaremos ao ver nosso Deus."
+      ],
+      [
+        "O nosso inimigo não nos vencerá,",
+        "O braço de Cristo nos auxiliará;",
+        "Teremos vitória se, de coração,",
+        "Ficarmos unidos ao bom Guardião."
+      ]
+    ],
+    "coro": [
+      "Que grande amor, aleluia!",
+      "Provamos em Cristo Jesus!",
+      "Amor sem igual, amor divinal,",
+      "Amor que ao céu nos conduz."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "232": {
+    "titulo": "Seguro estou...",
+    "estrofes": [
+      [
+        "Seguro estou de que Jesus me ajudará",
+        "E, lá do céu, de força e fé me proverá;",
+        "Se a Ele eu servir e a Sua lei cumprir,",
+        "Bem certo estou de que Jesus me ajudará."
+      ],
+      [
+        "Não deixará a minha fé se abalar;",
+        "Eu seguirei ao meu Senhor sem duvidar;",
+        "Com afeto guardarei a doutrina do meu Rei",
+        "Que, neste mundo, orientará meu caminhar."
+      ],
+      [
+        "Meu coração está firmado no Senhor,",
+        "Alicerçado nessa Rocha de amor;",
+        "Cristo irá me receber quando, em glória, aparecer;",
+        "Firmado estou no meu bendito Redentor."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "233": {
+    "titulo": "Avante, santos e fiéis de Deus",
+    "estrofes": [
+      [
+        "Avante, santos e fiéis de Deus,",
+        "Até o fim, até vencer,",
+        "Pois Ele as forças mandará dos céus;",
+        "É sem limite o Seu poder."
+      ],
+      [
+        "Avante com celestial valor;",
+        "Os dons de Deus não faltarão;",
+        "Em nós se manifestará o Senhor",
+        "Durante a peregrinação."
+      ],
+      [
+        "Com fé em Deus e no Senhor Jesus,",
+        "Sinais dos céus iremos ver;",
+        "Tomando cada dia a nossa cruz,",
+        "Sigamos Quem nos faz vencer."
+      ]
+    ],
+    "coro": [
+      "Vamos marchar por fé, vamos seguir Jesus,",
+      "Pois à frente Ele está e à glória nos conduz;",
+      "Junto a Deus, nos céus, o galardão sem par",
+      "Breve iremos desfrutar."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "234": {
+    "titulo": "O meu ser entrego a Cristo",
+    "estrofes": [
+      [
+        "O meu ser entrego a Cristo, d’Ele sempre eu serei;",
+        "Ele é o sábio Mestre, só a Ele ouvirei."
+      ],
+      [
+        "O meu ser entrego a Cristo, sempre a Ele amarei;",
+        "Cristo é o Pastor celeste, n’Ele me deleitarei."
+      ],
+      [
+        "O meu ser entrego a Cristo, perto d’Ele quero estar;",
+        "Seu poder é infinito para, à glória, me levar."
+      ]
+    ],
+    "coro": [
+      "Cristo me salvou e me perdoou;",
+      "O meu ser a Ele entrego, servo d’Ele sou."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "235": {
+    "titulo": "Um amor imenso",
+    "estrofes": [
+      [
+        "Um amor imenso, santo e celestial,",
+        "Sinto agora em Cristo, Mestre divinal;",
+        "Deus o Pai bendito, transformou meu ser;",
+        "Revelou-me a graça, pelo Seu poder."
+      ],
+      [
+        "Nada me separa do divino amor",
+        "Que me une a Cristo, o meu Salvador;",
+        "O fervor glorioso de servir a Deus",
+        "Me conduz avante rumo ao céu dos céus."
+      ],
+      [
+        "Paz e vida eterna tenho por Jesus,",
+        "Bem-aventurança, regozijo e luz;",
+        "Meu Tesouro é Cristo, Ele é meu Viver;",
+        "Quero, ao Mestre amado, sempre obedecer."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "236": {
+    "titulo": "Há um lugar de eterna paz",
+    "estrofes": [
+      [
+        "Os santos do Senhor em terra estranha estão,",
+        "Caminham com fervor, em peregrinação;",
+        "Estão buscando o lar de esplendor sem par,",
+        "São co-herdeiros de Jesus."
+      ],
+      [
+        "Quem pode exprimir, quem pode explicar",
+        "A glória do porvir, que o justo vai herdar?",
+        "Certeza deste bem, por fé, agora têm",
+        "Os resgatados de Jesus."
+      ],
+      [
+        "Mandado é, dos céus, que o homem pecador",
+        "Aceite a eterna lei de Deus, o Criador;",
+        "Justificado, então terá o galardão",
+        "Com os que creram em Jesus."
+      ]
+    ],
+    "coro": [
+      "Há um lugar de eterna paz",
+      "E de consolação veraz;",
+      "Quem se entregar a Deus, quem crer no Salvador,",
+      "Irá morar no lar de amor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "237": {
+    "titulo": "Deus é por mim",
+    "estrofes": [
+      [
+        "Deus é por mim, nada devo temer;",
+        "Por que hei de duvidar?",
+        "Ele em tudo me pode valer,",
+        "Só n’Ele vou confiar."
+      ],
+      [
+        "Nada no mundo jamais poderá",
+        "Privar-me do Seu amor;",
+        "É esse amor que me conduzirá",
+        "Ao reino do Criador."
+      ],
+      [
+        "Para os fiéis não há condenação,",
+        "Jesus é seu Defensor;",
+        "Sobre a morte eles triunfarão",
+        "Na volta do seu Senhor."
+      ]
+    ],
+    "coro": [
+      "Do mundo já separado estou,",
+      "Foi Jesus Quem me separou;",
+      "Com Seu sangue precioso me resgatou."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "238": {
+    "titulo": "Teu servo ouve; fala, Senhor",
+    "estrofes": [
+      [
+        "Para ouvir-Te, ó Criador,",
+        "Me apresento diante de Ti;",
+        "Tua Palavra manda, Senhor;",
+        "Para ouvi-La, eis-me aqui."
+      ],
+      [
+        "Ao meu desejo renunciarei",
+        "Para servir-Te e Te agradar;",
+        "E os preceitos da Tua lei",
+        "Quero, contente, executar."
+      ],
+      [
+        "Serve-Te deste meu fraco ser",
+        "Como instrumento ao Teu louvor;",
+        "E Te servindo, quero dizer:",
+        "“Servo inútil sou, ó Senhor.”"
+      ]
+    ],
+    "final": [
+      "Teu servo ouve; fala, Senhor,",
+      "O que requeres de mim, ó Deus?",
+      "A voz divina, que vem dos céus,",
+      "Teu servo ouve; fala, Senhor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ]
+  },
+  "239": {
+    "titulo": "Eis que a noite é passada",
+    "estrofes": [
+      [
+        "Eis que a noite é passada, para mim surgiu o dia;",
+        "De Jesus estou mais perto; oh! Que alegria!",
+        "Sempre mais eu vou crescendo nas virtudes do Senhor",
+        "Para, um dia, ser perfeito no divino amor."
+      ],
+      [
+        "Eis que a noite é passada, já surgiu a Luz divina;",
+        "Essa Luz é Jesus Cristo, que me ilumina.",
+        "Bem cingido de justiça e das armas do Senhor,",
+        "Eu espero, confiante, ser um vencedor."
+      ]
+    ],
+    "coro": [
+      "Ó Jesus, por Tua graça,",
+      "Glória sempre Te darei;",
+      "Resgatado por Teu sangue,",
+      "Só a Ti servirei."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2"
+    ]
+  },
+  "240": {
+    "titulo": "Não me cansarei de cantar",
+    "estrofes": [
+      [
+        "Não me cansarei de cantar",
+        "Louvores ao meu Criador;",
+        "A paz que me faz exultar",
+        "É fruto do Seu amor."
+      ],
+      [
+        "De quando Jesus me chamou,",
+        "Não cesso de dar-Lhe louvor;",
+        "Foi Ele Quem me resgatou,",
+        "Bendito é Cristo, o Senhor!"
+      ],
+      [
+        "A santa presença de Deus",
+        "Meu cálice faz transbordar;",
+        "Terei regozijo nos céus,",
+        "Glorioso, eterno, sem par."
+      ]
+    ],
+    "coro": [
+      "Glória, glória dou a Jesus com fervor;",
+      "Por Ele serei vencedor;",
+      "Oh! Glória ao meu Redentor!"
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  }
+};
+ for (const [numero,dados] of Object.entries(novasLetras)) LETRAS[numero]=dados;
+  MULTIMIDIA["231"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-231.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 0,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=0s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 125,
+    "min": 104,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-231-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-231-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 231 — Provemos, irmãos, do amor do Senhor"
+  },
+  "youtubeMusicEnd": 214
+};
+  MULTIMIDIA["232"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-232.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 214,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=214s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 78,
+    "min": 60,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-232-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-232-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 232 — Seguro estou..."
+  },
+  "youtubeMusicEnd": 412,
+  "youtube": "SE_fc5XLq1Y",
+  "youtubeOrigin": "https://www.youtube.com/watch?v=SE_fc5XLq1Y",
+  "youtubeOriginType": "video-individual",
+  "youtubeArtista": "Orquestra Sacra"
+};
+  MULTIMIDIA["233"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-233.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 412,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=412s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 80,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-233-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-233-p1.jpg?v=78147",
+      "assets/partituras/hino-233-p2.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 233 — Avante, santos e fiéis de Deus"
+  },
+  "youtubeMusicEnd": 629
+};
+  MULTIMIDIA["234"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-234.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 629,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=629s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 76,
+    "min": 66,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-234-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-234-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 234 — O meu ser entrego a Cristo"
+  },
+  "youtubeMusicEnd": 842
+};
+  MULTIMIDIA["235"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-235.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 842,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=842s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 99,
+    "min": 84,
+    "max": 104,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-235-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-235-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 235 — Um amor imenso"
+  },
+  "youtubeMusicEnd": 1029
+};
+  MULTIMIDIA["236"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-236.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 1029,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=1029s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 73,
+    "min": 63,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-236-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-236-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 236 — Há um lugar de eterna paz"
+  },
+  "youtubeMusicEnd": 1246
+};
+  MULTIMIDIA["237"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-237.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 1246,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=1246s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 120,
+    "min": 100,
+    "max": 126,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "6/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-237-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-237-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 237 — Deus é por mim"
+  },
+  "youtubeMusicEnd": 1506
+};
+  MULTIMIDIA["238"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-238.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 1506,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=1506s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 126,
+    "min": 108,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "9/8",
+    "tonalidade": "Ré♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-238-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-238-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 238 — Teu servo ouve; fala, Senhor"
+  },
+  "youtubeMusicEnd": 1694
+};
+  MULTIMIDIA["239"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-239.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 1694,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=1694s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 72,
+    "min": 60,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-239-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-239-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 239 — Eis que a noite é passada"
+  },
+  "youtubeMusicEnd": 1887
+};
+  MULTIMIDIA["240"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-240.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "YouTube: Orquestra Sacra, vídeo individual confirmado. YouTube Music: CCB Vozes do Campo, coletânea 231-240 por trecho. Spotify: pendente de faixa direta confirmada.",
+  "youtubeMusic": "yAehRlO6U1w",
+  "youtubeMusicStart": 1887,
+  "youtubeMusicOrigin": "https://www.youtube.com/watch?v=yAehRlO6U1w&t=1887s",
+  "youtubeMusicOriginType": "coletanea-com-timestamp",
+  "youtubeMusicArtista": "CCB - Vozes do Campo",
+  "metronomo": {
+    "bpm": 127,
+    "min": 112,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Lá♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-240-p1.jpg?v=78147",
+    "partituraPaginas": [
+      "assets/partituras/hino-240-p1.jpg?v=78147"
+    ],
+    "partituraTitulo": "Hino 240 — Não me cansarei de cantar"
+  }
+};
+ window.GuiaHinos231a240V78147 = {
+   numeros: Object.keys(novasLetras),
+   resumo: () => Object.entries(novasLetras).map(([numero,letra]) => ({numero:Number(numero),
+     estrofes:letra.estrofes.length,coro:!!letra.coro,final:!!letra.final,
+     estrutura:letra.estrutura.slice(),paginas:MULTIMIDIA[numero].metronomo.partituraPaginas.length,
+     spotify:!!MULTIMIDIA[numero].spotify,youtube:!!MULTIMIDIA[numero].youtube,
+     youtubeMusic:!!MULTIMIDIA[numero].youtubeMusic}))
  };
 })();
 </script>
