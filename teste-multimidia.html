@@ -1,3 +1,4 @@
+<!-- V7.81.48 TESTE: correção da presença e cadastro das mídias externas 221–240. -->
 <!-- V7.81.47 TESTE: novos modais/partituras/letras 231-240, produção intacta. -->
 <!-- V7.81.46 TESTE: modais/partituras/letras 221–230, produção intacta. -->
 <!-- V7.81.45 TESTE: YouTube (211–220) restrito à Orquestra Sacra; 215 verificado, demais pendentes. YouTube Music preserva Vozes do Campo. Sem alteração na produção. -->
@@ -12295,7 +12296,7 @@ function openHymnDetail(h,cat){
 
    const platformBtns=[];
    const hymnNum=Number(h&&h.num);
-   const forceThreePlatforms=Number.isFinite(hymnNum)&&hymnNum>=130&&hymnNum<=160;
+   const forceThreePlatforms=Number.isFinite(hymnNum)&&((hymnNum>=130&&hymnNum<=160)||(hymnNum>=221&&hymnNum<=240));
    const cleanMediaBrands=true; // V7.81.44: apenas nome da plataforma em todos os botões.
    const lote211a220=Number.isFinite(hymnNum)&&hymnNum>=211&&hymnNum<=220;
 
@@ -22655,6 +22656,31 @@ window.GuiaProtecaoTempoV78145={status(){
      spotify:!!MULTIMIDIA[numero].spotify,youtube:!!MULTIMIDIA[numero].youtube,
      youtubeMusic:!!MULTIMIDIA[numero].youtubeMusic}))
  };
+})();
+</script>
+
+
+<!-- V7.81.48 TESTE: 221–240, botões Spotify/YouTube/YouTube Music sempre visíveis; links só quando validados. -->
+<script id="guia-v78148-midias-externas-221-240">
+(function(){
+ 'use strict';
+ if(typeof MULTIMIDIA==='undefined') return;
+ for(let n=221;n<=240;n++){
+   const m=MULTIMIDIA[String(n)];
+   if(!m)continue;
+   m.hdBrandLabelsOnly=true;
+ }
+  Object.assign(MULTIMIDIA["222"], {"spotify": "3wFimQaTM4I99x1ll2WMCB", "spotifyType": "track", "spotifyOrigin": "https://open.spotify.com/track/3wFimQaTM4I99x1ll2WMCB", "spotifyArtista": "Orquestra Sacra Paulista"} );
+  Object.assign(MULTIMIDIA["224"], {"spotify": "119jdStBZigsE9dlapUgpV", "spotifyType": "track", "spotifyOrigin": "https://open.spotify.com/track/119jdStBZigsE9dlapUgpV", "spotifyArtista": "Orquestra Sacra"} );
+  Object.assign(MULTIMIDIA["225"], {"spotify": "2x3INwLMYfeUkXSs7ks9mb", "spotifyType": "track", "spotifyOrigin": "https://open.spotify.com/track/2x3INwLMYfeUkXSs7ks9mb", "spotifyArtista": "Orquestra Sacra"} );
+  Object.assign(MULTIMIDIA["226"], {"spotify": "3RqbxH93RaKzaluv1m4TXC", "spotifyType": "track", "spotifyOrigin": "https://open.spotify.com/track/3RqbxH93RaKzaluv1m4TXC", "spotifyArtista": "Orquestra Sacra"} );
+  Object.assign(MULTIMIDIA["236"], {"spotify": "6g2zlmUaO4hViBacnTDSOY", "spotifyType": "track", "spotifyOrigin": "https://open.spotify.com/track/6g2zlmUaO4hViBacnTDSOY", "spotifyArtista": "Orquestra Sacra"} );
+  Object.assign(MULTIMIDIA["221"], {"youtubeMusic": "COb5q9tFHIw", "youtubeMusicOrigin": "https://www.youtube.com/watch?v=COb5q9tFHIw", "youtubeMusicOriginType": "video-individual", "youtubeMusicArtista": "CCB - Vozes do Campo", "youtubeMusicStart": 0} );
+ window.GuiaAuditoriaMidias221a240V78148 = () => Array.from({length:20},(_,i)=>{
+   const n=i+221,m=MULTIMIDIA[String(n)]||{};
+   return {hino:n,spotify:!!m.spotify,youtube:!!m.youtube,youtubeMusic:!!m.youtubeMusic,mp3:!!m.audio,
+     fonteSpotify:m.spotifyArtista||'',fonteYoutube:m.youtubeArtista||'',fonteMusic:m.youtubeMusicArtista||''};
+ });
 })();
 </script>
 
