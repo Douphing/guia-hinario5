@@ -23419,12 +23419,14 @@ window.GuiaProtecaoTempoV78145={status(){
       </div>
       <div class="op-detail" id="opDetail" hidden>
         <div class="op-detail-head"><strong id="opDetailTitle">Hinos chamados</strong><button type="button" id="opCloseList" aria-label="Fechar a lista">Fechar</button></div>
-        <div class="op-inputs"><input type="search" id="opSearch" class="op-search" placeholder="Número ou título" aria-label="Pesquisar na lista" autocomplete="off">
+        <button type="button" class="op-filter-toggle" aria-controls="opInputsWrap" aria-expanded="false">⌕ Filtrar lista</button>
+        <div class="op-inputs" id="opInputsWrap" hidden><input type="search" id="opSearch" class="op-search" placeholder="Número ou título" aria-label="Pesquisar na lista" autocomplete="off">
         <select id="opOccasion" class="op-search" aria-label="Filtrar ocasião"><option value="">Todas as ocasiões</option>${[...new Set(catalog.map(occasion))].sort((a,b)=>a.localeCompare(b,'pt-BR')).map(v=>'<option value="'+escapeText(v)+'">'+escapeText(v)+'</option>').join('')}</select></div>
         <div class="op-list" id="opList"></div>
         <div class="op-detail-foot"><span id="opListCount"></span><button type="button" id="opReportCsv" data-csv="called">Baixar CSV da lista</button></div>
       </div>
       <div class="op-history-bar"><strong>Registros <span>${snapNow.totalRecords}</span></strong><button type="button" data-csv="history" aria-label="Baixar CSV de todos os registros">↓ CSV dos registros</button></div>`;
+    block.querySelector('.op-summary').appendChild(block.querySelector('.op-history-bar'));
     box.append(block,previous); // Histórico visível imediatamente, com a rolagem original.
     const detail=block.querySelector('#opDetail');
     const reset=()=>{current=null;detail.hidden=true;block.querySelectorAll('[data-view]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
@@ -23437,9 +23439,11 @@ window.GuiaProtecaoTempoV78145={status(){
       block.querySelector('#opDetailTitle').textContent=view==='called'?'Hinos chamados':'Hinos faltantes';
       block.querySelector('#opReportCsv').dataset.csv=view;
       block.querySelector('#opSearch').value='';block.querySelector('#opOccasion').value='';
+      block.querySelector('#opInputsWrap').hidden=true;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded','false');
       showList(block);
     });
     block.querySelectorAll('[data-csv]').forEach(btn=>btn.onclick=()=>exportCsv(btn.dataset.csv));
+    block.querySelector('.op-filter-toggle').onclick=()=>{const el=block.querySelector('#opInputsWrap'),open=el.hidden;el.hidden=!open;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded',String(open));if(open)block.querySelector('#opSearch').focus()};
     block.querySelector('#opSearch').oninput=()=>showList(block);
     block.querySelector('#opOccasion').onchange=()=>showList(block);
   }
@@ -25401,4 +25405,34 @@ window.GuiaProtecaoTempoV78145={status(){
 @media(max-width:345px){#officialProgressBlock .op-shortcut{padding:8px;min-height:59px}#officialProgressBlock .op-shortcut span{font-size:.78rem}#officialProgressBlock .op-shortcut strong{font-size:1.02rem}}
 </style>
 
+
+<!-- V7.81.57 TESTE: partituras dos hinos 321–330 e relatório compacto, sem alterar produção. -->
+<script id="guia-v78157-hinos-321-330">
+(()=>{
+  const novasMidias={"321": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-321.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-321-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-321-p1.jpg?v=78157"], "partituraTitulo": "Hino 321 — Bendito seja o Deus vivente", "volume": 50, "min": 58, "max": 69, "bpm": 66}}, "322": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-322.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-322-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-322-p1.jpg?v=78157", "assets/partituras/hino-322-p2.jpg?v=78157"], "partituraTitulo": "Hino 322 — Vem, Rei eterno", "volume": 50, "min": 104, "max": 132, "bpm": 125}}, "323": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-323.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-323-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-323-p1.jpg?v=78157"], "partituraTitulo": "Hino 323 — Oh! Não busques, ansioso", "volume": 50, "min": 63, "max": 80, "bpm": 76}}, "324": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-324.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-324-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-324-p1.jpg?v=78157", "assets/partituras/hino-324-p2.jpg?v=78157"], "partituraTitulo": "Hino 324 — Do mal o Salvador veio me tirar", "volume": 50, "min": 63, "max": 76, "bpm": 73}}, "325": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-325.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-325-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-325-p1.jpg?v=78157"], "partituraTitulo": "Hino 325 — Louvemos ao Rei dos reis", "volume": 50, "min": 112, "max": 138, "bpm": 132}}, "326": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-326.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-326-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-326-p1.jpg?v=78157"], "partituraTitulo": "Hino 326 — Sempre a Cristo fiéis", "volume": 50, "min": 100, "max": 120, "bpm": 115}}, "327": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-327.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-327-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-327-p1.jpg?v=78157"], "partituraTitulo": "Hino 327 — Soldados somos do Senhor", "volume": 50, "min": 76, "max": 92, "bpm": 88}}, "328": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-328.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-328-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-328-p1.jpg?v=78157"], "partituraTitulo": "Hino 328 — Grande é o Teu poder, Senhor", "volume": 50, "min": 63, "max": 80, "bpm": 76}}, "329": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-329.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-329-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-329-p1.jpg?v=78157"], "partituraTitulo": "Hino 329 — Com fé combate", "volume": 50, "min": 96, "max": 138, "bpm": 128}}, "330": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-330.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Nenhuma faixa externa confirmada neste lote.", "metronomo": {"partitura": false, "partituraImagem": "assets/partituras/hino-330-p1.jpg?v=78157", "partituraPaginas": ["assets/partituras/hino-330-p1.jpg?v=78157"], "partituraTitulo": "Hino 330 — Ao findar a jornada", "volume": 50, "min": 66, "max": 88, "bpm": 82}}};
+  for(const [n,v] of Object.entries(novasMidias)) MULTIMIDIA[n]=v;
+  window.GuiaHinos321a330V78157={numeros:Object.keys(novasMidias),letrasStatus:'pendentes de transcrição conferida'};
+})();
+</script>
+
+<style id="guia-v78157-report-compact">
+/* The personal panel itself is the scroll parent. Keep the shortcuts accessible without hiding the history. */
+#officialProgressBlock{display:contents!important}
+#officialProgressBlock .op-summary{position:sticky!important;top:0!important;z-index:15!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important;padding:6px 0 8px!important;margin:0!important;background:#fffdf8!important;border-bottom:1px solid #e5dbc8!important;box-shadow:0 4px 7px rgba(20,37,48,.07)!important}
+#officialProgressBlock .op-shortcut{min-height:40px!important;padding:5px 9px!important;border-radius:9px!important;gap:4px!important;box-shadow:none!important}
+#officialProgressBlock .op-shortcut span{font-size:.75rem!important}
+#officialProgressBlock .op-shortcut strong{font-size:.95rem!important}
+#officialProgressBlock .op-history-bar{grid-column:1/-1;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:7px!important;padding:3px 1px 0!important;margin:0!important;border:0!important}
+#officialProgressBlock .op-history-bar strong{font-size:.75rem!important}
+#officialProgressBlock .op-history-bar button{font-size:.71rem!important;padding:5px 9px!important;border-radius:8px!important;min-height:31px!important}
+#officialProgressBlock .op-detail{margin:9px 0!important;padding:9px!important}
+#officialProgressBlock .op-detail-head{margin-bottom:5px!important}
+#officialProgressBlock .op-detail-head button{min-height:30px!important;padding:5px 9px!important}
+#officialProgressBlock .op-filter-toggle{display:inline-flex;align-items:center;min-height:32px;padding:5px 10px;margin:3px 0 4px;border:1px solid #d4c3a0;border-radius:8px;background:#fff;color:#27455a;font-size:.74rem;font-weight:700;cursor:pointer}
+#officialProgressBlock .op-inputs[hidden]{display:none!important}
+#officialProgressBlock .op-inputs{margin:5px 0!important}
+#officialProgressBlock .op-search{min-height:35px!important;font-size:.76rem!important}
+#officialProgressBlock .op-list{max-height:230px!important;margin-top:4px!important}
+@media(max-width:360px){#officialProgressBlock .op-shortcut span{font-size:.68rem!important}#officialProgressBlock .op-shortcut strong{font-size:.85rem!important}}
+</style>
 </body></html>
