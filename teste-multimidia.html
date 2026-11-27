@@ -1,3 +1,4 @@
+<!-- V7.81.46 TESTE: modais/partituras/letras 221–230, produção intacta. -->
 <!-- V7.81.45 TESTE: YouTube (211–220) restrito à Orquestra Sacra; 215 verificado, demais pendentes. YouTube Music preserva Vozes do Campo. Sem alteração na produção. -->
 <!-- GUIA V7.81.44 - TESTE: reforço de letras únicas nos Hinos 211–220; botões de mídias só com marcas; produção intacta. -->
 <!-- V7.81.43 TESTE: letras 211–220 seguem padrão do Guia (coro uma vez após a 1ª estrofe; final uma vez no término). Partituras 215-p2/216-p1 separadas e imagens atualizadas com versão de cache. Não altera index.html de produção nem histórico do usuário. -->
@@ -21488,6 +21489,538 @@ window.GuiaProtecaoTempoV78145={status(){
  // Histórico do usuário permanece em HYMN_STORE, sem qualquer gravação adicional.
  window.GuiaLetras211a220V78144={disponiveis:()=>Object.keys(novasLetras).filter(n=>!!LETRAS[n]),
    resumo:()=>Object.entries(novasLetras).map(([n,l])=>({numero:n,estrofes:l.estrofes.length,coro:!!l.coro,final:!!l.final}))};
+})();
+</script>
+
+
+<!-- V7.81.46 TESTE: integra Hinos 221–230 com partituras p1/p2, letras canônicas e MP3 R2.
+     Mídias externas só devem tocar faixas individualmente confirmadas da fonte definida. -->
+<script id="guia-v78146-hinos-221-230">
+(function(){
+ 'use strict';
+ if (typeof MULTIMIDIA==='undefined' || typeof LETRAS==='undefined') return;
+ const novasLetras = {
+  "221": {
+    "titulo": "A descida do Espírito Santo",
+    "estrofes": [
+      [
+        "Reunidos se encontravam os discípulos do Senhor;",
+        "Com fervor eles esperavam, de Deus, o Consolador.",
+        "Eis que um som, mui de repente, ecoar ouviu-se lá dos céus,",
+        "Qual um vento veemente: Era o Espírito de Deus."
+      ],
+      [
+        "Línguas, como de fogo, viram em si mesmos então pousar;",
+        "Sobre eles se repartiram, fazendo-os a Deus louvar.",
+        "Em linguagens diferentes, começaram a manifestar",
+        "As grandezas excelentes que Deus Pai lhes fez provar."
+      ],
+      [
+        "A Promessa é feita a tantos quantos Deus, nosso Pai, chamar;",
+        "Com fervor, todos os Seus santos devem os Seus dons buscar.",
+        "Se os homens, aos seus filhos, boas coisas sabem ofertar,",
+        "Muito mais o Pai bendito, aos que pedem, pode dar."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "222": {
+    "titulo": "Brevemente virá o Senhor Jesus",
+    "estrofes": [
+      [
+        "Breve voltará Jesus Cristo, glorioso, com grande esplendor;",
+        "Que alegria será para os fiéis que aguardam o seu Redentor!"
+      ],
+      [
+        "Breve voltará Jesus Cristo, triunfante, com rijo clamor;",
+        "Levará os remidos, por Seu poder, para o reino de paz e de amor."
+      ],
+      [
+        "Breve voltará Jesus Cristo, quando, então, para nós surgirá",
+        "Nova aurora do reino de eterna luz, onde o justo resplandecerá."
+      ]
+    ],
+    "coro": [
+      "Brevemente virá o Senhor Jesus premiar, com o Seu galardão,",
+      "Os que fielmente aguardam Sua gloriosa aparição."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "223": {
+    "titulo": "Muitos, por fé, aceitaram Jesus",
+    "estrofes": [
+      [
+        "Muitos, por fé, aceitaram Jesus e alcançaram salvação;",
+        "O pecador que recebe a Luz tem perdão."
+      ],
+      [
+        "Muitos já trilham a senda do bem; sobre o mal vão triunfar;",
+        "Deves juntar-te a eles também sem tardar."
+      ],
+      [
+        "Muitos aguardam a vida eternal para descansar nos céus;",
+        "Crê em Jesus, o Amigo leal; crê em Deus."
+      ]
+    ],
+    "coro": [
+      "Muitos já sentem o grande amor de Jesus Cristo, Amigo sem par;",
+      "Oh! Não rejeites o bom Redentor que te quer salvar."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "224": {
+    "titulo": "Só Jesus concede paz e salvação",
+    "estrofes": [
+      [
+        "Quem, disposto, segue ao Senhor Jesus, com virtude e força leva a sua cruz;",
+        "Tem poder divino em seu coração, não será vencido pela tentação."
+      ],
+      [
+        "Todos os cansados, vinde ao Senhor, vinde sem demora, Ele é o Salvador;",
+        "E dizei a Cristo, com satisfação: “Nós Te consagramos nosso coração”."
+      ],
+      [
+        "Com a nova vida no Senhor Jesus mostrareis ao mundo que Ele é a Luz;",
+        "Seja a vossa obra um louvor a Deus, e a vida eterna vós tereis nos céus."
+      ]
+    ],
+    "coro": [
+      "Só Jesus concede paz e salvação, e, na glória eterna, grande galardão;",
+      "Quem também deseja ir com Deus morar sente que, a Cristo, deve aceitar."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "225": {
+    "titulo": "Senhor, com Tua voz me chamas",
+    "estrofes": [
+      [
+        "Senhor, com Tua voz me chamas; os Teus caminhos me ensinas;",
+        "Eu sei, Senhor, que Tu me amas com Teu amor celestial."
+      ],
+      [
+        "Senhor, a Tua voz sublime me traz conforto e regozijo,",
+        "E, quando a angústia me oprime, é bálsamo consolador."
+      ],
+      [
+        "Senhor, a Tua voz potente, que faz cessar a tempestade",
+        "E que apaga o fogo ardente, me guiará até o céu."
+      ]
+    ],
+    "coro": [
+      "Oh! Que voz tão preciosa é Tua voz, ó Criador,",
+      "Meiga, santa e poderosa, que me alegra, ó Senhor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "226": {
+    "titulo": "A história do Evangelho",
+    "estrofes": [
+      [
+        "É a história do Evangelho que nos fala de Jesus,",
+        "Que ao Pai obedeceu e veio ser a nossa Luz.",
+        "Para dar-nos vida eterna, dura morte suportou;",
+        "Pela glória que antevia, ao Seu Pai se humilhou."
+      ],
+      [
+        "Transpassado com a lança foi o corpo do Senhor,",
+        "Sobre a cruz foi derramado o Seu sangue remidor;",
+        "E, por esse sacrifício, recebemos salvação;",
+        "O Evangelho nos declara: “Só em Cristo há perdão”."
+      ],
+      [
+        "Comovente é ouvir contar a história de Jesus;",
+        "Quem, atento, escutá-la participará da luz;",
+        "Ela ensina que o castigo foi trocado por perdão;",
+        "Glória ao divinal Cordeiro todos os fiéis darão."
+      ]
+    ],
+    "final": [
+      "Não existe outra história que se iguale à do Senhor,",
+      "Alegria dá aos mansos e converte o pecador;",
+      "Essa história manifesta a verdade e a luz",
+      "Que restauram nossas vidas e nos guiam a Jesus."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3",
+      "final"
+    ]
+  },
+  "227": {
+    "titulo": "Procuras tu ao Salvador?",
+    "estrofes": [
+      [
+        "Procuras tu ao Salvador, que dá a bem-aventurança?",
+        "Qual é a tua confiança aqui no mundo enganador?",
+        "Em Cristo tens a vida, tens a força e o favor.",
+        "O santo Redentor será a tua Segurança."
+      ],
+      [
+        "A Cristo vem, sem duvidar, vem dar os teus primeiros passos;",
+        "Jesus remove os embaraços, perdão e vida quer te dar.",
+        "É Cristo Quem te salva, faz de ti um vencedor.",
+        "Deseja, o Redentor, manter contigo eternos laços."
+      ],
+      [
+        "Findando a peregrinação, terás com Ele eterna vida;",
+        "Jesus aqui te dá guarida e lá no céu o galardão.",
+        "É Cristo Fonte eterna de virtude e de fé.",
+        "Potente Ele é e te socorre em toda a lida."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "228": {
+    "titulo": "Salvação! Salvação!",
+    "estrofes": [
+      [
+        "Vem do céu alegre som: Salvação! Salvação!",
+        "Só em Cristo há perdão. Salvação! Salvação!",
+        "Paz e graça proclamar vão os servos do Senhor",
+        "Pelo ar, por terra e mar. Salvação! Salvação!"
+      ],
+      [
+        "Anunciemos sem cessar: Salvação! Salvação!",
+        "Que alegria em pensar! Salvação! Salvação!",
+        "Só no sangue do Senhor, derramado sobre a cruz,",
+        "Tem resgate o pecador. Salvação! Salvação!"
+      ],
+      [
+        "Do pecado e maldição, salvo estou, salvo estou!",
+        "Recebi, de Deus, perdão. Salvo estou! Salvo estou!",
+        "Mesmo à hora de expirar, sentirei a salvação,",
+        "Pois no céu vou habitar. Salvo estou! Salvo estou!"
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "229": {
+    "titulo": "Eu vivia no pecado",
+    "estrofes": [
+      [
+        "Eu vivia no pecado, sem a paz e sem a luz,",
+        "Quando Deus, o Pai amado, revelou-me a graça de Jesus."
+      ],
+      [
+        "Foi Jesus, por Deus, mandado, sendo o Cristo e Salvador;",
+        "E, na cruz, vituperado, consumou a obra de amor."
+      ],
+      [
+        "Deus me libertou da morte por sublime e grande amor;",
+        "Oh! Que grandiosa sorte alcancei do meu bom Criador!"
+      ]
+    ],
+    "coro": [
+      "Como poderei eu esquecer-me da mercê do meu bom Criador?!",
+      "Pois livrou-me do pecado pelo Seu imenso amor.",
+      "A celeste paz agora sinto por Jesus, o meu Intercessor,",
+      "Minha Rocha e Justiça, meu fiel e forte Defensor."
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "coro",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  },
+  "230": {
+    "titulo": "A Ti rendemos graças",
+    "estrofes": [
+      [
+        "A Ti rendemos graças, majestoso Criador,",
+        "Findando este culto de louvor a Ti, ó Deus Formador;",
+        "As nossas forças foram renovadas por Teu bom Consolador."
+      ],
+      [
+        "Senhor, com Tua ajuda, desejamos atender",
+        "A tudo que, por Tua sã Palavra, nos fizeste saber,",
+        "Pois nós queremos, sobre esta terra, sempre mais resplandecer."
+      ],
+      [
+        "Despede-nos em paz da Tua casa, ó Senhor,",
+        "Levando em nossos corações as bênçãos do Teu grande amor;",
+        "Agradecidos, nós Te tributamos honra, glória e louvor."
+      ]
+    ],
+    "tipo": "hino",
+    "estrutura": [
+      "estrofe-1",
+      "estrofe-2",
+      "estrofe-3"
+    ]
+  }
+};
+ for (const [n, data] of Object.entries(novasLetras)) LETRAS[n] = data;
+  MULTIMIDIA["221"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-221.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 75,
+    "min": 60,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-221-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-221-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 221 — A descida do Espírito Santo"
+  }
+};
+  MULTIMIDIA["222"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-222.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 80,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Si♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-222-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-222-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 222 — Brevemente virá o Senhor Jesus"
+  }
+};
+  MULTIMIDIA["223"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-223.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 125,
+    "min": 104,
+    "max": 132,
+    "unidade": "colcheia",
+    "unidadeSimbolo": "♪",
+    "compasso": "6/8",
+    "tonalidade": "Fá maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-223-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-223-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 223 — Muitos, por fé, aceitaram Jesus"
+  }
+};
+  MULTIMIDIA["224"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-224.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 63,
+    "min": 54,
+    "max": 66,
+    "unidade": "mínima",
+    "unidadeSimbolo": "𝅗𝅥",
+    "compasso": "2/2",
+    "tonalidade": "Dó maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-224-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-224-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 224 — Só Jesus concede paz e salvação"
+  }
+};
+  MULTIMIDIA["225"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-225.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 79,
+    "min": 63,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Mi♭ maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-225-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-225-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 225 — Senhor, com Tua voz me chamas"
+  }
+};
+  MULTIMIDIA["226"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-226.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 74,
+    "min": 69,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-226-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-226-p1.jpg?v=78146",
+      "assets/partituras/hino-226-p2.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 226 — A história do Evangelho"
+  }
+};
+  MULTIMIDIA["227"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-227.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 71,
+    "min": 56,
+    "max": 76,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-227-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-227-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 227 — Procuras tu ao Salvador?"
+  }
+};
+  MULTIMIDIA["228"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-228.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 76,
+    "min": 63,
+    "max": 80,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "3/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-228-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-228-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 228 — Salvação! Salvação!"
+  }
+};
+  MULTIMIDIA["229"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-229.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 86,
+    "min": 69,
+    "max": 92,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Ré maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-229-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-229-p1.jpg?v=78146",
+      "assets/partituras/hino-229-p2.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 229 — Eu vivia no pecado"
+  }
+};
+  MULTIMIDIA["230"] = {
+  "audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-230.mp3",
+  "modoReproducao": "partitura",
+  "hdBrandLabelsOnly": true,
+  "fonteExterna": "Padrão Orquestra Sacra / Vozes do Campo; somente fontes com faixa individual confirmada são ativadas.",
+  "metronomo": {
+    "bpm": 80,
+    "min": 69,
+    "max": 84,
+    "unidade": "semínima",
+    "unidadeSimbolo": "♩",
+    "compasso": "4/4",
+    "tonalidade": "Sol maior",
+    "volume": 50,
+    "partitura": false,
+    "partituraImagem": "assets/partituras/hino-230-p1.jpg?v=78146",
+    "partituraPaginas": [
+      "assets/partituras/hino-230-p1.jpg?v=78146"
+    ],
+    "partituraTitulo": "Hino 230 — A Ti rendemos graças"
+  }
+};
+ window.GuiaHinos221a230V78146 = {
+   numeros: Object.keys(novasLetras),
+   resumo: () => Object.entries(novasLetras).map(([n,v]) => ({ numero:Number(n), estrofes:v.estrofes.length,
+     coro:!!v.coro, final:!!v.final, paginas:MULTIMIDIA[n].metronomo.partituraPaginas.length,
+     spotify:!!MULTIMIDIA[n].spotify, youtube:!!MULTIMIDIA[n].youtube, youtubeMusic:!!MULTIMIDIA[n].youtubeMusic }))
+ };
 })();
 </script>
 
