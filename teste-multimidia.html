@@ -23335,34 +23335,73 @@ window.GuiaProtecaoTempoV78145={status(){
     const outsideCount=records.filter(r=>!official.has(normalizeNum(r.num))).length;
     return {byNum,called,missing,pct,all:catalog,totalRecords:records.length,outsideCount,storageBlocked};
   }
-  function exportCsv(mode='all'){
-    const s=snap();
-    const items=mode==='missing'?s.missing:mode==='called'?s.called:s.all;
-    const rows=[['Hino','Título','Apropriação','Situação','Modal multimídia','Letra','Spotify direto','YouTube direto','YouTube Music direto','Quantidade de chamadas','Primeira chamada','Última chamada']];
+  function safeDate(value){const d=new Date(value);return isNaN(d.getTime())?null:d;}
+  const dateOnly=d=>d?d.toLocaleDateString('pt-BR'):'';
+  const timeOnly=d=>d?d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
+  const occasion=h=>String(h.ocasiao||'Sem ocasião exclusiva');
+  const justOne=v=>String(v??'').replace(/[\r\n]+/g,' ').trim();
+  function filtered(block,mode){
+    const s=snap();let result=mode==='missing'?s.missing:mode==='called'?s.called:s.all;
+    if(!block)return result;
+    const normalize=v=>String(v??'').toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const q=normalize(block.querySelector('#opSearch')?.value||'').trim();
+    const occ=block.querySelector('#opOccasion')?.value||'';
+    return result.filter(h=>(!occ||occasion(h)===occ)&&(!q||normalize([h.num,h.titulo,occasion(h)].join(' ')).includes(q)));
+  }
+  function exportCsv(mode='all',useCurrentFilters=false){
+    const s=snap();const block=useCurrentFilters?document.getElementById('officialProgressBlock'):null;
+    const items=filtered(block,mode);
+    if(mode==='history'){
+      const history=(HYMN_STORE.calls()||[]).filter(r=>r&&r.type!=='note'&&official.has(normalizeNum(r.num)))
+          .filter(r=>!block||items.some(h=>Number(h.num)===Number(r.num)))
+          .sort((a,b)=>new Date(b.at)-new Date(a.at));
+      const rows=[['Hino','Título','Ocasião','Apropriação','Data','Horário','Observação']];
+      history.forEach(r=>{
+        const h=official.get(normalizeNum(r.num)),d=safeDate(r.at);
+        rows.push([h.num,h.titulo,occasion(h),'Culto Oficial',dateOnly(d),timeOnly(d),justOne(r.note||'')]);
+      });
+      download(rows,'historico');return;
+    }
+    const missing=mode==='missing';
+    const rows=missing?
+      [['Hino','Título','Ocasião','Apropriação','Situação']]:
+      [['Hino','Título','Ocasião','Apropriação','Situação','Quantidade de chamadas','Primeira chamada','Horário inicial','Última chamada','Horário final']];
     items.forEach(h=>{
       const calls=s.byNum.get(String(Number(h.num)))||[];
-      const times=calls.map(r=>new Date(r.at)).filter(d=>!isNaN(d.getTime())).sort((a,b)=>a-b);
-      rows.push([h.num,h.titulo,'Culto Oficial',calls.length?'Marcado':'Faltante',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?'Disponível':'Pendente',typeof LETRAS!=='undefined'&&LETRAS[String(Number(h.num))]?'Incluída':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.spotify?'Confirmado':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.youtube?'Confirmado':'Pendente',typeof MULTIMIDIA!=='undefined'&&MULTIMIDIA[String(Number(h.num))]?.youtubeMusic?'Confirmado':'Pendente',calls.length,times[0]?.toLocaleString('pt-BR')||'',times.at(-1)?.toLocaleString('pt-BR')||'']);
+      const dates=calls.map(r=>safeDate(r.at)).filter(Boolean).sort((a,b)=>a-b);
+      const status=calls.length?'Já chamado':'Faltante';
+      const head=[h.num,h.titulo,occasion(h),'Culto Oficial',status];
+      rows.push(missing?head:[...head,calls.length,dateOnly(dates[0]),timeOnly(dates[0]),dateOnly(dates.at(-1)),timeOnly(dates.at(-1))]);
     });
-    const q=v=>'"'+String(v??'').replace(/[\r\n]+/g,' ').replace(/"/g,'""')+'"';
-    const csv='\uFEFF'+rows.map(row=>row.map(q).join(';')).join('\r\n');
-    const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
-    const a=document.createElement('a');a.href=url;
-    a.download='relatorio-culto-oficial-'+(mode==='missing'?'faltantes':mode==='called'?'marcados':'completo')+'-'+new Date().toISOString().slice(0,10)+'.csv';
-    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
-    try{registrarEventoGA('exportar_csv',{tipo_exportacao:'cobertura_culto_oficial_'+mode,quantidade_registros:items.length})}catch(e){}
+    download(rows,mode);
+    function download(rows,kind){
+      const escapeCSV=v=>{
+        let val=justOne(v);
+        if(/^[=+@-]/.test(val))val="'"+val; // protege aplicativos de planilha
+        return '"'+val.replace(/"/g,'""')+'"';
+      };
+      const csv='\uFEFF'+rows.map(row=>row.map(escapeCSV).join(';')).join('\r\n');
+      const uri=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+      const a=document.createElement('a');a.href=uri;
+      const suffix={missing:'faltantes',called:'marcados',all:'completo',history:'historico'}[kind]||kind;
+      a.download='hinos-culto-oficial-'+suffix+'-'+new Date().toISOString().slice(0,10)+'.csv';
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(uri),1500);
+      try{registrarEventoGA('exportar_csv',{tipo_exportacao:'relatorio_culto_oficial_'+kind,quantidade_registros:rows.length-1})}catch(e){}
+    }
   }
   let current='missing';
   function showList(block){
-    const s=snap();const box=block.querySelector('#opList');if(!box)return;
-    const q=(block.querySelector('#opSearch')?.value||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    const items=(current==='missing'?s.missing:current==='called'?s.called:s.all).filter(h=>!q || [h.num,h.titulo].join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q));
-    const vis=items; // V7.81.39: sem limite artificial; pesquisa e rolagem continuam disponíveis
-    box.innerHTML=vis.length?vis.map(h=>{
-      const count=s.byNum.get(String(Number(h.num)))?.length||0;
-      return '<div class="op-item"><button type="button" data-hino="'+escapeText(h.num)+'">'+escapeText(h.num)+' — '+escapeText(h.titulo)+'</button><small>'+(count?count+' chamada'+(count>1?'s':''):'Não chamado')+(typeof MULTIMIDIA!=='undefined'&&!MULTIMIDIA[String(Number(h.num))]?' · sem modal':'')+'</small></div>';
-    }).join(''):'<div class="op-item">Nenhum hino neste filtro.</div>';
-    block.querySelector('#opListCount').textContent='Exibindo '+vis.length+' de '+items.length+' hinos neste filtro.';
+    const s=snap(),box=block.querySelector('#opList');if(!box)return;
+    const items=filtered(block,current);
+    box.innerHTML=items.length?items.map(h=>{
+      const calls=s.byNum.get(String(Number(h.num)))||[];
+      const latest=calls.map(r=>safeDate(r.at)).filter(Boolean).sort((a,b)=>b-a)[0];
+      const details=calls.length?
+        calls.length+' chamada'+(calls.length>1?'s':'')+(latest?' · Última: '+dateOnly(latest)+' '+timeOnly(latest):''):
+        'Ainda não chamado';
+      return '<div class="op-item"><div class="op-item-main"><button type="button" data-hino="'+escapeText(h.num)+'">'+escapeText(h.num)+' — '+escapeText(h.titulo)+'</button><small>'+escapeText(occasion(h))+' · '+escapeText(details)+'</small></div><span class="op-item-arrow" aria-hidden="true">›</span></div>';
+    }).join(''):'<div class="op-empty">Nenhum hino encontrado.</div>';
+    block.querySelector('#opListCount').textContent=items.length+' hino'+(items.length===1?'':'s')+' na consulta.';
     box.querySelectorAll('[data-hino]').forEach(b=>b.onclick=()=>{
       const h=official.get(String(Number(b.dataset.hino)));
       if(!h)return;
@@ -23375,16 +23414,16 @@ window.GuiaProtecaoTempoV78145={status(){
     const box=document.getElementById('personalContent');
     if(!box||window.__personalView!=='calls'||window.__historyHymn)return;
     const s=snap(); const block=document.createElement('section');block.id='officialProgressBlock';
-    block.innerHTML=`<h4 class="op-title">Progresso dos hinos chamados</h4>
-      <p class="op-sub">Apropriação: <b>Culto Oficial</b> · ${catalog.length} hinos elegíveis entre 1–480 · Coros excluídos</p>
-      <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já chamados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Ainda não chamados</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
-      <div class="op-bar" role="progressbar" aria-label="Cobertura dos hinos de culto oficial" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.pct}"><div class="op-bar-fill" style="width:${s.pct}%"></div></div>
-      <div class="op-actions"><button class="op-primary" type="button" id="opToggle" aria-expanded="false">Ver relatório e faltantes</button><button type="button" id="opExportAll">Exportar relatório CSV</button></div>
+    block.innerHTML=`<h4 class="op-title">Acompanhamento dos hinos</h4>
+      <p class="op-sub">Culto Oficial · ${catalog.length} hinos</p>
+      <div class="op-stats"><div class="op-stat"><b>${s.called.length}</b><span>Já chamados</span></div><div class="op-stat"><b>${s.missing.length}</b><span>Faltantes</span></div><div class="op-stat"><b>${s.pct}%</b><span>Concluído</span></div></div>
+      <div class="op-bar" role="progressbar" aria-label="Progresso dos hinos de Culto Oficial" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.pct}"><div class="op-bar-fill" style="width:${s.pct}%"></div></div>
+      <div class="op-actions"><button class="op-primary" type="button" id="opToggle" aria-expanded="false">Consultar hinos</button><button type="button" id="opExportAll">CSV completo</button></div>
       <div class="op-detail" id="opDetail" hidden>
-        <div class="op-filters"><button type="button" data-op-filter="missing" aria-pressed="true">Faltantes (${s.missing.length})</button><button type="button" data-op-filter="called" aria-pressed="false">Marcados (${s.called.length})</button><button type="button" data-op-filter="all" aria-pressed="false">Todos (${catalog.length})</button></div>
-        <input type="search" id="opSearch" class="op-search" aria-label="Pesquisar hinos no relatório" placeholder="Pesquisar número ou título" autocomplete="off">
+        <div class="op-filters"><button type="button" data-op-filter="missing" aria-pressed="true">Faltantes (${s.missing.length})</button><button type="button" data-op-filter="called" aria-pressed="false">Chamados (${s.called.length})</button><button type="button" data-op-filter="all" aria-pressed="false">Todos (${catalog.length})</button></div>
+        <div class="op-inputs"><input type="search" id="opSearch" class="op-search" aria-label="Pesquisar hinos no relatório" placeholder="Número ou título" autocomplete="off"><select id="opOccasion" class="op-search" aria-label="Filtrar ocasião"><option value="">Todas as ocasiões</option>${[...new Set(catalog.map(occasion))].sort((a,b)=>a.localeCompare(b,'pt-BR')).map(o=>'<option value="'+escapeText(o)+'">'+escapeText(o)+'</option>').join('')}</select></div>
         <div class="op-list" id="opList" aria-live="polite"></div><div class="op-foot" id="opListCount"></div>
-        <div class="op-actions"><button type="button" id="opExportMissing">CSV dos faltantes</button><button type="button" id="opExportCalled">CSV dos marcados</button></div>
+        <div class="op-actions"><button type="button" id="opExportFiltered">CSV desta lista</button><button type="button" id="opExportHistory">Histórico detalhado</button></div>
       </div>`;
     box.prepend(block);
     block.querySelector('#opToggle').onclick=()=>{
@@ -23393,14 +23432,15 @@ window.GuiaProtecaoTempoV78145={status(){
       if(!detail.hidden)showList(block);
     };
     block.querySelector('#opExportAll').onclick=()=>exportCsv('all');
-    block.querySelector('#opExportMissing').onclick=()=>exportCsv('missing');
-    block.querySelector('#opExportCalled').onclick=()=>exportCsv('called');
+    block.querySelector('#opExportFiltered').onclick=()=>exportCsv(current,true);
+    block.querySelector('#opExportHistory').onclick=()=>exportCsv('history',true);
     block.querySelectorAll('[data-op-filter]').forEach(b=>b.onclick=()=>{
       current=b.dataset.opFilter;
       block.querySelectorAll('[data-op-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));
       showList(block);
     });
     block.querySelector('#opSearch').oninput=()=>showList(block);
+    block.querySelector('#opOccasion').onchange=()=>showList(block);
   }
   const orig=renderCalls;
   renderCalls=function(filterNum){orig(filterNum);if(!filterNum)addDashboard();};
@@ -25251,4 +25291,31 @@ window.GuiaProtecaoTempoV78145={status(){
  window.GuiaHinos281a290V78153={numeros:Object.keys(novasLetras),resumo:()=>Object.keys(novasLetras).map(n=>({numero:Number(n),estrofes:novasLetras[n].estrofes.length,coro:!!novasLetras[n].coro,paginas:novasMidias[n].metronomo.partituraPaginas.length,bpm:novasMidias[n].metronomo.bpm,spotify:!!novasMidias[n].spotify,youtube:!!novasMidias[n].youtube,youtubeMusic:!!novasMidias[n].youtubeMusic}))};
 })();
 </script>
+
+<!-- V7.81.54 TESTE: Hinos 291–300 e relatórios de chamados simplificados. Produção intacta. -->
+<script id="guia-v78154-hinos-291-300">
+(()=>{
+  const newLyrics={"291": {"titulo": "Irmãos, avante, avante!", "estrofes": [["Irmãos, avante, avante! com nosso Salvador,", "Seremos triunfantes, lutando com fervor;", "Vitória alcançaremos, seguindo a Jesus,", "Que vai à nossa frente e à glória nos conduz."], ["Lugares deleitosos Jesus nos preparou,", "De jugos mui penosos também nos libertou;", "A herança prometida por Cristo, o Salvador,", "No céu é reservada por Deus, o Formador."], ["Com nosso amado Mestre, marchemos com fervor!", "Com fé, perseverantes, lutemos com vigor.", "Guiados nós seremos com força divinal;", "Avante! Prossigamos ao lar celestial."]], "tipo": "hino", "coro": ["Avante, avante! Unidos ao Senhor;", "Só Ele é nosso Condutor;", "Avante! Marchemos com valor."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "292": {"titulo": "Oh! Quanto é bom o Redentor!", "estrofes": [["O bom Deus, Criador, a Seu Filho enviou,", "A fim de nos dar a eterna redenção;", "Pelos nossos pecados Jesus suportou", "Morte de cruz, que nos trouxe a salvação."], ["O pecado, em todos, a morte gerou;", "Ninguém desse mal se podia libertar;", "Sobre a morte, o Filho de Deus triunfou", "E ressurgiu para nos justificar."], ["Cristo triunfalmente subiu para os céus,", "E assim voltará, Soberano e Senhor.", "Levará para a glória os filhos de Deus", "E lhes dará o Seu reino de esplendor."]], "tipo": "hino", "coro": ["Oh! Quanto é bom o nosso Redentor!", "Sobre a cruz, por nós a vida deu", "E lavou-nos pelo Seu amor;", "Justificou-nos no sangue que verteu."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "293": {"titulo": "Tu és Oleiro", "estrofes": [["Tu és Oleiro, ó meu Senhor,", "Eu sou argila na Tua mão;", "Vaso de honra e de louvor", "Faz-me, Senhor, com Tua unção."], ["Vem modelar-me, ó Formador,", "Pela Palavra do Teu poder;", "Humilde e manso faz-me, Senhor,", "Cumpre em mim Teu santo querer."], ["Em Teus preceitos quero viver,", "Para servir-Te e Te agradar;", "Pela Palavra vem remover", "O que me impede de Te louvar."]], "tipo": "hino", "estrutura": ["estrofe-1", "estrofe-2", "estrofe-3"]}, "294": {"titulo": "Avante! Coragem! Marchemos", "estrofes": [["Avante! Coragem! Marchemos", "Com fé e com todo o fervor,", "Soldados nós somos de Cristo,", "O nosso Senhor;", "Avante! Veremos a glória de Cristo,", "Fiel Redentor,", "Teremos completa vitória com o Salvador."], ["Avante! Lutar nós devemos,", "Cingidos de força e vigor,", "Amparo de Deus nós teremos,", "Por Seu grande amor;", "Voluntariamente sirvamos a Cristo,", "O Rei vencedor;", "Nós somos, por fé, Seus soldados, mostremos valor."], ["Avante! Lutemos unidos,", "Marchando com todo o fervor,", "Cingidos de toda armadura", "De Deus, Criador.", "Seguindo os passos de Cristo,", "Vitória se alcançará;", "É Ele veraz Fortaleza, que nos salvará."]], "tipo": "hino", "coro": ["Coragem, irmãos, sempre avante!", "Devemos lutar pela fé;", "Nosso ânimo seja constante,", "Deus tudo provê."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "295": {"titulo": "Fui, Senhor, por Ti remido", "estrofes": [["Fui, Senhor, por Ti remido", "Para andar em santo amor;", "Neste mundo, a Ti unido,", "Eu serei um vencedor."], ["Teu amor já me consola", "Para sempre obedecer", "À Palavra, que controla", "Todo este fraco ser."], ["Seja eu fortificado", "Com o Teu poder, Senhor,", "Para ser santificado", "Pelo Espírito de amor."], ["Sou Teu servo muito amado,", "Co-herdeiro Teu, Senhor;", "E, no reino desejado,", "Eu verei o Criador."]], "tipo": "hino", "estrutura": ["estrofe-1", "estrofe-2", "estrofe-3", "estrofe-4"]}, "296": {"titulo": "Teu Nome é soberano, ó Redentor", "estrofes": [["Teu Nome é soberano, ó caro Redentor;", "Teu Nome é mui sublime, de grande esplendor;", "Em espírito e verdade devemos adorar-Te;", "Devemos tributar-Te louvores, ó Senhor."], ["Teu Nome bendiremos, eterno Salvador;", "Em todos os combates és nosso Defensor;", "Deste a todos os Teus santos fé viva e esperança", "De entrar na Tua glória, ó justo Redentor."], ["Teu Nome respeitamos e amamos, ó Senhor;", "A paz com Deus nós temos por Ti, ó Redentor;", "Nossas almas resgataste, a vida nos doaste,", "Herdeiros nos fizeste de Deus, o Criador."]], "tipo": "hino", "coro": ["Quão suave e precioso", "É Teu Nome, ó Salvador;", "Não há outro Nome pelo qual os homens", "Chegarão ao Criador."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "297": {"titulo": "Senhor, conforta meu coração", "estrofes": [["Senhor, conforta meu coração", "E vem livrar-me da aflição;", "A minha súplica, ó Senhor,", "Recebe, por grande amor."], ["Senhor, conforta meu coração,", "Com Tua paz e consolação;", "Alegremente eu viverei;", "Louvor a Ti cantarei."], ["Senhor, conforta meu coração,", "Com Teu amor e celeste unção;", "Teu refrigério eu sentirei,", "Ó meu Senhor e meu Rei."]], "tipo": "hino", "coro": ["Vem, Jesus, meu Consolador,", "Nas angústias, também na dor,", "Com Teu amor me confortar;", "Vem, nas provas, me libertar."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "298": {"titulo": "Avante sempre, sem temer!", "estrofes": [["Avante sempre, sem temer,", "Ó soldados verdadeiros!", "Por Cristo, nosso Ensinador,", "Fomos feitos bons guerreiros;", "Ele, por nós, combaterá,", "Suas armas potentes são,", "Pois nos livram sempre do mal,", "Do poder da tentação."], ["Avante, com o Salvador,", "Pois é certa a vitória!", "Marchemos sempre com vigor,", "Prosseguindo para a glória;", "A coroa receberá, só quem for", "Em tudo fiel", "A Jesus, o nosso Senhor", "E o nosso Emanuel."]], "tipo": "hino", "coro": ["Aleluia! Aleluia!", "Bendiremos nosso Salvador;", "Aleluia! Aleluia!", "Glória eterna ao Redentor!"], "estrutura": ["estrofe-1", "coro", "estrofe-2"]}, "299": {"titulo": "Em nome de Jesus", "estrofes": [["Em nome de Jesus, eis-nos reunidos", "Para aprender Teu querer, ó Senhor;", "Conserva-nos, ó Deus, sempre unidos,", "Pois dependemos de Ti, Criador."], ["Dá-nos, Senhor, do Teu conhecimento", "Para que assim Te possamos honrar;", "Tua Palavra dá entendimento", "E em justiça nos faz caminhar."], ["Habita em Ti, ó Deus, sabedoria,", "Toda ciência, glorioso Senhor;", "Tua eterna luz sempre nos guia", "Na sã verdade, amor e temor."]], "tipo": "hino", "coro": ["Com reverência e fé Te adoramos,", "Onipotente Deus, Pai de amor."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}, "300": {"titulo": "Tudo o que nos falta", "estrofes": [["Tudo o que nos falta, Cristo suprirá;", "Quando suplicarmos, Ele ouvirá;", "De Seus dons celestes nos revestirá,", "Quando nós batermos, Ele abrirá."], ["Tudo o que nos falta, Cristo suprirá;", "Proteção divina, Ele proverá;", "Temos que entregar-Lhe todo o nosso ser,", "Para que possamos com valor vencer."], ["Tudo o que nos falta, Cristo suprirá;", "Firme e fielmente, nos conduzirá", "Nesta travessia que nos leva aos céus,", "Onde iremos ver a face do bom Deus."]], "tipo": "hino", "coro": ["Glória ao bendito Salvador,", "Forte e invencível Defensor!", "Árdua é a luta contra o pecado,", "Mas resistiremos com valor."], "estrutura": ["estrofe-1", "coro", "estrofe-2", "estrofe-3"]}};
+  const newMedia={"291": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-291.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 88, "min": 76, "max": 92, "compasso": "4/4", "tonalidade": "Sol maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-291-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-291-p1.jpg?v=78154"], "partituraTitulo": "Hino 291 — Irmãos, avante, avante!"}}, "292": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-292.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 82, "min": 63, "max": 88, "compasso": "4/4", "tonalidade": "Si♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-292-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-292-p1.jpg?v=78154", "assets/partituras/hino-292-p2.jpg?v=78154"], "partituraTitulo": "Hino 292 — Oh! Quanto é bom o Redentor!"}}, "293": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-293.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 118, "min": 92, "max": 126, "compasso": "9/4", "tonalidade": "Mi♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-293-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-293-p1.jpg?v=78154"], "partituraTitulo": "Hino 293 — Tu és Oleiro"}}, "294": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-294.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 125, "min": 104, "max": 132, "compasso": "6/4", "tonalidade": "Mi♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-294-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-294-p1.jpg?v=78154", "assets/partituras/hino-294-p2.jpg?v=78154"], "partituraTitulo": "Hino 294 — Avante! Coragem! Marchemos"}}, "295": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-295.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 65, "min": 54, "max": 69, "compasso": "3/4", "tonalidade": "Sol maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-295-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-295-p1.jpg?v=78154"], "partituraTitulo": "Hino 295 — Fui, Senhor, por Ti remido"}}, "296": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-296.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 79, "min": 63, "max": 84, "compasso": "3/4", "tonalidade": "Si♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-296-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-296-p1.jpg?v=78154", "assets/partituras/hino-296-p2.jpg?v=78154"], "partituraTitulo": "Hino 296 — Teu Nome é soberano, ó Redentor"}}, "297": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-297.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 120, "min": 100, "max": 126, "compasso": "6/8", "tonalidade": "Sol maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-297-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-297-p1.jpg?v=78154"], "partituraTitulo": "Hino 297 — Senhor, conforta meu coração"}}, "298": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-298.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 83, "min": 69, "max": 88, "compasso": "4/4", "tonalidade": "Si♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-298-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-298-p1.jpg?v=78154", "assets/partituras/hino-298-p2.jpg?v=78154"], "partituraTitulo": "Hino 298 — Avante sempre, sem temer!"}}, "299": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-299.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 76, "min": 66, "max": 80, "compasso": "4/4", "tonalidade": "Si♭ maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-299-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-299-p1.jpg?v=78154"], "partituraTitulo": "Hino 299 — Em nome de Jesus"}}, "300": {"audio": "https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-300.mp3", "modoReproducao": "partitura", "hdBrandLabelsOnly": true, "spotifyPending": true, "youtubePending": true, "youtubeMusicPending": true, "fonteExterna": "YouTube e Spotify: Orquestra Sacra; YouTube Music: Vozes do Campo. Sem faixa direta confirmada: botão indisponível.", "metronomo": {"bpm": 82, "min": 63, "max": 88, "compasso": "4/4", "tonalidade": "Ré maior", "unidade": "semínima", "unidadeSimbolo": "♩", "volume": 50, "partitura": false, "partituraImagem": "assets/partituras/hino-300-p1.jpg?v=78154", "partituraPaginas": ["assets/partituras/hino-300-p1.jpg?v=78154", "assets/partituras/hino-300-p2.jpg?v=78154"], "partituraTitulo": "Hino 300 — Tudo o que nos falta"}}};
+  for(const [n,data] of Object.entries(newLyrics)) LETRAS[n]=data;
+  for(const [n,data] of Object.entries(newMedia)) MULTIMIDIA[n]=data;
+  window.GuiaHinos291a300V78154={numeros:Object.keys(newLyrics),resumo:()=>Object.keys(newLyrics).map(n=>({numero:Number(n),estrofes:newLyrics[n].estrofes.length,coro:!!newLyrics[n].coro,paginas:newMedia[n].metronomo.partituraPaginas.length,bpm:newMedia[n].metronomo.bpm}))};
+})();
+</script>
+<style id="guia-v78154-relatorio-ux">
+#officialProgressBlock{padding:12px;margin-bottom:12px}
+#officialProgressBlock .op-sub{margin-bottom:9px}
+#officialProgressBlock .op-item{display:flex;gap:8px;align-items:center;padding:11px 10px}
+#officialProgressBlock .op-item-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+#officialProgressBlock .op-item-main button{text-align:left;text-decoration:none;line-height:1.35;font-size:.86rem;padding:0}
+#officialProgressBlock .op-item-main button:hover{text-decoration:underline}
+#officialProgressBlock .op-item-main small{display:block;white-space:normal;line-height:1.4;font-size:.71rem;color:#667078}
+#officialProgressBlock .op-item-arrow{flex:0 0 auto;font-size:1.4rem;color:#99815a}
+#officialProgressBlock .op-empty{padding:18px 12px;text-align:center;color:#6f7578;font-size:.85rem}
+#officialProgressBlock .op-inputs{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+#officialProgressBlock .op-inputs select{appearance:auto}
+#officialProgressBlock .op-actions button{min-height:40px}
+@media(min-width:480px){#officialProgressBlock .op-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media(max-width:360px){#officialProgressBlock .op-stats{gap:4px}#officialProgressBlock .op-stat{padding:7px 3px}#officialProgressBlock .op-stat span{font-size:.64rem}}
+</style>
 </body></html>
