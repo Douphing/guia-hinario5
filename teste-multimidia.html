@@ -120,7 +120,7 @@ Partituras externas em assets/partituras para manter o HTML leve.
 Hino 125 preserva integralmente o modelo já aprovado.
 -->
 
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b353e"><title>V7.81.58 Teste — Guia Hinário 5 CCB – Hinos por Ocasião, Número e Título</title><meta name="description"
       content="Consulte os hinos do Hinário nº 5 por ocasião, número ou título, incluindo a relação sugestiva de Hinos para Meia-Hora com andamento. Guia independente e não oficial."><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><link rel="canonical"
       href="https://douphing.github.io/guia-hinario5/"><meta name="application-name" content="Guia Hinário 5"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Guia Hinário 5"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png"><link rel="apple-touch-icon" href="assets/icon-192.png"><meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Guia Hinário 5"><meta property="og:title"
       content="Guia Hinário 5 CCB – Hinos por Ocasião"><meta property="og:description"
@@ -23426,29 +23426,46 @@ window.GuiaProtecaoTempoV78145={status(){
         <div class="op-detail-foot"><span id="opListCount"></span><button type="button" id="opReportCsv" data-csv="called">Baixar CSV da lista</button></div>
       </div>
       <div class="op-history-bar"><strong>Registros <span>${snapNow.totalRecords}</span></strong><button type="button" data-csv="history" aria-label="Baixar CSV de todos os registros">↓ CSV dos registros</button></div>`;
-    block.querySelector('.op-summary').appendChild(block.querySelector('.op-history-bar'));
-    box.append(block,previous); // Histórico visível imediatamente, com a rolagem original.
+    const fixedBar=block.querySelector('.op-summary');fixedBar.id='officialStickyReportControls';
+    fixedBar.appendChild(block.querySelector('.op-history-bar'));
+    box.append(fixedBar,block,previous); // Histórico visível imediatamente, com a rolagem original.
     const detail=block.querySelector('#opDetail');
-    const reset=()=>{current=null;detail.hidden=true;block.querySelectorAll('[data-view]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
+    const reset=()=>{current=null;detail.hidden=true;box.querySelectorAll('[data-view]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
     block.querySelector('#opCloseList').onclick=reset;
-    block.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
+    box.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
       const view=btn.dataset.view;
       if(current===view){reset();return;}
       current=view;detail.hidden=false;
-      block.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-expanded',String(x===btn)));
+      box.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-expanded',String(x===btn)));
       block.querySelector('#opDetailTitle').textContent=view==='called'?'Hinos chamados':'Hinos faltantes';
       block.querySelector('#opReportCsv').dataset.csv=view;
       block.querySelector('#opSearch').value='';block.querySelector('#opOccasion').value='';
       block.querySelector('#opInputsWrap').hidden=true;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded','false');
       showList(block);
     });
-    block.querySelectorAll('[data-csv]').forEach(btn=>btn.onclick=()=>exportCsv(btn.dataset.csv));
+    box.querySelectorAll('[data-csv]').forEach(btn=>btn.onclick=()=>exportCsv(btn.dataset.csv));
     block.querySelector('.op-filter-toggle').onclick=()=>{const el=block.querySelector('#opInputsWrap'),open=el.hidden;el.hidden=!open;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded',String(open));if(open)block.querySelector('#opSearch').focus()};
     block.querySelector('#opSearch').oninput=()=>showList(block);
     block.querySelector('#opOccasion').onchange=()=>showList(block);
   }
   const orig=renderCalls;
-  renderCalls=function(filterNum){orig(filterNum);if(!filterNum)addDashboard();};
+  renderCalls=function(filterNum){
+    orig(filterNum);
+    const target=document.getElementById('personalContent');
+    if(target){ target.querySelectorAll('.history-copy p:not(.no-note)').forEach(note=>{
+      if((note.textContent||'').trim().length<155)return;
+      note.classList.add('guia-observation-clamped');
+      const expand=document.createElement('button');expand.type='button';expand.className='guia-expand-note';
+      expand.textContent='Ver mais';expand.setAttribute('aria-expanded','false');
+      expand.addEventListener('click',e=>{
+        e.preventDefault();e.stopPropagation();
+        const open=note.classList.toggle('is-expanded');
+        expand.textContent=open?'Ver menos':'Ver mais';expand.setAttribute('aria-expanded',String(open));
+      });
+      note.after(expand);
+    });}
+    if(!filterNum)addDashboard();
+  };
   window.GuiaCultoOficialReport={snapshot:snap,exportCsv,catalogLength:catalog.length,modalAvailable:mediaAvailable,modalPending:mediaPending};
 })();
 </script>
@@ -25435,4 +25452,31 @@ window.GuiaProtecaoTempoV78145={status(){
 #officialProgressBlock .op-list{max-height:230px!important;margin-top:4px!important}
 @media(max-width:360px){#officialProgressBlock .op-shortcut span{font-size:.68rem!important}#officialProgressBlock .op-shortcut strong{font-size:.85rem!important}}
 </style>
+<style id="guia-v78158-relatorio-layout">
+/* Barra compacta ocupa posição própria na área rolável: o histórico não passa sobre ela. */
+#personalContent{position:relative!important;overflow-y:auto!important;overscroll-behavior:contain!important;scroll-padding-top:118px!important;box-sizing:border-box!important}
+#officialStickyReportControls{position:sticky!important;top:0!important;z-index:70!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important;margin:0 0 12px!important;padding:8px 4px 9px!important;background:#fffdf8!important;border-bottom:1px solid #d6c6a7!important;box-shadow:0 6px 10px rgba(23,39,53,.11)!important;isolation:isolate!important}
+#officialStickyReportControls .op-shortcut{display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:42px!important;min-width:0!important;padding:6px 10px!important;border-radius:10px!important;border:1px solid #cbbd9e!important;background:#fffaf0!important;color:#233e52!important;font-size:.82rem!important;box-shadow:none!important}
+#officialStickyReportControls .op-shortcut[aria-expanded="true"]{background:#24475d!important;color:white!important}
+#officialStickyReportControls .op-shortcut span{font-size:.79rem!important;line-height:1.25!important;font-weight:700!important}
+#officialStickyReportControls .op-shortcut strong{font-size:1rem!important}
+#officialStickyReportControls .op-history-bar{grid-column:1/-1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:7px!important;margin:0!important;padding:2px 1px 0!important;border:0!important}
+#officialStickyReportControls .op-history-bar strong{font-size:.78rem!important}
+#officialStickyReportControls .op-history-bar button{min-height:34px!important;padding:6px 9px!important;font-size:.74rem!important;line-height:1.1!important;border:1px solid #cbbb95!important;border-radius:8px!important;background:#fff!important;color:#23475b!important;white-space:nowrap!important}
+#officialProgressBlock{display:block!important;margin:0!important;position:relative!important;z-index:1!important}
+#opHistoryItems{position:relative!important;z-index:1!important;min-width:0!important;overflow:visible!important}
+#opHistoryItems .history-item{box-sizing:border-box!important;max-width:100%!important;min-width:0!important;padding:11px!important;margin:0 0 10px!important;overflow:visible!important;box-shadow:none!important}
+#opHistoryItems .history-topline,#opHistoryItems .history-main,#opHistoryItems .history-row,#opHistoryItems .history-copy{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+#opHistoryItems .history-copy{overflow-wrap:anywhere!important;word-break:normal!important}
+#opHistoryItems .history-main p{overflow-wrap:anywhere!important;max-width:100%!important;font-size:.93rem!important;line-height:1.4!important}
+#opHistoryItems .history-main p.guia-observation-clamped:not(.is-expanded){display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:3!important;overflow:hidden!important}
+#opHistoryItems .guia-expand-note{display:inline-block!important;min-height:30px!important;margin-top:3px!important;padding:4px 7px!important;background:transparent!important;border:0!important;color:#24526d!important;font-size:.78rem!important;font-weight:700!important;cursor:pointer!important}
+#opHistoryItems .history-actions{display:flex!important;justify-content:flex-end!important;gap:4px!important;flex-wrap:wrap!important;margin-top:7px!important;padding:0!important}
+#opHistoryItems .history-actions button{font-size:.76rem!important;padding:6px 5px!important;min-height:34px!important;line-height:1.2!important;white-space:nowrap!important}
+#officialProgressBlock .op-detail{margin:0 0 12px!important}
+@media(max-width:360px){#officialStickyReportControls{gap:4px!important;padding:6px 2px!important}#officialStickyReportControls .op-shortcut{padding:5px 7px!important}#officialStickyReportControls .op-shortcut span{font-size:.72rem!important}#officialStickyReportControls .op-history-bar button{font-size:.68rem!important;padding:5px!important}}
+</style>
+<script id="guia-v78158-hinos-331-340">
+(()=>{const newMedia={"331":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-331.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-331-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-331-p1.jpg?v=78158","assets/partituras/hino-331-p2.jpg?v=78158"],"partituraTitulo":"Hino 331 — Vem a Cristo sem tardar","volume":50,"min":66,"max":84,"bpm":80}},"332":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-332.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-332-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-332-p1.jpg?v=78158"],"partituraTitulo":"Hino 332 — É Cristo Quem cuida de ti","volume":50,"min":116,"max":132,"bpm":128}},"333":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-333.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-333-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-333-p1.jpg?v=78158"],"partituraTitulo":"Hino 333 — Peregrino sou no mundo","volume":50,"min":60,"max":80,"bpm":75}},"334":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-334.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-334-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-334-p1.jpg?v=78158"],"partituraTitulo":"Hino 334 — Há uma pátria perfeita...","volume":50,"min":69,"max":80,"bpm":77}},"335":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-335.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-335-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-335-p1.jpg?v=78158","assets/partituras/hino-335-p2.jpg?v=78158"],"partituraTitulo":"Hino 335 — Eu almejo nessa pátria entrar","volume":50,"min":60,"max":80,"bpm":75}},"336":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-336.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-336-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-336-p1.jpg?v=78158"],"partituraTitulo":"Hino 336 — Sempre brilhar devemos","volume":50,"min":66,"max":88,"bpm":82}},"337":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-337.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-337-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-337-p1.jpg?v=78158","assets/partituras/hino-337-p2.jpg?v=78158"],"partituraTitulo":"Hino 337 — Por fé seguimos ao Senhor","volume":50,"min":69,"max":84,"bpm":80}},"338":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-338.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-338-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-338-p1.jpg?v=78158"],"partituraTitulo":"Hino 338 — O Senhor é sempiterno","volume":50,"min":66,"max":88,"bpm":82}},"339":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-339.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-339-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-339-p1.jpg?v=78158"],"partituraTitulo":"Hino 339 — Glória sem par","volume":50,"min":112,"max":132,"bpm":127}},"340":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-340.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-340-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-340-p1.jpg?v=78158"],"partituraTitulo":"Hino 340 — No mundo sou peregrino","volume":50,"min":108,"max":132,"bpm":126}}};for(const [n,v] of Object.entries(newMedia)) MULTIMIDIA[n]=v;window.GuiaHinos331a340V78158={numeros:Object.keys(newMedia),letrasStatus:"Pendente de transcrição e revisão musical"};})();
+</script>
 </body></html>
