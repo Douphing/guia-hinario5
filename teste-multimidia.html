@@ -23426,30 +23426,45 @@ window.GuiaProtecaoTempoV78145={status(){
         <div class="op-detail-foot"><span id="opListCount"></span><button type="button" id="opReportCsv" data-csv="called">Baixar CSV da lista</button></div>
       </div>
       <div class="op-history-bar"><strong>Registros <span>${snapNow.totalRecords}</span></strong><button type="button" data-csv="history" aria-label="Baixar CSV de todos os registros">↓ CSV dos registros</button></div>`;
+    // V7.81.59: a barra é uma IRMÃ do scroll, nunca um filho dentro da lista rolável.
     const fixedBar=block.querySelector('.op-summary');fixedBar.id='officialStickyReportControls';
     fixedBar.appendChild(block.querySelector('.op-history-bar'));
-    box.append(fixedBar,block,previous); // Histórico visível imediatamente, com a rolagem original.
+    const panel=box.closest('.personal-panel');
+    panel.insertBefore(fixedBar,box);
+    box.append(block,previous); // Por padrão o histórico fica visível e ocupa todo o scroll.
     const detail=block.querySelector('#opDetail');
-    const reset=()=>{current=null;detail.hidden=true;box.querySelectorAll('[data-view]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
+    // CSV específico acessível imediatamente no cabeçalho da lista, não após 300 hinos.
+    const listCsv=block.querySelector('#opReportCsv');
+    listCsv.textContent='↓ CSV';
+    listCsv.setAttribute('aria-label','Baixar CSV do relatório exibido');
+    block.querySelector('.op-detail-head').insertBefore(listCsv,block.querySelector('#opCloseList'));
+    const reset=()=>{
+      current=null;detail.hidden=true;previous.hidden=false;box.scrollTop=0;
+      fixedBar.querySelectorAll('[data-view]').forEach(btn=>btn.setAttribute('aria-expanded','false'));
+    };
     block.querySelector('#opCloseList').onclick=reset;
-    box.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
+    fixedBar.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
       const view=btn.dataset.view;
       if(current===view){reset();return;}
-      current=view;detail.hidden=false;
-      box.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-expanded',String(x===btn)));
+      current=view;
+      // Troca de vista: não desenhar o relatório após centenas de registros.
+      previous.hidden=true;detail.hidden=false;
+      fixedBar.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-expanded',String(x===btn)));
       block.querySelector('#opDetailTitle').textContent=view==='called'?'Hinos chamados':'Hinos faltantes';
       block.querySelector('#opReportCsv').dataset.csv=view;
       block.querySelector('#opSearch').value='';block.querySelector('#opOccasion').value='';
       block.querySelector('#opInputsWrap').hidden=true;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded','false');
       showList(block);
+      box.scrollTop=0;
     });
-    box.querySelectorAll('[data-csv]').forEach(btn=>btn.onclick=()=>exportCsv(btn.dataset.csv));
+    panel.querySelectorAll('[data-csv]').forEach(btn=>btn.onclick=()=>exportCsv(btn.dataset.csv));
     block.querySelector('.op-filter-toggle').onclick=()=>{const el=block.querySelector('#opInputsWrap'),open=el.hidden;el.hidden=!open;block.querySelector('.op-filter-toggle').setAttribute('aria-expanded',String(open));if(open)block.querySelector('#opSearch').focus()};
     block.querySelector('#opSearch').oninput=()=>showList(block);
     block.querySelector('#opOccasion').onchange=()=>showList(block);
   }
   const orig=renderCalls;
   renderCalls=function(filterNum){
+    document.getElementById('officialStickyReportControls')?.remove();
     orig(filterNum);
     const target=document.getElementById('personalContent');
     if(target){ target.querySelectorAll('.history-copy p:not(.no-note)').forEach(note=>{
@@ -25476,6 +25491,54 @@ window.GuiaProtecaoTempoV78145={status(){
 #officialProgressBlock .op-detail{margin:0 0 12px!important}
 @media(max-width:360px){#officialStickyReportControls{gap:4px!important;padding:6px 2px!important}#officialStickyReportControls .op-shortcut{padding:5px 7px!important}#officialStickyReportControls .op-shortcut span{font-size:.72rem!important}#officialStickyReportControls .op-history-bar button{font-size:.68rem!important;padding:5px!important}}
 </style>
+
+<style id="guia-v78159-report-structure">
+/* A header and the actions live in the fixed flex stack. ONLY the history/report body scrolls. */
+#personalModal .personal-panel{display:flex!important;flex-direction:column!important;overflow:hidden!important;height:min(82dvh,760px)!important}
+#personalModal .personal-head{position:relative!important;z-index:5!important;flex:0 0 auto!important;background:#fffdf8!important}
+#personalModal #officialStickyReportControls{
+ position:relative!important;top:auto!important;z-index:4!important;isolation:auto!important;
+ flex:0 0 auto!important;align-self:stretch!important;margin:0!important;
+ padding:8px 12px 9px!important;background:#fffdf8!important;
+ border-top:0!important;border-bottom:1px solid #d8cbaa!important;
+ box-shadow:none!important;
+}
+#personalModal #personalContent{
+ position:relative!important;z-index:1!important;flex:1 1 auto!important;
+ min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+ overscroll-behavior:contain!important;scroll-padding-top:0!important;
+ padding:12px 12px 18px!important;background:#fffdf8!important;
+}
+#personalModal #opHistoryItems[hidden],#personalModal #opDetail[hidden]{display:none!important}
+#personalModal #officialProgressBlock{display:block!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+#personalModal #officialProgressBlock .op-detail{margin:0!important;padding:10px!important;border-radius:12px!important}
+#personalModal #officialProgressBlock .op-list{max-height:none!important;overflow:visible!important;overscroll-behavior:auto!important;margin:9px 0!important}
+#personalModal #officialProgressBlock .op-detail-head{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;align-items:center!important;gap:6px!important}
+#personalModal #officialProgressBlock .op-detail-head strong{min-width:0!important}
+#personalModal #officialProgressBlock .op-detail-head button{min-height:34px!important;padding:6px 9px!important;white-space:nowrap!important}
+#personalModal #officialProgressBlock .op-detail-foot{justify-content:flex-start!important}
+#personalModal #officialProgressBlock .op-row{min-height:53px!important}
+#personalModal #opHistoryItems{display:block;position:relative!important;overflow:visible!important}
+#personalModal #opHistoryItems .history-item{position:relative!important;isolation:auto!important;transform:none!important;margin:0 0 10px!important}
+#personalModal #opHistoryItems .history-main:hover{background:transparent!important;outline:none!important}
+#personalModal #opHistoryItems .history-main:focus-visible{outline:2px solid #b99038!important;outline-offset:2px!important}
+#personalModal #opHistoryItems .history-actions{margin-top:6px!important}
+@media(max-width:420px){
+ #personalModal #officialStickyReportControls{padding:7px 10px!important;gap:6px!important}
+ #personalModal #officialStickyReportControls .op-shortcut{min-height:40px!important}
+ #personalModal #personalContent{padding:10px!important}
+}
+</style>
+<script id="guia-v78159-report-cleanup">
+(function(){
+ // Mudanças de aba e fechamento não deixam uma barra de relatórios sobre os favoritos.
+ const oldFavorites=renderFavorites;
+ renderFavorites=function(...args){document.getElementById('officialStickyReportControls')?.remove();return oldFavorites(...args)};
+ const oldClose=closePersonal;
+ closePersonal=function(...args){const result=oldClose(...args);document.getElementById('officialStickyReportControls')?.remove();return result};
+})();
+</script>
+
 <script id="guia-v78158-hinos-331-340">
 (()=>{const newMedia={"331":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-331.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-331-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-331-p1.jpg?v=78158","assets/partituras/hino-331-p2.jpg?v=78158"],"partituraTitulo":"Hino 331 — Vem a Cristo sem tardar","volume":50,"min":66,"max":84,"bpm":80}},"332":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-332.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-332-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-332-p1.jpg?v=78158"],"partituraTitulo":"Hino 332 — É Cristo Quem cuida de ti","volume":50,"min":116,"max":132,"bpm":128}},"333":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-333.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-333-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-333-p1.jpg?v=78158"],"partituraTitulo":"Hino 333 — Peregrino sou no mundo","volume":50,"min":60,"max":80,"bpm":75}},"334":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-334.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-334-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-334-p1.jpg?v=78158"],"partituraTitulo":"Hino 334 — Há uma pátria perfeita...","volume":50,"min":69,"max":80,"bpm":77}},"335":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-335.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-335-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-335-p1.jpg?v=78158","assets/partituras/hino-335-p2.jpg?v=78158"],"partituraTitulo":"Hino 335 — Eu almejo nessa pátria entrar","volume":50,"min":60,"max":80,"bpm":75}},"336":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-336.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-336-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-336-p1.jpg?v=78158"],"partituraTitulo":"Hino 336 — Sempre brilhar devemos","volume":50,"min":66,"max":88,"bpm":82}},"337":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-337.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-337-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-337-p1.jpg?v=78158","assets/partituras/hino-337-p2.jpg?v=78158"],"partituraTitulo":"Hino 337 — Por fé seguimos ao Senhor","volume":50,"min":69,"max":84,"bpm":80}},"338":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-338.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-338-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-338-p1.jpg?v=78158"],"partituraTitulo":"Hino 338 — O Senhor é sempiterno","volume":50,"min":66,"max":88,"bpm":82}},"339":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-339.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-339-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-339-p1.jpg?v=78158"],"partituraTitulo":"Hino 339 — Glória sem par","volume":50,"min":112,"max":132,"bpm":127}},"340":{"audio":"https://pub-7199add30ab64a9dbb3534ca0f86ae57.r2.dev/audio/hino-340.mp3","modoReproducao":"partitura","hdBrandLabelsOnly":true,"spotifyPending":true,"youtubePending":true,"youtubeMusicPending":true,"fonteExterna":"Spotify e YouTube: Orquestra Sacra; YouTube Music: Vozes do Campo. Links individuais ainda não verificados.","metronomo":{"partitura":false,"partituraImagem":"assets/partituras/hino-340-p1.jpg?v=78158","partituraPaginas":["assets/partituras/hino-340-p1.jpg?v=78158"],"partituraTitulo":"Hino 340 — No mundo sou peregrino","volume":50,"min":108,"max":132,"bpm":126}}};for(const [n,v] of Object.entries(newMedia)) MULTIMIDIA[n]=v;window.GuiaHinos331a340V78158={numeros:Object.keys(newMedia),letrasStatus:"Pendente de transcrição e revisão musical"};})();
 </script>
