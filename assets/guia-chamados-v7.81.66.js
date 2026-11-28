@@ -146,3 +146,13 @@
     initCalledProgress();
   }
 })();
+
+/* V7.81.70 R1 — correção isolada dos metadados de metrônomo H321–340, somente no teste. */
+(function(){'use strict';
+if(!/(?:^|\/)teste-multimidia\.html$/.test(location.pathname))return;
+const revisao={"321":{"tonalidade":"Lá♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"322":{"tonalidade":"Dó maior","compasso":"6/4","unidade":"semínima","unidadeSimbolo":"♩"},"323":{"tonalidade":"Si♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"324":{"tonalidade":"Dó maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"325":{"tonalidade":"Sol maior","compasso":"6/8","unidade":"colcheia","unidadeSimbolo":"♪"},"326":{"tonalidade":"Fá maior","compasso":"6/8","unidade":"colcheia","unidadeSimbolo":"♪"},"327":{"tonalidade":"Sol maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"328":{"tonalidade":"Si♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"329":{"tonalidade":"Sol maior","compasso":"6/8","unidade":"colcheia","unidadeSimbolo":"♪"},"330":{"tonalidade":"Lá♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"331":{"tonalidade":"Lá♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"332":{"tonalidade":"Si♭ maior","compasso":"6/8","unidade":"colcheia","unidadeSimbolo":"♪"},"333":{"tonalidade":"Dó maior","compasso":"3/4","unidade":"semínima","unidadeSimbolo":"♩"},"334":{"tonalidade":"Sol maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"335":{"tonalidade":"Mi♭ maior","compasso":"2/4","unidade":"semínima","unidadeSimbolo":"♩"},"336":{"tonalidade":"Ré maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"337":{"tonalidade":"Si♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"338":{"tonalidade":"Si♭ maior","compasso":"4/4","unidade":"semínima","unidadeSimbolo":"♩"},"339":{"tonalidade":"Lá♭ maior","compasso":"6/4","unidade":"semínima","unidadeSimbolo":"♩"},"340":{"tonalidade":"Ré♭ maior","compasso":"6/4","unidade":"semínima","unidadeSimbolo":"♩"}};
+if(typeof MULTIMIDIA==='undefined'||Object.keys(revisao).some(n=>!MULTIMIDIA[n]?.metronomo)){console.error('Guia V7.81.70 R1: base de metrônomos indisponível');return;}
+for(const [n,campos] of Object.entries(revisao)){Object.assign(MULTIMIDIA[n].metronomo,campos);}
+window.GuiaMetroRevisaoV78170R1={hinos:Object.keys(revisao)};
+document.title=document.title.replace(/^V7\.81\.68 Teste/,'V7.81.70 R1 Teste');
+})();
